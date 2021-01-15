@@ -4,7 +4,7 @@ Configuration 2.1//EN"
 "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
 
-	<definition name="home" template="/WEB-INF/views/home.jsp" />
+	<definition name="home" template="/WEB-INF/views/main/main.jsp" />
 
 	<definition name="userTemplate"	template="/WEB-INF/views/tiles/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
