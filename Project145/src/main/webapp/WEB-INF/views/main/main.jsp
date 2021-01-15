@@ -4,31 +4,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="shortcut icon" href="/resources/assets/images/favicon.png" type="image/png">
+	<link rel="shortcut icon" href="<%=request.getContextPath() %>/resources/assets/images/favicon.png" type="image/png">
 
 	<!--====== Animate CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/animate.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/animate.css">
 
 	<!--====== Tiny slider CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/tiny-slider.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/tiny-slider.css">
 
 	<!--====== glightbox CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/glightbox.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/glightbox.min.css">
 
 	<!--====== Line Icons CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/LineIcons.2.0.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/LineIcons.2.0.css">
 
 	<!--====== Selectr CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/selectr.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/selectr.css">
 
 	<!--====== Nouislider CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/nouislider.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/nouislider.css">
 
 	<!--====== Bootstrap CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/bootstrap-5.0.5-alpha.min.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/bootstrap-5.0.5-alpha.min.css">
 
 	<!--====== Style CSS ======-->
-	<link rel="stylesheet" href="/resources/assets/css/style.css">
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/style.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -1050,25 +1050,25 @@
 
 
 	<!--====== Bootstrap js ======-->
-	<script src="/resources/assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/bootstrap.bundle-5.0.0.alpha-min.js"></script>
 
 	<!--====== Tiny slider js ======-->
-	<script src="/resources/assets/js/tiny-slider.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/tiny-slider.js"></script>
 
 	<!--====== wow js ======-->
-	<script src="/resources/assets/js/wow.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/wow.min.js"></script>
 
 	<!--====== glightbox js ======-->
-	<script src="/resources/assets/js/glightbox.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/glightbox.min.js"></script>
 	
 	<!--====== Selectr js ======-->
-	<script src="/resources/assets/js/selectr.min.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/selectr.min.js"></script>
 
 	<!--====== Nouislider js ======-->
-	<script src="/resources/assets/js/nouislider.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/nouislider.js"></script>
 
 	<!--====== Main js ======-->
-	<script src="/resources/assets/js/main.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"></script>
 
 	<script>
 
