@@ -60,4 +60,10 @@ public class HomeController {
 		list.add(map);
 		return list;
 	}
+	
+	@RequestMapping("/mypage.do")
+	public String mypage() {
+		
+		return "mypage/mypageMain";
+	}
 }

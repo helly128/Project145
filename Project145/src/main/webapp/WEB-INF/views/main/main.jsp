@@ -149,6 +149,8 @@
 										<li><a href="privacy.html">Privacy</a></li>
 										<li><a href="javascript:void(0)">Sign Out</a></li>
 									</ul></li>
+									<li><a href="/mypage.do"
+									class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
 
 							</ul>
 						</nav>
