@@ -7,7 +7,7 @@
 	<title>Home</title>
 </head>
 <body>
-<a href="empList">사원목록</a><br>
+
 
 ${empVO.firstName } : ${evo.lastName }
 <h1>

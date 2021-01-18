@@ -1,4 +1,4 @@
-package com.dbal.app;
+package com.pj.vegi;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,37 +33,16 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping("/ajaxTest.do")
-	public @ResponseBody List<String> test() {
-		List<String> list = new ArrayList<String>();
-		list.add("홍길동");
-		list.add("이순신");
-		list.add("을지문덕");
-		return list;
-	}
-
-	@RequestMapping("/getChartData.do")
-	@ResponseBody
-	public List<Map<String, String>> getChartData() {
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("name", "인사");
-		map.put("cnt", "5");
-		list.add(map);
-		map = new HashMap<String, String>();
-		map.put("name", "총무");
-		map.put("cnt", "10");
-		list.add(map);
-		map = new HashMap<String, String>();
-		map.put("name", "기획");
-		map.put("cnt", "20");
-		list.add(map);
-		return list;
-	}
+	
 	
 	@RequestMapping("/mypage.do")
 	public String mypage() {
 		
 		return "mypage/mypageMain";
 	}
+
+	
+//========================================	
+	
+	 
 }
