@@ -2,36 +2,40 @@ package com.pj.vegi.biz.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.pj.vegi.biz.service.RestaurantBizService;
 import com.pj.vegi.vo.RestaurantVo;
 
+@Service("restBizService")
 public class RestaurantBizServiceImpl implements RestaurantBizService {
-
+	@Autowired
 	private RestaurantBizMapper dao;
 	
 	@Override
-	public List<RestaurantVo> restList(RestaurantVo vo) {
-		return dao.restList(vo);
+	public List<RestaurantVo> restBizList(RestaurantVo vo) {
+		return dao.restBizList(vo);
 	}
 
 	@Override
-	public RestaurantVo restSelect(RestaurantVo vo) {
-		return dao.restSelect(vo);
+	public RestaurantVo restBizSelect(RestaurantVo vo) {
+		return dao.restBizSelect(vo);
 	}
 
 	@Override
-	public int restInsert(RestaurantVo vo) {
-		return dao.restInsert(vo);
+	public int restBizInsert(RestaurantVo vo) {
+		return dao.restBizInsert(vo);
 	}
 
 	@Override
-	public int restUpdate(RestaurantVo vo) {
-		return dao.restUpdate(vo);
+	public int restBizUpdate(RestaurantVo vo) {
+		return dao.restBizUpdate(vo);
 	}
 
 	@Override
-	public int restDelete(RestaurantVo vo) {
-		return dao.restDelete(vo);
+	public int restBizDelete(RestaurantVo vo) {
+		return dao.restBizDelete(vo);
 	}
 	
 }
