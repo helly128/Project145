@@ -176,8 +176,10 @@ article {min-height: 500px;}
 		<!-- header navbar -->
 	</header>
 		
-		<article style="padding-top:100px;">
-			
+
+		<article style="padding-top:200px">
+		
+			<br><br><br><br>
 			<tiles:insertAttribute name="content"/>
 		</article>
 		

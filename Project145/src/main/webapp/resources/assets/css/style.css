@@ -245,7 +245,23 @@ textarea:focus {
   background: #6C9852;
   transition: all 0.4s ease-out 0s;
 }
-
+.middle-btn {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 0;
+  padding: 14px 30px;
+  font-weight: 600;
+  font-size: 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 5;
+  background: #6C9852;
+  transition: all 0.4s ease-out 0s;
+}
 .main-btn:hover {
   color: #fff;
 }
