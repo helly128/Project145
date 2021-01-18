@@ -23,6 +23,18 @@ public class MemberControllerCJ {
 			return "login/memberRegister";
 		}
 	  
+	  @RequestMapping("/userRegister.do")
+			public String userRegister() {
+						
+				return "login/userRegister";
+			}
+	  
+	  @RequestMapping("/bizRegister.do")
+			public String bizRegister() {
+						
+				return "login/bizRegister";
+			}
+	  
 	  
 
 

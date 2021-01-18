@@ -177,7 +177,7 @@ article {min-height: 500px;}
 	</header>
 		
 
-		<article style="padding-top:200px">
+		<article style="padding-top:120px">
 		
 			<br><br><br><br>
 			<tiles:insertAttribute name="content"/>

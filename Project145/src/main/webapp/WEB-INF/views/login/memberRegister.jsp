@@ -7,8 +7,39 @@
 <title>회원가입</title>
 </head>
 <body>
-<div class="container"><h1>회원가입폼</h1></div>
+<div align ="center">
+<h2>회 원 가 입</h2>
 
 
-</body>
+<section class="category-list-area pt-30">
+
+<div class="container">
+
+<div class="category-list-wrapper">
+
+<div class ="category-list-item">
+<a href="userRegister.do">
+<div class="icon">
+<i class="lni lni-users"></i>
+</div>
+<h4>일반 가입</h4>
+</a>
+</div>
+
+<div class ="category-list-item">
+<a href="bizRegister.do">
+<div class="icon">
+<i class="lni lni-briefcase"></i>
+</div>
+<h4>사업자 가입</h4>
+</a>
+</div>
+
+</div>
+</section>
+<br>
+<h5>클래스 운영자나 채식당 사업주는 사업자 가입을 선택해 주세요.</h5>
+<br>
+<br>
+</div>
 </html>
