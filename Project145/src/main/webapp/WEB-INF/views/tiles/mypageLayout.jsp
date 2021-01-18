@@ -38,12 +38,8 @@
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="index.html">
-				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink"></i>
-				</div>
-				<div class="sidebar-brand-text mx-3">
-					SB Admin <sup>2</sup>
-				</div>
+				<div class="sidebar-brand-icon rotate-n-15"></div>
+				<div class="sidebar-brand-text mx-3">채식당</div>
 			</a>
 
 			<!-- Divider -->
@@ -51,10 +47,10 @@
 
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="/begiMain.do"
-				data-toggle="collapse" data-target="#collapseTwo"
-				aria-expanded="true" aria-controls="collapseTwo"> 🏃‍♂ <span>My
-						베지meet</span>
+			<li class="nav-item"><a class="nav-link collapsed"
+				href="/begiMain.do" data-toggle="collapse"
+				data-target="#collapseTwo" aria-expanded="true"
+				aria-controls="collapseTwo"> 🏃‍♂ <span>My 베지meet</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -76,19 +72,19 @@
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">I Like it</h6>
-						<a class="collapse-item" href="#">Class</a> <a
-							class="collapse-item" href="#">Recipe</a> <a
-							class="collapse-item" href="#">Meet</a>
+						<a class="collapse-item" href="/myLikeClass.do">Class</a> <a
+							class="collapse-item" href="/myLikeRecipe.do">Recipe</a> <a
+							class="collapse-item" href="/myLikeMeet.do">Meet</a>
 					</div>
 				</div></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link" href="#"> 🎨<span>My
+			<li class="nav-item"><a class="nav-link" href="/myClass.do"> 🎨 <span>My
 						클래스</span>
 			</a></li>
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="#"> 🍺<span>My
+			<li class="nav-item"><a class="nav-link" href="/myRecipe.do"> 🍺 <span>My
 						Recipe</span>
 			</a></li>
 
@@ -97,8 +93,8 @@
 
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="#">
-					👜<span>My Wallet</span>
+			<li class="nav-item"><a class="nav-link" href="#"> 👜 <span>My
+						Wallet</span>
 			</a></li>
 
 			<!-- Divider -->
@@ -353,7 +349,7 @@
 				</div>
 
 
-				<article style="padding-top: 200px">
+				<article style="padding-top: 100px">
 					<tiles:insertAttribute name="content" />
 				</article>
 

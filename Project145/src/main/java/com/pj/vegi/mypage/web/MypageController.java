@@ -29,4 +29,34 @@ public class MypageController {
 
 		return "mypage/myMeet";
 	}
+
+	@RequestMapping("/myLikeMeet.do")
+	public String myLikeMeet() {
+
+		return "mypage/myLikeMeet";
+	}
+
+	@RequestMapping("/myLikeRecipe.do")
+	public String myLikeRecipe() {
+
+		return "mypage/myLikeRecipe";
+	}
+
+	@RequestMapping("/myLikeClass.do")
+	public String myLikeClass() {
+
+		return "mypage/myLikeClass";
+	}
+	
+	@RequestMapping("/myRecipe.do")
+	public String myRecipe() {
+		
+		return "mypage/myRecipe";
+	}
+	
+	@RequestMapping("/myClass.do")
+	public String myClass() {
+		
+		return "mypage/myClass";
+	}
 }
