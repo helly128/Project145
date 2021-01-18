@@ -17,8 +17,8 @@
 </style>
 </head>
 <body>
-	<h1>로그인 페이지</h1>
 	<div class="login">
+	<h1>로그인 페이지</h1>
 		<form>
 			<!-- Email input -->
 			<div class="form-outline mb-4">
