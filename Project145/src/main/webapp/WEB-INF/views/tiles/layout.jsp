@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <style>
 
+article {min-height: 500px;}
 
 </style>
 <link rel="shortcut icon"
@@ -175,6 +176,7 @@
 		<!-- header navbar -->
 	</header>
 		
+
 		<article style="padding-top:200px">
 		
 			<br><br><br><br>
