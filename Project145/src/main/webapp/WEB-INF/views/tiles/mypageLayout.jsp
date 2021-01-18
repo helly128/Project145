@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -372,6 +373,13 @@
 					</div>
 				</div>
 
+
+				<article style="padding-top: 200px">
+					<tiles:insertAttribute name="content" />
+				</article>
+
+
+
 				<!-- Bootstrap core JavaScript-->
 				<script src="/resources/admin/vendor/jquery/jquery.min.js"></script>
 				<script
@@ -390,6 +398,5 @@
 				<!-- Page level custom scripts -->
 				<script src="/resources/admin/js/demo/chart-area-demo.js"></script>
 				<script src="/resources/admin/js/demo/chart-pie-demo.js"></script>
-				
 </body>
 </html>
