@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.dbal.insa">
+	<logger name="com.pj.vegi">
 		<level value="info" />
 	</logger>
 	
