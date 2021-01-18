@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <style>
 
+article {min-height: 500px;}
 
 </style>
 <link rel="shortcut icon"
@@ -175,8 +176,8 @@
 		<!-- header navbar -->
 	</header>
 		
-		<article class="mt-5">
-			<br><br><br><br>
+		<article style="padding-top:100px;">
+			
 			<tiles:insertAttribute name="content"/>
 		</article>
 		
