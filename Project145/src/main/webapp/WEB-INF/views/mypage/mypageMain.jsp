@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SB Admin 2 - Dashboard</title>
+<title>mypageMain.jsp</title>
 </head>
 <body>
 	<h1>테스트</h1>
