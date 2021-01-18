@@ -175,7 +175,8 @@
 		<!-- header navbar -->
 	</header>
 		
-		<article class="mt-5">
+		<article style="padding-top:200px">
+		
 			<br><br><br><br>
 			<tiles:insertAttribute name="content"/>
 		</article>
