@@ -7,29 +7,31 @@ import com.pj.vegi.vo.RestaurantVo;
 
 public class RestaurantBizServiceImpl implements RestaurantBizService {
 
+	private RestaurantBizMapper dao;
+	
 	@Override
 	public List<RestaurantVo> restList(RestaurantVo vo) {
-		return null;
+		return dao.restList(vo);
 	}
 
 	@Override
 	public RestaurantVo restSelect(RestaurantVo vo) {
-		return null;
+		return dao.restSelect(vo);
 	}
 
 	@Override
 	public int restInsert(RestaurantVo vo) {
-		return 0;
+		return dao.restInsert(vo);
 	}
 
 	@Override
 	public int restUpdate(RestaurantVo vo) {
-		return 0;
+		return dao.restUpdate(vo);
 	}
 
 	@Override
 	public int restDelete(RestaurantVo vo) {
-		return 0;
+		return dao.restDelete(vo);
 	}
 	
 }
