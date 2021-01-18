@@ -19,7 +19,7 @@
 <body>
 	<div class="login">
 	<h1>로그인 페이지</h1>
-		<form>
+		<form action="/loginResult.do">
 			<!-- Email input -->
 			<div class="form-outline mb-4">
 				<input type="email" id="form2Example1" class="form-control" /> <label

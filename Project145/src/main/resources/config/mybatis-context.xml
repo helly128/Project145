@@ -16,6 +16,6 @@
 	</bean> 
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-	  <property name="basePackage" value="com.dbal.**.mapper" />
+	  <property name="basePackage" value="com.pj.vegi.**.mapper" />
 	</bean>
 </beans>
