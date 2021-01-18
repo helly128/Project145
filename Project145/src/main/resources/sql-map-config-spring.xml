@@ -9,6 +9,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.dbal.app.emp.EmpVO" alias="emp"/> 
+		<typeAlias type="com.pj.vegi.vo.RestaurantVo" alias="RestaurantVo"/>
 	</typeAliases>
 
 </configuration>
