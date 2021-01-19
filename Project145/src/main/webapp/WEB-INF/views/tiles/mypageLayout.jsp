@@ -37,11 +37,18 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="index.html">
+				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
 				<div class="sidebar-brand-text mx-3">채식당</div>
 			</a>
+			
+			<!-- Divider -->
+			<hr class="sidebar-divider">
 
+			<!-- Nav Item - Tables -->
+			<li class="nav-item"><a class="nav-link" href="/mypage.do"> 🎀 <span>My
+						Page</span>
+			</a></li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 
@@ -79,13 +86,13 @@
 				</div></li>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link" href="/myClass.do"> 🎨 <span>My
-						클래스</span>
+			<li class="nav-item"><a class="nav-link" href="/myClass.do">
+					🎨 <span>My 클래스</span>
 			</a></li>
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="/myRecipe.do"> 🍺 <span>My
-						Recipe</span>
+			<li class="nav-item"><a class="nav-link" href="/myRecipe.do">
+					🍺 <span>My Recipe</span>
 			</a></li>
 
 			<!-- Divider -->
@@ -93,7 +100,7 @@
 
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="#"> 👜 <span>My
+			<li class="nav-item"><a class="nav-link" href="/myWallet.do"> 👜 <span>My
 						Wallet</span>
 			</a></li>
 

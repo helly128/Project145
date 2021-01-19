@@ -67,7 +67,7 @@
 								id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav">
 									<li class="nav-item"><a class="page-scroll active"
-										href="index.html">클래스</a></li>
+										href="/lessonMain.do">클래스</a></li>
 									<li class="nav-item"><a class="page-scroll"
 										data-toggle="collapse" data-target="#sub-nav1"
 										aria-controls="sub-nav1" aria-expanded="false"
