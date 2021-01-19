@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pj.vegi.biz.mapper.RestaurantBizMapper;
 import com.pj.vegi.biz.service.RestaurantBizService;
+import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("restBizService")
 public class RestaurantBizServiceImpl implements RestaurantBizService {
 	@Autowired
-	private RestaurantBizMapper dao;
+	RestaurantBizMapper dao;
 	
 	@Override
 	public List<RestaurantVo> restBizList(RestaurantVo vo) {
@@ -36,6 +38,11 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	@Override
 	public int restBizDelete(RestaurantVo vo) {
 		return dao.restBizDelete(vo);
+	}
+
+	@Override
+	public List<RestMenuVo> restMenuList(RestMenuVo vo) {
+		return dao.restMenuList(vo);
 	}
 	
 }

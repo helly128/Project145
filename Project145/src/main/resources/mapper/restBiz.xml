@@ -3,11 +3,17 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.pj.vegi.biz.service.impl.RestaurantBizMapper">
+<mapper namespace="com.pj.vegi.biz.mapper.RestaurantBizMapper">
 	<select id="restBizList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
-		<where>
-			m_id=#{mId}
-		</where>
+		WHERE m_id=#{mId}
+	</select>
+	<select id="restBizSelect" resultType="RestaurantVo">
+		SELECT * FROM restaurant
+		WHERE rest_id=#{restId}
+	</select>
+	<select id="restMenuList" resultType="com.pj.vegi.vo.RestMenuVo">
+		SELECT * FROM rest_menu
+		WHERE rest_id=#{restId}
 	</select>
 </mapper>
