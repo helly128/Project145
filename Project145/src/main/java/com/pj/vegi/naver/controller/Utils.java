@@ -1,4 +1,4 @@
-package com.pj.vegi.member.web;
+package com.pj.vegi.naver.controller;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
