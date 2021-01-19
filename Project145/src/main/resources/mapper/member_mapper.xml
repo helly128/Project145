@@ -10,5 +10,13 @@
 		FROM member
 		WHERE m_id = #{mId}
 	</select>
-
+	
+	<insert id="memberInsert">
+	INSERT INTO MEMBER(M_ID, PASSWORD, M_NAME,EMAIL,VEGTYPE,AUTH) 
+			VALUES(
+			#{mId},#{password},#{mName},#{email},#{vegtype},#{auth}
+			)
+	
+	
+	</insert>
 </mapper>

@@ -27,7 +27,7 @@
 					</div>
 
 					<div class="category-list-item">
-						<a href="bizRegister.do">
+						<a href="bizNumber.do">
 							<div class="icon">
 								<i class="lni lni-briefcase"></i>
 							</div>

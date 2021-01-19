@@ -1,22 +1,23 @@
 package com.pj.vegi.member.web;
 
 
-import org.springframework.stereotype.Controller;
+import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.pj.vegi.member.service.MemberService;
+import com.pj.vegi.vo.MemberVo;
 
 
 @Controller
 public class MemberControllerCJ {
-//	  @Autowired
-//	    MemberService memberService;
+	  @Autowired
+	    MemberService memberService;
 	    
-	  @RequestMapping("/login.do")
-		public String login() {
-					
-			return "login/login";
-		}
-	  
 	  @RequestMapping("/memberRegister.do")
 		public String memberRegister() {
 					
@@ -29,12 +30,30 @@ public class MemberControllerCJ {
 				return "login/userRegister";
 			}
 	  
+	  @PostMapping("/memberInsert.do")
+		public String memberInsert(MemberVo vo, Model model) throws SQLException {
+			String viewPath = null;
+			int n = memberService.memberInsert(vo);
+			if(n != 0)
+				viewPath = "redirect:loginForm.do";   //매핑메소드를 호출할때
+			else
+				viewPath = "login/loginFail";  //jsp페이지를 호출할때
+			return viewPath;
+		}
+		
+
+	  
 	  @RequestMapping("/bizRegister.do")
 			public String bizRegister() {
 						
 				return "login/bizRegister";
 			}
 	  
+	  @RequestMapping("/bizNumber.do")
+			public String bizNumber() {
+						
+				return "login/bizNumber";
+			}
 	  
 
 
