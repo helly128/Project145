@@ -34,15 +34,6 @@ public class HomeController {
 	}
 
 	
-	
-	@RequestMapping("/mypage.do")
-	public String mypage() {
-		
-		return "mypage/mypageMain";
-	}
 
-	
-//========================================	
-	
 	 
 }

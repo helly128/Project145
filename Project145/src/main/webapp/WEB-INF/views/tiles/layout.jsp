@@ -11,6 +11,8 @@
 article {min-height: 500px;}
 
 </style>
+
+
 <link rel="shortcut icon"
 	href="<%=request.getContextPath()%>/resources/assets/images/favicon.png"
 	type="image/png">
@@ -138,9 +140,9 @@ article {min-height: 500px;}
 							<ul class="header-btn d-md-flex">
 								
 									
-									<li><a href="/login.do"
+									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
-									<li><a href="post-ad.html"
+									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
 									<c:if test="">
 									<li><a href="post-ad.html"

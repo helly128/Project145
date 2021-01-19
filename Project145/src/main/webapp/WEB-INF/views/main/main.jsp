@@ -126,7 +126,7 @@
 							<ul class="header-btn d-md-flex">
 								
 									
-									<li><a href="/login.do"
+									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
 									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>

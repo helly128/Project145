@@ -33,7 +33,7 @@
 			</bean>
 		</property>
 	</bean>
-
+	
 	<!-- Transaction Manager 설정 -->
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
