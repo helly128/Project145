@@ -26,10 +26,5 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
-	@Override
-	public MemberVo memberSelect(MemberVo vo) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

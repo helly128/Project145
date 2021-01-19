@@ -10,17 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberVo {
-	private String m_id;
+	private String mId;
 	private String password;
 	private String email;
 	private String vegtype;
 	private String available;
 	private String auth;
-	private String m_name;
+	private String mName;
 	private int report;
-	private int wallet_id;
-	private int wallet_point;
-	private int wallet_cash;
-	private int biznum;
+	private int walletPoint;
+	private int walletCash;
+	private String bizNum;
 	
 }
