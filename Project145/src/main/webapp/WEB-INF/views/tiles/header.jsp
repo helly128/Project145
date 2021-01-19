@@ -145,12 +145,16 @@ article {
 							<ul class="header-btn d-md-flex">
 								
 									
-									<li><a href="/login.do"
+									<c:if test="${mId eq null}">
+									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
-									<li><a href="post-ad.html"
+									</c:if>
+									<c:if test="${mId eq null}">
+									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
-									<c:if test="">
-									<li><a href="post-ad.html"
+									</c:if>
+									<c:if test="${mId ne null}">
+									<li><a href="/logout.do"
 									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
 								<li><a href="#" class="main-btn account-btn"> <span
