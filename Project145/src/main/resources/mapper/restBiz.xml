@@ -4,8 +4,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="com.pj.vegi.biz.service.impl.RestaurantBizMapper">
-	<select id="restList" resultType="RestaurantVo">
+	<select id="restBizList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
-		WHERE m_id=#{mId}
+		<where>
+			m_id=#{mId}
+		</where>
 	</select>
 </mapper>
