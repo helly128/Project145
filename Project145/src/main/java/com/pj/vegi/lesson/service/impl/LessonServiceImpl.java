@@ -1,5 +1,6 @@
 package com.pj.vegi.lesson.service.impl;
 
-public class LessonServiceImpl {
-	String name;
+import com.pj.vegi.lesson.service.LessonService;
+
+public class LessonServiceImpl implements LessonService {
 }
