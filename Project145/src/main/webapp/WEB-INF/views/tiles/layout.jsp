@@ -139,18 +139,11 @@ article {min-height: 500px;}
 							</div>
 							<ul class="header-btn d-md-flex">
 								
-<<<<<<< HEAD
 									<c:if test="${mId eq null}">
-=======
-									
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
-<<<<<<< HEAD
 									</c:if>
 									<c:if test="${mId eq null}">
-=======
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
 									</c:if>
@@ -189,7 +182,7 @@ article {min-height: 500px;}
 	</header>
 		
 
-		<article style="padding-top:120px">
+		<article style="padding-top:200px">
 		
 			<br><br><br><br>
 			<tiles:insertAttribute name="content"/>
