@@ -3,8 +3,13 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
+<<<<<<< HEAD
 <mapper namespace="com.pj.vegi.biz.mapper.RestaurantBizMapper">
 	<select id="restBizList" resultType="RestaurantVo">
+=======
+<mapper namespace="com.pj.vegi.biz.service.impl.RestaurantBizMapper">
+	<select id="restList" resultType="com.pj.vegi.vo.RestaurantVo">
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 		SELECT * FROM restaurant
 		WHERE m_id=#{mId}
 	</select>

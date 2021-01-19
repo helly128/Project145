@@ -44,25 +44,6 @@
 
 </head>
 <body>
-	<div></div>
-	<div class="preloader">
-		<div class="loader">
-			<div class="ytp-spinner">
-				<div class="ytp-spinner-container">
-					<div class="ytp-spinner-rotator">
-						<div class="ytp-spinner-left">
-							<div class="ytp-spinner-circle"></div>
-						</div>
-						<div class="ytp-spinner-right">
-							<div class="ytp-spinner-circle"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--====== PRELOADER PART ENDS ======-->
 
 	<!--====== HEADER PART START ======-->
 
@@ -86,7 +67,7 @@
 								id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav">
 									<li class="nav-item"><a class="page-scroll active"
-										href="index.html">클래스</a></li>
+										href="/lessonMain.do">클래스</a></li>
 									<li class="nav-item"><a class="page-scroll"
 										data-toggle="collapse" data-target="#sub-nav1"
 										aria-controls="sub-nav1" aria-expanded="false"
@@ -125,13 +106,16 @@
 							</div>
 							<ul class="header-btn d-md-flex">
 								
-									
+									<c:if test="${mId eq null}">
 									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
+									</c:if>
+									<c:if test="${mId eq null}">
 									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
-									<c:if test="">
-									<li><a href="post-ad.html"
+									</c:if>
+									<c:if test="${mId ne null}">
+									<li><a href="/logout.do"
 									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
 								<li><a href="#" class="main-btn account-btn"> <span

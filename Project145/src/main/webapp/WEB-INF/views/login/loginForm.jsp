@@ -22,13 +22,13 @@
 		<form action="/loginResult.do">
 			<!-- Email input -->
 			<div class="form-outline mb-4">
-				<input type="email" id="form2Example1" class="form-control" /> <label
-					class="form-label" for="form2Example1">Email address</label>
+				<input type="text" id="mId" name="mId" class="form-control" /> <label
+					class="form-label" for="form2Example1">ID</label>
 			</div>
 
 			<!-- Password input -->
 			<div class="form-outline mb-4">
-				<input type="password" id="form2Example2" class="form-control" /> <label
+				<input type="password" id="password" name="password" class="form-control" /> <label
 					class="form-label" for="form2Example2">Password</label>
 			</div>
 

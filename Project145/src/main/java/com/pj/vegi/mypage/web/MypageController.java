@@ -59,4 +59,16 @@ public class MypageController {
 		
 		return "mypage/myClass";
 	}
+	
+	@RequestMapping("/myPageEdit.do")
+	public String myPageEdit() {
+		
+		return "mypage/myPageEdit";
+	}
+	
+	@RequestMapping("/myWallet.do")
+	public String myWallet() {
+		
+		return "mypage/myWallet";
+	}
 }
