@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 
-<mapper namespace="com.pj.vegi.biz.service.impl.RestaurantBizMapper">
-	<select id="restList" resultType="RestaurantVo">
+<mapper namespace="com.pj.vegi.biz.mapper.RestaurantBizMapper">
+	<select id="restBizList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE m_id=#{mId}
 	</select>
@@ -17,4 +17,11 @@
 		SELECT * FROM rest_menu
 		WHERE rest_id=#{restId}
 	</select>
+	<select id="restReservList" resultType="com.pj.vegi.vo.RestReservVo">
+		SELECT * FROM rest_reserv
+		WHERE rest_id = #{restId}
+	</select>
+	<update id="restBizUpdate">
+		
+	</update>
 </mapper>

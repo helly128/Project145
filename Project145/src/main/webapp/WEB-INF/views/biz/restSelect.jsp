@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +14,8 @@
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
 			<div class="row">
-				<div class="col-lg-5">
-					<div class="card shadow mb-4">
+				<div class="col-lg-5 mb-4">
+					<div class="card shadow h-100">
 						<!-- Card Header - Dropdown -->
 						<div
 							class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -28,12 +29,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-7">
-					<div class="card shadow mb-4">
+				<div class="col-lg-7 mb-4">
+					<div class="card shadow h-100">
 						<div class="card-header py-3">
 							<h6 class="m-0 font-weight-bold text-primary">식당 정보</h6>
 						</div>
-						<div class="card-body" style="height: 100%">
+						<div class="card-body">
 							<h3 class="fw-bold">
 								<strong>${restVo.restName }</strong>
 							</h3>
@@ -60,12 +61,43 @@
 						<div class="card-header py-3">
 							<h6 class="m-0 font-weight-bold text-primary">메뉴</h6>
 						</div>
-						<div class="card-body">The styling for this basic card
-							example is created by using default Bootstrap utility classes. By
-							using utility classes, the style of the card component can be
-							easily modified with no need for any custom CSS!</div>
+						<div class="card-body">
+							<table class="table dataTable" id="dataTable" width="100%"
+								cellspacing="0" role="grid" aria-describedby="dataTable_info"
+								style="width: 100%; text-align: center;">
+								<thead>
+									<tr role="row">
+										<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" aria-sort="ascending"
+											style="width: 44px;">메뉴</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 54px;">채식타입</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 34px;">가격</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="menuVo" items="${menuList }">
+										<tr role="row" class="tr-hover">
+											<td>${menuVo.menuName }</td>
+											<td>${menuVo.menuVegeType }</td>
+											<td><fmt:formatNumber value="${menuVo.menuPrice }"
+													pattern="#,###" />원</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
+			</div>
+			<div align="center" class="mb-5 restBtn">
+				<button class="btn btn-primary" onclick="location.href='restBizDetail.do?restId=${restVo.restId}'">가게 정보 수정</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-primary" onclick="">가게 삭제</button>
+			</div>
+			<div class="mb-5">
+				<hr>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
@@ -90,13 +122,48 @@
 							</div>
 						</div>
 						<!-- Card Body -->
-						<div class="card-body">Dropdown menus can be placed in the
-							card header in order to extend the functionality of a basic card.
-							In this dropdown card example, the Font Awesome vertical ellipsis
-							icon in the card header can be clicked on in order to toggle a
-							dropdown menu.</div>
+						<div class="card-body">
+							<table class="table dataTable" id="dataTable" width="100%"
+								cellspacing="0" role="grid" aria-describedby="dataTable_info"
+								style="width: 100%; text-align: center;">
+								<thead>
+									<tr role="row">
+										<th style="width: 15px;"><input type="checkbox"
+											class="table-checkbox"></th>
+										<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" aria-sort="ascending"
+											style="width: 44px;">예약자아이디</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 54px;">예약자명</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 54px;">예약일</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 20px;">인원</th>
+										<th class="sorting" tabindex="0" aria-controls="dataTable"
+											rowspan="1" colspan="1" style="width: 34px;">예약상태</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="reservVo" items="${reservList }">
+										<tr role="row" class="tr-hover">
+											<td><input type="checkbox" class="td-checkbox"></td>
+											<td>${reservVo.getMId() }</td>
+											<td>${reservVo.restReservName }</td>
+											<td>${reservVo.restReservDate }</td>
+											<td>${reservVo.restReservPeople }</td>
+											<td>${reservVo.restReservStatus }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
+			</div>
+			<div align="center" class="mb-5 reservBtn">
+				<button class="btn btn-primary" onclick="">예약 수락</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-primary" onclick="">예약 거절</button>
 			</div>
 		</div>
 		<div class="col-lg-1"></div>
