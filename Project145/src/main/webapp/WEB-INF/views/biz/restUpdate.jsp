@@ -12,6 +12,7 @@
 	background: #f2f2f2;
 	border: none;
 	width: 97%;
+	padding: 15px;
 }
 
 .input-textarea {
@@ -19,7 +20,42 @@
 	border: none;
 	resize: none;
 	width: 97%;
-	padding: 1px;
+	padding: 15px;
+}
+
+.div-image {
+	position: relative;
+	text-align: center;
+	width: 150px;
+	text-align: center;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.label {
+	position: relative;
+	z-index: 0;
+	display: inline-block;
+	width: 100%;
+	background: #6C9852;
+	cursor: pointer;
+	color: #fff;
+	padding: 10px 0;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.restPic {
+	display: inline-block;
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 50px;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -38,12 +74,12 @@
 								<h6 class="m-0 font-weight-bold text-primary">대표 사진</h6>
 							</div>
 							<!-- Card Body -->
-							<div class="card-body">
-								<div class="p-2">
-									<img src="${restVo.restPic }" width="100%">
-								</div>
-								<div>
-									<input type="file" name="restPic" accept="image/*">
+							<div class="image-container p-3">
+								<img id="rest-image" src="${restVo.restPic }" width="100%">
+								<div class="div-image">
+									<span class="label">사진 업로드</span> <input type="file"
+										name="restPic" class="restPic" accept="image/*"
+										onchange="setImage(event);">
 								</div>
 							</div>
 						</div>
@@ -57,19 +93,21 @@
 								<h3 class="fw-bold">
 									<strong>${restVo.restName }</strong>
 								</h3>
-								<p class="mb-0 mt-4">
+								<p class="mb-2 mt-4">
 									<strong>운영시간</strong>
 								</p>
-								<textarea class="input-textarea" name="restTime"
-									style="width: 97%;">${restVo.restTime }</textarea>
-								<p class="mb-0 mt-2">
+								<textarea class="input-textarea mb-2" name="restTime"
+									style="width: 97%;" rows=3>${restVo.restTime }</textarea>
+								<p class="mb-2 mt-2">
 									<strong>주소</strong>
 								</p>
-								<input type="text" class="input-text" name="restAddress" value="${restVo.restAddress }">
-								<p class="mb-0 mt-2">
+								<input type="text" class="input-text mb-4" name="restAddress"
+									value="${restVo.restAddress }">
+								<p class="mb-2 mt-2">
 									<strong>연락처</strong>
 								</p>
-								<input type="text" class="input-text" name="restTel" value="${restVo.restTel }">
+								<input type="text" class="input-text" name="restTel"
+									value="${restVo.restTel }">
 							</div>
 						</div>
 					</div>
@@ -81,19 +119,21 @@
 							<div class="card-header py-3">
 								<h6 class="m-0 font-weight-bold text-primary">메뉴</h6>
 							</div>
-							<div class="card-body">
+							<div class="card-body px-3 mx-3">
 								<table class="table dataTable" id="dataTable" width="100%"
 									cellspacing="0" role="grid" aria-describedby="dataTable_info"
 									style="width: 100%; text-align: center;">
 									<thead>
 										<tr role="row">
 											<th class="sorting_asc" tabindex="0"
-												aria-controls="dataTable" rowspan="1" colspan="1"
-												aria-sort="ascending" style="width: 44px;">메뉴</th>
+												aria-controls="dataTable" aria-sort="ascending"
+												style="width: 44px;">메뉴</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="1" style="width: 54px;">채식타입</th>
+												style="width: 35px;">채식타입</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="1" style="width: 34px;">가격</th>
+												style="width: 34px;">가격</th>
+											<th class="sorting" tabindex="0" aria-controls="dataTable"
+												style="width: 20px;"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -101,8 +141,8 @@
 											<tr role="row" class="tr-hover">
 												<td>${menuVo.menuName }</td>
 												<td>${menuVo.menuVegeType }</td>
-												<td><fmt:formatNumber value="${menuVo.menuPrice }"
-														pattern="#,###" />원</td>
+												<td>${menuVo.menuPrice }</td>
+												<td><button class="btn btn-outline-success" onclick="">-</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -122,5 +162,21 @@
 		<div class="col-lg-1"></div>
 	</div>
 
+	<script>
+		function setImage(event) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var img = document.getElementById("rest-image");
+				img.setAttribute("src", event.target.result);
+
+			}
+
+			reader.readAsDataURL(event.target.files[0]);
+		}
+		
+		function deleteRow(event) {
+			
+		}
+	</script>
 </body>
 </html>
