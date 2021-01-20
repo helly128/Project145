@@ -18,4 +18,7 @@ public class RestaurantVo {
 	private String restPic;
 	private String restTime;
 	private String mId;
+	private int restReservWait;
+	private int restReservAccept;
+	private String restTel;
 }

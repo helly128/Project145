@@ -3,9 +3,18 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
+
 <mapper namespace="com.pj.vegi.biz.service.impl.RestaurantBizMapper">
-	<select id="restList" resultType="com.pj.vegi.vo.RestaurantVo">
+	<select id="restList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE m_id=#{mId}
+	</select>
+	<select id="restBizSelect" resultType="RestaurantVo">
+		SELECT * FROM restaurant
+		WHERE rest_id=#{restId}
+	</select>
+	<select id="restMenuList" resultType="com.pj.vegi.vo.RestMenuVo">
+		SELECT * FROM rest_menu
+		WHERE rest_id=#{restId}
 	</select>
 </mapper>

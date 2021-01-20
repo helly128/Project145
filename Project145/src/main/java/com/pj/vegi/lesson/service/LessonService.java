@@ -1,5 +1,9 @@
 package com.pj.vegi.lesson.service;
 
-public class LessonService {
-
+public interface LessonService {
+	//LessonVO 생성
+	//lessonList();
+	//lessonSelectOne();
+	
+	
 }

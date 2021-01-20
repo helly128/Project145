@@ -1,5 +1,7 @@
 package com.pj.vegi.lesson.mapper;
 
-public class LessonMapper {
-
+public interface LessonMapper {
+	// LessonVO 생성
+	// lessonList();
+	// lessonSelectOne();
 }
