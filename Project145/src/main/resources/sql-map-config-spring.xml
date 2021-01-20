@@ -10,6 +10,7 @@
 	<typeAliases>
 		<typeAlias type="com.dbal.app.emp.EmpVO" alias="emp"/> 
 		<typeAlias type="com.pj.vegi.vo.RestaurantVo" alias="RestaurantVo"/>
+		<typeAlias type="com.pj.vegi.vo.LessonVO" alias="LessonVO"/>
 	</typeAliases>
 
 </configuration>

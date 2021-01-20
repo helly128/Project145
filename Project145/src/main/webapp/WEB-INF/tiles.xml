@@ -23,6 +23,10 @@ Configuration 2.1//EN"
 	<definition name="adminM/*"	template="/WEB-INF/views/tiles/mypageLayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/views/adminM/{1}.jsp" />
 	</definition>
+	
+	<definition name="lesson/*"	template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/lesson/{1}.jsp" />
+	</definition>
 
 	<!-- 사용자 -->
 	<definition name="*/*" extends="userTemplate">

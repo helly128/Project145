@@ -19,13 +19,14 @@
 		</div>
 
 		<div class="row">
-		<!-- 클래스리스트 데이터 -->
-			<c:forEach var="" items="">
+			<!-- 클래스리스트 시작 -->
+			<c:forEach var="lesson" items="${lessons }">
 				<div class="col-xl-4 col-lg-6 col-md-6">
+					<input type="hidden" value="${lesson.getCId() }">
 					<div class="single-product">
 						<div class="product-img">
-							<a href="/lessonProduct.do"> <img
-								src="/resources/assets/images/product/l-product-1.jpg" alt="">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
 							</a>
 							<div class="product-action">
 								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
@@ -36,99 +37,30 @@
 						<div class="product-content">
 							<input type="hidden" value="클래스아이디">
 							<h3 class="name">
-								<a href="product-details.html">클래스제목 c_title</a>
+								<a href="product-details.html">${lesson.CTitle }</a>
 							</h3>
-							<span class="update">클래스내용 c_desc</span>
+							<span class="update">${lesson.getCDesc() }</span>
 							<ul class="address">
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-user"></i> 클래스강사</a></li>
+										class="lni lni-user"></i> ${lesson.lecName }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-package"></i>타입 begtype</a></li>
+										class="lni lni-package"></i> ${lesson.CHit }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-calendar"></i>마감일 c_end</a></li>
+										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-map-marker"></i>조회수 c_hit</a></li>
+										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
 							</ul>
 							<div class="product-bottom">
-								<h3 class="price">클래스가격 c_price</h3>
+								<h3 class="price">${lesson.CPrice }원</h3>
 								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
-			
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="single-product">
-					<div class="product-img">
-						<a href="product-details.html"> <img
-							src="/resources/assets/images/product/l-product-2.jpg" alt="">
-						</a>
-						<div class="product-action">
-							<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
-								href="javascript:void(0)" class="share"><i
-								class="lni lni-share"></i></a>
-						</div>
-					</div>
+			<!-- 클래스리스트 카드 끝 -->
 
-					<div class="product-content">
-						<h3 class="name">
-							<a href="product-details.html">Apple MacBook Air</a>
-						</h3>
-						<span class="update">Last Update: 5 hours ago</span>
-						<ul class="address">
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-calendar"></i> 20 June, 2023</a></li>
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-map-marker"></i> Canada</a></li>
-							<li><a href="javascript:void(0)"><i class="lni lni-user"></i>
-									Stifen Jon</a></li>
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-package"></i> Used</a></li>
-						</ul>
-						<div class="product-bottom">
-							<h3 class="price">$420.99</h3>
-							<a href="javascript:void(0)" class="link-ad"><i
-								class="lni lni-checkmark-circle"></i> Verified Ad</a>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="col-xl-4 col-lg-6 col-md-6">
-				<div class="single-product">
-					<div class="product-img">
-						<a href="product-details.html"> <img
-							src="/resources/assets/images/product/l-product-3.jpg" alt="">
-						</a>
-						<div class="product-action">
-							<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
-								href="javascript:void(0)" class="share"><i
-								class="lni lni-share"></i></a>
-						</div>
-					</div>
-
-					<div class="product-content">
-						<h3 class="name">
-							<a href="product-details.html">Cctv camera</a>
-						</h3>
-						<span class="update">Last Update: 5 hours ago</span>
-						<ul class="address">
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-calendar"></i> 20 June, 2023</a></li>
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-map-marker"></i> Canada</a></li>
-							<li><a href="javascript:void(0)"><i class="lni lni-user"></i>
-									Stifen Jon</a></li>
-							<li><a href="javascript:void(0)"><i
-									class="lni lni-package"></i> Used</a></li>
-						</ul>
-						<div class="product-bottom">
-							<h3 class="price">$80.99</h3>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </body>

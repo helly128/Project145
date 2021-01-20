@@ -31,20 +31,20 @@
 						<a rel="nofollow"
 							href="http://preview.graygrids.com/item/classilist-classified-ads-and-listing-website-template/"><img
 							width="750" height="480"
-							src="https://graygrids.com/wp-content/uploads/edd/classilist.jpg"
+							src="/images/${lesson.getCImg() }"
 							class="attachment-full size-full wp-post-image" alt=""
-							loading="lazy"
-							srcset="https://graygrids.com/wp-content/uploads/edd/classilist.jpg 750w, https://graygrids.com/wp-content/uploads/edd/classilist-300x192.jpg 300w, https://graygrids.com/wp-content/uploads/edd/classilist-150x96.jpg 150w"
+							loading="lazy"							
 							sizes="(max-width: 750px) 100vw, 750px"></a>
 					</div>
 					<br>
 					<hr>
-					<h3>클래스정보</h3>
-					<p>클래스내용 블라블라</p>
+					<h3>${lesson.getCDesc() }</h3>
 					<hr>
 					<div id="jp-relatedposts" class="jp-relatedposts"
 						style="display: block;">
-						<h3>강사정보</h3>
+						<h3>강사명</h3>
+						<p class="jp-relatedposts-post-excerpt">
+							${lesson.getLecName() }</p>
 
 						<div
 							class="jp-relatedposts-items jp-relatedposts-items-visual jp-relatedposts-grid ">
@@ -57,22 +57,7 @@
 									<h3>커리큘럼</h3>
 								</h4>
 								<p class="jp-relatedposts-post-excerpt">
-								<ul>
-									<li>강사</li>
-									<li>카</li>
-									<li>리</li>
-									<li>쿨</li>
-									<li>롬</li>
-								</ul>
-								</p>
-							</div>
-							<div
-								class="jp-relatedposts-post jp-relatedposts-post1 jp-relatedposts-post-thumbs">
-								<br>
-								<hr>
-								<br>
-								<h4 class="jp-relatedposts-post-title">레시피정보</h4>
-								<p class="jp-relatedposts-post-excerpt">레시피순서</p>
+									${lesson.getCurriCulum() }</p>
 							</div>
 							<div
 								class="jp-relatedposts-post jp-relatedposts-post2 jp-relatedposts-post-thumbs"
@@ -145,7 +130,7 @@
 					<div class="sidebar-theme">
 						<div class="single-product-widget">
 							<h4 class="widget-title" style="margin-bottom: 0px;">
-								<i class="zil zi-cart"></i> 클레스제목
+								<i class="zil zi-cart"></i> ${lesson.CTitle }
 							</h4>
 							<br>
 							<hr>
@@ -173,7 +158,7 @@
 				<div id="product_release_info-3"
 					class="theme--sidebar--widget product_release_info">
 					<h4 class="widget-title">수강기간</h4>
-					<p>수강기간 당겨오기</p>
+					<p>${lesson.getCStart() }- ${lesson.getCEnd() }</p>
 					<br>
 					<hr>
 					<br>
@@ -183,7 +168,7 @@
 					<hr>
 					<br>
 					<h4 class="widget-title">수강료</h4>
-					<p>수강료 당겨오기</p>
+					<p>${lesson.getCPrice() }원</p>
 
 				</div>
 				<br>
