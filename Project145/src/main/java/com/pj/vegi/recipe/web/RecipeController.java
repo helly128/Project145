@@ -38,4 +38,25 @@ public class RecipeController {
 		return "recipe/recipeDesc";
 	}
 	
+	@RequestMapping("/recipeInsert.do")
+	public String recipeInsert() {
+		
+		return "recipe/recipeInsert";
+	}
+	
+	@RequestMapping("/recipeInsertResult.do")
+	public String recipeInsertResult() {
+		
+		return "redirect:recipeMain";
+	}
+	
+	@RequestMapping("/recipeUpdate.do")
+	public String recipeUpdate() {
+		
+		return "recipe/recipeUpdate";
+	}
+	
+	
+	
+	
 }
