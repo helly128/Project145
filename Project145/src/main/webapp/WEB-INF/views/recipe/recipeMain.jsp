@@ -275,6 +275,7 @@
 				</div>
 
 			</div>
+			<button onclick="location.href='/recipeInsert.do'">Write</button>
 		</div>
 	</section>
 	<!--====== LATEST PRODUCT PART ENDS ======-->
