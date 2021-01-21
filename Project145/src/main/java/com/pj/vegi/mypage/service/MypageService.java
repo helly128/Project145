@@ -7,4 +7,7 @@ import com.pj.vegi.vo.MemberVo;
 public interface MypageService {
 
 	MemberVo myPageSelect(MemberVo vo) throws SQLException;
+	int myPageUpdate(MemberVo vo) throws SQLException;
+	
+	
 }
