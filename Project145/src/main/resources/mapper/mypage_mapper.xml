@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.mypage.mapper.MypageMapper">
+
+	<select id="myPageSelect" resultType="MemberVo">
+		SELECT * FROM member
+		WHERE
+		M_ID = #{mId}
+	</select>
+
+	<update id="myPageUpdate">
+		UPDATE member
+		SET password = #{ password ,jdbcType=VARCHAR}, 
+			vegtype = #{ vegtype ,jdbcType=VARCHAR}
+		WHERE m_id= #{ mId}
+	</update>
+
+</mapper>

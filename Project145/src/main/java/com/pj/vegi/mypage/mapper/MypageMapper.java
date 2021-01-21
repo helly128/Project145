@@ -1,5 +1,10 @@
 package com.pj.vegi.mypage.mapper;
 
-public class MypageMapper {
+import com.pj.vegi.vo.MemberVo;
+
+public interface MypageMapper {
+
+	public MemberVo myPageSelect(MemberVo vo);
+	public int myPageUpdate(MemberVo vo);
 
 }

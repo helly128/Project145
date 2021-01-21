@@ -86,7 +86,12 @@ article {min-height: 500px;}
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
+<<<<<<< HEAD
 							<a class="navbar-brand" href="index.html">채식당
+=======
+							<a class="navbar-brand" href="/main.do"> <img id="logo"
+								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg" alt="Logo">
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 							</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -98,28 +103,10 @@ article {min-height: 500px;}
 							<div class="collapse navbar-collapse sub-menu-bar"
 								id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav">
-									<li class="nav-item"><a class="page-scroll active"
-										href="/lessonMain.do">클래스</a></li>
 									<li class="nav-item"><a class="page-scroll"
-										data-toggle="collapse" data-target="#sub-nav1"
-										aria-controls="sub-nav1" aria-expanded="false"
-										aria-label="Toggle navigation" href="javascript:void(0)">레시피
-											<div class="sub-nav-toggler">
-												<span></span>
-											</div>
-									</a>
-										<ul class="sub-menu collapse" id="sub-nav1">
-											<li><a href="about.html">About</a></li>
-											<li><a href="service.html">Service</a></li>
-											<li><a href="category-list.html">Category List</a></li>
-											<li><a href="category.html">Category Grid</a></li>
-											<li><a href="pricing.html">Pricing</a></li>
-											<li><a href="accordions.html">Accordions</a></li>
-											<li><a href="product-details.html">Product Details</a></li>
-											<li><a href="login.html">Login</a></li>
-											<li><a href="signup.html">Sign Up</a></li>
-											<li><a href="404.html">404 Page</a></li>
-										</ul></li>
+										href="/lessonMain.do">클래스</a></li>
+									<li class="nav-item"><a class="page-scroll"  href="/recipeMain.do" >레시피
+									</a></li>
 									<li class="nav-item"><a class="page-scroll"
 										data-toggle="collapse" data-target="#sub-nav"
 										aria-controls="sub-nav" aria-expanded="false"
@@ -138,15 +125,15 @@ article {min-height: 500px;}
 							</div>
 							<ul class="header-btn d-md-flex">
 								
-									<c:if test="${mId eq null}">
+									<c:if test="${auth eq null}">
 									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
 									</c:if>
-									<c:if test="${mId eq null}">
+									<c:if test="${mId eq null && password eq null}">
 									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
 									</c:if>
-									<c:if test="${mId ne null}">
+									<c:if test="${mId ne null && password ne null}">
 									<li><a href="/logout.do"
 									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
@@ -181,7 +168,7 @@ article {min-height: 500px;}
 	</header>
 		
 
-		<article style="padding-top:200px">
+		<article>
 		
 			<br><br><br><br>
 			<tiles:insertAttribute name="content"/>
@@ -211,7 +198,7 @@ article {min-height: 500px;}
 								<h4>Quick Link</h4>
 								<ul class="link">
 									<li><a href="javascript:void(0)">클래스</a></li>
-									<li><a href="javascript:void(0)">레시피</a></li>
+									<li><a href="/recipeMain.do">레시피</a></li>
 									<li><a href="javascript:void(0)">식당</a></li>
 									<li><a href="javascript:void(0)">베지Meet</a></li>
 									<li><a href="javascript:void(0)">Contact</a></li>

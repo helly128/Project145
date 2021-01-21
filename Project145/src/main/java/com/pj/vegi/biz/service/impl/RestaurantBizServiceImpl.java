@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.biz.mapper.RestaurantBizMapper;
 import com.pj.vegi.biz.service.RestaurantBizService;
 import com.pj.vegi.vo.RestMenuVo;
+import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("restBizService")
@@ -43,6 +44,11 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	@Override
 	public List<RestMenuVo> restMenuList(RestMenuVo vo) {
 		return dao.restMenuList(vo);
+	}
+
+	@Override
+	public List<RestReservVo> restReservList(RestReservVo vo) {
+		return dao.restReservList(vo);
 	}
 	
 }
