@@ -139,15 +139,15 @@ article {min-height: 500px;}
 							</div>
 							<ul class="header-btn d-md-flex">
 								
-									<c:if test="${mId eq null}">
+									<c:if test="${auth eq null}">
 									<li><a href="/loginForm.do"
 									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
 									</c:if>
-									<c:if test="${mId eq null}">
+									<c:if test="${mId eq null && password eq null}">
 									<li><a href="/memberRegister.do"
 									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
 									</c:if>
-									<c:if test="${mId ne null}">
+									<c:if test="${mId ne null && password ne null}">
 									<li><a href="/logout.do"
 									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
