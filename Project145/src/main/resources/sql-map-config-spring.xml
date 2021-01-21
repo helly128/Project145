@@ -11,7 +11,11 @@
 		<typeAlias type="com.dbal.app.emp.EmpVO" alias="emp"/> 
 		<typeAlias type="com.pj.vegi.vo.RestaurantVo" alias="RestaurantVo"/>
 		<typeAlias type="com.pj.vegi.vo.LessonVO" alias="LessonVO"/>
+<<<<<<< HEAD
+		<typeAlias type="com.pj.vegi.vo.MemberVo" alias="MemberVo"/>
+=======
 		<typeAlias type="com.pj.vegi.vo.RecipeVo" alias="RecipeVo"/>
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 	</typeAliases>
 
 </configuration>

@@ -35,8 +35,8 @@
 						alt="Anis M" /></a>
 				</div>
 				<div class="profile-details">
-					<h1>회원아이디</h1>
-					<h6>회원이메일</h6>
+					<h1>${mid }</h1>
+					<h6>${member.getEmail() }</h6>
 				</div>
 			</div>
 			<div class="profile-info" style="display: none;">
@@ -60,12 +60,11 @@
 				<div class="clear"></div>
 			</div>
 			<div class="profile-content">
-				<br> <a href="/myPageEdit.do"
+				<br> <a href="/myPageEdit.do?mId=${mid }"
 					class="btn btn-light btn-icon-split"> <span
 					class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
 				</span> <span class="text">내 정보 수정</span>
-				</a><br>
-				<br>
+				</a><br> <br>
 				<div class="card shadow mb-4">
 					<!-- Card Header - Accordion -->
 					<a href="#collapseCardExample" class="d-block card-header py-3"
@@ -77,8 +76,8 @@
 					<div class="collapse show" id="collapseCardExample" style="">
 						<div class="card-body">
 							<div class="row">
-								적립금&nbsp;  <input type="text" value="마넌">&nbsp;&nbsp;
-								충전금&nbsp;  <input type="text" value="이마넌"><br>
+								적립금&nbsp; <input type="text" value="${member.getWalletPoint() }">&nbsp;&nbsp;
+								충전금&nbsp; <input type="text" value="${member.getWalletCash() }"><br>
 								MyWallet 에서 충전을 해보세요!! 하시라구요
 							</div>
 						</div>
