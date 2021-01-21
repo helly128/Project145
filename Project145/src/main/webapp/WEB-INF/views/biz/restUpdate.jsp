@@ -64,7 +64,7 @@
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
-			<form id="frm" name="frm">
+			<form id="frm" name="frm" action="#">
 				<div class="row">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
@@ -153,9 +153,9 @@
 				</div>
 
 				<div align="center" class="mb-5 reservBtn">
-					<button class="btn btn-primary" onclick="">수정</button>
+					<input type="submit" class="btn btn-primary" value="수정">
 					&nbsp;&nbsp;
-					<button class="btn btn-primary" onclick="">취소</button>
+					<input type="reset" class="btn btn-primary" value="취소">
 				</div>
 			</form>
 		</div>
