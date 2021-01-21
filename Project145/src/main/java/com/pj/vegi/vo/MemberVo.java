@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberVo {
-	private String mId;
+	private String m_id;
 	private String password;
 	private String email;
 	private String vegtype;
@@ -18,8 +18,8 @@ public class MemberVo {
 	private String auth;
 	private String mName;
 	private int report;
-	private int walletPoint;
-	private int walletCash;
+	private int wallet_point;
+	private int wallet_cash;
 	private String bizNum;
 	
 }

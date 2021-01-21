@@ -30,9 +30,9 @@ public class MemberController {
 		String viewPath = null;
 		boolean check = memberService.memberLoginCheck(vo);
 
-		session.setAttribute("mId", vo.getMId());
-		String mId = (String) session.getAttribute("mId");
-		model.addAttribute("mId", mId);
+		session.setAttribute("mId", vo.getM_id());
+		String mId = (String) session.getAttribute("m_id");
+		model.addAttribute("m_id", mId);
 
 		if (check == true) {
 			viewPath = "redirect:/main.do";

@@ -2,7 +2,6 @@ package com.pj.vegi.member.service;
 
 import java.sql.SQLException;
 import com.pj.vegi.vo.MemberVo;
-import com.pj.vegi.vo.NaverVo;
 
 public interface MemberService {
 
