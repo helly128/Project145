@@ -115,6 +115,7 @@
     </div>
    <br>
     <br>
+  <input type="text" id="biznum" name="biznum" value="${bizNumInput}">
   <button type="submit" id="submit">가입</button>
   <button type="button" id="cancel"  onclick="location.href='memberRegister.do'">취소</button>
 </form>
