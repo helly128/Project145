@@ -37,21 +37,21 @@
 						<div class="product-content">
 							<input type="hidden" value="클래스아이디">
 							<h3 class="name">
-								<a href="product-details.html">${lesson.CTitle }</a>
+								<a href="product-details.html">${lesson.getCTitle() }</a>
 							</h3>
 							<span class="update">${lesson.getCDesc() }</span>
 							<ul class="address">
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-user"></i> ${lesson.lecName }</a></li>
+										class="lni lni-user"></i> ${lesson.getLecName() }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-package"></i> ${lesson.CHit }</a></li>
+										class="lni lni-package"></i> ${lesson.getCHit() }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
+										class="lni lni-calendar"></i> ${lesson.getCEnd() }</a></li>
 								<li><a href="javascript:void(0)"><i
-										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+										class="lni lni-map-marker"></i> ${lesson.getVegType() }</a></li>
 							</ul>
 							<div class="product-bottom">
-								<h3 class="price">${lesson.CPrice }원</h3>
+								<h3 class="price">${lesson.getCPrice() }원</h3>
 								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>

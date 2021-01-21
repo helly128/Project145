@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecipeVo {
 
-	private String r_id;    
-	private String r_type;    
-	private String r_title;      
-	private Date r_date;               
-	private String r_content;          
-	private String r_image;     
-	private int r_hit;                     
-	private String m_id;         
-	private String c_id;              
-	private int r_report;          
+	private String rId;    
+	private String rType;    
+	private String rTitle;      
+	private Date rDate;               
+	private String rContent;          
+	private String rImage;     
+	private int rHit;                     
+	private String mId;         
+	private String cId;              
+	private int rReport;          
 }

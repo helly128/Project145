@@ -1,6 +1,7 @@
 package com.pj.vegi.mypage.web;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.RecipeVo;
 
 @Controller
 public class MypageController {
@@ -24,8 +26,8 @@ public class MypageController {
 
 		String mid = (String) session.getAttribute("mId");
 		model.addAttribute("mid", mid);
-
 		vo.setMId(mid);
+		
 		MemberVo member = mypageService.myPageSelect(vo);
 		model.addAttribute("member", member);
 
@@ -69,7 +71,11 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myRecipe.do")
-	public String myRecipe() {
+	public String myRecipe(RecipeVo vo, Model model, HttpSession session) throws SQLException {
+		
+		vo.setMId((String) session.getAttribute("mId"));
+		List<RecipeVo> recipes = mypageService.recipeSelect(vo);
+		model.addAttribute("recipes", recipes);
 		
 		return "mypage/myRecipe";
 	}
@@ -100,8 +106,19 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myWallet.do")
-	public String myWallet() {
+	public String myWallet(MemberVo vo, Model model, HttpSession session) throws SQLException {
 
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		MemberVo member = mypageService.myPageSelect(vo);
+		model.addAttribute("member", member);
+		
 		return "mypage/myWallet";
+	}
+	
+	@RequestMapping("/myRestaurant.do")
+	public String myRestaurant() {
+		return "mypage/myRestaurant";
 	}
 }

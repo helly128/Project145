@@ -12,9 +12,24 @@
 
 	<update id="myPageUpdate">
 		UPDATE member
-		SET password = #{ password ,jdbcType=VARCHAR}, 
-			vegtype = #{ vegtype ,jdbcType=VARCHAR}
-		WHERE m_id= #{ mId}
+		SET password = #{ password,
+		jdbcType=VARCHAR},
+		vegtype = #{ vegtype ,jdbcType=VARCHAR}
+		WHERE m_id=
+		#{ mId}
 	</update>
+
+	<select id="recipeSelect" resultType="RecipeVo">
+		SELECT * FROM recipe
+		WHERE
+		M_ID = #{mId}
+	</select>
+	
+<!-- 
+	<update id="recipeHitUpdate" parameterType="RecipeVo">
+		UPDATE recipe set r_hit = r_hit + 1
+		WHERE M_ID = #{m_id}
+	</update>
+-->
 
 </mapper>

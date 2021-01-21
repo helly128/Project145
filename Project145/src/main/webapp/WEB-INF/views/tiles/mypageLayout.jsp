@@ -41,13 +41,13 @@
 				<div class="sidebar-brand-icon rotate-n-15"></div>
 				<div class="sidebar-brand-text mx-3">채식당</div>
 			</a>
-			
+
 			<!-- Divider -->
 			<hr class="sidebar-divider">
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="/mypage.do"> 🎀 <span>My
-						Page</span>
+			<li class="nav-item"><a class="nav-link" href="/mypage.do">
+					🎀 <span>My Page</span>
 			</a></li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
@@ -57,7 +57,7 @@
 			<li class="nav-item"><a class="nav-link collapsed"
 				href="/begiMain.do" data-toggle="collapse"
 				data-target="#collapseTwo" aria-expanded="true"
-				aria-controls="collapseTwo"> 🏃‍♂ <span>My 베지meet</span>
+				aria-controls="collapseTwo"> 🏃‍♂ <span>My Meet</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -73,7 +73,7 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> ❤ <span>My
-						좋아요</span>
+						Like It</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -87,7 +87,11 @@
 
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link" href="/myClass.do">
-					🎨 <span>My 클래스</span>
+					🎨 <span>My Class</span>
+			</a></li>
+
+			<li class="nav-item"><a class="nav-link" href="/myRestaurant.do">
+					🍙 <span>My Restaurant</span>
 			</a></li>
 
 			<!-- Nav Item - Charts -->
@@ -100,8 +104,8 @@
 
 
 			<!-- Nav Item - Tables -->
-			<li class="nav-item"><a class="nav-link" href="/myWallet.do"> 👜 <span>My
-						Wallet</span>
+			<li class="nav-item"><a class="nav-link" href="/myWallet.do">
+					👜 <span>My Wallet</span>
 			</a></li>
 
 			<!-- Divider -->

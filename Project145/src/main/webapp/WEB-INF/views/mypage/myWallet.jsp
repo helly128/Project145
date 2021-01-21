@@ -15,15 +15,15 @@
 				</div>
 				<form class="user">
 					<div class="form-group">
-					적립금 잔액&nbsp;
-						<input type="text" class="form-control form-control-user"
-							id="exampleInputEmail" aria-describedby="emailHelp"
-							placeholder="적림금잔액 가져오기">
+						&nbsp; <input readonly="readonly" type="text"
+							class="form-control form-control-user"
+							aria-describedby="emailHelp" placeholder="적림금잔액 가져오기"
+							value="적립금 : ${member.getWalletPoint()}">
 					</div>
 					<div class="form-group">
-					충전금 잔액&nbsp;
-						<input type="text" class="form-control form-control-user"
-							id="exampleInputPassword" placeholder="충전금 잔액 가져오기">
+						&nbsp; <input readonly="readonly" type="text"
+							class="form-control form-control-user" placeholder="충전금 잔액 가져오기"
+							value="충전금 : ${member.getWalletCash() }">
 					</div>
 					<hr>
 					<a href="index.html" class="btn btn-google btn-user btn-block">

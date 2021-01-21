@@ -70,43 +70,40 @@
 						cellspacing="0">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Office</th>
-								<th>Age</th>
-								<th>Start date</th>
-								<th>Salary</th>
+								<th>Title</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>내용</th>
+								<th>달성율</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>Name</td>
-								<td>Position</td>
-								<td>Office</td>
+								<td>언택트제목</td>
+								<td>시작날짜</td>
+								<td>끝날짜</td>
+								<td>내용</td>
 								<td><div class="row no-gutters align-items-center">
 										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">30 %</div>
 										</div>
 										<div class="col">
 											<div class="progress progress-sm mr-2">
 												<div class="progress-bar bg-info" role="progressbar"
-													style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+													style="width: 30%" aria-valuenow="50" aria-valuemin="0"
 													aria-valuemax="100"></div>
 											</div>
 										</div>
 									</div></td>
-								<td>Start date</td>
-								<td>Salary</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>Name</th>
-								<th>Position</th>
-								<th>Office</th>
-								<th>Age</th>
-								<th>Start date</th>
-								<th>Salary</th>
+								<th>Title</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>내용</th>
+								<th>달성율</th>
 							</tr>
 						</tfoot>
 					</table>

@@ -15,7 +15,7 @@
 			<div class="p-5">
 				<div class="text-center">
 					<h1 class="h3 mb-2 text-gray-800">내 정보 수정</h1>
-				</div>
+				</div>${member}
 				<form class="user" action="myPageEditResult.do" id="form"
 					method="post">
 					<div class="form-group row"></div>

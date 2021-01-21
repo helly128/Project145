@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>myBegiUntact.jsp</title>
+<title>myBegiContact</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -34,7 +34,7 @@
 <body id="page-top">
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">내가 만든 MEET를 확인하세요!!👓</h1>
+		<h1 class="h3 mb-2 text-gray-800">내가 예약한 Restaurant를 확인하세요!! 💛</h1>
 		<p class="mb-4">
 			DataTables is a third party plugin that is used to generate the demo
 			table below. For more information about DataTables, please visit the
@@ -70,40 +70,29 @@
 						cellspacing="0">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								<th>내용</th>
-								<th>달성율</th>
+								<th>식당이름</th>
+								<th>예약날짜</th>
+								<th>예약자명</th>
+								<th>예약인원</th>
+								<th>예약현황</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>언택트제목</td>
-								<td>시작날짜</td>
-								<td>끝날짜</td>
-								<td>내용</td>
-								<td><div class="row no-gutters align-items-center">
-										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">30 %</div>
-										</div>
-										<div class="col">
-											<div class="progress progress-sm mr-2">
-												<div class="progress-bar bg-info" role="progressbar"
-													style="width: 30%" aria-valuenow="50" aria-valuemin="0"
-													aria-valuemax="100"></div>
-											</div>
-										</div>
-									</div></td>
+								<td>식당이름</td>
+								<td>예약날짜</td>
+								<td>예약자명</td>
+								<td>예약인원</td>
+								<td>예약현황</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>Title</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								<th>내용</th>
-								<th>달성율</th>
+								<th>식당이름</th>
+								<th>예약날짜</th>
+								<th>예약자명</th>
+								<th>예약인원</th>
+								<th>예약현황</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -141,6 +130,7 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 
 </html>
