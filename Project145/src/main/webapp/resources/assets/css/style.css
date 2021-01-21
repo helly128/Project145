@@ -1857,7 +1857,7 @@ hero area css
 .search-area .search-wrapper {
   background-color: #fff;
   border-radius: 5px;
-  padding: 48px 0px;
+  /* padding: 48px 0px; */
   box-shadow: 0px 3px 25px rgba(203, 207, 213, 0.3);
 }
 

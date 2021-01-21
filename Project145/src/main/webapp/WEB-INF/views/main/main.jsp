@@ -54,7 +54,7 @@
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="index.html"> <img id="logo"
+							<a class="navbar-brand" href="/main.do"> <img id="logo"
 								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg"
 								alt="Logo">
 							</a>
@@ -68,28 +68,10 @@
 							<div class="collapse navbar-collapse sub-menu-bar"
 								id="navbarSupportedContent">
 								<ul id="nav" class="navbar-nav">
-									<li class="nav-item"><a class="page-scroll active"
+									<li class="nav-item"><a class="page-scroll"
 										href="/lessonMain.do">클래스</a></li>
 									<li class="nav-item"><a class="page-scroll"
-										data-toggle="collapse" data-target="#sub-nav1"
-										aria-controls="sub-nav1" aria-expanded="false"
-										aria-label="Toggle navigation" href="javascript:void(0)">레시피
-											<div class="sub-nav-toggler">
-												<span></span>
-											</div>
-									</a>
-										<ul class="sub-menu collapse" id="sub-nav1">
-											<li><a href="about.html">About</a></li>
-											<li><a href="service.html">Service</a></li>
-											<li><a href="category-list.html">Category List</a></li>
-											<li><a href="category.html">Category Grid</a></li>
-											<li><a href="pricing.html">Pricing</a></li>
-											<li><a href="accordions.html">Accordions</a></li>
-											<li><a href="product-details.html">Product Details</a></li>
-											<li><a href="login.html">Login</a></li>
-											<li><a href="signup.html">Sign Up</a></li>
-											<li><a href="404.html">404 Page</a></li>
-										</ul></li>
+										href="/recipeMain.do">레시피 </a></li>
 									<li class="nav-item"><a class="page-scroll"
 										data-toggle="collapse" data-target="#sub-nav"
 										aria-controls="sub-nav" aria-expanded="false"
@@ -179,7 +161,7 @@
 			<div class="search-wrapper">
 				<form action="#">
 					<div class="row justify-content-center">
-						<div class="col-lg-3 col-sm-5 col-10">
+						<div class="col-lg-4 col-sm-5 col-10">
 							<div class="search-input">
 								<label for="keyword"><i
 									class="lni lni-search-alt theme-color"></i></label> <input type="text"
@@ -246,7 +228,7 @@
 
 			<div class="row">
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -281,7 +263,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -318,7 +300,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -352,6 +334,42 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="col-xl-3 col-lg-6 col-md-6">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="product-details.html"> <img
+								src="/resources/assets/images/product/l-product-1.jpg" alt="">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
+							</div>
+						</div>
+
+						<div class="product-content">
+							<h3 class="name">
+								<a href="product-details.html">Apple iPhone x</a>
+							</h3>
+							<span class="update">Last Update: 5 hours ago</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> 20 June, 2023</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> Canada</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> Stifen Jon</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> Used</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">$120.99</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</section>
@@ -372,7 +390,7 @@
 
 			<div class="row">
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -407,7 +425,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -444,7 +462,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -479,6 +497,40 @@
 					</div>
 				</div>
 
+				<div class="col-xl-3 col-lg-6 col-md-6">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="product-details.html"> <img
+								src="/resources/assets/images/product/l-product-1.jpg" alt="">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
+							</div>
+						</div>
+
+						<div class="product-content">
+							<h3 class="name">
+								<a href="product-details.html">Apple iPhone x</a>
+							</h3>
+							<span class="update">Last Update: 5 hours ago</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> 20 June, 2023</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> Canada</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> Stifen Jon</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> Used</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">$120.99</h3>
+							</div>
+						</div>
+					</div>
+				</div>
 
 
 			</div>
@@ -501,7 +553,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -536,7 +588,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -573,7 +625,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -607,6 +659,42 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="col-xl-3 col-lg-6 col-md-6">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="product-details.html"> <img
+								src="/resources/assets/images/product/l-product-1.jpg" alt="">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
+							</div>
+						</div>
+
+						<div class="product-content">
+							<h3 class="name">
+								<a href="product-details.html">Apple iPhone x</a>
+							</h3>
+							<span class="update">Last Update: 5 hours ago</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> 20 June, 2023</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> Canada</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> Stifen Jon</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> Used</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">$120.99</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -629,7 +717,7 @@
 
 			<div class="row">
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -664,7 +752,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -701,7 +789,7 @@
 					</div>
 				</div>
 
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img
@@ -736,6 +824,42 @@
 					</div>
 				</div>
 
+<div class="col-xl-3 col-lg-6 col-md-6">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="product-details.html"> <img
+								src="/resources/assets/images/product/l-product-1.jpg" alt="">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
+							</div>
+						</div>
+
+						<div class="product-content">
+							<h3 class="name">
+								<a href="product-details.html">Apple iPhone x</a>
+							</h3>
+							<span class="update">Last Update: 5 hours ago</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> 20 June, 2023</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> Canada</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> Stifen Jon</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> Used</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">$120.99</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</section>
@@ -755,7 +879,7 @@
 						<div class="footer-widget about">
 							<a href="index.html" class="d-inline-block mb-30"> <img
 								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg"
-								alt="">
+								alt="/main.do">
 							</a>
 						</div>
 					</div>
@@ -765,7 +889,7 @@
 							<h4>Quick Link</h4>
 							<ul class="link">
 								<li><a href="javascript:void(0)">클래스</a></li>
-								<li><a href="javascript:void(0)">레시피</a></li>
+								<li><a href="/recipeMain.do">레시피</a></li>
 								<li><a href="javascript:void(0)">식당</a></li>
 								<li><a href="javascript:void(0)">베지Meet</a></li>
 								<li><a href="javascript:void(0)">Contact</a></li>

@@ -17,7 +17,12 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public MemberVo myPageSelect(MemberVo vo) throws SQLException {
-		return null;
+		return dao.myPageSelect(vo);
+	}
+
+	@Override
+	public int myPageUpdate(MemberVo vo) throws SQLException {
+		return dao.myPageUpdate(vo);
 	}
 
 }

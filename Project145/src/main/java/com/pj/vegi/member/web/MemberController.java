@@ -44,8 +44,7 @@ public class MemberController {
 		boolean check = memberService.memberLoginCheck(vo);
 
 		session.setAttribute("mId", vo.getMId());
-		String mId = (String) session.getAttribute("mId");
-		model.addAttribute("mId", mId);
+		session.setAttribute("auth", vo.getAuth());
 
 		if (check == true) {
 			viewPath = "redirect:/main.do";

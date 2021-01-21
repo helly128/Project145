@@ -5,5 +5,6 @@ import com.pj.vegi.vo.MemberVo;
 public interface MypageMapper {
 
 	public MemberVo myPageSelect(MemberVo vo);
+	public int myPageUpdate(MemberVo vo);
 
 }
