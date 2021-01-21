@@ -12,10 +12,12 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/assets/css/bootstrap-5.0.5-alpha.min.css">
 <style>
+
 .login {
 	margin-left: 40%;
 	margin-right: 40%;
 	margin-bottom: 8%;
+	margin-top: 5%;
 }
 </style>
   <%
