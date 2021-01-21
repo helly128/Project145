@@ -86,7 +86,7 @@
  <tr>
 
       <td> 
-      <input type="checkbox" class="type" value="비건" checked checked="checked" disabled>
+      <input type="checkbox" class="type" value="비건" checked disabled>
         <div class="tbl-data" data-item="🥦"></div>
        
       </td>
@@ -106,7 +106,7 @@
   
  
 </div>
- <input type="text" id="vegi" name="vegtype" value="비건" placeholder="비건 " style="text-align: center; height:3rem; padding:10px;">
+ <input type="text" id="vegi" name="vegtype" value="비건" style="text-align: center; height:3rem; padding:10px;">
 </div>
 
 
