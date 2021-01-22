@@ -32,6 +32,7 @@
 									</div>
 								</div>
 
+<<<<<<< HEAD
 								<div class="col-lg-3 col-sm-5 col-10">
 									<div class="search-input" style="margin-bottom: 5%">
 										<label for="category"><i
@@ -48,6 +49,22 @@
 									</div>
 								</div>
 
+=======
+		<div class="row">
+			<!-- 클래스리스트 시작 -->
+			<c:forEach var="lesson" items="${lessons }">
+				<div class="col-xl-3 col-lg-6 col-md-6">
+					<input type="hidden" value="${lesson.getCId() }">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 							</div>
 						</form>
 					</div>

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.MemberVo;
@@ -32,6 +33,5 @@ public class MemberServiceImpl implements MemberService {
 		return dao.memberInsert(vo);
 	}
 
-
-
+	
 }

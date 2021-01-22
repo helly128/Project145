@@ -1,5 +1,6 @@
 package com.pj.vegi.biz.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -66,5 +67,28 @@ public class RestaurantController {
 		model.addAttribute("reservList", reservList);
 
 		return "biz/restUpdate";
+	}
+	
+	@RequestMapping("restMenuDelete.do")
+	public String restMenuDelete(Model model, RestMenuVo menuVo) {
+		restBizService.restMenuDelete(menuVo);
+		
+		RestaurantVo restVo;
+//		restVo.setRestId(menuVo.get);
+		
+		return "redirect:restBizSelect.do";
+	}
+	
+	@RequestMapping("restBizUpdate.do")
+	public String restBizUpdate(Model model, RestaurantVo restVo, ArrayList<RestMenuVo> list) {
+		
+		restBizService.restBizUpdate(restVo);
+		
+		restBizService.restMenuUpdate(list);
+		
+		model.addAttribute(restVo);
+		model.addAttribute("menuList", list);
+		
+		return "redirect:restBizSelect.do";
 	}
 }

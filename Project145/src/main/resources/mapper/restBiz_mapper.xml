@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 
 <mapper namespace="com.pj.vegi.biz.mapper.RestaurantBizMapper">
 	<select id="restBizList" resultType="RestaurantVo">
@@ -17,11 +17,23 @@
 		SELECT * FROM rest_menu
 		WHERE rest_id=#{restId}
 	</select>
-	<select id="restReservList" resultType="com.pj.vegi.vo.RestReservVo">
+	<select id="restReservList"
+		resultType="com.pj.vegi.vo.RestReservVo">
 		SELECT * FROM rest_reserv
 		WHERE rest_id = #{restId}
 	</select>
 	<update id="restBizUpdate">
-		
+		UPDATE restaurant
+		SET rest_address = #{restAddress},
+			rest_time=#{restTime},
+			rest_tel=#{restTel}
+		WHERE rest_id=#{restId}
+	</update>
+	<update id="restMenuUpdate">
+		UPDATE rest_menu
+		SET menu_name = #{menuName},
+			menu_vege_type = #{menuVegeType},
+			menu_price = #{menuPrice}
+		WHERE menu_id=#{menuId}
 	</update>
 </mapper>
