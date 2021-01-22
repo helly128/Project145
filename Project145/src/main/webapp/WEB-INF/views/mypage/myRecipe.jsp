@@ -17,9 +17,9 @@
 			<c:forEach var="recipe" items="${recipes }">
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
-						<img class="card-img-top" src="http://placehold.it/500x325" alt="">
+						<img class="card-img-top" src="/images/${recipe.getRImage() }" width="200" height="200">
 						<div class="card-body">
-							<h4 class="card-title">${recipe.getRTitle() }</h4>
+							<h3 class="card-title">${recipe.getRTitle() }</h3>
 							<p class="card-text">${recipe.getRContent() }</p>
 						</div>
 						<div class="card-footer">
