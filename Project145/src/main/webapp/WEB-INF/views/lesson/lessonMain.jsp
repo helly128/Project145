@@ -21,7 +21,7 @@
 		<div class="row">
 			<!-- 클래스리스트 시작 -->
 			<c:forEach var="lesson" items="${lessons }">
-				<div class="col-xl-4 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<input type="hidden" value="${lesson.getCId() }">
 					<div class="single-product">
 						<div class="product-img">
