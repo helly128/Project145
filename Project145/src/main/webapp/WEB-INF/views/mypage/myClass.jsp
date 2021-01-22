@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,96 +14,26 @@
 		</div>
 		<!-- Page Features -->
 		<div class="row text-center">
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">수강중</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">클래스제목</h4>
-						<p class="card-text">클래스 설명</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">수강대기</a>
+			<c:forEach var="list" items="${list }">
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="card h-100">
+						<img class="card-img-top" src="/images/${list.cImg }" width="200"
+							height="200" alt="">
+						<div class="card-body">
+							<h3 class="card-title">${list.cTitle }</h3>
+							<p class="card-text">${list.cDesc }</p>
+							<p style="font: bold;">
+								시작일 <i class="lni lni-calendar"></i>${list.cStart }</p>
+							<p>
+								종료일 <i class="lni lni-calendar"></i>${list.cEnd }</p>
+						</div>
+						<div class="card-footer">
+							<a href="#" class="btn btn-primary">${list.cStatus }</a>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">수강완료</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Explicabo magni sapiente, tempore debitis
-							beatae culpa natus architecto.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Explicabo magni sapiente, tempore debitis
-							beatae culpa natus architecto.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Explicabo magni sapiente, tempore debitis
-							beatae culpa natus architecto.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-
+			</c:forEach>
 		</div>
-		<!-- /.row -->
-
 	</div>
 </body>
 </html>

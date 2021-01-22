@@ -2,6 +2,7 @@ package com.pj.vegi.mypage.web;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.vegi.mypage.service.MypageService;
+import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestReservVo;
 
 @Controller
 public class MypageController {
@@ -27,7 +30,7 @@ public class MypageController {
 		String mid = (String) session.getAttribute("mId");
 		model.addAttribute("mid", mid);
 		vo.setMId(mid);
-		
+
 		MemberVo member = mypageService.myPageSelect(vo);
 		model.addAttribute("member", member);
 
@@ -72,17 +75,23 @@ public class MypageController {
 
 	@RequestMapping("/myRecipe.do")
 	public String myRecipe(RecipeVo vo, Model model, HttpSession session) throws SQLException {
-		
+
 		vo.setMId((String) session.getAttribute("mId"));
 		List<RecipeVo> recipes = mypageService.recipeSelect(vo);
 		model.addAttribute("recipes", recipes);
-		
+
 		return "mypage/myRecipe";
 	}
 
 	@RequestMapping("/myClass.do")
-	public String myClass() {
+	public String myClass(Model model, LessonReservVO vo, HttpSession session) throws SQLException {
 
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		List<Map> classList = mypageService.lessonSelect(vo);
+		model.addAttribute("list", classList);
+		
 		return "mypage/myClass";
 	}
 
@@ -110,15 +119,23 @@ public class MypageController {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
+
 		MemberVo member = mypageService.myPageSelect(vo);
 		model.addAttribute("member", member);
-		
+
 		return "mypage/myWallet";
 	}
-	
+
 	@RequestMapping("/myRestaurant.do")
-	public String myRestaurant() {
+	public String myRestaurant(RestReservVo vo, Model model, HttpSession session) throws SQLException {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		List<Map> reservList = mypageService.restSelect(vo);
+		model.addAttribute("list", reservList);
+		
+		
 		return "mypage/myRestaurant";
 	}
 }
