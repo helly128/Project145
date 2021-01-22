@@ -7,7 +7,8 @@
 <title>회원가입</title>
 </head>
 <body>
-	<div align="center">
+
+	<div align="center" style="padding-top:5%">
 		<h2>회 원 가 입</h2>
 
 

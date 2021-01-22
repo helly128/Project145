@@ -53,7 +53,7 @@
 			<div class="container position-relative">
 				<div class="row align-items-center">
 					<div class="col-xl-12">
-						<nav class="navbar navbar-expand-lg">
+						<nav class="navbar navbar-expand-xl">
 							<a class="navbar-brand" href="/main.do"> <img id="logo"
 								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg"
 								alt="Logo">
@@ -88,7 +88,7 @@
 										href="product-details.html">베지Meet</a></li>
 								</ul>
 							</div>
-							<ul class="header-btn d-md-flex">
+							<ul class="header-btn d-sm-flex">
 
 								<c:if test="${mId eq null}">
 									<li><a href="/loginForm.do"
@@ -102,23 +102,10 @@
 									<li><a href="/logout.do"
 										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 								</c:if>
-								<li><a href="#" class="main-btn account-btn"> <span
+								<li><a href="/mypage.do" class="main-btn btn-hover d-none d-md-block"> <span
 										class="d-md-none"><i class="lni lni-user"></i></span> <span
-										class="d-none d-md-block">My Account</span>
+										class="d-none d-md-block">마이페이지테스트중</span>
 								</a>
-									<ul class="dropdown-nav">
-										<li><a href="dashboard.html">Dashboard</a></li>
-										<li><a href="profile-settings.html">Profile Settings</a></li>
-										<li><a href="post-ad.html">Post Ad</a></li>
-										<li><a href="my-ads.html">My Ads</a></li>
-										<li><a href="offers.html">Offers/Messages</a></li>
-										<li><a href="payments.html">Payments</a></li>
-										<li><a href="favorites.html">Favorites</a></li>
-										<li><a href="privacy.html">Privacy</a></li>
-										<li><a href="javascript:void(0)">Sign Out</a></li>
-									</ul></li>
-								<li><a href="/mypage.do"
-									class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
 								<li><a href="/restBizList.do"
 									class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
 							</ul>

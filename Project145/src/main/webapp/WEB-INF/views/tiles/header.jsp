@@ -124,7 +124,7 @@ article {
 										href="product-details.html">베지Meet</a></li>
 								</ul>
 							</div>
-							<ul class="header-btn d-md-flex">
+							<ul class="header-btn d-sm-flex">
 								
 									
 									<c:if test="${mId eq null}">
@@ -139,7 +139,7 @@ article {
 									<li><a href="/logout.do"
 									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
-								<li><a href="#" class="main-btn account-btn"> <span
+								<!-- <li><a href="#" class="main-btn account-btn"> <span
 										class="d-md-none"><i class="lni lni-user"></i></span> <span
 										class="d-none d-md-block">My Account</span>
 								</a>
@@ -153,7 +153,7 @@ article {
 										<li><a href="favorites.html">Favorites</a></li>
 										<li><a href="privacy.html">Privacy</a></li>
 										<li><a href="javascript:void(0)">Sign Out</a></li>
-									</ul></li>
+									</ul></li> -->
 									<li><a href="/mypage.do"
 									class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
 
