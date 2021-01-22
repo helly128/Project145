@@ -2,14 +2,18 @@ package com.pj.vegi.mypage.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pj.vegi.mypage.mapper.MypageMapper;
 import com.pj.vegi.mypage.service.MypageService;
+import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestReservVo;
+import com.pj.vegi.vo.RestaurantVo;
 
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService {
@@ -32,7 +36,16 @@ public class MypageServiceImpl implements MypageService {
 		return dao.recipeSelect(vo);
 	}
 
-	
+	@Override
+	public List<Map> restSelect(RestReservVo vo) throws SQLException {
+		return dao.restSelect(vo);
+	}
+
+	@Override
+	public List<Map> lessonSelect(LessonReservVO vo) throws SQLException {
+		return dao.lessonSelect(vo);
+	}
+
 //	@Override
 //	public int recipeHitUpdate(RecipeVo vo) throws SQLException {
 //		return dao.recipeHitUpdate(vo);
