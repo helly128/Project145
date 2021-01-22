@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.crawling.mapper.CrawlingMapper">
+	<insert id="insertRecipe">
+		insert into recipe(R_ID, R_TITLE, R_CONTENT, R_IMAGE,
+		R_DATE, m_id)
+		values('rec' || rec_seq.nextval, #{rTitle}, #{rContent},
+		#{rImage}, sysdate,
+		'hee1')
+	</insert>
+
+	<update id="insertMaterial">
+		insert into recipe_material(MAT_ID, MAT_NAME, MAT_VOL, R_ID )
+		values
+		('mat' || mat_seq.nextval, #{matName}, #{matVol}, 'rec' ||
+		rec_seq.currval)
+	</update>
+</mapper>
