@@ -24,7 +24,7 @@
 			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
 		</div>
 		<div class="category-list-item">
-			<h3>recipe title🍏</h3>
+			<h2>recipe title🍏</h2>
 			<br />
 			<div class="row">
 				<div class="col-lg-10">
@@ -42,12 +42,12 @@
 				</div>
 			</div>
 			<div class="row">
-			<div class="col-lg-10">
-			</div>
-			<div class="col-lg-2">
-			<button onclick="location.href='/recipeUpdate.do'">Edit</button>&nbsp;&nbsp;&nbsp;&nbsp;
-			<button>Delete</button>
-			</div>
+				<div class="col-lg-10"></div>
+				<div class="col-lg-2">
+					<button onclick="location.href='/recipeUpdate.do'">Edit</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button>Delete</button>
+				</div>
 			</div>
 		</div>
 		<hr>
@@ -163,8 +163,7 @@
 			<br />
 			<div class="row">
 				<div class="col-lg-4">
-					Used Ingredient<br />
-					<br />
+					Used Ingredient<br /> <br />
 					<ol style="margin-left: 10%">
 						<li>재료1</li>
 						<li>재료2</li>
@@ -180,8 +179,7 @@
 
 				</div>
 				<div class="col-lg-8">
-					Go to Cheapest Mall<br />
-					<br />
+					Go to Cheapest Mall<br /> <br />
 					<ol>
 						<li>mall1_주소 [가격]</li>
 						<li>mall2_주소 [가격]</li>
@@ -199,151 +197,151 @@
 			<div class="row">
 				<!-- 클래스리스트 시작 -->
 				<%-- <c:forEach var="lesson" items="${lessons }"> --%>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${lesson.getCId() }">
-						<div class="single-product">
-							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
-								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-									<a href="javascript:void(0)" class="share"><i
-										class="lni lni-share"></i></a>
-								</div>
+				<div class="col-xl-3 col-lg-3 col-md-3">
+					<input type="hidden" value="${lesson.getCId() }">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
 							</div>
-							<div class="product-content">
-								<input type="hidden" value="클래스아이디">
-								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
-								</h3>
-								<span class="update">${lesson.getCDesc() }</span>
-								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
-								</ul>
-								<div class="product-bottom">
-									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
-								</div>
+						</div>
+						<div class="product-content">
+							<input type="hidden" value="클래스아이디">
+							<h3 class="name">
+								<a href="product-details.html">${lesson.CTitle }</a>
+							</h3>
+							<span class="update">${lesson.getCDesc() }</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> ${lesson.lecName }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> ${lesson.CHit }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">${lesson.CPrice }원</h3>
+								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>
 					</div>
+				</div>
 				<!-- </c:forEach> -->
-<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${lesson.getCId() }">
-						<div class="single-product">
-							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
-								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-									<a href="javascript:void(0)" class="share"><i
-										class="lni lni-share"></i></a>
-								</div>
+				<div class="col-xl-3 col-lg-3 col-md-3">
+					<input type="hidden" value="${lesson.getCId() }">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
 							</div>
-							<div class="product-content">
-								<input type="hidden" value="클래스아이디">
-								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
-								</h3>
-								<span class="update">${lesson.getCDesc() }</span>
-								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
-								</ul>
-								<div class="product-bottom">
-									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
-								</div>
+						</div>
+						<div class="product-content">
+							<input type="hidden" value="클래스아이디">
+							<h3 class="name">
+								<a href="product-details.html">${lesson.CTitle }</a>
+							</h3>
+							<span class="update">${lesson.getCDesc() }</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> ${lesson.lecName }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> ${lesson.CHit }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">${lesson.CPrice }원</h3>
+								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${lesson.getCId() }">
-						<div class="single-product">
-							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
-								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-									<a href="javascript:void(0)" class="share"><i
-										class="lni lni-share"></i></a>
-								</div>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3">
+					<input type="hidden" value="${lesson.getCId() }">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
 							</div>
-							<div class="product-content">
-								<input type="hidden" value="클래스아이디">
-								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
-								</h3>
-								<span class="update">${lesson.getCDesc() }</span>
-								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
-								</ul>
-								<div class="product-bottom">
-									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
-								</div>
+						</div>
+						<div class="product-content">
+							<input type="hidden" value="클래스아이디">
+							<h3 class="name">
+								<a href="product-details.html">${lesson.CTitle }</a>
+							</h3>
+							<span class="update">${lesson.getCDesc() }</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> ${lesson.lecName }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> ${lesson.CHit }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">${lesson.CPrice }원</h3>
+								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${lesson.getCId() }">
-						<div class="single-product">
-							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
-								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-									<a href="javascript:void(0)" class="share"><i
-										class="lni lni-share"></i></a>
-								</div>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3">
+					<input type="hidden" value="${lesson.getCId() }">
+					<div class="single-product">
+						<div class="product-img">
+							<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+								src="/images/${lesson.getCImg() }" width="150" height="250">
+							</a>
+							<div class="product-action">
+								<a href="javascript:void(0)"><i class="lni lni-heart"></i></a> <a
+									href="javascript:void(0)" class="share"><i
+									class="lni lni-share"></i></a>
 							</div>
-							<div class="product-content">
-								<input type="hidden" value="클래스아이디">
-								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
-								</h3>
-								<span class="update">${lesson.getCDesc() }</span>
-								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
-								</ul>
-								<div class="product-bottom">
-									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
-								</div>
+						</div>
+						<div class="product-content">
+							<input type="hidden" value="클래스아이디">
+							<h3 class="name">
+								<a href="product-details.html">${lesson.CTitle }</a>
+							</h3>
+							<span class="update">${lesson.getCDesc() }</span>
+							<ul class="address">
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-user"></i> ${lesson.lecName }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-package"></i> ${lesson.CHit }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
+								<li><a href="javascript:void(0)"><i
+										class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+							</ul>
+							<div class="product-bottom">
+								<h3 class="price">${lesson.CPrice }원</h3>
+								<a href="javascript:void(0)" class="link-ad">좋아요</a>
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 			<br />
 		</div>
