@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,8 @@ import com.pj.vegi.member.service.biznonet;
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RestaurantVo;
+
+
 
 
 @Controller
@@ -53,10 +56,64 @@ public class MemberControllerCJ {
 
 		return "login/bizRegister";
 	}
+	
+	@RequestMapping("/bizCheck.do")
+	@ResponseBody
+	public String bizCheck(@PathVariable String restName, RestaurantVo vo) throws SQLException {
+		
+			vo.setRestName(restName);
+			String result=null;
+			boolean check = restaurantService.restaurantCheck(vo);
+			if(check == true) {
+				result ="같은이름있음";
+				//나중에 고민할것, 리스트로 보여줄까? 
+				return result;
+			}else {
+				result = null;
+				return result;
+			}
+		
+	}
+	
+	
+	
+//			//리턴값 false 일때 insert로 연결. 
+//			//true일때 트루 일때 가입페이로 
+//			//아무변수나 트루 false나타내는 것. 
+//			//
+//			return .getUser(vo);
+//		
+//		
+//			
+//			
+//			
+//			
+//		String viewPath = null;
+//		
+//		boolean check =restaurantService.restaurantCheck(restName);
+//
+//
+//		vo.setRestName("bizname", vo.getRestName());
+//		vo.setAttribute("auth", vo.getAuth());
+//
+//		if (check == true) {
+//			viewPath = "redirect:/main.do";
+//
+//		} else {
+//			viewPath = "login/loginFail";
+//		}
+//
+//		return viewPath
+//	
+//		
+//		return "login/bizInfoRegister";
+//	}
+//
 
 	@Autowired
 	RestaurantService restaurantService;
 	@RequestMapping("/bizNumber.do")
+	
 	public String bizNumber(RestaurantVo vo, Model model, HttpSession session) throws SQLException {
 
 		return "login/bizNumber";
@@ -89,7 +146,6 @@ public class MemberControllerCJ {
 		HashMap<String,String> map=biznonet.checkBiz(data);
 		map.get("bizname");
 		map.get("bizaddress");
-		
 		return map;
 	}
 

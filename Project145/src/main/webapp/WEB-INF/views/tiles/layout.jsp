@@ -87,8 +87,7 @@ article {min-height: 500px;}
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="index.html">채식당
-							<a class="navbar-brand" href="/main.do"> <img id="logo"
-								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg" alt="Logo">
+							<a class="navbar-brand" href="/main.do"> 
 							</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -184,8 +183,7 @@ article {min-height: 500px;}
 
 						<div class="col-xl-4 col-md-7">
 							<div class="footer-widget about">
-								<a href="index.html" class="d-inline-block mb-30"> <img
-									src="<%=request.getContextPath() %>/resources/assets/images/logo/logo.svg" alt="">
+								<a href="index.html" class="d-inline-block mb-30"> 
 								</a>
 							</div>
 						</div>
