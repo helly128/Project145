@@ -86,12 +86,9 @@ article {min-height: 500px;}
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
-<<<<<<< HEAD
 							<a class="navbar-brand" href="index.html">채식당
-=======
 							<a class="navbar-brand" href="/main.do"> <img id="logo"
 								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg" alt="Logo">
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 							</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -123,7 +120,7 @@ article {min-height: 500px;}
 										href="product-details.html">베지Meet</a></li>
 								</ul>
 							</div>
-							<ul class="header-btn d-md-flex">
+							<ul class="header-btn d-sm-flex">
 								
 									<c:if test="${auth eq null}">
 									<li><a href="/loginForm.do"
