@@ -1,6 +1,9 @@
 package com.pj.vegi.member.web;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pj.vegi.member.service.BizNumHomeTax;
 import com.pj.vegi.member.service.MemberService;
+import com.pj.vegi.member.service.biznonet;
+import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.RestaurantVo;
+
 
 @Controller
 public class MemberControllerCJ {
@@ -48,19 +54,47 @@ public class MemberControllerCJ {
 		return "login/bizRegister";
 	}
 
+	@Autowired
+	RestaurantService restaurantService;
 	@RequestMapping("/bizNumber.do")
-	public String bizNumber() {
+	public String bizNumber(RestaurantVo vo, Model model, HttpSession session) throws SQLException {
 
 		return "login/bizNumber";
 	}
+	
+//
+//	@RequestMapping("/loginResult.do")
+//	public String loginResult(MemberVo vo, Model model, HttpSession session) throws SQLException {
+//		String viewPath = null;
+//		boolean check = memberService.memberLoginCheck(vo);
+//
+//		session.setAttribute("mId", vo.getMId());
+//		session.setAttribute("auth", vo.getAuth());
+//
+//		if (check == true) {
+//			viewPath = "redirect:/main.do";
+//
+//		} else {
+//			viewPath = "login/loginFail";
+//		}
+//
+//		return viewPath;
+//	}
 
 	@RequestMapping("/bizNumCheck.do")
 	@ResponseBody
-	public String bizNum(@RequestParam String data) {
-		data = BizNumHomeTax.checkBiz(data);
-		return data;
+	public HashMap<String, String> bizNum(@RequestParam String data) {
+		
+	
+		HashMap<String,String> map=biznonet.checkBiz(data);
+		map.get("bizname");
+		map.get("bizaddress");
+		
+		return map;
 	}
 
+
+	
 //	    //등록폼
 //	    @RequestMapping("insertFormEmp")
 //	    public String insertFormEmp(EmpVO vo) {
