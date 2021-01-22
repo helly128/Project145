@@ -124,7 +124,7 @@ article {
 										href="product-details.html">베지Meet</a></li>
 								</ul>
 							</div>
-							<ul class="header-btn d-md-flex">
+							<ul class="header-btn d-sm-flex">
 								
 									
 									<c:if test="${mId eq null}">
