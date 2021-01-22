@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<img src="images/salad.jpg" height="200px" width="200px">
+					<img src="${recipeSelect.getRImage()}" height="200px" width="200px">
 				</div>
 			</div>
 			<div class="row">

@@ -11,9 +11,6 @@
 	height: 500px;
 }
 
-.namediv {
-	height: 80px;
-}
 </style>
 <script>
 	function moveurl(category) {
@@ -79,17 +76,14 @@
 					<div class="single-product">
 						<div class="product-img">
 							<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-								src="/images/${vo.getRImage()}" alt="">
+								src="${vo.getRImage()}" alt=""  height="300px" width="300px">
 							</a>
-							<div class="product-action">
-								<a href="javascript:void(0)"><i class="lni lni-heart"></i>
-							</div>
 						</div>
 						<div class="product-content">
 							<div class="namediv">
-								<h3 class="name">
+								<h5 class="name">
 									<a href="/recipeDesc.do?rId=${vo.getRId()} ">${vo.getRTitle()}</a>
-								</h3>
+								</h5>
 							</div>
 							<ul class="address">
 								<li><a href="javascript:void(0)"><i
@@ -100,8 +94,8 @@
 											class="lni lni-package"></i> Used</a></li> -->
 							</ul>
 							<div class="product-bottom">
-								<h3 class="price">원</h3>
-								<a href="javascript:void(0)" class="link-ad">좋아요</a>
+								<h5 class="price"></h5>
+								<a  ></a>
 							</div>
 						</div>
 					</div>
