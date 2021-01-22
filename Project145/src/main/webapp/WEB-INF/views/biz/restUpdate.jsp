@@ -9,14 +9,14 @@
 <title>식당상세</title>
 <style>
 .input-text {
-	background: #f2f2f2;
+	background: #f7f7f7;
 	border: none;
 	width: 97%;
 	padding: 15px;
 }
 
 .input-textarea {
-	background: #f2f2f2;
+	background: #f7f7f7;
 	border: none;
 	resize: none;
 	width: 97%;
@@ -57,14 +57,36 @@
 	opacity: 0;
 	cursor: pointer;
 }
+
+.menu-input {
+	border: none;
+	width: 97%;
+	text-align: center;
+	vertical-align: bottom;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.deleteBtn {
+	height: 35px;
+}
 </style>
+<script>
+	$(function() {
+		$("#checkBox").change(function() {
+			if ($("#checkBox").is(":checked")) {
+
+			}
+		})
+	});
+</script>
 </head>
 <body>
 	<div class="row">
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
-			<form id="frm" name="frm" action="#">
+			<form id="frm" name="frm" action="restBizUpdate.do">
 				<div class="row">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
@@ -90,6 +112,7 @@
 								<h6 class="m-0 font-weight-bold text-primary">식당 정보</h6>
 							</div>
 							<div class="card-body">
+								<input type="hidden" name="restId" value="${restVo.restId }">
 								<h3 class="fw-bold">
 									<strong>${restVo.restName }</strong>
 								</h3>
@@ -119,7 +142,7 @@
 							<div class="card-header py-3">
 								<h6 class="m-0 font-weight-bold text-primary">메뉴</h6>
 							</div>
-							<div class="card-body px-3 mx-3">
+							<div class="card-body mx-3">
 								<table class="table dataTable" id="dataTable" width="100%"
 									cellspacing="0" role="grid" aria-describedby="dataTable_info"
 									style="width: 100%; text-align: center;">
@@ -133,16 +156,20 @@
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
 												style="width: 34px;">가격</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												style="width: 20px;"></th>
+												style="width: 20px;">삭제</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="menuVo" items="${menuList }">
+											<input type="hidden" name="menuId" value="${menuVo.menuId }">
 											<tr role="row" class="tr-hover">
-												<td>${menuVo.menuName }</td>
-												<td>${menuVo.menuVegeType }</td>
-												<td>${menuVo.menuPrice }</td>
-												<td><button class="btn btn-outline-success" onclick="">-</button></td>
+												<td><input class="menu-input" type="text"
+													name="menuName" value="${menuVo.menuName }"></td>
+												<td><input class="menu-input" type="text"
+													name="menuVegeType" value="${menuVo.menuVegeType }"></td>
+												<td><input class="menu-input" type="text"
+													name="menuPrice" value="${menuVo.menuPrice }"></td>
+												<td><input type="checkbox" id="checkBox"></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -154,8 +181,7 @@
 
 				<div align="center" class="mb-5 reservBtn">
 					<input type="submit" class="btn btn-primary" value="수정">
-					&nbsp;&nbsp;
-					<input type="reset" class="btn btn-primary" value="취소">
+					&nbsp;&nbsp; <input type="reset" class="btn btn-primary" value="취소">
 				</div>
 			</form>
 		</div>
@@ -173,9 +199,9 @@
 
 			reader.readAsDataURL(event.target.files[0]);
 		}
-		
+
 		function deleteRow(event) {
-			
+
 		}
 	</script>
 </body>
