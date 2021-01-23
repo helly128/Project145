@@ -67,13 +67,9 @@
 								style="width: 100%; text-align: center;">
 								<thead>
 									<tr role="row">
-										<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" aria-sort="ascending"
-											style="width: 44px;">메뉴</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 54px;">채식타입</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 34px;">가격</th>
+										<th style="width: 44px;">메뉴</th>
+										<th style="width: 54px;">채식타입</th>
+										<th style="width: 34px;">가격</th>
 									</tr>
 								</thead>
 								<tbody>

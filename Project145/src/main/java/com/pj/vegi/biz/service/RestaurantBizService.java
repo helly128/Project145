@@ -17,5 +17,5 @@ public interface RestaurantBizService {
 	int restBizDelete(RestaurantVo vo);
 
 	int restMenuDelete(RestMenuVo vo);
-	int restMenuUpdate(List<RestMenuVo> list);
+	int restMenuUpdate(RestMenuVo menuVo);
 }

@@ -36,4 +36,8 @@
 			menu_price = #{menuPrice}
 		WHERE menu_id=#{menuId}
 	</update>
+	<delete id="restMenuDelete">
+		DELETE FROM rest_menu
+		WHERE menu_id=#{menuId}
+	</delete>
 </mapper>

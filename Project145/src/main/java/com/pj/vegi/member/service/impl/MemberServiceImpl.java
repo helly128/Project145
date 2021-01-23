@@ -33,5 +33,10 @@ public class MemberServiceImpl implements MemberService {
 		return dao.memberInsert(vo);
 	}
 
+	@Override
+	public MemberVo memberSelect(MemberVo vo) throws SQLException {
+		return dao.memberSelect(vo);
+	}
+
 	
 }

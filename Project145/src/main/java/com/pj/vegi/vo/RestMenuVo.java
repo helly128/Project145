@@ -1,5 +1,7 @@
 package com.pj.vegi.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +17,7 @@ public class RestMenuVo {
 	private String menuVegeType;
 	private int menuPrice;
 	private String restId;
+	private String deleteFlag;
+	
+	private List<RestMenuVo> menuVoList;
 }

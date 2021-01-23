@@ -42,10 +42,11 @@ public class MemberController {
 		String viewPath = null;
 		boolean check = memberService.memberLoginCheck(vo);
 
-		session.setAttribute("mId", vo.getMId());
-		session.setAttribute("auth", vo.getAuth());
 
 		if (check == true) {
+			session.setAttribute("mId", vo.getMId());
+			vo = memberService.memberSelect(vo);
+			session.setAttribute("auth", vo.getAuth());
 			viewPath = "redirect:/main.do";
 
 		} else {
