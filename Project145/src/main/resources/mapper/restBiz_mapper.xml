@@ -5,23 +5,28 @@
 
 
 <mapper namespace="com.pj.vegi.biz.mapper.RestaurantBizMapper">
+
 	<select id="restBizList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE m_id=#{mId}
 	</select>
+	
 	<select id="restBizSelect" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE rest_id=#{restId}
 	</select>
+	
 	<select id="restMenuList" resultType="com.pj.vegi.vo.RestMenuVo">
 		SELECT * FROM rest_menu
 		WHERE rest_id=#{restId}
 	</select>
+	
 	<select id="restReservList"
 		resultType="com.pj.vegi.vo.RestReservVo">
 		SELECT * FROM rest_reserv
 		WHERE rest_id = #{restId}
 	</select>
+	
 	<update id="restBizUpdate">
 		UPDATE restaurant
 		SET rest_address = #{restAddress},
@@ -29,6 +34,12 @@
 			rest_tel=#{restTel}
 		WHERE rest_id=#{restId}
 	</update>
+	
+	<delete id="restBizDelete">
+		DELETE FROM restaurant
+		WHERE rest_id=#{restId}
+	</delete>
+	
 	<update id="restMenuUpdate">
 		UPDATE rest_menu
 		SET menu_name = #{menuName},
@@ -36,8 +47,15 @@
 			menu_price = #{menuPrice}
 		WHERE menu_id=#{menuId}
 	</update>
+	
 	<delete id="restMenuDelete">
 		DELETE FROM rest_menu
 		WHERE menu_id=#{menuId}
 	</delete>
+	
+	<insert id="restMenuInsert">
+		INSERT INTO rest_menu
+		VALUES('menu' || menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice}, #{restId})
+	</insert>
+	
 </mapper>

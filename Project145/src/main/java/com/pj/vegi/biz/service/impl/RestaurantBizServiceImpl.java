@@ -60,4 +60,9 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	public int restMenuUpdate(RestMenuVo menuVo) {
 		return dao.restMenuUpdate(menuVo);
 	}
+
+	@Override
+	public int restMenuInsert(RestMenuVo vo) {
+		return dao.restMenuInsert(vo);
+	}
 }

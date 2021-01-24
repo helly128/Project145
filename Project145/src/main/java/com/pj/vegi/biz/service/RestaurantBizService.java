@@ -18,4 +18,5 @@ public interface RestaurantBizService {
 
 	int restMenuDelete(RestMenuVo vo);
 	int restMenuUpdate(RestMenuVo menuVo);
+	int restMenuInsert(RestMenuVo vo);
 }

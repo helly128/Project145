@@ -17,7 +17,9 @@ public class RestMenuVo {
 	private String menuVegeType;
 	private int menuPrice;
 	private String restId;
+	
 	private String deleteFlag;
+	private String newMenuFlag;
 	
 	private List<RestMenuVo> menuVoList;
 }

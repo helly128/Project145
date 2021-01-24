@@ -1,6 +1,5 @@
 package com.pj.vegi.biz.web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj.vegi.biz.service.RestaurantBizService;
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
+
 
 @Controller
 public class RestaurantController {
@@ -23,8 +23,23 @@ public class RestaurantController {
 	RestaurantBizService restBizService;
 
 	@RequestMapping("/restBizList.do")
-	public String restBizList(Model model, RestaurantVo vo, HttpSession session) {
+	public String restBizList(Model model, Paging paging, HttpSession session) {
+		
+//		paging.setPageUnit(5);	//출력하는 레코드 건수
+//		paging.setPageSize(3);	//페이지 번호 수
+//		// 페이지번호 파라미터
+//		if (paging.getPage() == null) {
+//			paging.setPage(1);	//페이지번호 안 넘어오면 1로 초기화
+//		}
+//		// 시작/마지막 레코드 번호
+//		vo.setStart(paging.getFirst());
+//		vo.setEnd(paging.getLast());
+//		// 전체 건수
+//		paging.setTotalRecord(dao.getCount(vo));	//전체레코드건수
+//		model.addAttribute("paging", paging);
+		
 		String mId = (String) session.getAttribute("mId");
+		RestaurantVo vo = new RestaurantVo();
 		vo.setMId(mId);
 		List<RestaurantVo> restList = restBizService.restBizList(vo);
 		model.addAttribute("restList", restList);
@@ -78,7 +93,6 @@ public class RestaurantController {
 		
 		restBizService.restBizUpdate(restVo);
 		
-//		System.out.println(menuVo.getMenuVoList().get(0).getMenuName());
 		List<RestMenuVo> menuList = menuListVo.getMenuVoList();
 		for(RestMenuVo menuVo : menuList) {
 			restBizService.restMenuUpdate(menuVo);
@@ -86,12 +100,23 @@ public class RestaurantController {
 			if(menuVo.getDeleteFlag() != null) {
 				restBizService.restMenuDelete(menuVo);
 			}
+			if(menuVo.getNewMenuFlag() != null) {
+				menuVo.setRestId(restVo.getRestId());
+				restBizService.restMenuInsert(menuVo);
+			}
 		}
-		
-//		restBizService.restMenuUpdate(menuVo);
 		
 		model.addAttribute("restId", restVo.getRestId());
 		
 		return "redirect:restBizSelect.do";
+	}
+	
+	
+	@RequestMapping("/restBizDelete.do")
+	public String restBizDelete(Model model, RestaurantVo vo) {
+		
+		restBizService.restBizDelete(vo);
+		
+		return "redirect:restBizList.do";
 	}
 }

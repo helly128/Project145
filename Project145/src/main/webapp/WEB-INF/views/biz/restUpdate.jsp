@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,12 +68,12 @@
 	border-radius: 5px;
 }
 
-.deleteBtn {
-	height: 35px;
-}
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<c:set var="listLength" value="${fn:length(listVo.menuVoList) }" /> 
 	<div class="row">
 
 		<div class="col-lg-1"></div>
@@ -154,21 +155,21 @@
 											<tr role="row" class="tr-hover">
 												<td><input class="menu-input" type="text"
 													name="menuVoList[${status.index }].menuName"
-													value="${menuVo.menuName }"></td>
+													value="${menuVo.menuName }" required></td>
 												<td><input class="menu-input" type="text"
 													name="menuVoList[${status.index }].menuVegeType"
 													value="${menuVo.menuVegeType }"></td>
 												<td><input class="menu-input" type="text"
 													name="menuVoList[${status.index }].menuPrice"
-													value="${menuVo.menuPrice }"></td>
+													value="${menuVo.menuPrice }" required></td>
 												<td><input class="menu-input" type="checkbox" name="menuVoList[${status.index}].deleteFlag"
 													style="zoom: 1.5" id="deleteFlag"></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-								<div>
-									<button onclick="addMenu();">메뉴추가</button>
+								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="button" id="addMenuBtn" class="btn btn-primary">메뉴추가</button>
 								</div>
 							</div>
 						</div>
@@ -183,8 +184,10 @@
 		</div>
 		<div class="col-lg-1"></div>
 	</div>
-
+	
+	
 	<script>
+		//사진 미리보기 설정
 		function setImage(event) {
 			var reader = new FileReader();
 			reader.onload = function(event) {
@@ -196,6 +199,7 @@
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
+		//checkbox 중 체크된 row만 value 설정해서 delete
 		function checkForm() {
 			$("#checkBox").change(function() {
 				if ($("#checkBox").is(":checked")) {
@@ -204,9 +208,50 @@
 			})
 		}
 		
-		function addMenu(){
-			$("")
-		}
+		var length = '<c:out value="${listLength}"/>';
+		$(function(){
+			//메뉴추가 버튼 클릭 시 행 추가
+			$("#addMenuBtn").on('click', function(){
+				var tr = $("<tr>").attr("role", "row");
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuName',
+					required: 'true'
+				})));
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuVegeType'
+				})));
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuPrice',
+					required: 'true'
+				})));
+				tr.append($("<td>").append($("<button>").addClass('btn btn-primary deleteBtn deleteBtn'+length).attr({
+					type: 'button'
+				}).text('입력 취소')));
+				var menuFlag = $("<input>").addClass('menuFlag'+length).attr({
+					type: 'hidden',
+					name: 'menuVoList['+length+'].newMenuFlag',
+					value: 'true'
+				});
+				
+				$("#dataTable > tbody").append(tr);
+				$("#dataTable > tbody").append(menuFlag);
+				
+				length++;
+			});
+			
+			
+			//입력취소 버튼 누르면 해당하는 행, newMenuFlag 삭제
+			$('#dataTable').on('click', '.deleteBtn', function(){
+				$(this).closest('tr').remove();
+				var className = $(this).attr('class').split(' ');
+				var num = className[3].replace('deleteBtn', '');
+				$('.menuFlag' + num).remove();
+			});
+		});
+		
 	</script>
 </body>
 </html>
