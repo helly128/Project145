@@ -57,7 +57,12 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	}
 	
 	@Override
-	public int restMenuUpdate(List<RestMenuVo> list) {
-		return dao.restMenuUpdate(list);
+	public int restMenuUpdate(RestMenuVo menuVo) {
+		return dao.restMenuUpdate(menuVo);
+	}
+
+	@Override
+	public int restMenuInsert(RestMenuVo vo) {
+		return dao.restMenuInsert(vo);
 	}
 }

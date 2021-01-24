@@ -102,12 +102,15 @@
 									<li><a href="/logout.do"
 										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 								</c:if>
-								<li><a href="/mypage.do" class="main-btn btn-hover d-none d-md-block"> <span
+								<li><a href="/mypage.do"
+									class="main-btn btn-hover d-none d-md-block"> <span
 										class="d-md-none"><i class="lni lni-user"></i></span> <span
 										class="d-none d-md-block">마이페이지테스트중</span>
-								</a>
-								<li><a href="/restBizList.do"
-									class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+								</a></li>
+								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
+									<li><a href="/restBizList.do"
+										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+								</c:if>
 							</ul>
 						</nav>
 						<!-- navbar -->
@@ -646,7 +649,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
@@ -681,7 +684,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</section>
@@ -811,7 +814,7 @@
 					</div>
 				</div>
 
-<div class="col-xl-3 col-lg-6 col-md-6">
+				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="product-details.html"> <img

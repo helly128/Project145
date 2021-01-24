@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,26 +68,17 @@
 	border-radius: 5px;
 }
 
-.deleteBtn {
-	height: 35px;
-}
 </style>
-<script>
-	$(function() {
-		$("#checkBox").change(function() {
-			if ($("#checkBox").is(":checked")) {
-
-			}
-		})
-	});
-</script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<c:set var="listLength" value="${fn:length(listVo.menuVoList) }" /> 
 	<div class="row">
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
-			<form id="frm" name="frm" action="restBizUpdate.do">
+			<form id="frm" name="frm" action="restBizUpdate.do" method="post" onsubmit="checkForm();">
 				<div class="row">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
@@ -148,32 +140,37 @@
 									style="width: 100%; text-align: center;">
 									<thead>
 										<tr role="row">
-											<th class="sorting_asc" tabindex="0"
-												aria-controls="dataTable" aria-sort="ascending"
-												style="width: 44px;">메뉴</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												style="width: 35px;">채식타입</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												style="width: 34px;">가격</th>
-											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												style="width: 20px;">삭제</th>
+											<th style="width: 44px;">메뉴</th>
+											<th style="width: 30px;">채식타입</th>
+											<th style="width: 34px;">가격</th>
+											<th style="width: 20px;">삭제</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="menuVo" items="${menuList }">
-											<input type="hidden" name="menuId" value="${menuVo.menuId }">
+										<c:forEach var="menuVo" items="${listVo.menuVoList }"
+											varStatus="status">
+											<input type="hidden"
+												name="menuVoList[${status.index }].menuId"
+												value="${menuVo.menuId }">
 											<tr role="row" class="tr-hover">
 												<td><input class="menu-input" type="text"
-													name="menuName" value="${menuVo.menuName }"></td>
+													name="menuVoList[${status.index }].menuName"
+													value="${menuVo.menuName }" required></td>
 												<td><input class="menu-input" type="text"
-													name="menuVegeType" value="${menuVo.menuVegeType }"></td>
+													name="menuVoList[${status.index }].menuVegeType"
+													value="${menuVo.menuVegeType }"></td>
 												<td><input class="menu-input" type="text"
-													name="menuPrice" value="${menuVo.menuPrice }"></td>
-												<td><input type="checkbox" id="checkBox"></td>
+													name="menuVoList[${status.index }].menuPrice"
+													value="${menuVo.menuPrice }" required></td>
+												<td><input class="menu-input" type="checkbox" name="menuVoList[${status.index}].deleteFlag"
+													style="zoom: 1.5" id="deleteFlag"></td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
+								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="button" id="addMenuBtn" class="btn btn-primary">메뉴추가</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -187,8 +184,10 @@
 		</div>
 		<div class="col-lg-1"></div>
 	</div>
-
+	
+	
 	<script>
+		//사진 미리보기 설정
 		function setImage(event) {
 			var reader = new FileReader();
 			reader.onload = function(event) {
@@ -200,9 +199,59 @@
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
-		function deleteRow(event) {
-
+		//checkbox 중 체크된 row만 value 설정해서 delete
+		function checkForm() {
+			$("#checkBox").change(function() {
+				if ($("#checkBox").is(":checked")) {
+					$("#checkBox").value("true");
+				}
+			})
 		}
+		
+		var length = '<c:out value="${listLength}"/>';
+		$(function(){
+			//메뉴추가 버튼 클릭 시 행 추가
+			$("#addMenuBtn").on('click', function(){
+				var tr = $("<tr>").attr("role", "row");
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuName',
+					required: 'true'
+				})));
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuVegeType'
+				})));
+				tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+					type: 'text',
+					name: 'menuVoList['+length+'].menuPrice',
+					required: 'true'
+				})));
+				tr.append($("<td>").append($("<button>").addClass('btn btn-primary deleteBtn deleteBtn'+length).attr({
+					type: 'button'
+				}).text('입력 취소')));
+				var menuFlag = $("<input>").addClass('menuFlag'+length).attr({
+					type: 'hidden',
+					name: 'menuVoList['+length+'].newMenuFlag',
+					value: 'true'
+				});
+				
+				$("#dataTable > tbody").append(tr);
+				$("#dataTable > tbody").append(menuFlag);
+				
+				length++;
+			});
+			
+			
+			//입력취소 버튼 누르면 해당하는 행, newMenuFlag 삭제
+			$('#dataTable').on('click', '.deleteBtn', function(){
+				$(this).closest('tr').remove();
+				var className = $(this).attr('class').split(' ');
+				var num = className[3].replace('deleteBtn', '');
+				$('.menuFlag' + num).remove();
+			});
+		});
+		
 	</script>
 </body>
 </html>

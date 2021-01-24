@@ -6,6 +6,9 @@
 	<settings>
 		<!-- 오라클 컬럼이 first_name 를 VO firstName 처럼 카멜케이스로 변환 -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+		
+		<setting name="cacheEnabled" value="false"/>
+	 	<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.dbal.app.emp.EmpVO" alias="emp"/> 

@@ -21,9 +21,6 @@ public class RestaurantVo {
 	private int restReservWait;
 	private int restReservAccept;
 	private String restTel;
-
 	private String bizNum;
-
-
 
 }
