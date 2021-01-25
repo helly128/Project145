@@ -15,6 +15,7 @@ public interface RestaurantBizService {
 	int restBizInsert(RestaurantVo vo);
 	int restBizUpdate(RestaurantVo vo);
 	int restBizDelete(RestaurantVo vo);
+	int getCount(RestaurantVo vo);
 
 	int restMenuDelete(RestMenuVo vo);
 	int restMenuUpdate(RestMenuVo menuVo);
