@@ -22,8 +22,11 @@ public class RestaurantVo {
 	private int restReservAccept;
 	private String restTel;
 	private String bizNum;
+<<<<<<< HEAD
 	
 	private int start;
 	private int end;
 
+=======
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 }

@@ -1,6 +1,8 @@
 package com.pj.vegi.restaurant.mapper;
 
 
+import java.util.List;
+
 import com.pj.vegi.vo.RestaurantVo;
 
 
@@ -8,6 +10,7 @@ public interface RestaurantMapper {
 
 	RestaurantVo restaurantSelect(RestaurantVo vo);
 	int restaurantInsert(RestaurantVo vo);
-	int restaurantUpdate(RestaurantVo vo); //회원가입하면서 미리 만들어뒀음
-	int restaurantDelete(RestaurantVo vo); //회원가입하면서 미리 만들어뒀음
+	int restaurantUpdate(RestaurantVo vo); 
+	int restaurantDelete(RestaurantVo vo);
+	public List<RestaurantVo> bizCheckList(String restName);
 }

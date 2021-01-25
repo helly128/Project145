@@ -1,6 +1,7 @@
 package com.pj.vegi.restaurant.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public int restaurantInsert(RestaurantVo vo) throws SQLException {
 		// TODO Auto-generated method stub
 		return dao.restaurantInsert(vo);
+	}
+
+	@Override
+	public List<RestaurantVo> bizCheckList(String restName) throws SQLException {
+		
+		return dao.bizCheckList(restName);
 	}
 
 }
