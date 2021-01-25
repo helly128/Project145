@@ -21,71 +21,67 @@
 			<div class="search-area">
 				<div class="container">
 					<div class="search-wrapper">
-						<form action="#">
-							<div class="row justify-content-center">
-								<div class="col-lg-3 col-sm-5 col-10">
-									<div class="search-input">
-										<label for="keyword"><i
-											class="lni lni-search-alt theme-color"></i></label> <input
-											type="text" name="keyword" id="keyword"
-											placeholder="Product keyword">
-									</div>
+						F
+						<div class="row justify-content-center">
+							<div class="col-lg-3 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="keyword"><i
+										class="lni lni-search-alt theme-color"></i></label> <input type="text"
+										name="keyword" id="keyword" placeholder="Product keyword">
 								</div>
-								<div class="col-lg-3 col-sm-5 col-10">
-									<div class="search-input" style="margin-bottom: 5%">
-										<label for="category"><i
-											class="lni lni-grid-alt theme-color"></i></label> <select
-											name="category" onchange="moveurl(this.value);" id="category">
-											<form name=move method=post>
-												<option value="none" selected disabled>Categories</option>
-												<option value="/recipeBegan.do">비건</option>
-												<option value="/recipeRacto.do">락토</option>
-												<option value="/recipeOvo.do">오보</option>
-												<option value="/recipeRactoOvo.do">락토오보</option>
-										</select>
-
-									</div>
+							</div>
+							<div class="col-lg-3 col-sm-5 col-10">
+								<div class="search-input" style="margin-bottom: 5%">
+									<label for="category"><i
+										class="lni lni-grid-alt theme-color"></i></label> <select
+										name="category" onchange="moveurl(this.value);" id="category">
+										<form name=move method=post>
+											<option value="none" selected disabled>Categories</option>
+											<option value="/recipeBegan.do">비건</option>
+											<option value="/recipeRacto.do">락토</option>
+											<option value="/recipeOvo.do">오보</option>
+											<option value="/recipeRactoOvo.do">락토오보</option>
+									</select>
 								</div>
-								<div class="row">
-									<c:forEach var="lesson" items="${lessons }">
-										<div class="col-xl-3 col-lg-6 col-md-6">
-											<div class="single-product">
-												<div class="product-img">
-													<a href="/recipeDesc.do"> <img src="images/salad.jpg"
-														alt="">
-													</a>
-													<div class="product-action">
-														<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-
-													</div>
+							</div>
+							<div class="row">
+								<c:forEach var="lesson" items="${lessons }">
+									<div class="col-xl-3 col-lg-6 col-md-6">
+										<div class="single-product">
+											<div class="product-img">
+												<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+													src="images/salad.jpg" alt="">
+												</a>
+												<div class="product-action">
+													<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
 												</div>
-
-												<div class="product-content">
-													<div class="namediv">
-														<h3 class="name">
-															<a href="/recipeDesc.do">${lesson.getCTitle() }</a>
-														</h3>
-													</div>
-													<ul class="address">
-														<li><a href="javascript:void(0)"><i
-																class="lni lni-user"></i> ${lesson.getLecName() }</a></li>
-														<li><a href="javascript:void(0)"><i
-																class="lni lni-package"></i> ${lesson.getCHit() }</a></li>
-														<li><a href="javascript:void(0)"><i
-																class="lni lni-calendar"></i> ${lesson.getCEnd() }</a></li>
-														<li><a href="javascript:void(0)"><i
-																class="lni lni-map-marker"></i> ${lesson.getVegType() }</a></li>
-													</ul>
-													<div class="product-bottom">
-														<h3 class="price">${lesson.getCPrice() }원</h3>
-														<a href="javascript:void(0)" class="link-ad">좋아요</a>
-													</div>
+											</div>
+											<div class="product-content">
+												<div class="namediv">
+													<h3 class="name">
+														<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
+													</h3>
+												</div>
+												<ul class="address">
+													<li><a href="javascript:void(0)"><i
+															class="lni lni-user"></i> ${lesson.getLecName() }</a></li>
+													<li><a href="javascript:void(0)"><i
+															class="lni lni-package"></i> ${lesson.getCHit() }</a></li>
+													<li><a href="javascript:void(0)"><i
+															class="lni lni-calendar"></i> ${lesson.getCEnd() }</a></li>
+													<li><a href="javascript:void(0)"><i
+															class="lni lni-map-marker"></i> ${lesson.getVegType() }</a></li>
+												</ul>
+												<div class="product-bottom">
+													<h3 class="price">${lesson.getCPrice() }원</h3>
+													<a href="javascript:void(0)" class="link-ad">좋아요</a>
 												</div>
 											</div>
 										</div>
-									</c:forEach>
-								</div>
+									</div>
+								</c:forEach>
 							</div>
+						</div>
 	</section>
 </body>
 </html>
