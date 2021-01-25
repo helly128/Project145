@@ -24,7 +24,7 @@
 						<!-- Card Body -->
 						<div class="card-body">
 							<div class="p-2">
-								<img src="${restVo.restPic }" width="100%">
+								<img src="/images/${restVo.restPic }" width="100%">
 							</div>
 						</div>
 					</div>
