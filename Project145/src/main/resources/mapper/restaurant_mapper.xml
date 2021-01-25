@@ -11,14 +11,48 @@
 		WHERE rest_name = #{restName}
 	</select>
 	
-	<insert id="restInsert">
-	INSERT INTO MEMBER(M_ID, PASSWORD, M_NAME,EMAIL,VEGTYPE,AUTH) 
-			VALUES(
-			#{mId},#{password},#{mName},#{email},#{vegtype},#{auth}
-			)
 	
+	
+	
+	<insert id="restInsert">
+	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
+							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
+			VALUES('rest'||rest_seq.nextval,#{restName},#{restStarAvg},#{restReviewCount},
+					#{restAddress},#{restPic},#{restTime},#{mId},#{restReservWait},
+					#{restReservAccept},#{restTel},#{bizNum},#{adminConfirm}
+					)
+			
+	</insert>
+	<insert id="restInsertNull">
+	INSERT INTO restaurant (REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
+							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
+          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','',#{mId},0,0,#{restTel},'','false')
+          
 	
 	</insert>
+	
+
+	<update id="restUpdate">
+	Update restaurant 
+	set bizNum=#{bizNum} 
+	where rest_id = #{restId}
+	
+	</update>
+	
+	<update id="bizrestUpdate">
+	Update restaurant set biznum=#{bizNum} where rest_id = #{restId}
+					  
+		
+          
+	
+	</update>
+
+	<select id="getRestaurantList" resultType="RestaurantVo">
+	SELECT * FROM RESTAURANT
+	</select>
+
 	
 	
 </mapper>

@@ -67,8 +67,9 @@ public class biznonet {
 			driver.close();
 		}
 		
-
+		driver.close();
 		return map;
+		
 	
 
 		

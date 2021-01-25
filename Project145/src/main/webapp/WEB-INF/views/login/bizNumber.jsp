@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.smbtn {color:black}
+</style>
 <meta charset="UTF-8">
 
 <!--====== Register CSS ======-->
@@ -15,8 +18,8 @@
 <script>
 $(function(){
 	
-//ajax 1
-$("#search").click(()=>{
+//ajax 1 사업자 등록 정보를 크롬 드라이버로 가져온다
+$("#searchbtn").click(()=>{
 	$.ajax(
 		{
 			type:"POST",
@@ -34,7 +37,7 @@ $("#search").click(()=>{
 				}
 				else if(map.bizname == $("#restName").val()){
 				bizadd =map.bizaddress;
-					$("#result").text("사업자 확인 완료. 다음으로");
+					$("#result").text("사업자 확인 완료. 식당 검색을 해주세요.");
 					
 				$("#restsearch").css("background-color","lightgreen");
 				$("#restsearch").show();
@@ -57,7 +60,7 @@ $("#search").click(()=>{
 		});
 });
 
-//ajax2 
+//ajax2 db에서 같은 이름의 식당 리스트를 가져온다.
 $("#restsearch").click(()=>{
 	$.ajax(
 		{
@@ -66,33 +69,63 @@ $("#restsearch").click(()=>{
 			data:{restName: $("#restName").val()}, //사용하는 함수 
 			dataType:"json",
 			success: function(map){
-				if(map != null){
-					alert(map);
-					$("#result").text("채식당에 등록된 식당입니다. 회원가입 페이지로 넘어갑니다.");
+				
+				if(map != null && map.length > 0){
+					console.log(map.length);
+					console.log(map[0].restName);
+					var str ='<tr>';
+					$.each(map, function(i){
+						str += '<td>'+map[i].restName+'</td>' +
+						'<td>'+map[i].restAddress +'</td>' +
+						'<td>'+'<input name="restEdit" type="radio" value="' +map[i].restId + '">'+'</td>';
+			
+						str +='</tr>' + '내식당 추가' ;
+						
+					});
+					$("#bizSearchList").append(str);
+					
+					$("#result").text("채식당에 이미 등록된 식당입니다. 아래 리스트에서 확인하세요.");
 					
 					$("#restsearch").hide();
 					$("#submit").css("background-color","lightgreen");
 					$("#submit").show();
-					//$("#list").add(map.list??)
-					/* 채식당에 등록된 같은 이름의 식당이 있습니다. 리스트 보여주기 게시판 ajax로? 
-					목록 중에서 내식당임 -> update 로 넘어감 > 바로 업데이트 ? 혹은 등록 신청(관리자가 확인해주면 등록 완성?)
-					목록 중에 없음. 내 식당 등록 -> insert
-					입력하신 정보가 입력되었습니다. 가입페이지로 넘어감. */				
-				} else{ 
-				$("#result").text("새로운 식당의 발견! 식당으로 등록하시겠습니까?");
+						
+				}else{ 
+					var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
+					$("#noResult").append(str);
+					
+				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
 				//submit action위치 바꾸기. 
 				$("#submit").css("background-color","lightgreen");
 				$("#submit").show();
 			}},
-			error:(log)=>{alert("실패+log")
+			error:(log)=>{alert("실패임")
 			}
 				
 		});
 });
 
 
-})
+//ajax3
+$("#restEdit").click(()=>{
+	$.ajax(
+		{
+			type:"POST",
+			url:"bizRestEdit.do",
+			data:{restId: $(this).val()}, //사용하는 함수 
+			dataType:"json",
+			success: function(n){
+				if(n != null) {
+					alert("레스토랑의 관리자가 되었습니다.");
+				}else {alert("수정 오류");}
+			},
+			error:(log)=>{alert("수정 실패")
+			}	
+		});
+});
+
+});
 
 </script>
 
@@ -130,7 +163,7 @@ $("#restsearch").click(()=>{
 					<div class="line-box">
 						<div class="line"></div>
 						<br>
-						<input name="search" class="search" id="search" type="button"
+						<input name="search" class="searchbtn" id="searchbtn" type="button"
 							value="검색"
 							style="float: right; background-color:lightGreen; height: 30px; width: 50px; font-size: 1.5rem; border-radius: 0; padding:0;">
 					</div>
@@ -152,21 +185,26 @@ $("#restsearch").click(()=>{
 					<p class="label-txt">사업체 주소 결과</p>
 					<input type="text" class="input" name="restAddress"
 						id="restAddress" readOnly required>
-
+						
+				<table id="bizSearchList" border="1" style="width:100%; height:30px; font-size:1rem;">
+				<tr><td>식당명</td><td>식당 주소</td><td>내 식당 확인</td></tr>
+				</table>
+				
 				</div>
-				<div class="list"></div>
+				<div id="noResult"></div>
 				<div class="labelf">
 
 					<br>
-					<button type="button" id="restsearch">식당 정보 검색</button>
-					<button type="submit" id="submit" style="display: none">다음</button>
+					<button type="button" id="restsearch" >식당 정보 검색</button>
+					<button type="submit" id="submit" style="display: none">등록</button>
 					<button type="button" id="cancel"
 						onclick="location.href='memberRegister.do'">취소</button>
 				</div>
 
 			</form>
 		</div>
-
+		
+		
 		<br> <br> <br>
 	</div>
 

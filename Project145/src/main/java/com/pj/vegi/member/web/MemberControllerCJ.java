@@ -57,50 +57,7 @@ public class MemberControllerCJ {
 		return "login/bizRegister";
 	}
 	
-	@Autowired
-	RestaurantService restaurantService;
-	@RequestMapping("/bizCheck.do")
-	@ResponseBody
-	public List<RestaurantVo> bizCheckList(@RequestParam String restName,Model model) throws SQLException {
-			System.out.println(restName);
-			return restaurantService.bizCheckList(restName);
-		
-	}
 	
-	
-	
-//			//리턴값 false 일때 insert로 연결. 
-//			//true일때 트루 일때 가입페이로 
-//			//아무변수나 트루 false나타내는 것. 
-//			//
-//			return .getUser(vo);
-//		
-//		
-//			
-//			
-//			
-//			
-//		String viewPath = null;
-//		
-//		boolean check =restaurantService.restaurantCheck(restName);
-//
-//
-//		vo.setRestName("bizname", vo.getRestName());
-//		vo.setAttribute("auth", vo.getAuth());
-//
-//		if (check == true) {
-//			viewPath = "redirect:/main.do";
-//
-//		} else {
-//			viewPath = "login/loginFail";
-//		}
-//
-//		return viewPath
-//	
-//		
-//		return "login/bizInfoRegister";
-//	}
-//
 
 	@RequestMapping("/bizNumber.do")
 	
@@ -109,38 +66,47 @@ public class MemberControllerCJ {
 		return "login/bizNumber";
 	}
 	
-//
-//	@RequestMapping("/loginResult.do")
-//	public String loginResult(MemberVo vo, Model model, HttpSession session) throws SQLException {
-//		String viewPath = null;
-//		boolean check = memberService.memberLoginCheck(vo);
-//
-//		session.setAttribute("mId", vo.getMId());
-//		session.setAttribute("auth", vo.getAuth());
-//
-//		if (check == true) {
-//			viewPath = "redirect:/main.do";
-//
-//		} else {
-//			viewPath = "login/loginFail";
-//		}
-//
-//		return viewPath;
-//	}
+
 
 	@RequestMapping("/bizNumCheck.do")
 	@ResponseBody
 	public HashMap<String, String> bizNum(@RequestParam String data) {
-		
-	
+
 		HashMap<String,String> map=biznonet.checkBiz(data);
 		map.get("bizname");
 		map.get("bizaddress");
 		return map;
 	}
 
-
 	
+	
+	
+	@Autowired
+	RestaurantService restaurantService;
+	
+	@RequestMapping("/bizCheck.do")
+	@ResponseBody
+	public List<RestaurantVo> bizCheckList(@RequestParam String restName,Model model) throws SQLException {
+			System.out.println(restName);
+		
+			return restaurantService.bizCheckList(restName);
+	}
+	
+	
+	@RequestMapping("/bizRestEdit.do")
+	@ResponseBody
+	public int restUpdate(@RequestParam String restId,Model model, RestaurantVo vo) throws SQLException{
+		System.out.println(restId +"받아옴");
+		vo.setRestId(restId);
+		int n = restaurantService.restaurantEdit(vo);
+		return n;
+	
+	}
+	
+	
+	
+}
+
 //	    //등록폼
 //	    @RequestMapping("insertFormEmp")
 //	    public String insertFormEmp(EmpVO vo) {
@@ -160,4 +126,4 @@ public class MemberControllerCJ {
 //	        model.addAttribute("empList", memberService.getEmpList(null));
 //	        return "emp/empList";
 //	    }
-}
+

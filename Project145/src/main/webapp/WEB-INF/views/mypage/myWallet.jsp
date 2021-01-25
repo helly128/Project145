@@ -26,13 +26,12 @@
 							value="충전금 : ${member.getWalletCash() }">
 					</div>
 					<hr>
-					<a href="index.html" class="btn btn-google btn-user btn-block">
-						충전 </a> <a href="index.html"
-						class="btn btn-facebook btn-user btn-block"> 출금 </a>
+					<a href="WithDraw.do" class="btn btn-google btn-user btn-block">충전 </a>
+					<a href="Deposit.do" class="btn btn-facebook btn-user btn-block">인출 </a>
 				</form>
 				<hr>
 				<div class="text-center">
-					<a class="small" href="forgot-password.html">내 실제 계좌 등록하기??</a>
+					<a class="small" href="AuthAccount.do">내 실제 계좌 등록하기??</a>
 				</div>
 			</div>
 		</div>
