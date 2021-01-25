@@ -38,10 +38,10 @@
 											name="category" onchange="moveurl(this.value);" id="category">
 											<form name=move method=post>
 												<option value="none" selected disabled>Categories</option>
-												<option value="/recipeBegan.do">비건</option>
-												<option value="/recipeRacto.do">락토</option>
-												<option value="/recipeOvo.do">오보</option>
-												<option value="/recipeRactoOvo.do">락토오보</option>
+												<option value="/restaurantBegan.do">비건</option>
+												<option value="/restaurantRacto.do">락토</option>
+												<option value="/restaurantOvo.do">오보</option>
+												<option value="/restaurantRactoOvo.do">락토오보</option>
 											</form>
 										</select>
 									</div>
@@ -54,23 +54,23 @@
 			<!-- 검색바 끝 -->
 			<%-- ${restaurant} --%>
 			<div class="row">
-			<!-- 레시피리스트 시작 -->
-				<c:forEach var="lesson" items="${lessons }">
+			<!-- 식당 리스트 시작 -->
+				<c:forEach var="vo" items="${restaurants}">
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/recipeDesc.do"> <img src="images/salad.jpg" alt="">
+								<a href="/restaurantImformation.do?restId=${vo.getRestId() }"> 
+									<img src="images/salad.jpg" alt="" height="300px" width="300px">
 								</a>
 								<div class="product-action">
 									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-
 								</div>
 							</div>
 
 							<div class="product-content">
 								<div class="namediv">
 									<h3 class="name">
-										<a href="/recipeDesc.do">${lesson.getCTitle() }</a>
+										<a href="/restaurantImformation.do?restId=${vo.getRestId() }">${vo.getRestId() }</a> 
 									</h3>
 								</div>
 								<ul class="address">

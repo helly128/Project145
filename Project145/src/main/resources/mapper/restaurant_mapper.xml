@@ -20,5 +20,9 @@
 	
 	</insert>
 	
+	<select id="getRestaurantList" resultType="RestaurantVo">
+	SELECT * FROM RESTAURANT
+	</select>
+	
 	
 </mapper>

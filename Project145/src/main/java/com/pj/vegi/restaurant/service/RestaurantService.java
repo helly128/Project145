@@ -12,5 +12,7 @@ public interface RestaurantService {
 	int restaurantInsert(RestaurantVo vo) throws SQLException;
 	List<RestaurantVo> bizCheckList(String restName) throws SQLException;
 	
+	public List<RestaurantVo>getRestaurantList(RestaurantVo vo); //식당 목록
+	
 
 }

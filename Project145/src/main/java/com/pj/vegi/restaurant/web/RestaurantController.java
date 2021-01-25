@@ -18,7 +18,8 @@ public class RestaurantController {
 	
 	@RequestMapping("/restaurant.do")
 	public String restaurantMain(Model model, RestaurantVo vo) {
-		List<RestaurantVo> restaurants = restaurantService.getRestaurnat(vo);
+		List<RestaurantVo> restaurants = restaurantService.getRestaurantList(vo);
+		System.out.println(restaurants);
 		model.addAttribute("restaurants", restaurants);
 		return "restaurant/restaurantList";
 	}
