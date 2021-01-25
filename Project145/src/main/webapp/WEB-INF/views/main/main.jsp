@@ -73,15 +73,16 @@
 									<li class="nav-item"><a class="page-scroll"
 										href="/recipeMain.do">레시피 </a></li>
 									<li class="nav-item"><a class="page-scroll"
-										href="/restaurant.do">식당 </a></li> 
-											<div class="sub-nav-toggler">
-												<span></span>
-											</div>
+										href="/restaurant.do">식당 </a></li>
+									<div class="sub-nav-toggler">
+										<span></span>
+									</div>
 									</a>
-										<ul class="sub-menu collapse" id="sub-nav">
-											<li><a href="category.html">Category Grid</a></li>
-											<li><a href="category-list.html">Category List</a></li>
-										</ul></li>
+									<ul class="sub-menu collapse" id="sub-nav">
+										<li><a href="category.html">Category Grid</a></li>
+										<li><a href="category-list.html">Category List</a></li>
+									</ul>
+									</li>
 									<li class="nav-item"><a class="page-scroll"
 										href="product-details.html">베지Meet</a></li>
 								</ul>
@@ -100,11 +101,13 @@
 									<li><a href="/logout.do"
 										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 								</c:if>
-								<li><a href="/mypage.do"
-									class="main-btn btn-hover d-none d-md-block"> <span
-										class="d-md-none"><i class="lni lni-user"></i></span> <span
-										class="d-none d-md-block">마이페이지테스트중</span>
-								</a></li>
+								<c:if test="${mId ne null}">
+									<li><a href="/mypage.do"
+										class="main-btn btn-hover d-none d-md-block"> <span
+											class="d-md-none"><i class="lni lni-user"></i></span> <span
+											class="d-none d-md-block">마이페이지</span>
+									</a></li>
+								</c:if>
 								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
 									<li><a href="/restBizList.do"
 										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
