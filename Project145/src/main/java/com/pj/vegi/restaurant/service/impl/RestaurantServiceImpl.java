@@ -30,10 +30,20 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public int restaurantEdit(RestaurantVo vo) throws SQLException {
+	public int bizInfoUpdate(RestaurantVo vo) {
 		
-		return dao.bizrestUpdate(vo);
+		return dao.bizInfoUpdate(vo);
+		
 	}
+	
+
+	@Override
+	public int restInsertNull(RestaurantVo vo) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.restInsertNull(vo);
+	}
+
+	
 
 	@Override
 	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) {
@@ -41,4 +51,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return dao.getRestaurantList(vo);
 	}
 
+
+
+
+	
 }

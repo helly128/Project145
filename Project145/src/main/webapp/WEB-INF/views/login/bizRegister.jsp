@@ -12,9 +12,12 @@
 href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() { alert(${restName}+"등록 완료"); });
 
+</script>
 
-<title>회원가입</title>
+<title>사업자 회원가입</title>
 </head>
 <body>
 
@@ -22,12 +25,11 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
 <h2>사업자 회원가입</h2>
 
 <div class="search-wrapper">
-
-<form action="InsertMember.do">
+<form action="memberInsert.do" method="post" >
 
   <div class="labelf">
     <p class="label-txt">아이디</p>
-    <input type="text" class="input" id="mid" name="mid">
+    <input type="text" class="input" id="mId" name="mId">
     <div class="line-box">
       <div class="line"></div>
     </div>
@@ -35,7 +37,7 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
   
    <div class="labelf">
     <p class="label-txt">비밀번호</p>
-    <input type="text" class="input" id="mpw" name="mpw">
+    <input type="text" class="input" id="password" name="password">
     <div class="line-box">
       <div class="line"></div>
     </div>
@@ -43,28 +45,28 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
  
   <div class="labelf">
     <p class="label-txt">비밀번호 재입력</p>
-    <input type="text" class="input" id="mpw2" name="mpw2">
+    <input type="text" class="input" id="password2">
     <div class="line-box">
       <div class="line"></div>
     </div>
 </div>
  <div class="labelf">
     <p class="label-txt">이름</p>
-    <input type="text" class="input" id="mname" name="mname">
+    <input type="text" class="input" id="mName" name="mName">
     <div class="line-box">
       <div class="line"></div>
     </div>
 </div> 
  <div class="labelf">
     <p class="label-txt">이메일</p>
-    <input type="text" class="input" id="memail" name="memail">
+    <input type="text" class="input" id="email" name="email">
     <div class="line-box">
       <div class="line"></div>
     </div>
 </div>
 
-    <input type="hidden" class="input" value="앞에서 파라매터값 받아옴">
- 
+  
+   <input type="hidden" class="input"  name="auth" value="user">
 
   <div class="labelf" align="center">
     <p class="label-txt">베지테리언 타입</p>
@@ -72,7 +74,7 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
     <br>
   <div class="demo">
 
-  <table class="tbl">
+  <table class="tbl" >
 <tr>
       <th>채소</th>
       <th>유제품</th>
@@ -107,7 +109,7 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
   
  
 </div>
- <input type="text" id="vegi" name="vegi" value="비건" placeholder="비건 " style="text-align: center; height:3rem; padding:10px;">
+ <input type="text" id="vegi" name="vegtype" value="비건" style="text-align: center; height:3rem; padding:10px;">
 </div>
 
 
@@ -116,7 +118,7 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
     </div>
    <br>
     <br>
-  <input type="text" id="biznum" name="biznum" value="${bizNumInput}">
+  <input type="hidden" id="bizNum" name="bizName" value="${$bizNum}">  
   <button type="submit" id="submit">가입</button>
   <button type="button" id="cancel"  onclick="location.href='memberRegister.do'">취소</button>
 </form>

@@ -13,12 +13,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-<title>회원가입</title>
+<title>일반 회원가입</title>
 </head>
 <body>
 
 <div align ="center">
-<h2>일반회원 회원가입</h2>
+<h2>일반 회원가입</h2>
 
 <div class="search-wrapper">
 
@@ -62,7 +62,7 @@
     </div>
 </div>
 
-    <input type="hidden" class="input" value="앞에서 파라매터값 받아옴">
+  
    <input type="hidden" class="input"  name="auth" value="user">
 
   <div class="labelf" align="center">
@@ -115,6 +115,7 @@
     </div>
    <br>
     <br>
+    
   <button type="submit" id="submit">가입</button>
   <button type="button" id="cancel"  onclick="location.href='memberRegister.do'">취소</button>
 </form>
@@ -128,7 +129,12 @@
 </div>
 <script type="text/javascript">
 
-//	$(document).ready(function(){
+	$(document).ready(function(){
+		if($(".bizNum")!=null){
+			$(".auth").val("biz");
+			
+		}console.log(auth);
+	});
 
 		// .check 클래스 중 어떤 원소가 체크되었을 때 발생하는 이벤트
 

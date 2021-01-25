@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,7 +42,8 @@ public class MemberControllerCJ {
 	}
 
 	@PostMapping("/memberInsert.do")
-	public String memberInsert(MemberVo vo, Model model) throws SQLException {
+	public String memberInsert(@RequestParam String mName, MemberVo vo, Model model) throws SQLException {
+		
 		String viewPath = null;
 		int n = memberService.memberInsert(vo);
 		if (n != 0)
@@ -51,12 +53,7 @@ public class MemberControllerCJ {
 		return viewPath;
 	}
 
-	@RequestMapping("/bizRegister.do")
-	public String bizRegister() {
 
-		return "login/bizRegister";
-	}
-	
 	
 
 	@RequestMapping("/bizNumber.do")
@@ -93,19 +90,44 @@ public class MemberControllerCJ {
 	}
 	
 	
-	@RequestMapping("/bizRestEdit.do")
-	@ResponseBody
-	public int restUpdate(@RequestParam String restId,Model model, RestaurantVo vo) throws SQLException{
-		System.out.println(restId +"받아옴");
-		vo.setRestId(restId);
-		int n = restaurantService.restaurantEdit(vo);
-		return n;
-	
+	@RequestMapping(value="/bizRegister.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String bizRegister(RestaurantVo vo, Model model, HttpSession session) throws SQLException {
+		String viewPath = null;
+		
+		int n = restaurantService.restInsertNull(vo);
+		
+		if (n != 0)
+
+			viewPath = "login/bizRegister"; // 매핑메소드를 호출할때
+			 
+			return viewPath;
 	}
 	
-	
-	
+	@RequestMapping(value="/bizInfoUpdate.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String bizInfoUpdate(RestaurantVo vo, Model model, HttpSession session) throws SQLException {
+		String viewPath = null;
+		int n = restaurantService.bizInfoUpdate(vo);
+		if (n != 0)
+			viewPath = "login/bizRegister"; // 매핑메소드를 호출할때
+			return viewPath;
+	}
 }
+
+
+
+//@RequestMapping("/bizRestEdit.do")
+//@ResponseBody
+//public int restUpdate(@RequestParam String restId,Model model, RestaurantVo vo) throws SQLException{
+//	System.out.println(restId +"받아옴");
+//	vo.setRestId(restId);
+//	int n = restaurantService.restaurantEdit(vo);
+//	return n;
+//
+//}
+
+
+
+
 
 //	    //등록폼
 //	    @RequestMapping("insertFormEmp")

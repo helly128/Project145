@@ -41,11 +41,11 @@ $("#searchbtn").click(()=>{
 					
 				$("#restsearch").css("background-color","lightgreen");
 				$("#restsearch").show();
-				$("#search").val("완료");
-				$("#search").css("background-color","#efefef");
-				$("#search").css("border","none");
-				$("#search").css("color","green");
-				$("#search").css("font-size","1.2rem");
+				$("#searchbtn").val("완료");
+				$("#searchbtn").css("background-color","#efefef");
+				$("#searchbtn").css("border","none");
+				$("#searchbtn").css("color","green");
+				$("#searchbtn").css("font-size","1.2rem");
 				
 				$("#restAddress").val(map.bizaddress);
 				$("#restAddress").css("font-size","1.2rem");
@@ -77,7 +77,7 @@ $("#restsearch").click(()=>{
 					$.each(map, function(i){
 						str += '<td>'+map[i].restName+'</td>' +
 						'<td>'+map[i].restAddress +'</td>' +
-						'<td>'+'<input name="restEdit" type="radio" value="' +map[i].restId + '">'+'</td>';
+						'<td>'+'<input name="restId" type="radio" required value="' +map[i].restId + '">'+'</td>';
 			
 						str +='</tr>' + '내식당 추가' ;
 						
@@ -85,8 +85,11 @@ $("#restsearch").click(()=>{
 					$("#bizSearchList").append(str);
 					
 					$("#result").text("채식당에 이미 등록된 식당입니다. 아래 리스트에서 확인하세요.");
+					//submit action위치 바꾸기. 
+					$('#frm').attr("action", "bizInfoUpdate.do");
 					
 					$("#restsearch").hide();
+					$("#submit").text('내식당등록');
 					$("#submit").css("background-color","lightgreen");
 					$("#submit").show();
 						
@@ -96,32 +99,12 @@ $("#restsearch").click(()=>{
 					
 				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
-				//submit action위치 바꾸기. 
 				$("#submit").css("background-color","lightgreen");
 				$("#submit").show();
 			}},
 			error:(log)=>{alert("실패임")
 			}
 				
-		});
-});
-
-
-//ajax3
-$("#restEdit").click(()=>{
-	$.ajax(
-		{
-			type:"POST",
-			url:"bizRestEdit.do",
-			data:{restId: $(this).val()}, //사용하는 함수 
-			dataType:"json",
-			success: function(n){
-				if(n != null) {
-					alert("레스토랑의 관리자가 되었습니다.");
-				}else {alert("수정 오류");}
-			},
-			error:(log)=>{alert("수정 실패")
-			}	
 		});
 });
 
@@ -141,7 +124,7 @@ $("#restEdit").click(()=>{
 
 		<div class="search-wrapper">
 
-			<form action="bizInfoRegister.do">
+			<form id="frm" action="bizRegister.do">
 
 				<div id="result" style="font-size: 1.5rem; color: green;">등록된
 					사업체명과 사업자등록 번호를 입력한 후 검색해주세요.</div>
@@ -186,8 +169,8 @@ $("#restEdit").click(()=>{
 					<input type="text" class="input" name="restAddress"
 						id="restAddress" readOnly required>
 						
-				<table id="bizSearchList" border="1" style="width:100%; height:30px; font-size:1rem;">
-				<tr><td>식당명</td><td>식당 주소</td><td>내 식당 확인</td></tr>
+				<table id="bizSearchList" style="width:100%; height:30px; font-size:1rem;">
+				<tr><td>식당명</td><td>식당 주소</td><td>내 식당 확인</td></tr><tr></tr>
 				</table>
 				
 				</div>
@@ -195,8 +178,8 @@ $("#restEdit").click(()=>{
 				<div class="labelf">
 
 					<br>
-					<button type="button" id="restsearch" >식당 정보 검색</button>
-					<button type="submit" id="submit" style="display: none">등록</button>
+					<button type="button" id="restsearch" style="display: none">식당 정보검색</button>
+					<button type="submit" id="submit" style="display: none">새식당등록</button>
 					<button type="button" id="cancel"
 						onclick="location.href='memberRegister.do'">취소</button>
 				</div>

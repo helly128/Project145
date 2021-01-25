@@ -12,7 +12,12 @@ public interface RestaurantMapper {
 	int restaurantInsert(RestaurantVo vo);
 	int restaurantUpdate(RestaurantVo vo); 
 	int restaurantDelete(RestaurantVo vo);
+	
+	int restInsertNull(RestaurantVo vo);
 	public List<RestaurantVo> bizCheckList(String restName);
-	int bizrestUpdate(RestaurantVo vo);
+	int bizInfoUpdate(RestaurantVo vo);
+	
 	List<RestaurantVo>getRestaurantList(RestaurantVo vo);
+	
+	
 }
