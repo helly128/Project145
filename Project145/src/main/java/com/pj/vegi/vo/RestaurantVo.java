@@ -22,4 +22,5 @@ public class RestaurantVo {
 	private int restReservAccept;
 	private String restTel;
 	private String bizNum;
+	private String adminConfirm;
 }

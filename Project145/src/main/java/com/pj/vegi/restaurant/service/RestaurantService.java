@@ -7,10 +7,12 @@ import com.pj.vegi.vo.RestaurantVo;
 
 public interface RestaurantService {
 
-
-	boolean restaurantCheck(RestaurantVo vo) throws SQLException;	// 멤버 로그인 체크
 	int restaurantInsert(RestaurantVo vo) throws SQLException;
-	List<RestaurantVo> bizCheckList(String restName) throws SQLException;
+
+	List<RestaurantVo> bizCheckList(String restName) throws SQLException; //멤버 로그인에서 한번 씀
+	int restaurantEdit(RestaurantVo vo) throws SQLException; //멤버 로그인에서 한번 씀
+
 	
+
 
 }

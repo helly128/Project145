@@ -16,17 +16,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Autowired
 	private RestaurantMapper dao;	
 
-	
-	@Override
-	public boolean restaurantCheck(RestaurantVo vo) throws SQLException {
-			RestaurantVo restVo = dao.restaurantSelect(vo);
-			if(restVo != null) { 
-				return true;			
-			} else {
-				return false;
-			}
-			
-	}
 
 	@Override
 	public int restaurantInsert(RestaurantVo vo) throws SQLException {
@@ -38,6 +27,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public List<RestaurantVo> bizCheckList(String restName) throws SQLException {
 		
 		return dao.bizCheckList(restName);
+	}
+
+	@Override
+	public int restaurantEdit(RestaurantVo vo) throws SQLException {
+		
+		return dao.bizrestUpdate(vo);
 	}
 
 }
