@@ -14,4 +14,5 @@ public interface RestaurantMapper {
 	int restaurantDelete(RestaurantVo vo);
 	public List<RestaurantVo> bizCheckList(String restName);
 	int bizrestUpdate(RestaurantVo vo);
+	List<RestaurantVo>getRestaurantList(RestaurantVo vo);
 }

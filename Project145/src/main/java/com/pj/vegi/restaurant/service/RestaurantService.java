@@ -13,6 +13,8 @@ public interface RestaurantService {
 	int restaurantEdit(RestaurantVo vo) throws SQLException; //멤버 로그인에서 한번 씀
 
 	
+	public List<RestaurantVo>getRestaurantList(RestaurantVo vo); //식당 목록
+	
 
 
 }

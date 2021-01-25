@@ -35,4 +35,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return dao.bizrestUpdate(vo);
 	}
 
+	@Override
+	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) {
+		// TODO Auto-generated method stub
+		return dao.getRestaurantList(vo);
+	}
+
 }

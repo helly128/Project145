@@ -33,6 +33,7 @@
 	
 	</insert>
 	
+
 	<update id="restUpdate">
 	Update restaurant 
 	set bizNum=#{bizNum} 
@@ -47,6 +48,11 @@
           
 	
 	</update>
+
+	<select id="getRestaurantList" resultType="RestaurantVo">
+	SELECT * FROM RESTAURANT
+	</select>
+
 	
 	
 </mapper>

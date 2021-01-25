@@ -23,4 +23,7 @@ public class RestaurantVo {
 	private String restTel;
 	private String bizNum;
 	private String adminConfirm;
+	private int start;
+	private int end;
+
 }
