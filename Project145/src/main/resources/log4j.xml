@@ -14,10 +14,13 @@
 	<logger name="com.pj.vegi">
 		<level value="info" />
 	</logger>
+		<logger name="org.apache.commons">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
@@ -25,11 +28,11 @@
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 
     <logger name="jdbc.sqltiming" additivity="false">
@@ -47,7 +50,7 @@
     
 	<!-- Root Logger warn-->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 	

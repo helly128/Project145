@@ -32,6 +32,10 @@ Configuration 2.1//EN"
 		<put-attribute name="content" value="/WEB-INF/views/recipe/{1}.jsp" />
 	</definition>
 	
+	<definition name="wallet/*"	template="/WEB-INF/views/tiles/mypageLayout.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/wallet/{1}.jsp" />
+	</definition>
+	
 	<!-- 사용자 -->
 	<definition name="*/*" extends="userTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
