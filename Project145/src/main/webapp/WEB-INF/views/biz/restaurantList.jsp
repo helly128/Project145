@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +18,7 @@
 	<div class="container">
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">DataTables
-					Example</h6>
+				<h6 class="m-0 font-weight-bold text-primary">식당 목록</h6>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -59,27 +59,12 @@
 						</div>
 						<div class="dataTables_paginate paging_simple_numbers"
 							id="dataTable_paginate" align="center">
-							<ul class="pagination">
-								<li class="paginate_button page-item previous disabled"
-									id="dataTable_previous"><a href="#"
-									aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-									class="page-link">Previous</a></li>
-								<li class="paginate_button page-item active"><a href="#"
-									aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-									class="page-link">1</a></li>
-								<li class="paginate_button page-item "><a href="#"
-									aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-									class="page-link">2</a></li>
-								<li class="paginate_button page-item "><a href="#"
-									aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-									class="page-link">3</a></li>
-								<li class="paginate_button page-item "><a href="#"
-									aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-									class="page-link">4</a></li>
-								<li class="paginate_button page-item "><a href="#"
-									aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-									class="page-link">5</a></li>
-							</ul>
+							<my:paging paging="${paging }" jsFunc="goList" />
+							<script>
+								function goList(p) {
+									location.href = "memberList.do?page=" + p;
+								}
+							</script>
 						</div>
 					</div>
 				</div>

@@ -8,14 +8,10 @@
 <meta charset="UTF-8">
 <style>
 article {
-   
- 
-   padding: 1em;
-   overflow: hidden;
-   min-height: 400px;
+	padding: 1em;
+	overflow: hidden;
+	min-height: 400px;
 }
-
-
 </style>
 <link rel="shortcut icon"
 	href="<%=request.getContextPath()%>/resources/assets/images/favicon.png"
@@ -61,7 +57,6 @@ article {
 </head>
 
 <body>
-
 <body>
 	<div></div>
 	<div class="preloader">
@@ -85,14 +80,15 @@ article {
 
 
 
-<header class="header_area">
+	<header class="header_area">
 		<div id="header_navbar" class="header_navbar">
 			<div class="container position-relative">
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="/main.do"> <img id="logo"
-								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg" alt="Logo">
+								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg"
+								alt="Logo">
 							</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -106,8 +102,8 @@ article {
 								<ul id="nav" class="navbar-nav">
 									<li class="nav-item"><a class="page-scroll"
 										href="index.html">클래스</a></li>
-									<li class="nav-item"><a class="page-scroll"  href="/recipeMain.do" >레시피
-									</a></li>
+									<li class="nav-item"><a class="page-scroll"
+										href="/recipeMain.do">레시피 </a></li>
 									<li class="nav-item"><a class="page-scroll"
 										data-toggle="collapse" data-target="#sub-nav"
 										aria-controls="sub-nav" aria-expanded="false"
@@ -125,20 +121,20 @@ article {
 								</ul>
 							</div>
 							<ul class="header-btn d-sm-flex">
-								
-									
-									<c:if test="${mId eq null}">
+
+
+								<c:if test="${mId eq null}">
 									<li><a href="/loginForm.do"
-									class="main-btn btn-hover d-none d-md-block">로그인</a></li>
-									</c:if>
-									<c:if test="${mId eq null}">
+										class="main-btn btn-hover d-none d-md-block">로그인</a></li>
+								</c:if>
+								<c:if test="${mId eq null}">
 									<li><a href="/memberRegister.do"
-									class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
-									</c:if>
-									<c:if test="${mId ne null}">
+										class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
+								</c:if>
+								<c:if test="${mId ne null}">
 									<li><a href="/logout.do"
-									class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
-									</c:if>
+										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
+								</c:if>
 								<!-- <li><a href="#" class="main-btn account-btn"> <span
 										class="d-md-none"><i class="lni lni-user"></i></span> <span
 										class="d-none d-md-block">My Account</span>
@@ -154,9 +150,12 @@ article {
 										<li><a href="privacy.html">Privacy</a></li>
 										<li><a href="javascript:void(0)">Sign Out</a></li>
 									</ul></li> -->
-									<li><a href="/mypage.do"
+								<li><a href="/mypage.do"
 									class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
-
+								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
+									<li><a href="/restBizList.do"
+										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+								</c:if>
 							</ul>
 						</nav>
 						<!-- navbar -->

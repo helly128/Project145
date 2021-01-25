@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,10 +42,11 @@ public class MemberController {
 		String viewPath = null;
 		boolean check = memberService.memberLoginCheck(vo);
 
-		session.setAttribute("mId", vo.getMId());
-		session.setAttribute("auth", vo.getAuth());
 
 		if (check == true) {
+			session.setAttribute("mId", vo.getMId());
+			vo = memberService.memberSelect(vo);
+			session.setAttribute("auth", vo.getAuth());
 			viewPath = "redirect:/main.do";
 
 		} else {

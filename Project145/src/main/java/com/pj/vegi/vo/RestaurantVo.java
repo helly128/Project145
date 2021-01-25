@@ -23,4 +23,5 @@ public class RestaurantVo {
 	private String restTel;
 
 	private String bizNum;
+
 }

@@ -67,13 +67,9 @@
 								style="width: 100%; text-align: center;">
 								<thead>
 									<tr role="row">
-										<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" aria-sort="ascending"
-											style="width: 44px;">메뉴</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 54px;">채식타입</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 34px;">가격</th>
+										<th style="width: 44px;">메뉴</th>
+										<th style="width: 54px;">채식타입</th>
+										<th style="width: 34px;">가격</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -129,24 +125,18 @@
 								<thead>
 									<tr role="row">
 										<th style="width: 15px;"><input type="checkbox"
-											class="table-checkbox"></th>
-										<th class="sorting_asc" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" aria-sort="ascending"
-											style="width: 44px;">예약자아이디</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 54px;">예약자명</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 54px;">예약일</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 20px;">인원</th>
-										<th class="sorting" tabindex="0" aria-controls="dataTable"
-											rowspan="1" colspan="1" style="width: 34px;">예약상태</th>
+											class="table-checkbox" style="zoom: 1.5"></th>
+										<th style="width: 44px;">예약자아이디</th>
+										<th style="width: 54px;">예약자명</th>
+										<th style="width: 54px;">예약일</th>
+										<th style="width: 20px;">인원</th>
+										<th style="width: 34px;">예약상태</th>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="reservVo" items="${reservList }">
 										<tr role="row" class="tr-hover">
-											<td><input type="checkbox" class="td-checkbox"></td>
+											<td><input type="checkbox" class="td-checkbox" style="zoom: 1.5"></td>
 											<td>${reservVo.getMId() }</td>
 											<td>${reservVo.restReservName }</td>
 											<td>${reservVo.restReservDate }</td>
