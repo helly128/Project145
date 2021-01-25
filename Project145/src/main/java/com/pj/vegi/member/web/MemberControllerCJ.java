@@ -2,13 +2,13 @@ package com.pj.vegi.member.web;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,21 +57,13 @@ public class MemberControllerCJ {
 		return "login/bizRegister";
 	}
 	
+	@Autowired
+	RestaurantService restaurantService;
 	@RequestMapping("/bizCheck.do")
 	@ResponseBody
-	public String bizCheck(@PathVariable String restName, RestaurantVo vo) throws SQLException {
-		
-			vo.setRestName(restName);
-			String result=null;
-			boolean check = restaurantService.restaurantCheck(vo);
-			if(check == true) {
-				result ="같은이름있음";
-				//나중에 고민할것, 리스트로 보여줄까? 
-				return result;
-			}else {
-				result = null;
-				return result;
-			}
+	public List<RestaurantVo> bizCheckList(@RequestParam String restName,Model model) throws SQLException {
+			System.out.println(restName);
+			return restaurantService.bizCheckList(restName);
 		
 	}
 	
@@ -110,8 +102,6 @@ public class MemberControllerCJ {
 //	}
 //
 
-	@Autowired
-	RestaurantService restaurantService;
 	@RequestMapping("/bizNumber.do")
 	
 	public String bizNumber(RestaurantVo vo, Model model, HttpSession session) throws SQLException {

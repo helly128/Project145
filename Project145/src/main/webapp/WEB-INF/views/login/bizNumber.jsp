@@ -63,10 +63,11 @@ $("#restsearch").click(()=>{
 		{
 			type:"POST",
 			url:"bizCheck.do",
-			data:{data: $("#restName").val()}, //사용하는 함수 
+			data:{restName: $("#restName").val()}, //사용하는 함수 
 			dataType:"json",
 			success: function(map){
-				if(result != null){
+				if(map != null){
+					alert(map);
 					$("#result").text("채식당에 등록된 식당입니다. 회원가입 페이지로 넘어갑니다.");
 					
 					$("#restsearch").hide();
@@ -157,7 +158,7 @@ $("#restsearch").click(()=>{
 				<div class="labelf">
 
 					<br>
-					<button type="button" id="restsearch" style="display: none">식당 정보 검색</button>
+					<button type="button" id="restsearch">식당 정보 검색</button>
 					<button type="submit" id="submit" style="display: none">다음</button>
 					<button type="button" id="cancel"
 						onclick="location.href='memberRegister.do'">취소</button>
