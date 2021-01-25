@@ -73,9 +73,7 @@
 									<li class="nav-item"><a class="page-scroll"
 										href="/recipeMain.do">레시피 </a></li>
 									<li class="nav-item"><a class="page-scroll"
-										data-toggle="collapse" data-target="#sub-nav"
-										aria-controls="sub-nav" aria-expanded="false"
-										aria-label="Toggle navigation" href="javascript:void(0)">식당
+										href="/restaurant.do">식당 </a></li> 
 											<div class="sub-nav-toggler">
 												<span></span>
 											</div>
