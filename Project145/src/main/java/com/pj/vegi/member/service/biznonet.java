@@ -17,7 +17,7 @@ public class biznonet {
 	
 	// Properties
 	public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-	public static final String WEB_DRIVER_PATH = "chromedriver";
+	public static final String WEB_DRIVER_PATH = "d:/selenium/chromedriver_win32/chromedriver.exe";;
 
 	public static HashMap<String, String> checkBiz(String data) {
 		HashMap<String, String> map = new HashMap<String, String>();
