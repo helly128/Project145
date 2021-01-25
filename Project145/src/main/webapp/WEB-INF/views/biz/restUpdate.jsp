@@ -90,7 +90,13 @@
 							<!-- Card Body -->
 							<input type="hidden" name="restPic" value="${restVo.restPic }">
 							<div class="image-container p-3">
-								<img id="rest-image" src="/images/${restVo.restPic }" width="100%">
+								<c:if test="${restVo.restPic eq null}">
+									<img id="rest-image" src="/images/images-empty.png"
+										width="100%">
+								</c:if>
+								<c:if test="${restVo.restPic ne null}">
+									<img src="/images/${restVo.restPic }" width="100%">
+								</c:if>
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"
 										name="uploadfile" class="restPic" accept="image/*"
@@ -180,6 +186,7 @@
 				<div align="center" class="mb-5 reservBtn">
 					<input type="submit" class="btn btn-primary" value="수정">
 					&nbsp;&nbsp; <input type="reset" class="btn btn-primary" value="취소">
+					&nbsp;&nbsp; <button type="button" class="btn btn-primary" onclick="location.href='restBizList.do'">목록보기</button>
 				</div>
 			</form>
 		</div>

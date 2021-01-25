@@ -13,6 +13,9 @@
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
+			<div class="row px-3 mb-4">
+				<button class="btn btn-outline-primary" onclick="location.href='restBizList.do'"> <strong>&#60;</strong> 돌아가기</button>
+			</div>
 			<div class="row">
 				<div class="col-lg-5 mb-4">
 					<div class="card shadow h-100">
@@ -24,7 +27,13 @@
 						<!-- Card Body -->
 						<div class="card-body">
 							<div class="p-2">
-								<img src="/images/${restVo.restPic }" width="100%">
+								<c:if test="${restVo.restPic eq null}">
+									<img id="rest-image" src="/images/images-empty.png"
+										width="100%">
+								</c:if>
+								<c:if test="${restVo.restPic ne null}">
+									<img src="/images/${restVo.restPic }" width="100%">
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -88,9 +97,11 @@
 				</div>
 			</div>
 			<div align="center" class="mb-5 restBtn">
-				<button class="btn btn-primary" onclick="location.href='restBizDetail.do?restId=${restVo.restId}'">가게 정보 수정</button>
+				<button class="btn btn-primary"
+					onclick="location.href='restBizDetail.do?restId=${restVo.restId}'">가게
+					정보 수정</button>
 				&nbsp;&nbsp;
-				<button class="btn btn-primary" onclick="">가게 삭제</button>
+				<button class="btn btn-primary" onclick="deleteConfirm();">가게 삭제</button>
 			</div>
 			<div class="mb-5">
 				<hr>
@@ -136,7 +147,8 @@
 								<tbody>
 									<c:forEach var="reservVo" items="${reservList }">
 										<tr role="row" class="tr-hover">
-											<td><input type="checkbox" class="td-checkbox" style="zoom: 1.5"></td>
+											<td><input type="checkbox" class="td-checkbox"
+												style="zoom: 1.5"></td>
 											<td>${reservVo.getMId() }</td>
 											<td>${reservVo.restReservName }</td>
 											<td>${reservVo.restReservDate }</td>
@@ -158,6 +170,17 @@
 		</div>
 		<div class="col-lg-1"></div>
 	</div>
-
+	
+	<script>
+		function deleteConfirm(){
+			var result = confirm("식당을 삭제하시겠습니까? 삭제 후에는 취소가 불가능합니다.");
+			if(result){
+				alert("삭제되었습니다.");
+				location.href="restBizDelete.do?restId=${restVo.restId}";
+			} else{
+				alert("취소되었습니다.")
+			}
+		}
+	</script>
 </body>
 </html>

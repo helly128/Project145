@@ -29,22 +29,22 @@ public class RestaurantBizController {
 	@RequestMapping("/restBizList.do")
 	public String restBizList(Model model, Paging paging, HttpSession session) {
 		RestaurantVo vo = new RestaurantVo();
+		String mId = (String) session.getAttribute("mId");
+		vo.setMId(mId);
 
-		paging.setPageUnit(5);	//출력하는 레코드 건수
-		paging.setPageSize(3);	//페이지 번호 수
+		paging.setPageUnit(5); // 출력하는 레코드 건수
+		paging.setPageSize(3); // 페이지 번호 수
 		// 페이지번호 파라미터
 		if (paging.getPage() == null) {
-			paging.setPage(1);	//페이지번호 안 넘어오면 1로 초기화
+			paging.setPage(1); // 페이지번호 안 넘어오면 1로 초기화
 		}
 		// 시작/마지막 레코드 번호
 		vo.setStart(paging.getFirst());
 		vo.setEnd(paging.getLast());
 		// 전체 건수
-		paging.setTotalRecord(restBizService.getCount(vo));	//전체레코드건수
+		paging.setTotalRecord(restBizService.getCount(vo)); // 전체레코드건수
 		model.addAttribute("paging", paging);
 
-		String mId = (String) session.getAttribute("mId");
-		vo.setMId(mId);
 		List<RestaurantVo> restList = restBizService.restBizList(vo);
 		model.addAttribute("restList", restList);
 
@@ -101,7 +101,6 @@ public class RestaurantBizController {
 
 			restVo.setRestPic(name);
 		}
-		System.out.println(restVo);
 		restBizService.restBizUpdate(restVo);
 
 		List<RestMenuVo> menuList = menuListVo.getMenuVoList();
@@ -124,10 +123,42 @@ public class RestaurantBizController {
 
 	@RequestMapping("/restBizDelete.do")
 	public String restBizDelete(Model model, RestaurantVo vo) {
-
+		restBizService.restAllMenuDelete(vo);
 		restBizService.restBizDelete(vo);
 
 		return "redirect:restBizList.do";
 	}
 
+	@RequestMapping("/restBizInsertForm")
+	public String restBizInsertForm() {
+
+		return "biz/restInsert";
+	}
+
+	@RequestMapping("/restBizInsert.do")
+	public String restBizInsert(Model model, RestaurantVo restVo, RestMenuVo menuListVo, HttpServletRequest request,
+			@RequestParam MultipartFile uploadfile, HttpSession session) throws IllegalStateException, IOException {
+
+		// 사진 업로드 처리
+		if (uploadfile != null && uploadfile.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, uploadfile);
+
+			restVo.setRestPic(name);
+		}
+		restVo.setMId((String) session.getAttribute("mId"));
+		restBizService.restBizInsert(restVo);
+		restVo.setRestId("rest"+restVo.getSeq());
+
+		List<RestMenuVo> menuList = menuListVo.getMenuVoList();
+		for (RestMenuVo menuVo : menuList) {
+			if(menuVo.getMenuName() != null && menuVo.getMenuName() != "") {
+				menuVo.setRestId(restVo.getRestId());
+				restBizService.restMenuInsert(menuVo);
+			}
+		}
+
+		model.addAttribute("restId", restVo.getRestId());
+
+		return "redirect:restBizSelect.do";
+	}
 }

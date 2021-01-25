@@ -25,5 +25,7 @@ public class RestaurantVo {
 	
 	private int start;
 	private int end;
+	
+	private int seq;
 
 }

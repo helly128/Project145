@@ -60,7 +60,7 @@
 }
 
 .menu-input {
-	border: none;
+	border-color: #dedede;
 	width: 97%;
 	text-align: center;
 	vertical-align: bottom;
@@ -73,12 +73,11 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<c:set var="listLength" value="${fn:length(listVo.menuVoList) }" /> 
 	<div class="row">
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
-			<form id="frm" name="frm" action="restBizUpdate.do" method="post" onsubmit="checkForm();" encType="multipart/form-data">
+			<form id="frm" name="frm" action="restBizInsert.do" method="post" encType="multipart/form-data">
 				<div class="row">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
@@ -88,9 +87,8 @@
 								<h6 class="m-0 font-weight-bold text-primary">대표 사진</h6>
 							</div>
 							<!-- Card Body -->
-							<input type="hidden" name="restPic" value="${restVo.restPic }">
 							<div class="image-container p-3">
-								<img id="rest-image" src="/images/${restVo.restPic }" width="100%">
+								<img id="rest-image" src="/images/images-empty.png" width="100%">
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"
 										name="uploadfile" class="restPic" accept="image/*"
@@ -105,25 +103,23 @@
 								<h6 class="m-0 font-weight-bold text-primary">식당 정보</h6>
 							</div>
 							<div class="card-body">
-								<input type="hidden" name="restId" value="${restVo.restId }">
-								<h3 class="fw-bold">
-									<strong>${restVo.restName }</strong>
-								</h3>
+								<p class="mb-2 mt-2">
+									<strong>식당명 (*필수)</strong>
+								</p>
+								<input type="text" class="input-text mb-4" name="restName" required>
 								<p class="mb-2 mt-4">
 									<strong>운영시간</strong>
 								</p>
 								<textarea class="input-textarea mb-2" name="restTime"
-									style="width: 97%;" rows=3>${restVo.restTime }</textarea>
+									style="width: 97%;" rows=3></textarea>
 								<p class="mb-2 mt-2">
-									<strong>주소</strong>
+									<strong>주소 (*필수)</strong>
 								</p>
-								<input type="text" class="input-text mb-4" name="restAddress"
-									value="${restVo.restAddress }">
+								<input type="text" class="input-text mb-4" name="restAddress" required>
 								<p class="mb-2 mt-2">
-									<strong>연락처</strong>
+									<strong>연락처 (*필수)</strong>
 								</p>
-								<input type="text" class="input-text" name="restTel"
-									value="${restVo.restTel }">
+								<input type="text" class="input-text" name="restTel" required>
 							</div>
 						</div>
 					</div>
@@ -148,25 +144,6 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="menuVo" items="${listVo.menuVoList }"
-											varStatus="status">
-											<input type="hidden"
-												name="menuVoList[${status.index }].menuId"
-												value="${menuVo.menuId }">
-											<tr role="row" class="tr-hover">
-												<td><input class="menu-input" type="text"
-													name="menuVoList[${status.index }].menuName"
-													value="${menuVo.menuName }" required></td>
-												<td><input class="menu-input" type="text"
-													name="menuVoList[${status.index }].menuVegeType"
-													value="${menuVo.menuVegeType }"></td>
-												<td><input class="menu-input" type="text"
-													name="menuVoList[${status.index }].menuPrice"
-													value="${menuVo.menuPrice }" required></td>
-												<td><input class="menu-input" type="checkbox" name="menuVoList[${status.index}].deleteFlag"
-													style="zoom: 1.5" id="deleteFlag"></td>
-											</tr>
-										</c:forEach>
 									</tbody>
 								</table>
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -178,8 +155,9 @@
 				</div>
 
 				<div align="center" class="mb-5 reservBtn">
-					<input type="submit" class="btn btn-primary" value="수정">
-					&nbsp;&nbsp; <input type="reset" class="btn btn-primary" value="취소">
+					<input type="submit" class="btn btn-primary" value="입력">
+					&nbsp;&nbsp; <input type="reset" class="btn btn-primary" value="리셋">
+					&nbsp;&nbsp; <button type="button" class="btn btn-primary" onclick="location.href='restBizList.do'">목록보기</button>
 				</div>
 			</form>
 		</div>
@@ -209,8 +187,8 @@
 			})
 		}
 		
-		var length = '<c:out value="${listLength}"/>';
 		$(function(){
+			var length = 0;
 			//메뉴추가 버튼 클릭 시 행 추가
 			$("#addMenuBtn").on('click', function(){
 				var tr = $("<tr>").attr("role", "row");

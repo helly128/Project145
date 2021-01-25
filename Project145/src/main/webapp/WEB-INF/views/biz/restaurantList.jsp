@@ -23,20 +23,23 @@
 			<div class="card-body">
 				<div class="table-responsive">
 					<div id="dataTable_wrapper"
-						class="dataTables_wrapper dt-bootstrap4">
+						class="dataTables_wrapper dt-bootstrap4" style="width:98%">
 						<div class="row">
 							<div class="col-sm-12">
+						<div align="left" class="mb-2">
+							<button class="btn btn-outline-primary" onclick="location.href='restBizInsertForm'">식당 추가</button>
+						</div>
 								<table class="table table-bordered dataTable" id="dataTable"
-									width="100%" cellspacing="0" role="grid"
+									 cellspacing="0" role="grid"
 									aria-describedby="dataTable_info"
 									style="width: 100%; text-align: center;">
 									<thead>
 										<tr role="row">
 											<th class="sorting_asc" tabindex="0"
 												aria-controls="dataTable" rowspan="1" colspan="1"
-												aria-sort="ascending" style="width: 44px;">가게명</th>
+												aria-sort="ascending" style="width: 45px;">가게명</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
-												rowspan="1" colspan="1" style="width: 54px;">위치</th>
+												rowspan="1" colspan="1" style="width: 60px;">위치</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
 												rowspan="1" colspan="1" style="width: 34px;">예약요청</th>
 											<th class="sorting" tabindex="0" aria-controls="dataTable"
@@ -62,7 +65,7 @@
 							<my:paging paging="${paging }" jsFunc="goList" />
 							<script>
 								function goList(p) {
-									location.href = "memberList.do?page=" + p;
+									location.href = "restBizList.do?page=" + p;
 								}
 							</script>
 						</div>

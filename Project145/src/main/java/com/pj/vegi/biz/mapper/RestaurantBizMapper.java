@@ -20,4 +20,5 @@ public interface RestaurantBizMapper {
 	int restMenuDelete(RestMenuVo vo);
 	int restMenuUpdate(RestMenuVo vo);
 	int restMenuInsert(RestMenuVo vo);
+	int restAllMenuDelete(RestaurantVo vo);
 }

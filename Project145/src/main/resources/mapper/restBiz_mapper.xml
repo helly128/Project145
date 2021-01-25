@@ -8,13 +8,15 @@
 
 	<select id="restBizList" resultType="RestaurantVo">
 		SELECT a.* FROM
-			(SELECT b.*, rownum rn FROM (
-				SELECT * FROM restaurant
-				WHERE
-				m_id=#{mId}
-				order by rest_id
-				) b
-			) a WHERE rn BETWEEN #{start} and #{end}
+		(SELECT b.*,
+		rownum rn FROM (
+		SELECT * FROM restaurant
+		WHERE
+		m_id=#{mId}
+		order by
+		rest_id
+		) b
+		) a WHERE rn BETWEEN #{start} and #{end}
 	</select>
 
 	<select id="restBizSelect" resultType="RestaurantVo">
@@ -39,7 +41,8 @@
 		rest_time=#{restTime},
 		rest_tel=#{restTel},
 		rest_pic=#{restPic}
-		WHERE rest_id=#{restId}
+		WHERE
+		rest_id=#{restId}
 	</update>
 
 	<delete id="restBizDelete">
@@ -52,7 +55,8 @@
 		SET menu_name = #{menuName},
 		menu_vege_type = #{menuVegeType},
 		menu_price = #{menuPrice}
-		WHERE menu_id=#{menuId}
+		WHERE
+		menu_id=#{menuId}
 	</update>
 
 	<delete id="restMenuDelete">
@@ -72,4 +76,26 @@
 		WHERE m_id=#{mId}
 	</select>
 
+	<insert id="restBizInsert">
+		INSERT INTO restaurant
+		(rest_id, rest_name,
+		rest_address, rest_pic,
+		rest_time, m_id, rest_tel, biznum)
+		VALUES('rest' || rest_seq.nextval,
+		#{restName}, #{restAddress},
+		#{restPic}, #{restTime}, #{mId},
+		#{restTel},
+		(SELECT biznum FROM member
+		WHERE m_id=#{mId}))
+
+		<selectKey keyProperty="seq" resultType="int" order="AFTER">
+			SELECT rest_seq.currval
+			FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<delete id="restAllMenuDelete">
+		DELETE FROM rest_menu
+		WHERE rest_id=#{restId}
+	</delete>
 </mapper>

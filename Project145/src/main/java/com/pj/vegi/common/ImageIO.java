@@ -8,6 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImageIO {
+	//이미지 신규등록
+	public static String imageUpload(HttpServletRequest request, MultipartFile uploadfile) throws IllegalStateException, IOException {
+		String path = request.getSession().getServletContext().getRealPath("/images"); // 처음의 /는 webapp을 뜻함
+		File file = new File(path, uploadfile.getOriginalFilename());
+
+		file = rename(file);
+
+		uploadfile.transferTo(file);
+		return file.getName();
+	}
+	
+	//이미지 변경
 	public static String imageUpload(HttpServletRequest request, MultipartFile uploadfile, String orgName)
 			throws IllegalStateException, IOException {
 		String path = request.getSession().getServletContext().getRealPath("/images"); // 처음의 /는 webapp을 뜻함

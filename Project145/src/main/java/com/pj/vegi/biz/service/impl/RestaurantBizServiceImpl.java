@@ -70,4 +70,9 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	public int getCount(RestaurantVo vo) {
 		return dao.getCount(vo);
 	}
+
+	@Override
+	public int restAllMenuDelete(RestaurantVo vo) {
+		return dao.restAllMenuDelete(vo);
+	}
 }
