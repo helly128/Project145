@@ -4,11 +4,11 @@
 
 <mapper namespace="com.pj.vegi.restaurant.mapper.RestaurantMapper">
 
-	<select id="restSelect" resultType="com.pj.vegi.vo.RestaurantVo">
+	<select id="bizCheckList" resultType="RestaurantVo">
 		SELECT 
 		*
-		FROM member
-		WHERE m_id = #{mId}
+		FROM restaurant
+		WHERE rest_name = #{restName}
 	</select>
 	
 	<insert id="restInsert">
