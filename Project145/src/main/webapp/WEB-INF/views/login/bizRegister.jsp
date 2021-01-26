@@ -69,12 +69,14 @@ $("input").keyup(function(){
 
 $("#submitbtn").click(()=>{
 	if ($("#email").val()==""||$("#mName").val()==""||$("#vegitype").val()==""){
-		alert("정보가 입력되지 않았습니다. 다시 확인하세요.")
+		
+		alert("정보가 입력되지 않았습니다. 다시 확인하세요.");
+		$("#vegitype").val('비건');
 	}
 	else if ($("#mId").val()==""){		
 		alert("아이디 중복체크를 하세요");}
 	else if($("#password").val()!=$("#password2").val()||$("#password").val()==""){
-		alert("비밀번호를 다시 확인하세요");
+		alert("비밀번호를 다시 확인하세요");	
 	}else if($("#mId").val() == $("#Id").val()){
 		document.bizmemberfrm.submit();
 	}else{
@@ -83,7 +85,6 @@ $("#submitbtn").click(()=>{
 		
 		
 	});
-
 
 
 });
@@ -155,14 +156,13 @@ $("#submitbtn").click(()=>{
 				</div>
 
 
-				<input type="hidden" class="input" name="auth" value="user">
+				<input type="hidden" class="input" name="auth" value='${auth}'>
 
 				<div class="labelf" align="center">
 					<p class="label-txt">베지테리언 타입</p>
 
 					<br>
 					<div class="demo">
-
 						<table class="tbl">
 							<tr>
 								<th>채소</th>
@@ -178,25 +178,25 @@ $("#submitbtn").click(()=>{
 							<tr>
 
 								<td><input type="checkbox" class="type" value="비건" checked
-									readonly>
+									disabled>
 									<div class="tbl-data" data-item="🥦"></div></td>
 								<td><input type="checkbox" class="vtype" value="락토"
-									checked="checked">
+									>
 									<div class="tbl-data" data-item="🧀"></div></td>
-								<td><input type="checkbox" class="vtype" value="오보"
-									checked="checked">
+								<td><input type="checkbox" class="vtype" value="오보">
 									<div class="tbl-data" data-item="🥚"></div></td>
 
 							</tr>
 
 						</table>
 
-  
-  
- 
-</div>
- <input type="text" id="vegi" name="vegtype" value="비건" style="text-align: center; height:3rem; padding:10px;">
-</div>
+
+
+					</div>
+					<input type="text" id="vegi" readonly value="비건" required name="vegtype"
+						
+						style="text-align: center; display:none; height: 3rem; padding: 10px;">
+				</div>
 
 
     <div class="line-box">
@@ -204,7 +204,7 @@ $("#submitbtn").click(()=>{
     </div>
    <br>
     <br>
-  <input id="bizNum" style="display:none" name="bizNum" value=${bizNum}>  
+  <input id="bizNum" style="display:none" name="bizNum" value='${bizNum}'>  
   <button type="button" id="submitbtn">가입</button>
   <button type="button" id="cancel"  onclick="location.href='memberRegister.do'">취소</button>
 </form>
@@ -222,17 +222,21 @@ $("#submitbtn").click(()=>{
 
 		// .check 클래스 중 어떤 원소가 체크되었을 때 발생하는 이벤트
 
-		$(".vtype").click(function(){ 
+	$(".vtype").click(function(){ 
+			if($("#vegi").val()!=null){ 
 			var str ="";  
 			$(".vtype").each(function(){ 
-				if($(this).is(":checked")) 
-					str += $(this).val() + "";  
+				
+				if($(this).is(":checked"))
+				str += $(this).val()+'';
 			});
-			$("#vegi").val(str);  
+			$("#vegi").val(str);  }
+			else{
+				var str ="비건";
+				$("#vegi").val(str);
+			}
 		});
-//	})
 
-$(".vtype").click();
 </script>
 </body>
 
