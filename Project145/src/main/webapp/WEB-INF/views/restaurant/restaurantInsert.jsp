@@ -85,21 +85,23 @@
 
 			<div class="labelf">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">식당명</p>
+				<button name="search" class="searchbtn" id="searchbtn" type="button"
+					style="float: right; background-color: #6C9852; height: 33px; width: 60px; 
+					font-size: 1.3rem; border-radius: 50px; padding: 2px 0px 0px 0px;"
+					onclick="location.href='restNameSerch.do'">확 인</button>
+					
 				<input type="text" class="input" id="restName" name="restName"
+					style="padding: 17px 0px 17px 30px; width: 400px;" 
 					placeholder="식당명을 입력해주세요." required>
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
-				<button name="search" class="searchbtn" id="searchbtn"
-						type="button" style="float: right; 
-						background-color: #6C9852; height: 33px; 
-						width: 60px; font-size: 1.3rem; font-color: white; 
-						border-radius: 50px; padding: 2px 0px 0px 0px;"
-						onclick="location.href='restNameSerch.do'">확 인</button>
+			
 			</div>
 			<div class="labelf">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">식당사진(1장)</p>
-				<input type="file" class="input" name="uploadfile" multiple="multiple">
+				<input type="file" class="input" name="uploadfile"
+					multiple="multiple">
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
@@ -107,7 +109,8 @@
 
 			<div class="labelf">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">주소</p>
-				<input type="text" class="input" id="" name="" placeholder="식당 주소를 입력해주세요." required>
+				<input type="text" class="input" id="" name=""
+					placeholder="식당 주소를 입력해주세요." required>
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
@@ -116,7 +119,7 @@
 			<div class="labelf">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">전화번호</p>
 				<input type="text" class="input" id="" name=""
-					placeholder="식당 전화번호를 입력해주세요." required>
+					placeholder="식당 전화번호를 입력해주세요.">
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
@@ -125,18 +128,18 @@
 			<div class="labelf">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">영업시간</p>
 				<input type="text" class="input" id="" name=""
-					placeholder="식당 영업시간을 입력해주세요." required>
+					placeholder="식당 영업시간을 입력해주세요.">
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
 			</div>
 
 			<div class="labelf">
-				<p class="label-txt">메뉴</p>
-				<input type="text" class="" name="" id="" placeholder="메뉴명" size="5" required> 
-				<input type="text" class="" name="" id="" placeholder="가격" size="5" required> 
-					
-				<select name="beganType" onchange="" id="beganType">
+				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">메뉴</p>
+				
+				<input type="text" class="input" id="" name="" placeholder="메뉴명" style="width: 200px; padding: 17px 0px 17px 0px;" required>
+				<input type="text" class="input" id="" name="" placeholder="가격" style="width: 120px; padding: 17px 0px 17px 0px;" required>
+				<select name="beganType" onchange="" id="beganType" style="width: 100px; heigh: 50px; font-size:1.3rem;">	
 					<form name=move method=post>
 						<option value="none" selected disabled>채식타입</option>
 						<option value="began">비건</option>
@@ -145,14 +148,17 @@
 						<option value="ractoOvo">락토오보</option>
 					</form>
 				</select>
+				<div class="line-box">
+					<div class="line"></div>
+				</div> 
+					
+			</div>
+			<div>
+			<button style="font-size: 1.5rem;" type="button" id="cancel" onclick="">취 소</button>
+			<button style="font-size: 1.5rem;" type="submit" id="push" onclick="">등 록</button>
 			</div>
 		</form>
 	</div>
-
-
-
-	<button type="submit" id="push" onclick="">등 록</button>
-	<button type="button" id="cancel" onclick="'">취 소</button>
 
 	<br>
 	<br>

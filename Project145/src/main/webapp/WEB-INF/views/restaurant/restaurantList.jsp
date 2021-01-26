@@ -9,22 +9,25 @@
 
 <style type="text/css">
 
+#restInsert:hover {
+	background-color:#6c9852;
+	color:white;
+}
+
 .lni-heart-filled {
 	color: white;
 }
+
 .lni-heart-filled:hover {
 	color: pink;
 }
+
 .lni-heart-filled:clicked {
 	color: red;
 }
 
-.restInsert button:hover {
-	 background-color: #6C9852;
-}
-
-
 </style>
+
 </head>
 <body>
 	<section class="latest-product-area pt-130 pb-110">
@@ -42,15 +45,7 @@
 					<div class="search-wrapper">
 						<form action="#">
 							<div class="row justify-content-center">
-								<div class="col-lg-3 col-sm-5 col-10">
-									<div class="search-input">
-										<label for="keyword"><i
-											class="lni lni-search-alt theme-color"></i></label> <input
-											type="text" name="keyword" id="keyword"
-											placeholder="Product keyword">
-									</div>
-								</div>
-								<div class="col-lg-3 col-sm-5 col-10">
+								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="search-input" >
 										<label for="category">
 										<i class="lni lni-grid-alt theme-color"></i>
@@ -66,9 +61,18 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-lg-3 col-sm-5 col-10">
+								<div class="col-lg-3 col-sm-5 col-6">
+									<div class="search-input">
+										<label for="keyword"><i
+											class="lni lni-search-alt theme-color"></i></label> <input
+											type="text" name="keyword" id="keyword"
+											placeholder="Product keyword">
+									</div>
+								</div>
+								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="restaurantInsertButton" style="margin-bottom: 5%">
-										<button type="button" class="restInsert" name="restInsert" id="restInsert" onclick="location.href='restaurantForm.do'">식당 제보하기</button>
+										<input class="aaa" type="button" name="restInsert" id="restInsert" onclick="location.href='restaurantForm.do'"
+											   style="border-radius: 50px; text-align:center;" value="식당 제보하기">
 									</div>
 								</div>
 							</div>
