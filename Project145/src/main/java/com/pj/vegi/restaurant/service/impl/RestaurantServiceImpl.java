@@ -18,9 +18,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 
 	@Override
-	public int restaurantInsert(RestaurantVo vo) throws SQLException {
+	public int restInsert(RestaurantVo vo) throws SQLException {
 		// TODO Auto-generated method stub
-		return dao.restaurantInsert(vo);
+		return dao.restInsert(vo);
 	}
 
 	@Override
@@ -49,6 +49,19 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) {
 		// TODO Auto-generated method stub
 		return dao.getRestaurantList(vo);
+	}
+
+	@Override
+	public int restaurantInsert(RestaurantVo vo) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public List<RestaurantVo> restNameSerchList(String restName) {
+		
+		return dao.restNameSerchList(restName);
+		
 	}
 
 

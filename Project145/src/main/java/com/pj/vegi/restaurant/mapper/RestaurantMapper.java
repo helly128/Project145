@@ -9,7 +9,7 @@ import com.pj.vegi.vo.RestaurantVo;
 public interface RestaurantMapper {
 
 	RestaurantVo restaurantSelect(RestaurantVo vo);
-	int restaurantInsert(RestaurantVo vo);
+	int restInsert(RestaurantVo vo); //일반 유저 식당등록 
 	int restaurantUpdate(RestaurantVo vo); 
 	int restaurantDelete(RestaurantVo vo);
 	
@@ -17,7 +17,7 @@ public interface RestaurantMapper {
 	public List<RestaurantVo> bizCheckList(String restName);
 	int bizInfoUpdate(RestaurantVo vo);
 	
-	List<RestaurantVo>getRestaurantList(RestaurantVo vo);
-	
+	List<RestaurantVo>getRestaurantList(RestaurantVo vo); //식당메인에 목록 불러오기
+	List<RestaurantVo>restNameSerchList(String restName); //식당등록페이지에서 식당이름 검색 
 	
 }

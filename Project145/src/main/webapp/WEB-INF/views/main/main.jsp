@@ -74,15 +74,6 @@
 										href="/recipeMain.do">레시피 </a></li>
 									<li class="nav-item"><a class="page-scroll"
 										href="/restaurant.do">식당 </a></li>
-									<div class="sub-nav-toggler">
-										<span></span>
-									</div>
-									</a>
-									<ul class="sub-menu collapse" id="sub-nav">
-										<li><a href="category.html">Category Grid</a></li>
-										<li><a href="category-list.html">Category List</a></li>
-									</ul>
-									</li>
 									<li class="nav-item"><a class="page-scroll"
 										href="product-details.html">베지Meet</a></li>
 								</ul>
