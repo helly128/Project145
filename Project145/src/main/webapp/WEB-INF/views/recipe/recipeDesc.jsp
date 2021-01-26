@@ -17,6 +17,158 @@
 	margin-right: 15%;
 }
 </style>
+<!-- <script type="text/javascript" src="/resources/js/reple.js" />
+<script type="text/javascript">
+$(document).ready(function){
+	var openForm = $("#openForm");
+	$("button[data-oper='update']").on("click",function(e){
+		openForm.attr("action","/recipe/update").submit();
+	});
+}
+</script> -->
+<!-- Modal -->
+<div class="modal fade" id="repleDesc" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">댓글 상세 보기 모달</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div>
+					<table class="table table-hover" border="1">
+						<thead class="text-center">
+							<tr class="content">
+
+								<th width="10">번호</th>
+								<th width="90">댓글내용</th>
+								<th width="40">작성일자</th>
+								<th width="10">작성자</th>
+							</tr>
+						</thead>
+						<tbody class="text-center">
+							<tr>
+								<td>${reId}</td>
+								<td>${reContent}</td>
+								<td>${reDate}</td>
+								<td>${MId }</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-primary" type="button" data-dismiss="modal">Edit</button>
+				<button class="btn btn-primary" type="button" data-dismiss="modal">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.modal -->
+<script>
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth() + 1;
+	var day = today.getDate();
+	var date = year + "년" + month + "월" + day + "일"
+
+	$(document).ready(function() {
+		repleList();//댓글 목록 불러오기
+		$("#repleBtn").click(function() {
+			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
+		});
+
+		/* $("#deleteBtn").click(function() {
+			if (confirm("정말...삭제하시겠어요?")) {
+				document.form
+			}
+		}); */
+
+		$(".descBtn").click(function() {//댓글 상세 보기 모달 창
+			var reId = $(this).parents().find("td").eq(0).text();
+			var reContent = $(this).parents().find("td").eq(1).text();
+			var reDate = $(this).parents().find("td").eq(2).text();
+			var MId = $(this).parents().find("td").eq(3).text();
+
+		})
+	});
+
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth() + 1;
+	var day = today.getDate();
+	var date = year + "년" + month + "월" + day + "일"
+	$('#wDate').text(date);
+
+	//댓글 입력
+	function repleWrite() {
+		var reContent = $("#reContent").val();
+		var rId = "${RepleVo.RId}"
+		var mId = "${mId}"
+		$.ajax({
+			type : "post",
+			url : "/reple/reple.do",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			dataType : "text",
+			data : JSON.stringify({
+				rId : rId,
+				reContent : reContent,
+				reDate : date,
+				mId : mId
+			}),
+			success : function() {
+				alert("댓글이 등록되었습니다.");
+
+			}
+		})
+	}
+	//댓글 수정
+	function repleEdit() {
+		$.ajax({
+			type : "put",
+			url : "/reple/{reId}",
+			success : function(result) {
+
+			}
+
+		})
+	}
+	//댓글 상세 보기
+	function repleDesc() {
+
+	}
+	//댓글 목록 출력
+	function repleList() {
+		$
+				.ajax({
+					type : "get",
+					url : "/reple/reple.do?RId=${recipeVo.RId}",
+					success : function(result) {
+						var output = "<table>";
+						console.log(result);
+						for ( var i in result) {
+							output += "<tr>";
+							output += "<td width='60'>" + result[i].reId;
+							output += "<td width='200'>" + result[i].reContent;
+							output += "<td width='100'>" + result[i].reDate;
+							output += "<td width='60'>" + result[i].mid;
+							output += "<td width='60'>"
+									+ "<button class='descBtn' data-toggle='modal' data-target='#repleDesc'>상세보기"
+							output += "<tr>"
+						}
+						output += "</table>";
+						$("#repleList").html(output);
+					}
+				});
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -88,13 +240,13 @@
 			<h3>📖Related Class</h3>
 			<div class="row">
 				<!-- 클래스리스트 시작 -->
-				<c:forEach var="lesson" items="${lessons }">
+				<c:forEach var="recipe" items="${recipe }">
 					<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${lesson.getCId() }">
+						<input type="hidden" value="${recipe.getrId() }">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
+								<a href="/lessonProduct.do?cId=${recipe.getCId() }"> <img
+									src="/images/${recipe.getCImg() }" width="150" height="250">
 								</a>
 								<div class="product-action">
 									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
@@ -130,30 +282,128 @@
 		</div>
 		<br />
 
-		<hr />
+
 		<div>
+			<div>
+
+				<h5>🖊댓글 목록</h5>
+				<br />
+				<div>
+					<div class="row" align="left">
+						<div class="col-lg-1">번호</div>
+						<div class="col-lg-6">댓글 내용</div>
+						<div class="col-lg-2">작성일자</div>
+						<div class="col-lg-2">작성자</div>
+						<div class="col-lg-1">비고</div>
+						<hr />
+					</div>
+					<input type="hidden" value="${reple}">
+					<!-- 댓글 목록 출력되는 부분 -->
+					<div class="row" id="repleList"></div>
+
+				</div>
+
+			</div>
+			<br /> <br />
+			<h5>🖊댓글 작성</h5>
+			<br /> <br />
 			<div class="container">
 				<div class="search-wrapper">
-					<form action="#">
+					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+					<c:if test="${sessionScope.mId != null }">
 						<div class="row justify-content-center">
-							<div class="col-lg-10 col-sm-8 col-10">
+							<div class="row" align="left">
+								<div class="col-lg-2">
+									<p>
+										작성자 &nbsp;: &nbsp;${sessionScope.mId }<input type="hidden"
+											name="mId" id="mId">
+									</p>
+								</div>
+								<div class="col-lg-10">
+									작성일자&nbsp;:&nbsp; <span id="wDate"> </span>
+								</div>
+							</div>
+							<div class="col-lg-19 col-sm-8 col-10">
 								<div class="search-input">
-									<input type="text" name="keyword" id="keyword"
+									<input type="text" name="reContent" id="reContent"
 										placeholder="🤷‍♂️댓글을 입력 해 주세요">
 								</div>
 							</div>
+
 							<div class="col-lg-2 col-sm-5 col-10">
 								<!-- Submit button -->
-								<button type="button" class="middle-btn">댓글</button>
+								<button class="middle-btn" id="repleBtn">댓글</button>
 							</div>
 						</div>
-					</form>
+
+					</c:if>
 				</div>
 			</div>
 		</div>
 
 		<!-- 댓글-->
-		<div class="replebox">
+		<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+		<%-- <c:if test="${sessionScope.mId != null }">
+			<div class="replebox" id="repleList">
+				<div class="single-box">
+					<div class="row">
+						<div class="icon col-lg-1">
+							<h1>
+								<i class="lni lni-bulb"></i>
+							</h1>
+						</div>
+						<form id="openForm" action="">
+							<div class="icon col-lg-11">
+								<div class="row" align="left">
+									<div class="col-lg-2">
+										<p>작성자 &nbsp;: &nbsp;${sessionScope.mId }</p>
+									</div>
+									<div class="col-lg-10">
+										<p>작성일자&nbsp;: &nbsp;${rDate }</p>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="row">
+					<textarea rows="3" cols="100" id="rContent" name="rContent"
+						placeholder="댓글을 입력하세요">
+					</textarea>
+				</div>
+				<br />
+				<div class="row" align="right">
+					<div class="col-lg-10">
+						<label id="repleSecret">비밀댓글<input type="checkbox"
+							id="repleSecret"></label>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" id="repleBtn">댓글 작성</button>
+					</div>
+				</div>
+				</form>
+		</c:if>
+	</div> --%>
+		<br />
+
+		<!-- <div class="re-reple">
+		<div class="search-wrapper">
+			<form name="form1" method="post">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 col-sm-4 col-3">
+						<div class="search-input">
+							<input type="text" name="keyword" id="keyword"
+								placeholder="🤷‍♂️댓글을 입력 해 주세요">
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-2 col-1">
+						Submit button
+						<button type="button" class="middle-btn">댓글</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		대댓글
+		<div class="rereplebox">
 			<div class="single-box">
 				<div class="row">
 					<div class="icon col-lg-1">
@@ -162,8 +412,14 @@
 						</h1>
 					</div>
 					<div class="icon col-lg-11">
-						<h5>작성자</h5>
-						<h5>작성일자</h5>
+						<div class="row" align="left">
+							<div class="col-lg-2">
+								<p>작성자</p>
+							</div>
+							<div class="col-lg-10">
+								<p>작성일자</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -182,59 +438,9 @@
 					<a>🚫</a>
 				</div>
 			</div>
-
 		</div>
-		<br />
-		<div class="re-reple">
-			<div class="search-wrapper">
-				<form action="#">
-					<div class="row justify-content-center">
-						<div class="col-lg-6 col-sm-4 col-3">
-							<div class="search-input">
-								<input type="text" name="keyword" id="keyword"
-									placeholder="🤷‍♂️댓글을 입력 해 주세요">
-							</div>
-						</div>
-						<div class="col-lg-2 col-sm-2 col-1">
-							<!-- Submit button -->
-							<button type="button" class="middle-btn">댓글</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<!-- 대댓글-->
-			<div class="rereplebox">
-				<div class="single-box">
-					<div class="row">
-						<div class="icon col-lg-1">
-							<h1>
-								<i class="lni lni-bulb"></i>
-							</h1>
-						</div>
-						<div class="icon col-lg-11">
-							<h5>작성자</h5>
-							<h5>작성일자</h5>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<p>Buy and sell everything from used cars to mobile phones and
-						computer or search for property.Buy and sell everything from used
-						cars to mobile phones and computer or search for property.Buy and
-						sell everything from used cars to mobile phones and computer or
-						search for property.</p>
-				</div>
-				<div class="row">
-					<div class="col-lg-10">
-						<a>↪</a>
-					</div>
-					<div class="col-lg-2">
-						<a>🚫</a>
-					</div>
-				</div>
-			</div>
 
-		</div>
+	</div> -->
 	</div>
 </body>
 </html>
