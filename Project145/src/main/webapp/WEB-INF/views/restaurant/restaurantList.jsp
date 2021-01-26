@@ -68,7 +68,7 @@
 								</div>
 								<div class="col-lg-3 col-sm-5 col-10">
 									<div class="restaurantInsertButton" style="margin-bottom: 5%">
-										<button class="restInsert" name="restInsert" id="restInsert">식당 제보하기</button>
+										<button type="button" class="restInsert" name="restInsert" id="restInsert" onclick="location.href='restaurantForm.do'">식당 제보하기</button>
 									</div>
 								</div>
 							</div>

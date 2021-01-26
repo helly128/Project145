@@ -12,24 +12,27 @@
 	</select>
 	
 	
-	
-	
 	<insert id="restInsert">
 	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
 							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
 							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
-			VALUES('rest'||rest_seq.nextval,#{restName},#{restStarAvg},#{restReviewCount},
-					#{restAddress},#{restPic},#{restTime},#{mId},#{restReservWait},
-					#{restReservAccept},#{restTel},#{bizNum},#{adminConfirm}
-					)	
+			VALUES('rest'||rest_seq.nextval,#{restName},0,0,
+					#{restAddress},#{restPic},#{restTime},#{mId},0,
+					0,#{restTel},'','false')	
 	</insert>
+	
 	
 	<insert id="restInsertNull">
 	INSERT INTO restaurant (REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
 							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
 							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
-          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'true')
+          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'false')
 	</insert>
+	
+	
+	<select id="restNameSerch">
+	SELECT REST_NAME FROM restaurant WHERE REST_NAME LIKE '%#{restName}%'
+	</select>
 	
 
 	<update id="restUpdate">
