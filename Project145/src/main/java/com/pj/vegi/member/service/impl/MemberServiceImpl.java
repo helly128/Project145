@@ -1,6 +1,7 @@
 package com.pj.vegi.member.service.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVo memberSelect(MemberVo vo) throws SQLException {
 		return dao.memberSelect(vo);
+	}
+
+	@Override
+	public int idDuplCheck(String data) throws SQLException {
+		return dao.idDuplCheck(data);
 	}
 
 	

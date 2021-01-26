@@ -37,15 +37,16 @@ $("#searchbtn").click(()=>{
 				}
 				else if(map.bizname == $("#restName").val()){
 				bizadd =map.bizaddress;
-					$("#result").text("사업자 확인 완료. 식당 검색을 해주세요.");
+					$("#result").text("사업자 확인 완료. 사업체 검색을 해주세요.");
 					
-				$("#restsearch").css("background-color","lightgreen");
+				
 				$("#restsearch").show();
 				$("#searchbtn").val("완료");
 				$("#searchbtn").css("background-color","#efefef");
 				$("#searchbtn").css("border","none");
 				$("#searchbtn").css("color","green");
 				$("#searchbtn").css("font-size","1.2rem");
+				$("#submit").show();
 				
 				$("#restAddress").val(map.bizaddress);
 				$("#restAddress").css("font-size","1.2rem");
@@ -79,9 +80,10 @@ $("#restsearch").click(()=>{
 						'<td>'+map[i].restAddress +'</td>' +
 						'<td>'+'<input name="restId" type="radio" required value="' +map[i].restId + '">'+'</td>';
 			
-						str +='</tr>' + '내식당 추가' ;
+						str +='</tr>';
 						
 					});
+					$("#bizSearchList").show();
 					$("#bizSearchList").append(str);
 					
 					$("#result").text("채식당에 이미 등록된 식당입니다. 아래 리스트에서 확인하세요.");
@@ -90,6 +92,8 @@ $("#restsearch").click(()=>{
 					
 					$("#restsearch").hide();
 					$("#submit").text('내식당등록');
+					$("#submit").text('내식당등록');
+					
 					$("#submit").css("background-color","lightgreen");
 					$("#submit").show();
 						
@@ -99,6 +103,7 @@ $("#restsearch").click(()=>{
 					
 				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
+				$('#frm').attr("action", "bizRegister.do");
 				$("#submit").css("background-color","lightgreen");
 				$("#submit").show();
 			}},
@@ -124,7 +129,7 @@ $("#restsearch").click(()=>{
 
 		<div class="search-wrapper">
 
-			<form id="frm" action="bizRegister.do">
+			<form id="frm" action="classRegister.do">
 
 				<div id="result" style="font-size: 1.5rem; color: green;">등록된
 					사업체명과 사업자등록 번호를 입력한 후 검색해주세요.</div>
@@ -169,7 +174,7 @@ $("#restsearch").click(()=>{
 					<input type="text" class="input" name="restAddress"
 						id="restAddress" readOnly required>
 						
-				<table id="bizSearchList" style="width:100%; height:30px; font-size:1rem;">
+				<table id="bizSearchList" style="width:100%; height:30px; font-size:1rem; display: none">
 				<tr><td>식당명</td><td>식당 주소</td><td>내 식당 확인</td></tr><tr></tr>
 				</table>
 				
@@ -178,8 +183,9 @@ $("#restsearch").click(()=>{
 				<div class="labelf">
 
 					<br>
-					<button type="button" id="restsearch" style="display: none">식당 정보검색</button>
-					<button type="submit" id="submit" style="display: none">새식당등록</button>
+					<button type="button" id="restsearch" style="display: none">식당사업자 등록</button>
+					<button type="submit" id="submit" style="display: none">클래스사업자 등록</button>
+					
 					<button type="button" id="cancel"
 						onclick="location.href='memberRegister.do'">취소</button>
 				</div>
