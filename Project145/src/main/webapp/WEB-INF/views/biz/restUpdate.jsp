@@ -78,7 +78,7 @@
 
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10">
-			<form id="frm" name="frm" action="restBizUpdate.do" method="post" onsubmit="checkForm();">
+			<form id="frm" name="frm" action="restBizUpdate.do" method="post" onsubmit="checkForm();" encType="multipart/form-data">
 				<div class="row">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
@@ -88,11 +88,18 @@
 								<h6 class="m-0 font-weight-bold text-primary">대표 사진</h6>
 							</div>
 							<!-- Card Body -->
+							<input type="hidden" name="restPic" value="${restVo.restPic }">
 							<div class="image-container p-3">
-								<img id="rest-image" src="${restVo.restPic }" width="100%">
+								<c:if test="${restVo.restPic eq null}">
+									<img id="rest-image" src="/images/images-empty.png"
+										width="100%">
+								</c:if>
+								<c:if test="${restVo.restPic ne null}">
+									<img src="/images/${restVo.restPic }" width="100%">
+								</c:if>
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"
-										name="restPic" class="restPic" accept="image/*"
+										name="uploadfile" class="restPic" accept="image/*"
 										onchange="setImage(event);">
 								</div>
 							</div>
@@ -179,6 +186,7 @@
 				<div align="center" class="mb-5 reservBtn">
 					<input type="submit" class="btn btn-primary" value="수정">
 					&nbsp;&nbsp; <input type="reset" class="btn btn-primary" value="취소">
+					&nbsp;&nbsp; <button type="button" class="btn btn-primary" onclick="location.href='restBizList.do'">목록보기</button>
 				</div>
 			</form>
 		</div>
@@ -199,14 +207,6 @@
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
-		//checkbox 중 체크된 row만 value 설정해서 delete
-		function checkForm() {
-			$("#checkBox").change(function() {
-				if ($("#checkBox").is(":checked")) {
-					$("#checkBox").value("true");
-				}
-			})
-		}
 		
 		var length = '<c:out value="${listLength}"/>';
 		$(function(){

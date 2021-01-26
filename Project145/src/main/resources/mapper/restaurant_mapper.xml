@@ -4,21 +4,59 @@
 
 <mapper namespace="com.pj.vegi.restaurant.mapper.RestaurantMapper">
 
-	<select id="restSelect" resultType="com.pj.vegi.vo.RestaurantVo">
+	<select id="bizCheckList" resultType="RestaurantVo">
 		SELECT 
 		*
-		FROM member
-		WHERE m_id = #{mId}
+		FROM restaurant
+		WHERE rest_name = #{restName}
 	</select>
 	
+	
 	<insert id="restInsert">
-	INSERT INTO MEMBER(M_ID, PASSWORD, M_NAME,EMAIL,VEGTYPE,AUTH) 
-			VALUES(
-			#{mId},#{password},#{mName},#{email},#{vegtype},#{auth}
-			)
-	
-	
+	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
+							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
+			VALUES('rest'||rest_seq.nextval,#{restName},0,0,
+					#{restAddress},#{restPic},#{restTime},#{mId},0,
+					0,#{restTel},'','false')	
 	</insert>
+	
+	
+	<insert id="restInsertNull">
+	INSERT INTO restaurant (REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
+							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
+          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'false')
+	</insert>
+	
+	
+	<select id="restNameSerch">
+	SELECT REST_NAME FROM restaurant WHERE REST_NAME LIKE '%#{restName}%'
+	</select>
+	
+
+	<update id="restUpdate">
+	Update restaurant 
+	set bizNum=#{bizNum} 
+	where rest_id = #{restId}
+	
+	</update>
+	
+	
+	
+	
+	<update id="bizInfoUpdate">
+	Update restaurant set bizNum=#{bizNum} where rest_id = #{restId}
+					  
+		
+          
+	
+	</update>
+
+	<select id="getRestaurantList" resultType="RestaurantVo">
+	SELECT * FROM RESTAURANT
+	</select>
+
 	
 	
 </mapper>

@@ -47,8 +47,8 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	}
 
 	@Override
-	public List<RestReservVo> restReservList(RestReservVo vo) {
-		return dao.restReservList(vo);
+	public List<RestReservVo> restReservWaitList(RestReservVo vo) {
+		return dao.restReservWaitList(vo);
 	}
 
 	@Override
@@ -64,5 +64,25 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	@Override
 	public int restMenuInsert(RestMenuVo vo) {
 		return dao.restMenuInsert(vo);
+	}
+
+	@Override
+	public int getCount(RestaurantVo vo) {
+		return dao.getCount(vo);
+	}
+
+	@Override
+	public int restAllMenuDelete(RestaurantVo vo) {
+		return dao.restAllMenuDelete(vo);
+	}
+
+	@Override
+	public int restBizReservUpdate(RestReservVo vo) {
+		return dao.restBizReservUpdate(vo);
+	}
+
+	@Override
+	public int reservRestUpdate(RestReservVo vo) {
+		return dao.reservRestUpdate(vo);
 	}
 }

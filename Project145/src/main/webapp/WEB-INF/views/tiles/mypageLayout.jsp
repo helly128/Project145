@@ -12,7 +12,7 @@
 <meta name="author" content="">
 
 <title>mypageLayout.jsp</title>
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- Custom fonts for this template-->
 <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">

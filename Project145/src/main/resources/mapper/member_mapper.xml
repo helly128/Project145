@@ -12,13 +12,17 @@
 	</select>
 	
 	<insert id="memberInsert">
-	INSERT INTO MEMBER(M_ID, PASSWORD, M_NAME,EMAIL,VEGTYPE,AUTH) 
+	INSERT INTO MEMBER(M_ID, PASSWORD, M_NAME,EMAIL,VEGTYPE,AUTH,BIZNUM) 
 			VALUES(
-			#{mId},#{password},#{mName},#{email},#{vegtype},#{auth}
+			#{mId},#{password},#{mName},#{email},#{vegtype},#{auth},#{bizNum}
 			)
 	
 	
 	</insert>
+	
+	<select id="idDuplCheck" resultType="int">
+	select Count(*) from member where m_id = #{data}
+	</select>
 	
 	
 </mapper>

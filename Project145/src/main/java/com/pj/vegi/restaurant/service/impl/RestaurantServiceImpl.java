@@ -1,6 +1,7 @@
 package com.pj.vegi.restaurant.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,22 +16,56 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Autowired
 	private RestaurantMapper dao;	
 
-	
+
 	@Override
-	public boolean restaurantCheck(RestaurantVo vo) throws SQLException {
-			RestaurantVo restVo = dao.restaurantSelect(vo);
-			if(restVo != null) { 
-				return true;			
-			} else {
-				return false;
-			}
-			
+	public int restInsert(RestaurantVo vo) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.restInsert(vo);
+	}
+
+	@Override
+	public List<RestaurantVo> bizCheckList(String restName) throws SQLException {
+		
+		return dao.bizCheckList(restName);
+	}
+
+	@Override
+	public int bizInfoUpdate(RestaurantVo vo) {
+		
+		return dao.bizInfoUpdate(vo);
+		
+	}
+	
+
+	@Override
+	public int restInsertNull(RestaurantVo vo) throws SQLException {
+		// TODO Auto-generated method stub
+		return dao.restInsertNull(vo);
+	}
+
+	
+
+	@Override
+	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) {
+		// TODO Auto-generated method stub
+		return dao.getRestaurantList(vo);
 	}
 
 	@Override
 	public int restaurantInsert(RestaurantVo vo) throws SQLException {
 		// TODO Auto-generated method stub
-		return dao.restaurantInsert(vo);
+		return 0;
+	}
+	
+	@Override
+	public List<RestaurantVo> restNameSerchList(String restName) {
+		
+		return dao.restNameSerchList(restName);
+		
 	}
 
+
+
+
+	
 }

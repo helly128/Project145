@@ -9,53 +9,102 @@
 	<select id="restBizList" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE m_id=#{mId}
+		order by rest_id
 	</select>
-	
+
 	<select id="restBizSelect" resultType="RestaurantVo">
 		SELECT * FROM restaurant
 		WHERE rest_id=#{restId}
 	</select>
-	
-	<select id="restMenuList" resultType="com.pj.vegi.vo.RestMenuVo">
+
+	<select id="restMenuList" resultType="RestMenuVo">
 		SELECT * FROM rest_menu
 		WHERE rest_id=#{restId}
 	</select>
-	
-	<select id="restReservList"
-		resultType="com.pj.vegi.vo.RestReservVo">
+
+	<select id="restReservWaitList"
+		resultType="RestReservVo">
 		SELECT * FROM rest_reserv
 		WHERE rest_id = #{restId}
+		AND rest_reserv_status = '대기'
 	</select>
-	
+
 	<update id="restBizUpdate">
 		UPDATE restaurant
 		SET rest_address = #{restAddress},
-			rest_time=#{restTime},
-			rest_tel=#{restTel}
-		WHERE rest_id=#{restId}
+		rest_time=#{restTime},
+		rest_tel=#{restTel},
+		rest_pic=#{restPic}
+		WHERE
+		rest_id=#{restId}
 	</update>
-	
+
 	<delete id="restBizDelete">
 		DELETE FROM restaurant
 		WHERE rest_id=#{restId}
 	</delete>
-	
+
 	<update id="restMenuUpdate">
 		UPDATE rest_menu
 		SET menu_name = #{menuName},
-			menu_vege_type = #{menuVegeType},
-			menu_price = #{menuPrice}
-		WHERE menu_id=#{menuId}
+		menu_vege_type = #{menuVegeType},
+		menu_price = #{menuPrice}
+		WHERE
+		menu_id=#{menuId}
 	</update>
-	
+
 	<delete id="restMenuDelete">
 		DELETE FROM rest_menu
 		WHERE menu_id=#{menuId}
 	</delete>
-	
+
 	<insert id="restMenuInsert">
 		INSERT INTO rest_menu
-		VALUES('menu' || menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice}, #{restId})
+		VALUES('menu' ||
+		menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice},
+		#{restId})
+	</insert>
+
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM restaurant
+		WHERE m_id=#{mId}
+	</select>
+
+	<insert id="restBizInsert">
+		INSERT INTO restaurant
+		(rest_id, rest_name,
+		rest_address, rest_pic,
+		rest_time, m_id, rest_tel, biznum, admin_confirm)
+		VALUES('rest' || rest_seq.nextval,
+		#{restName}, #{restAddress},
+		#{restPic}, #{restTime}, #{mId},
+		#{restTel},
+		(SELECT biznum FROM member
+		WHERE m_id=#{mId}), 'true')
+
+		<selectKey keyProperty="seq" resultType="int" order="AFTER">
+			SELECT rest_seq.currval
+			FROM DUAL
+		</selectKey>
 	</insert>
 	
+	<delete id="restAllMenuDelete">
+		DELETE FROM rest_menu
+		WHERE rest_id=#{restId}
+	</delete>
+	
+	<update id="restBizReservUpdate">
+		UPDATE rest_reserv
+		SET rest_reserv_status = #{restReservStatus}
+		WHERE rest_reserv_num = #{restReservNum}
+	</update>
+	
+	<update id="reservRestUpdate">
+		UPDATE restaurant
+		SET rest_reserv_wait = rest_reserv_wait - 1
+		<if test='restReservStatus == "예약완료"'>
+			, rest_reserv_accept = rest_reserv_accept + 1
+		</if>
+		WHERE rest_id = #{restId}
+	</update>
 </mapper>
