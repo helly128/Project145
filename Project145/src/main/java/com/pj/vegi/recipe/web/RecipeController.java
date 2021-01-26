@@ -3,6 +3,8 @@ package com.pj.vegi.recipe.web;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,14 +64,14 @@ public class RecipeController {
 	@Autowired
 	RecipeMaterialService recipeMaterialService;
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo,RecipeMaterialVo rmVo,Model model) throws SQLException {
+	public String recipeDesc(RecipeVo rVo,RecipeMaterialVo rmVo,Model model,HttpSession session) throws SQLException {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
 		
 		LessonVO lessonVo = new LessonVO();
 		lessonVo.setCId(recipeVo.getCId());
 		List<LessonVO> lessonSelectList = lessonService.lessonList(lessonVo);
-		
+		session.setAttribute("rId", rVo.getRId());
 		model.addAttribute("recipeSelect", recipeVo);
 		model.addAttribute("lessonSelectList",lessonSelectList);
 		model.addAttribute("recipeMaterial",recipeMaterialSelectList);
