@@ -9,7 +9,14 @@ public class DepositReqListVO {
 	String req_client_name;
 	String req_client_num;
 	String transfer_purpose;
+	String req_client_fintech_use_num;
 	
+	public String getReq_client_fintech_use_num() {
+		return req_client_fintech_use_num;
+	}
+	public void setReq_client_fintech_use_num(String req_client_fintech_use_num) {
+		this.req_client_fintech_use_num = req_client_fintech_use_num;
+	}
 	public String getTran_no() {
 		return tran_no;
 	}

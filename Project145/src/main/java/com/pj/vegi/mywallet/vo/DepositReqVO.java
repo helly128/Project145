@@ -11,6 +11,7 @@ public class DepositReqVO {
 	String tran_dtime;
 	String req_cnt;
 	String access_token;
+	ArrayList<DepositReqListVO> req_list;
 
 	public String getAccess_token() {
 		return access_token;
@@ -20,7 +21,6 @@ public class DepositReqVO {
 		this.access_token = access_token;
 	}
 
-	ArrayList<DepositReqListVO> req_list;
 	
 	public ArrayList<DepositReqListVO> get_res_list() {
 		return req_list;
