@@ -22,11 +22,11 @@
 		WHERE rest_id=#{restId}
 	</select>
 
-	<select id="restReservWaitList"
+	<select id="restReservList"
 		resultType="RestReservVo">
 		SELECT * FROM rest_reserv
 		WHERE rest_id = #{restId}
-		AND rest_reserv_status = '대기'
+		AND rest_reserv_status = #{restReservStatus}
 	</select>
 
 	<update id="restBizUpdate">

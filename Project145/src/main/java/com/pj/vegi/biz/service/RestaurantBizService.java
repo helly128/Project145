@@ -10,7 +10,7 @@ public interface RestaurantBizService {
 	List<RestaurantVo> restBizList(RestaurantVo vo);
 	RestaurantVo restBizSelect(RestaurantVo vo);
 	List<RestMenuVo> restMenuList(RestMenuVo vo);
-	List<RestReservVo> restReservWaitList(RestReservVo vo);
+	List<RestReservVo> restReservList(RestReservVo vo);
 	
 	int restBizInsert(RestaurantVo vo);
 	int restBizUpdate(RestaurantVo vo);

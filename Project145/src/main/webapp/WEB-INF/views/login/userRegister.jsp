@@ -65,12 +65,14 @@ $("input").keyup(function(){
 
 $("#submitbtn").click(()=>{
 	if ($("#email").val()==""||$("#mName").val()==""||$("#vegitype").val()==""){
-		alert("정보가 입력되지 않았습니다. 다시 확인하세요.")
+		
+		alert("정보가 입력되지 않았습니다. 다시 확인하세요.");
+		$("#vegitype").val('비건');
 	}
 	else if ($("#mId").val()==""){		
 		alert("아이디 중복체크를 하세요");}
 	else if($("#password").val()!=$("#password2").val()||$("#password").val()==""){
-		alert("비밀번호를 다시 확인하세요");
+		alert("비밀번호를 다시 확인하세요");	
 	}else if($("#mId").val() == $("#Id").val()){
 		document.memberfrm.submit();
 	}else{
@@ -169,13 +171,12 @@ $("#submitbtn").click(()=>{
 							<tr>
 
 								<td><input type="checkbox" class="type" value="비건" checked
-									readonly>
+									disabled>
 									<div class="tbl-data" data-item="🥦"></div></td>
 								<td><input type="checkbox" class="vtype" value="락토"
-									checked="checked">
+									>
 									<div class="tbl-data" data-item="🧀"></div></td>
-								<td><input type="checkbox" class="vtype" value="오보"
-									checked="checked">
+								<td><input type="checkbox" class="vtype" value="오보">
 									<div class="tbl-data" data-item="🥚"></div></td>
 
 							</tr>
@@ -185,9 +186,9 @@ $("#submitbtn").click(()=>{
 
 
 					</div>
-					<input type="text" id="vegi" readonly required name="vegtype"
-						value="비건"
-						style="text-align: center; height: 3rem; padding: 10px;">
+					<input type="text" id="vegi" readonly value="비건" required name="vegtype"
+						
+						style="text-align: center; display:none; height: 3rem; padding: 10px;">
 				</div>
 
 
@@ -207,22 +208,38 @@ $("#submitbtn").click(()=>{
 	</div>
 	<script type="text/javascript">
 
-
 		// .check 클래스 중 어떤 원소가 체크되었을 때 발생하는 이벤트
+		
 
 		$(".vtype").click(function(){ 
+			if($("#vegi").val()!=null){ 
 			var str ="";  
 			$(".vtype").each(function(){ 
-				if($(this).is(":checked")){ 
-					str += $(this).val() + ""}
-				else {str =="비건"}
 				
+				if($(this).is(":checked"))
+				str += $(this).val()+'';
 			});
-			$("#vegi").val(str);  
+			$("#vegi").val(str);  }
+			else{
+				var str ="비건";
+				$("#vegi").val(str);
+			}
 		});
-//	})
+		
+	/* 아무것도 안눌렸을때 비건 
+		$(".vtype").click(function(){ 
+			if($("#vegi").val()==''){
+				console.log("ql비건출력"); 
+				var str="비건";
+			}$("#vegi").val(str);
+		}); */
+		
+		
+			
+		
+		
+		
 
-$(".vtype").click();
 </script>
 </body>
 

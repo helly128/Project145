@@ -73,18 +73,38 @@ $("#restsearch").click(()=>{
 				
 				if(map != null && map.length > 0){
 					console.log(map.length);
-					console.log(map[0].restName);
+					console.log(map[0].bizNum);
 					var str ='<tr>';
 					$.each(map, function(i){
+						
+						if(map[i].bizNum==""){
+							map[i].bizNum="사업자미상";
+						}else if(map[i].bizNum==$("#bizNum").val()){
+							map[i].bizNum = "입력한 사업자번호";
+						}else {
+							map[i].bizNum = "다른 사업자번호";
+							map[i].restId = 'not';
+							}
+						
+						
+						
 						str += '<td>'+map[i].restName+'</td>' +
 						'<td>'+map[i].restAddress +'</td>' +
-						'<td>'+'<input name="restId" type="radio" required value="' +map[i].restId + '">'+'</td>';
+						'<td>'+map[i].bizNum +'</td>' +
+						
+						'<td>'+
+						'<input name="restId" type="radio" id="'+map[i].restId +'" required value="' +map[i].restId + '">'+'</td>';
 			
 						str +='</tr>';
-						
+	
 					});
 					$("#bizSearchList").show();
 					$("#bizSearchList").append(str);
+					//남의 사업자번호에는 등록하지 못하도록 막기  질문 : id가 2개 이상이면?
+					$('#not').attr("onClick","return false");
+					$('#not').attr("disabled", true); 
+					//$(".restId:input[value='not']").attr("onClick","return false");
+					//$(".restId:input[value='not']").attr("disabled", true);
 					
 					$("#result").text("채식당에 이미 등록된 식당입니다. 아래 리스트에서 확인하세요.");
 					//submit action위치 바꾸기. 
@@ -100,7 +120,7 @@ $("#restsearch").click(()=>{
 				}else{ 
 					var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
 					$("#noResult").append(str);
-					
+				
 				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
 				$('#frm').attr("action", "bizRegister.do");
@@ -112,6 +132,8 @@ $("#restsearch").click(()=>{
 				
 		});
 });
+
+
 
 });
 
@@ -175,7 +197,7 @@ $("#restsearch").click(()=>{
 						id="restAddress" readOnly required>
 						
 				<table id="bizSearchList" style="width:100%; height:30px; font-size:1rem; display: none">
-				<tr><td>식당명</td><td>식당 주소</td><td>내 식당 확인</td></tr><tr></tr>
+				<tr><td>식당명</td><td>주소</td><td>등록 번호</td><td>내식당확인</td></tr><tr></tr>
 				</table>
 				
 				</div>

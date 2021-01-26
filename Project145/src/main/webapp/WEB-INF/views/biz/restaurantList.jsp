@@ -27,7 +27,7 @@
 							class="dataTables_wrapper dt-bootstrap4" style="width: 98%">
 							<div class="row">
 								<div class="col-sm-12">
-									<div align="left" class="mb-2">
+									<div align="right" class="mb-2">
 										<button class="btn btn-outline-primary"
 											onclick="location.href='restBizInsertForm'">식당 추가</button>
 									</div>
@@ -36,15 +36,10 @@
 										style="width: 100%; text-align: center;">
 										<thead>
 											<tr role="row">
-												<th class="sorting_asc" tabindex="0"
-													aria-controls="dataTable" rowspan="1" colspan="1"
-													aria-sort="ascending" style="width: 45px;">가게명</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1" style="width: 60px;">위치</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1" style="width: 34px;">예약요청</th>
-												<th class="sorting" tabindex="0" aria-controls="dataTable"
-													rowspan="1" colspan="1" style="width: 34px;">예약완료</th>
+												<th style="width: 45px;">가게명</th>
+												<th style="width: 60px;">위치</th>
+												<th style="width: 34px;">예약요청</th>
+												<th style="width: 34px;">예약완료</th>
 											</tr>
 										</thead>
 										<tbody>
