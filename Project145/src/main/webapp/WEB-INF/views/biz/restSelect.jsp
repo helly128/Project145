@@ -127,34 +127,36 @@
 								style="width: 100%; text-align: center;">
 								<thead>
 									<tr role="row">
-										<th style="width: 15px;"><input type="checkbox"
+										<th style="width: 10px;"><input type="checkbox"
 											id="checkAll" class="table-checkbox" style="zoom: 1.5"></th>
-										<th style="width: 44px;">예약자아이디</th>
-										<th style="width: 54px;">예약자명</th>
-										<th style="width: 54px;">예약일</th>
+										<th style="width: 40px;">예약자ID</th>
+										<th style="width: 52px;">예약자명</th>
+										<th style="width: 50px;">예약일</th>
 										<th style="width: 20px;">인원</th>
-										<th style="width: 34px;">예약상태</th>
+										<th style="width: 40px;">예약상태</th>
 									</tr>
 								</thead>
 								<tbody>
 									<form id="frm" action="restBizReservUpdate.do" method="post">
 										<input type="hidden" name="hiddenFlag" class="hiddenFlag">
-										<c:forEach var="reservVo" items="${reservVo.reservVoList }"
+										<c:forEach var="vo" items="${reservVo.reservVoList }"
 											varStatus="status">
-											<input type="hidden" name="reservVoList[${status.index }].restId" value="${restVo.restId }">
+											<input type="hidden"
+												name="reservVoList[${status.index }].restId"
+												value="${vo.restId }">
 											<input type="hidden"
 												name="reservVoList[${status.index }].restReservNum"
-												value="${reservVo.restReservNum }">
+												value="${vo.restReservNum }">
 											<tr role="row" class="tr-hover">
 												<td><input type="checkbox" class="td-checkbox"
 													name="reservVoList[${status.index }].checkFlag"
 													style="zoom: 1.5"></td>
-												<td>${reservVo.getMId() }</td>
-												<td>${reservVo.restReservName }</td>
-												<td><fmt:formatDate value="${reservVo.restReservDate }"
+												<td>${vo.getMId() }</td>
+												<td>${vo.restReservName }</td>
+												<td><fmt:formatDate value="${vo.restReservDate }"
 														pattern="yyyy-MM-dd HH:mm" /></td>
-												<td>${reservVo.restReservPeople }</td>
-												<td>${reservVo.restReservStatus }</td>
+												<td>${vo.restReservPeople }</td>
+												<td>${vo.restReservStatus }</td>
 											</tr>
 										</c:forEach>
 									</form>
@@ -165,15 +167,14 @@
 				</div>
 			</div>
 			<div align="center" class="mb-5 reservBtn">
-				<button class="btn btn-primary submitBtn"
-					disabled="true" onclick="acceptBtn()">예약 수락
-				</button>
-				&nbsp;&nbsp; <button class="btn btn-primary submitBtn"
-					disabled="true" onclick="refuseBtn()">예약 거절
-				</button>
+				<button class="btn btn-primary submitBtn" disabled="true"
+					onclick="acceptBtn()">예약 수락</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-primary submitBtn" disabled="true"
+					onclick="refuseBtn()">예약 거절</button>
 			</div>
-			
-			
+
+
 			<div class="mb-5">
 				<hr>
 			</div>
@@ -194,60 +195,41 @@
 									class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
 									aria-labelledby="dropdownMenuLink" style="">
 									<div class="dropdown-header">예약상태</div>
-									<a class="dropdown-item" href="#">예약완료</a> <a
-										class="dropdown-item" href="#">예약거절</a>
+									<a class="dropdown-item" href="javascript:void(0);"
+										onclick="reservDone('accept')">예약완료</a> <a class="dropdown-item"
+										href="javascript:void(0);" onclick="reservDone('refuse')">예약거절</a>
 								</div>
 							</div>
 						</div>
 						<!-- Card Body -->
 						<div class="card-body">
-							<table class="table dataTable" id="dataTable" width="100%"
+							<table class="table dataTable" id="completeReserv" width="100%"
 								cellspacing="0" role="grid" aria-describedby="dataTable_info"
 								style="width: 100%; text-align: center;">
 								<thead>
 									<tr role="row">
-										<th style="width: 15px;"><input type="checkbox"
-											id="checkAll" class="table-checkbox" style="zoom: 1.5"></th>
-										<th style="width: 44px;">예약자아이디</th>
-										<th style="width: 54px;">예약자명</th>
-										<th style="width: 54px;">예약일</th>
+										<th style="width: 40px;">예약자ID</th>
+										<th style="width: 52px;">예약자명</th>
+										<th style="width: 50px;">예약일</th>
 										<th style="width: 20px;">인원</th>
-										<th style="width: 34px;">예약상태</th>
+										<th style="width: 40px;">예약상태</th>
 									</tr>
 								</thead>
 								<tbody>
-									<form id="frm" action="restBizReservUpdate.do" method="post">
-										<input type="hidden" name="hiddenFlag" class="hiddenFlag">
-										<c:forEach var="reservVo" items="${reservVo.reservVoList }"
-											varStatus="status">
-											<input type="hidden" name="reservVoList[${status.index }].restId" value="${restVo.restId }">
-											<input type="hidden"
-												name="reservVoList[${status.index }].restReservNum"
-												value="${reservVo.restReservNum }">
-											<tr role="row" class="tr-hover">
-												<td><input type="checkbox" class="td-checkbox"
-													name="reservVoList[${status.index }].checkFlag"
-													style="zoom: 1.5"></td>
-												<td>${reservVo.getMId() }</td>
-												<td>${reservVo.restReservName }</td>
-												<td><fmt:formatDate value="${reservVo.restReservDate }"
-														pattern="yyyy-MM-dd HH:mm" /></td>
-												<td>${reservVo.restReservPeople }</td>
-												<td>${reservVo.restReservStatus }</td>
-											</tr>
-										</c:forEach>
-									</form>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="mb-5"></div>
 		</div>
 		<div class="col-lg-1"></div>
 	</div>
 
 	<script>
+	
+
 		$(function() {
 			//체크박스 전체선택/해제
 			$('#checkAll').click(function() {
@@ -267,6 +249,8 @@
 					$('.submitBtn').prop('disabled', true);
 				}
 			})
+			
+			reservDone('accept');
 		});
 
 		function deleteConfirm() {
@@ -288,6 +272,48 @@
 			$('.hiddenFlag').val('refuse');
 			$('#frm').submit();
 		}
+		
+		function reservDone(msg){
+			$('#completeReserv tbody').empty();
+			var restId = "${restVo.restId}";
+			if(msg == 'accept'){
+				var url = 'restBizReservAccept.do/';
+			} else{
+				var url = 'restBizReservRefuse.do/';
+			}
+			$.ajax({
+				url: url+restId,
+				type: 'get',
+				contentType: "application/json",
+				success: function(result){
+					$.each(result, function(idx, item){
+						var date = dateFormat(item.restReservDate);
+						var tbody = $('#completeReserv tbody');
+						tbody.append($('<tr>').append($('<td>').html(item.mid))
+								.append($('<td>').html(item.restReservName))
+								.append($('<td>').html(date))
+								.append($('<td>').html(item.restReservPeople))
+								.append($('<td>').html(item.restReservStatus)));
+					});
+				}
+			});
+		}
+		
+		function dateFormat(dat){
+			var date = new Date(dat);
+			var year = date.getFullYear();
+		    var month = date.getMonth() + 1;
+		    var day = date.getDate();
+		    var hour = date.getHours();
+		    var min = date.getMinutes();
+		    if(min < 10){
+		    	min = '0'+min;
+		    }
+		    var newDate = year + "-" + month + "-" + day + " " + hour + ":" + min;
+		    return newDate;
+		}
+		
+		
 	</script>
 </body>
 </html>

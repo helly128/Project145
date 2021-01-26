@@ -53,10 +53,9 @@
 				aria-controls="collapseTwo"><span>내 클래스 관리</span>
 			</a></li>
 
-			<!-- Nav Item - Utilities Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed" href="/restBizList.do"
-				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"><span>내 식당 관리</span>
+			<!-- Nav Item - Tables -->
+			<li class="nav-item"><a class="nav-link" href="/restBizList.do">
+					<span>내 식당 관리</span>
 			</a></li>
 
 

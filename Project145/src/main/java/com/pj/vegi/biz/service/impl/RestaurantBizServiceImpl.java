@@ -47,8 +47,8 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	}
 
 	@Override
-	public List<RestReservVo> restReservWaitList(RestReservVo vo) {
-		return dao.restReservWaitList(vo);
+	public List<RestReservVo> restReservList(RestReservVo vo) {
+		return dao.restReservList(vo);
 	}
 
 	@Override
