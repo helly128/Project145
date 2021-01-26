@@ -26,7 +26,7 @@
 	INSERT INTO restaurant (REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
 							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
 							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
-          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'true')
+          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'false')
 	</insert>
 	
 	

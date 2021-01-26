@@ -207,14 +207,6 @@
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
-		//checkbox 중 체크된 row만 value 설정해서 delete
-		function checkForm() {
-			$("#checkBox").change(function() {
-				if ($("#checkBox").is(":checked")) {
-					$("#checkBox").value("true");
-				}
-			})
-		}
 		
 		var length = '<c:out value="${listLength}"/>';
 		$(function(){
