@@ -24,4 +24,5 @@ public class LessonVO {
 	private int cParti;
 	private int cJoin;
 	private String cLoc;
+	private String bizNum;
 }
