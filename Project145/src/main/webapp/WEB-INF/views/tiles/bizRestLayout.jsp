@@ -47,10 +47,8 @@
 
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="#" data-toggle="collapse"
-				data-target="#collapseTwo" aria-expanded="true"
-				aria-controls="collapseTwo"><span>내 클래스 관리</span>
+			<li class="nav-item"><a class="nav-link" href="/classBizList.do">
+			<span>내 클래스 관리</span>
 			</a></li>
 
 			<!-- Nav Item - Tables -->

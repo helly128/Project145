@@ -74,6 +74,7 @@ $("#restsearch").click(()=>{
 				if(map != null && map.length > 0){
 					console.log(map.length);
 					console.log(map[0].bizNum);
+				//	data = data.replaceAll("-","");
 					var str ='<tr>';
 					$.each(map, function(i){
 						
@@ -112,10 +113,9 @@ $("#restsearch").click(()=>{
 					
 					$("#restsearch").hide();
 					$("#submit").text('내식당등록');
-					$("#submit").text('내식당등록');
-					
+										
 					$("#submit").css("background-color","lightgreen");
-					$("#submit").show();
+					$("#submitbtn").show();
 						
 				}else{ 
 					var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
@@ -124,6 +124,8 @@ $("#restsearch").click(()=>{
 				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
 				$('#frm').attr("action", "bizRegister.do");
+				$("#submit").text('내식당등록');
+
 				$("#submit").css("background-color","lightgreen");
 				$("#submit").show();
 			}},
