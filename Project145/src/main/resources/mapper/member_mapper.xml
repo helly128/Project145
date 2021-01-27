@@ -24,5 +24,13 @@
 	select Count(*) from member where m_id = #{data}
 	</select>
 	
+	<select id="idSearch" resultType="MemberVo">
+		SELECT
+		*
+		FROM member
+		WHERE m_name = #{mName} and email = #{email}
+		
+	
+	</select>
 	
 </mapper>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +28,7 @@ public class MemberControllerCJ {
 	@Autowired
 	MemberService memberService;
 
+	
 	@RequestMapping("/memberRegister.do")//회원가입 
 	public String memberRegister() {
 		return "login/memberRegister";
@@ -94,17 +95,29 @@ public class MemberControllerCJ {
 		map.get("bizname");
 		map.get("bizaddress");
 		String bizNum=map.get("bizNum");
-		if(bizNum!="") {bizNum ="번호없음";
-		}else if(bizNum==data) {
-			bizNum = "같은 번호";
-		}else{
-			bizNum = "다른 번호";
-		}
+//		if(bizNum!="") {bizNum ="번호없음";
+//		}else if(bizNum==data) {
+//			bizNum = "같은 번호";
+//		}else{
+//			bizNum = "다른 번호";
+//		}
 		map.put("bizNum", bizNum); //번호보여주기 
 		map.get("bizNum");
 		return map;
 	}
 
+	@RequestMapping("/idSearch.do")
+	@ResponseBody
+	public MemberVo idSearch( 
+			@RequestParam(value="email") String email,
+			@RequestParam(value="mName") String mName,
+			MemberVo vo){
+		System.out.println(email+mName);//성공 
+		vo.setMName(mName);
+		vo.setEmail(email);
+		
+		return memberService.idSearch(vo);
+	}
 	
 	
 	
@@ -164,8 +177,12 @@ public class MemberControllerCJ {
 			return "login/bizRegister";
 		}
 
+		@RequestMapping("/searchIDPW.do")//회원가입 
+		public String searchIDPW() {
+			return "login/searchIDPW";
+		}
 
-
+		
 
 
 //@RequestMapping("/bizRestEdit.do")

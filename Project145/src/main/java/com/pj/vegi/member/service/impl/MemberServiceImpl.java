@@ -44,5 +44,14 @@ public class MemberServiceImpl implements MemberService {
 		return dao.idDuplCheck(data);
 	}
 
+	@Override
+	public MemberVo idSearch(MemberVo vo) {
+		return dao.idSearch(vo);
+	}
+
+	
+
+	
+
 	
 }
