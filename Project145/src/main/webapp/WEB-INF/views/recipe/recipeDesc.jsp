@@ -55,7 +55,7 @@ $(document).ready(function){
 								<td>${reId}</td>
 								<td>${reContent}</td>
 								<td>${reDate}</td>
-								<td>${MId }</td>
+								<td>${MId}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -79,17 +79,19 @@ $(document).ready(function){
 
 	$(document).ready(function() {
 		repleList();//댓글 목록 불러오기
+
 		$("#repleBtn").click(function() {
 			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
 
-		/* $("#deleteBtn").click(function() {
+		$("#deleteBtn").click(function() {
 			if (confirm("정말...삭제하시겠어요?")) {
-				document.form
+				repleDelete();
 			}
-		}); */
+		});
 
 		$(".descBtn").click(function() {//댓글 상세 보기 모달 창
+			console.log("정보");
 			var reId = $(this).parents().find("td").eq(0).text();
 			var reContent = $(this).parents().find("td").eq(1).text();
 			var reDate = $(this).parents().find("td").eq(2).text();
@@ -125,7 +127,10 @@ $(document).ready(function){
 			}),
 			success : function() {
 				alert("댓글이 등록되었습니다.");
-
+				$("#repleList").empty();
+				//$("#repleList").append('#repleList');
+				repleList();
+				$("#reContent").val("");
 			}
 		})
 	}
@@ -135,9 +140,25 @@ $(document).ready(function){
 			type : "put",
 			url : "/reple/{reId}",
 			success : function(result) {
+				alert("댓글이 수정되었습니다.");
+				$("#repleList").empty();
+				//$("#repleList").append('#repleList');
+				repleList();
+				$("#reContent").val("");
+			}
+		})
+	}
+	//댓글 삭제
+	function repleDelete() {
+		$.ajax({
+			type : "delete",
+			url : "/reple/reple.do/{reId}",
+			success : function(result) {
+				alert("댓글이 삭제되었습니다.");
+				$("#repleList").empty();
+				$("#repleList").load(location.href + '#repleList');
 
 			}
-
 		})
 	}
 	//댓글 상세 보기
@@ -169,6 +190,32 @@ $(document).ready(function){
 				});
 	}
 </script>
+<!-- 댓글 폼 수정용
+<form>
+  <div class="form-group row">
+    <label for="reId" class="col-sm-2 col-form-label">reId</label>
+    <div class="col-sm-3">
+      <input type="text" readonly class="form-control-plaintext" id="reId" value="${reId}">
+    </div>
+    <label for="reDate" class="col-sm-2 col-form-label">reDate</label>
+    <div class="col-sm-3">
+      <input type="text" readonly class="form-control-plaintext" id="reDate" value="email@example.com">
+    </div>
+    <label for="mId" class="col-sm-2 col-form-label">reDate</label>
+    <div class="col-sm-4">
+      <input type="text" readonly class="form-control-plaintext" id="mId" value="작성자">
+    </div>
+    
+  </div>
+  <div class="form-group row">
+    <label for="reContent" class="col-sm-2 col-form-label">댓글 내용</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="reContent" placeholder="댓글을 입력하세요">
+    </div>
+    
+  </div>
+</form>
+ -->
 </head>
 <body>
 	<div class="container">
@@ -288,7 +335,7 @@ $(document).ready(function){
 
 				<h5>🖊댓글 목록</h5>
 				<br />
-				<div>
+				<div id="reloadReple">
 					<div class="row" align="left">
 						<div class="col-lg-1">번호</div>
 						<div class="col-lg-6">댓글 내용</div>

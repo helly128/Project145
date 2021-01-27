@@ -21,5 +21,10 @@ public class MemberVo {
 	private int walletPoint;
 	private int walletCash;
 	private String bizNum;
+	private String reqClientFintechUseNum;
+	private String reqClientName;
+	private String reqClientNum;
+	
+	
 	
 }

@@ -7,10 +7,10 @@
 <title>withDrawContent.jsp</title>
 </head>
 <body>
-		<div>
-			<span class="bname"></span>거래고유번호 : ${withDrawContent.api_tran_id }<br>
-			<span>거래일시 : ${withDrawContent.bank_tran_date }</span><br>
-			<span>거래금액 : ${withDrawContent.tran_amt }</span><br>
+		<div>${withDrawContent }
+			<span class="bname"></span>거래고유번호 : ${withDrawContent.getApiTranId() }<br>
+			<span>거래일시 : ${withDrawContent.getBankTranDate() }</span><br>
+			<span>거래금액 : ${withDrawContent.getTran_amt() }</span><br>
 			
 			<%-- 
 			<span>거래일시 : ${withDrawContent.api_tran_dtm }</span><br>
