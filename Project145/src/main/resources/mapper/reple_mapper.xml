@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.reple.mapper.RepleMapper">
+
+	<select id="read" resultType="com.pj.vegi.vo.RepleVo">
+		select * from reple
+		where r_id = #{rId}
+		order by re_id desc
+	</select>
+
+	<select id="readAll" resultType="com.pj.vegi.vo.RepleVo">
+		select * from reple
+		where r_id = #{rId}
+		order by re_date,re_id
+	</select>
+	
+	
+	<insert id="insert">
+		insert into reple (re_id,re_content,re_date, m_id,r_id)
+		values('re'||re_seq.nextval,#{reContent},sysdate,#{mId},#{rId} )
+		
+	</insert>
+
+	<update id="update">
+		update reple set 
+		re_content = #{reContent}
+		where re_id = #{reId}
+	</update>
+
+	<delete id="delete">
+		delete from reple where r_id = #{rId}
+	</delete>
+
+	 <select id = "getListWithPaging" resultType="com.pj.vegi.vo.RepleVo"> 
+		select re_id, re_content,re_date, m_id from reple where r_id = #{rId} order 
+		by r_id asc </select> 
+
+</mapper>
