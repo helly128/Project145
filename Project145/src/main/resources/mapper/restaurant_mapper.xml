@@ -38,8 +38,7 @@
 	<update id="restUpdate">
 	Update restaurant 
 	set bizNum=#{bizNum} 
-	where rest_id = #{restId}
-	
+	where rest_id = #{restId}	
 	</update>
 	
 	
