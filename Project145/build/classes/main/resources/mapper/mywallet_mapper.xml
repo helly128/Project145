@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.mywallet.mapper.MyWalletMapper">
+
+	<select id="selectMember" resultType="MemberVo">
+		select
+			req_client_fintech_use_num "req_client_fintech_use_num",
+			req_client_name "req_client_name",
+			req_client_num "req_client_num"
+		from member
+		where m_id = #{ mId}
+	</select>
+
+	<select id="selectReqAll" resultType="map">
+		select ACCESS_TOKEN "access_token",
+			BANK_TRAN_ID "bank_tran_id",
+			CNTR_ACCOUNT_TYPE "cntr_account_type",
+			CNTR_ACCOUNT_NUM "cntr_account_num",
+			FINTECH_USE_NUM "fintech_use_num",
+			DPS_PRINT_CONTENT "dps_print_content",
+			TRAN_AMT "tran_amt",
+			TRAN_DTIME "tran_dtime",
+			TRANSFER_PURPOSE "transfer_purpose",
+			RECV_CLIENT_ACCOUNT_NUM "recv_client_account_num",
+			RECV_CLIENT_NAME "recv_client_name",
+			RECV_CLIENT_BANK_CODE "recv_client_bank_code",
+			REQ_CLIENT_FINTECH_USE_NUM "req_client_fintech_use_num",
+			REQ_CLIENT_NAME "req_client_name",
+			REQ_CLIENT_NUM "req_client_num"
+		from with_draw_req
+	</select>
+
+</mapper>
