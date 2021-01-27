@@ -24,6 +24,7 @@ row.plus {
 </head>
 <body>
 	<div class="container">
+	
 		<div>
 			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
 		</div>
@@ -60,9 +61,11 @@ row.plus {
 		<div class="row">
 			<div class="col-lg-3">
 				<i class="lni lni-users">작성자</i>
+				<input type="text" id="mId" name="mId" readonly >
 			</div>
 			<div class="col-lg-3">
 				<i class="lni lni-calendar">작성일자</i>
+				<input type="text" id="reDate" name="reDate" readonly >
 			</div>
 			<div class="col-lg-3">
 				<p>이미지 수정</p>

@@ -1,15 +1,20 @@
 package com.pj.vegi.recipe.web;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
@@ -63,32 +68,43 @@ public class RecipeController {
 	LessonService lessonService;
 	@Autowired
 	RecipeMaterialService recipeMaterialService;
+
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo,RecipeMaterialVo rmVo,Model model,HttpSession session) throws SQLException {
+	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
+			throws SQLException {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
-		
+
 		LessonVO lessonVo = new LessonVO();
 		lessonVo.setCId(recipeVo.getCId());
 		List<LessonVO> lessonSelectList = lessonService.lessonList(lessonVo);
 		session.setAttribute("rId", rVo.getRId());
 		model.addAttribute("recipeSelect", recipeVo);
-		model.addAttribute("lessonSelectList",lessonSelectList);
-		model.addAttribute("recipeMaterial",recipeMaterialSelectList);
-		
+		model.addAttribute("lessonSelectList", lessonSelectList);
+		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
+
 		return "recipe/recipeDesc";
 	}
 
 	@RequestMapping("/recipeInsert.do") // 등록 폼
 	public String recipeInsert(RecipeVo vo, Model model) {
 
-		return "recipe/recipeInsert.do";
+		return "recipe/recipeInsert";
 	}
 
 	@RequestMapping("/recipeUpdate.do") // 수정 폼
-	public String recipeUpdate() {
-
-		return "recipe/recipeUpdate";
+	public String recipeUpdate(RecipeVo vo, Model model, HttpServletRequest request,
+			@RequestParam MultipartFile uploadfile) throws IllegalStateException, IOException {
+		// 사진 업로드 처리
+		if (uploadfile != null && uploadfile.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, uploadfile, vo.getRImage());
+			vo.setRImage(name);
+		}
+		recipeService.recipeUpdate(vo);
+		
+		model.addAttribute("rId",vo.getRId());
+		
+		return "redirect:recipeMain.do";
 	}
 
 //	@RequestMapping("/recipeDelete.do")//삭제
