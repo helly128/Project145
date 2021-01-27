@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.mypage.mapper.MypageMapper">
+
+	<!-- 마이페이지 -->
+	<select id="myPageSelect" resultType="MemberVo">
+		SELECT * FROM member
+		WHERE
+		M_ID = #{mId}
+	</select>
+
+	<update id="myPageUpdate">
+		UPDATE member
+		SET password = #{ password,
+		jdbcType=VARCHAR},
+		vegtype = #{ vegtype ,jdbcType=VARCHAR}
+		WHERE m_id=
+		#{ mId}
+	</update>
+	
+	<!-- 마이페이지의 레시피 -->
+
+	<select id="recipeSelect" resultType="RecipeVo">
+		SELECT * FROM recipe
+		WHERE
+		M_ID = #{mId}
+	</select>
+
+	<!-- <update id="recipeHitUpdate" parameterType="RecipeVo"> UPDATE recipe 
+		set r_hit = r_hit + 1 WHERE M_ID = #{m_id} </update> -->
+
+	<!-- 마이페이지의 식당 -->
+
+	<select id="restSelect" resultType="map">
+		SELECT r.REST_NAME "restName", 
+				rr.m_id "mId", 
+				rr.REST_RESERV_DATE "restReservDate", 
+				rr.REST_RESERV_NAME "restReservName", 
+				rr.REST_RESERV_PEOPLE "restReservPeople",
+				rr.REST_RESERV_STATUS "restReservStatus"
+		FROM RESTAURANT r JOIN REST_RESERV rr
+		ON r.REST_ID = rr.REST_ID
+		WHERE rr.m_id = #{mId}
+	</select>
+	
+	<!-- 마이페이지의 클래스 -->
+	<select id="lessonSelect" resultType="map">
+		SELECT c.c_title "cTitle", 
+		 		c.c_start "cStart", 
+		 		c.c_end "cEnd",
+				c.c_img "cImg", 
+				c.c_desc "cDesc", 
+				c.status "cStatus", 
+				cr.m_id "mId"
+		FROM CLASS_RESERV cr JOIN  CLASS c 
+		ON cr.c_id = c.c_id
+		WHERE cr.m_id = #{mId}
+	</select>
+
+</mapper>

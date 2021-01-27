@@ -15,10 +15,10 @@
 	<insert id="restInsert">
 	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
 							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
-							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM, REST_ADDRESS_DETAIL) 
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
 			VALUES('rest'||rest_seq.nextval,#{restName},0,0,
 					#{restAddress},#{restPic},#{restTime},#{mId},0,
-					0,#{restTel},'','false', #{restAddressDetail})	
+					0,#{restTel},'','false')	
 	</insert>
 	
 	
@@ -30,8 +30,8 @@
 	</insert>
 	
 	
-	<select id="restNameSerchList" resultType="RestaurantVo">
-	SELECT REST_NAME, REST_ID FROM restaurant WHERE REST_NAME LIKE '%${restName}%'
+	<select id="restNameSerch">
+	SELECT REST_NAME FROM restaurant WHERE REST_NAME LIKE '%#{restName}%'
 	</select>
 	
 

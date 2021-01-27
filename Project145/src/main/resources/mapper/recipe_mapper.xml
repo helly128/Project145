@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pj.vegi.recipe.mapper.RecipeMapper">
+	<select id="getRecipeList" resultType="RecipeVo">
+		select *
+		from recipe
+	</select>
+	<select id="recipeSelect" resultType="RecipeVo">
+		select *
+		from recipe
+		where
+		r_id=#{rId}
+	</select>
+
+	<!-- <insert id="recipeInsert">
+		insert into recipe (r_id, r_type, r_title, r_content,
+		r_image, m_id, c_id)
+		values (
+		#{rId),
+		#{rType},
+		#{rTitle},
+		#{rContent},
+		#{rImage},
+		#{mId},
+		#{cId} )
+	</insert>
+
+	<update id="recipeUpdate">
+		update recipe set
+		r_type = #{rType},
+		r_title =
+		#{rTitle},
+		r_content = #{rContent},
+		r_image = #{rImage},
+		c_id = #{cId}
+		where r_id = #{rId)
+	</update>
+
+	<delete id="recipeDelete">
+		delete from recipe
+		where r_id = #{rId}
+	</delete>
+ -->
+
+</mapper>

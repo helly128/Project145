@@ -59,7 +59,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	
 	@Override
 	public List<RestaurantVo> restNameSerchList(String restName) {
-		//일반사용자 식당 입력페이지에서 식당 이름 검색
+		
 		return dao.restNameSerchList(restName);
 		
 	}

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.RestaurantVo;
@@ -35,26 +33,18 @@ public class RestaurantController {
 		
 		return "restaurant/restaurantInsert";
 	}
-
-	@ResponseBody
-	// ajax 로 받아 올 때
-	@RequestMapping("/restNameSerchList.do")
-	public List<RestaurantVo> restChek(@RequestParam String restName, RestaurantVo vo) {
-		//일반 사용자 식당등록 페이지에서 식당이름 검색
-		
-		System.out.println(restName+"식당이름");
-		return restaurantService.restNameSerchList(restName);
-	}
 	
 	@RequestMapping("/restInsert.do")
 	public String restaurantInsert(RestaurantVo vo, Model model, HttpSession session) throws SQLException {
-
+		
+		String view = null;
 		int n = restaurantService.restInsert(vo);
-		if (n != 0)
+//		if (n != 0)
+//			view = "restaurant/restaurantList";
+//		else
+//			view = "restaurant/restaurantList";
 		
-		
-		return "redirect:restaurantList";
-		return null;
+		return view;
 	}
 
 }

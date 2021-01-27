@@ -15,7 +15,6 @@ public class RestaurantVo {
 	private double restStarAvg;
 	private int restReviewCount;
 	private String restAddress;
-	private String restAddressDetail;
 	private String restPic;
 	private String restTime;
 	private String mId;
