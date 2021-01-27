@@ -12,6 +12,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import com.google.gson.Gson;
@@ -116,7 +118,7 @@ public class OpenBank {
 	}
 
 	// 출금이체
-	public static String getWithDraw(WithDrawReqVO vo) {
+	public static String getWithDraw(Map vo) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -128,7 +130,7 @@ public class OpenBank {
 			String query = gson.toJson(vo);
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-			con.addRequestProperty("Authorization", "Bearer" + vo.getAccess_token());
+			con.addRequestProperty("Authorization", "Bearer" + vo.get("access_token"));
 
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -170,7 +172,7 @@ public class OpenBank {
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();			
 			
-			con.addRequestProperty("Authorization", "Bearer" + vo.getAccess_token());
+			con.addRequestProperty("Authorization", "Bearer" + vo.getAccessToken());
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 			con.setRequestProperty("Content-Length", String.valueOf(query.length()));

@@ -150,8 +150,10 @@ article {
 										<li><a href="privacy.html">Privacy</a></li>
 										<li><a href="javascript:void(0)">Sign Out</a></li>
 									</ul></li> -->
-									<li><a href="/mypage.do"
-										class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
+									<c:if test="${mId ne null && password ne null}">
+										<li><a href="/mypage.do"
+											class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
+									</c:if>
 
 								</ul>
 						</nav>
@@ -168,10 +170,7 @@ article {
 
 	<article>
 
-		<br>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br> <br>
 		<tiles:insertAttribute name="content" />
 	</article>
 

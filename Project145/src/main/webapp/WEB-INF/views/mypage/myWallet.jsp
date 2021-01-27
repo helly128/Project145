@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>내지갑</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div align="center">
@@ -23,47 +25,45 @@
 					&nbsp; <input readonly="readonly" type="text"
 						class="form-control form-control-user" placeholder="충전금 잔액 가져오기"
 						value="보유 충전금 : ${member.getWalletCash() }"><br>
-				</div>
-				<hr>
-				<hr>
-				<br>
+				</div><hr><hr><br>
 				<form action="WithDraw.do" method="post" id="form1">
-					<input id="wId" name="wId" type="text"
+					<input id="wPay" name="wPay" type="text"
 						class="form-control form-control-user"
-						placeholder="충전하실 금액을 입력하세요."> <a href=""
-						class="btn btn-google btn-user btn-block">충전</a>
-				</form>
-				<hr>
-
+						placeholder="충전하실 금액을 입력하세요."> 
+						<button type="button" id="button1" class="btn btn-google btn-user btn-block">충전</button>
+				</form><hr>
 				<form action="Deposit.do" method="post" id="form2">
-					<input id="dId" name="dId" type="text"
+					<input id="dPay" name="dPay" type="text"
 						class="form-control form-control-user"
-						placeholder="인출하실 금액을 입력하세요."> <a href=""
-						class="btn btn-facebook btn-user btn-block">인출</a>
+						placeholder="인출하실 금액을 입력하세요."> 
+						<button type="button" id="button2" class="btn btn-facebook btn-user btn-block">인출</button>
 				</form>
-				<hr>
-
-				<%-- 
+				<hr>				
 				<div class="text-center">
 					<a class="small" href="AuthAccount.do">사용자토큰</a><br>
 					<a class="small" href="OobToken.do">이용자토큰</a>
 				</div>
-				--%>
-
 			</div>
 		</div>
 	</div>
 	<script>
 	
-	$("#wId").on("click", function() {
-				
-		$("#form1").submit();
-	}
+	$("#button1").on("click", function() {
+		
+		var wPay = $("#wPay").val()
+		
+		if ( wPay != "" ) {
+			$("#form1").submit()
+		
+		} else {
+			alert("충전금을 입력해주세요.")		
+		}
+	})
 	
-	$("#dId").on("click", function() {
+	$("#Pay2").on("click", function() {
 				
-		$("#form2").submit();
-	}
+		$("#form2").submit()		
+	})
 	
 	</script>
 </body>

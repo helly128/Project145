@@ -16,6 +16,7 @@
 		<typeAlias type="com.pj.vegi.vo.MemberVo" alias="MemberVo"/>
 		<typeAlias type="com.pj.vegi.vo.RecipeVo" alias="RecipeVo"/>
 		<typeAlias type="com.pj.vegi.vo.RecipeMaterialVo" alias="RecipeMaterialVo"/>
+		<typeAlias type="com.pj.vegi.mywallet.vo.WithDrawReqVO" alias="WithDrawReqVO"/>
 		<package name="com.pj.vegi.vo"/>
 	</typeAliases>
 

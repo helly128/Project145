@@ -61,8 +61,8 @@
 					</div>
 					<div id="dataTable_filter" class="dataTables_filter">
 						<label><input type="search"
-							class="form-control form-control-sm" >
-							<button style="border: none;background: none;">🔍검색</button></label>
+							class="form-control form-control-sm">
+							<button style="border: none; background: none;">🔍검색</button></label>
 					</div>
 				</div>
 				<div class="table-responsive">
@@ -85,7 +85,8 @@
 								<td>내용</td>
 								<td><div class="row no-gutters align-items-center">
 										<div class="col-auto">
-											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">30 %</div>
+											<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">30
+												%</div>
 										</div>
 										<div class="col">
 											<div class="progress progress-sm mr-2">

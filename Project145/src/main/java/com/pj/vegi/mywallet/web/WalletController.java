@@ -2,26 +2,34 @@ package com.pj.vegi.mywallet.web;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.google.gson.Gson;
+import com.pj.vegi.mywallet.service.MyWalletService;
 import com.pj.vegi.mywallet.vo.DepositReqListVO;
 import com.pj.vegi.mywallet.vo.DepositReqVO;
 import com.pj.vegi.mywallet.vo.DepositResponseVO;
 import com.pj.vegi.mywallet.vo.WithDrawReqVO;
 import com.pj.vegi.mywallet.vo.WithDrawResVO;
+import com.pj.vegi.vo.MemberVo;
 
 import net.sf.json.JSONObject;
 
 @Controller
 public class WalletController {
+
+	@Autowired
+	private MyWalletService myWalletService;
 
 	// 계좌등록
 	@RequestMapping("/AuthAccount.do")
@@ -92,7 +100,8 @@ public class WalletController {
 
 	// 출금이체 충전버튼(고객->이용기관) p66
 	@RequestMapping("/WithDraw.do")
-	public String WithDrawContent(WithDrawReqVO vo, Model model) throws SQLException {
+	public String WithDrawContent(MemberVo m_vo, Model model, @RequestParam("wPay") String wPay, HttpSession session)
+			throws SQLException {
 
 		long randId = System.currentTimeMillis();
 		String randIdStr = Long.toString(randId);
@@ -102,24 +111,42 @@ public class WalletController {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String formatStr = dateformat.format(today);
 
-		vo.setAccess_token(
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzY2NzM4Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTkzMzgzMDcsImp0aSI6ImZmM2VhNGI1LThhNDQtNDIwNS04ZWFmLTkxYjExZDI0NTBlMSJ9.Lhueq8KK0FX4_wKvPx3yea7XYyT-FyJ-Ki3I-dG7lxI");
-		vo.setBank_tran_id("T991676710" + "U" + randNine); // 은행거래고유번호
-		vo.setCntr_account_type("N"); // 일반적으로 계좌(N)사용
-		vo.setCntr_account_num("1721001234"); // 약정계좌번호(출금계좌정보)
-		vo.setFintech_use_num("199167671057888646711668"); // 출금계좌핀테크이용번호(서수연)
-		vo.setDps_print_content("충전금"); // 입금계좌인자내역
-		vo.setTran_amt("50000"); // 거래금액 ****받아오기
-		vo.setTran_dtime(formatStr);
-		vo.setReq_client_fintech_use_num("199167671057888647046890"); // 요청고객 핀테크이용번호(유미샘) ****회원정보****
-		vo.setReq_client_name("회원1"); // 요청고객성명 ****회원정보****
-		vo.setReq_client_num("001"); // 요청고객회원번호 ***회원정보*****
-		vo.setTransfer_purpose("TR"); // TR:송금 (이체용도)
-		vo.setRecv_client_account_num("123456789"); // 최종수취고객계좌
-		vo.setRecv_client_name("채식당"); // 최종수취고객성명
-		vo.setRecv_client_bank_code("002"); // 최종수취고객계좌 개설기관.표준코드
+		// -----------------------
 
-		String result = OpenBank.getWithDraw(vo);
+		String mid = (String) session.getAttribute("mId");
+		m_vo.setMId(mid);
+
+		myWalletService.selectMember(m_vo);
+
+		Map<String, Object> map = myWalletService.selectReqAll();
+		String bank_tran_id = (String) map.get("bank_tran_id") + "U" + randNine;
+		map.put("bank_tran_id", bank_tran_id);
+		//map.put("req_client_fintech_use_num", m_vo.getReqClientFintechUseNum());
+		//map.put("req_client_name", m_vo.getReqClientName());
+		//map.put("req_client_num", m_vo.getReqClientNum());
+		map.put("req_client_name", "회원이름");
+		map.put("req_client_fintech_use_num", "199167671057888646711668");
+		map.put("req_client_num", "001");
+		map.put("tran_dtime", formatStr);
+		map.put("tran_amt", wPay);
+
+//		w_vo.setAccessToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzY2NzM4Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MTk1MTA1MTIsImp0aSI6ImVhYTE0ODQ5LWJiYWItNDBiMC1iYWEwLWEyMmEyNjdhZGRlNyJ9.Wzoh0uoNWW3p8dq17uhSwkSBYNuom_Ogy5TqmULs4xk"); 
+//		w_vo.setBankTranId("T991676710" + "U" + randNine); // 은행거래고유번호
+//		w_vo.setCntrAccountType("N"); // 일반적으로 계좌(N)사용
+//		w_vo.setCntrAccountNum("1721001234"); // 약정계좌번호(출금계좌정보)
+//		w_vo.setFintechUseNum("199167671057888646711668"); // 출금계좌핀테크이용번호(서수연)
+//		w_vo.setDpsPrintContent("충전금"); // 입금계좌인자내역 
+//		w_vo.setTranAmt("50000"); // 거래금액 *****받아오기 
+//		w_vo.setTranDtime(formatStr);
+//		w_vo.setReqClientFintechUseNum("199167671057888646711668"); // 요청고객 * 핀테크이용번호(유미샘) ****회원정보**** 
+//		w_vo.setReqClientName("회원1"); // 요청고객성명****회원정보****
+//		w_vo.setReqClientNum("001"); // 요청고객회원번호 ***회원정보*****
+//		w_vo.setTransferPurpose("TR"); // TR:송금 (이체용도)
+//		w_vo.setRecvClientAccountNum("123456789"); // 최종수취고객계좌
+//		w_vo.setRecvClientName("채식당"); // 최종수취고객성명
+//		w_vo.setRecvClientBankCode("002"); // 최종수취고객계좌 개설기관.표준코드		
+
+		String result = OpenBank.getWithDraw(map);
 
 		Gson gson = new Gson();
 		WithDrawResVO withDrawContent = gson.fromJson(result, WithDrawResVO.class);
@@ -141,35 +168,38 @@ public class WalletController {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String formatStr = dateformat.format(today);
 
-		ArrayList<DepositReqListVO> reqList = new ArrayList<DepositReqListVO>();
-		req.setTran_no("1"); // 거래순번
-		req.setBank_tran_id("T991676710" + "U" + randNine); // 은행거래고유번호
-		req.setFintech_use_num("199167671057888646711668"); // 핀테크이용번호
-		req.setPrint_content("인출");
-		req.setTran_amt("10000"); // 거래금액****받아오기
-		req.setReq_client_name("회원1"); // 요청고객성명
-		req.setReq_client_num("001"); // 요청고객회원번호
-		req.setReq_client_fintech_use_num("199167671057888647046890"); // 요청고객핀테크이용번호
-		req.setTransfer_purpose("TR"); // TR:송금 (이체용도)
-		reqList.add(req);
-				
-		vo.setAccess_token("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUOTkxNjc2NzEwIiwic2NvcGUiOlsib29iIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNjE5NDIwNDk2LCJqdGkiOiI1NjBhNWQyNy0yYmJiLTRlNmYtOTZlMi01ZjNhZGZkMGMzYWQifQ.PELoUE60nBBMjnROrSCgBHw8VSoR6nowuytXN0eBzm8");
-		vo.setCntr_account_type("N"); // 일반적으로 계좌(N)사용
-		vo.setCntr_account_num("1721005555"); // 약정계좌번호(입금계좌정보)
-		vo.setWd_pass_phrase("NONE"); // (테스트 환경) 기본값 "NONE"를 세팅
-		vo.setWd_print_content("충전금 인출"); // 내역
-		vo.setName_check_option("on"); // 수취인성명 검증 여부
-		vo.setTran_dtime(formatStr);
-		vo.setReq_cnt("1"); // 입금요청건수 (default :1)
-
-		vo.setReq_list(reqList);
+		/*
+		 * ArrayList<DepositReqListVO> reqList = new ArrayList<DepositReqListVO>();
+		 * req.setTran_no("1"); // 거래순번 
+		 * req.setBank_tran_id("T991676710" + "U" + randNine); // 은행거래고유번호
+		 * req.setFintech_use_num("199167671057888646711668"); // 핀테크이용번호
+		 * req.setPrint_content("인출"); 
+		 * req.setTran_amt("10000"); // 거래금액****받아오기
+		 * req.setReq_client_name("회원1"); // 요청고객성명
+		 *  req.setReq_client_num("001"); // 요청고객회원번호 
+		 *  req.setReq_client_fintech_use_num("199167671057888647046890"); // 요청고객핀테크이용번호
+		 *  req.setTransfer_purpose("TR"); // TR:송금 (이체용도) 
+		 *  reqList.add(req);
+		 * 
+		 * vo.setAccess_token(
+		 * "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUOTkxNjc2NzEwIiwic2NvcGUiOlsib29iIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNjE5NDIwNDk2LCJqdGkiOiI1NjBhNWQyNy0yYmJiLTRlNmYtOTZlMi01ZjNhZGZkMGMzYWQifQ.PELoUE60nBBMjnROrSCgBHw8VSoR6nowuytXN0eBzm8"
+		 * ); 
+		 * vo.setCntr_account_type("N"); // 일반적으로 계좌(N)사용
+		 * vo.setCntr_account_num("1721005555"); // 약정계좌번호(입금계좌정보)
+		 * vo.setWd_pass_phrase("NONE"); // (테스트 환경) 기본값 "NONE"를 세팅
+		 * vo.setWd_print_content("충전금 인출"); // 내역 
+		 * vo.setName_check_option("on"); //
+		 * 수취인성명 검증 여부 vo.setTran_dtime(formatStr); 
+		 * vo.setReq_cnt("1"); // 입금요청건수 (default :1) 
+		 * vo.setReq_list(reqList);
+		 */
 
 		String result = OpenBank.getDeposit(vo);
 
 		Gson gson = new Gson();
 		DepositResponseVO depositContent = gson.fromJson(result, DepositResponseVO.class);
 
-		model.addAttribute("depositContent", depositContent.get_res_list());
+		model.addAttribute("depositContent", depositContent.getResList());
 
 		return "wallet/depositContent";
 	}
