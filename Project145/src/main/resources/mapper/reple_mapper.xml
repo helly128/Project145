@@ -7,18 +7,19 @@
 	<select id="read" resultType="com.pj.vegi.vo.RepleVo">
 		select * from reple
 		where r_id = #{rId}
-		order by reId desc
+		order by re_id desc
 	</select>
 
 	<select id="readAll" resultType="com.pj.vegi.vo.RepleVo">
 		select * from reple
 		where r_id = #{rId}
+		order by re_date,re_id
 	</select>
 	
 	
 	<insert id="insert">
 		insert into reple (re_id,re_content,re_date, m_id,r_id)
-		values('re'||re_seq.nextval,#{reContent},#{reDate},#{mId},#{rId} )
+		values('re'||re_seq.nextval,#{reContent},sysdate,#{mId},#{rId} )
 		
 	</insert>
 
