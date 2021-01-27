@@ -95,7 +95,7 @@
 										width="100%">
 								</c:if>
 								<c:if test="${restVo.restPic ne null}">
-									<img src="/images/${restVo.restPic }" width="100%">
+									<img id="rest-image" src="/images/${restVo.restPic }" width="100%">
 								</c:if>
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"
