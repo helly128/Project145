@@ -62,7 +62,7 @@
 
 				<div class="col">
 					<!-- Simple link -->
-					<a href="#!">Forgot password?</a>
+					<a href="/searchIDPW.do">Forgot password?</a>
 				</div>
 			</div>
 
