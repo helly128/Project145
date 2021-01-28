@@ -78,7 +78,7 @@
 							<div class="row">
 								적립금&nbsp; <input type="text" value="${member.getWalletPoint() }">&nbsp;&nbsp;
 								충전금&nbsp; <input type="text" value="${member.getWalletCash() }"><br>
-								MyWallet 에서 충전을 해보세요!! 하시라구요
+								MyWallet 에서 충전을 해보세요!!
 							</div>
 						</div>
 					</div>

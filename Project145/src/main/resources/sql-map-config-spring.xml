@@ -17,6 +17,8 @@
 		<typeAlias type="com.pj.vegi.vo.RecipeVo" alias="RecipeVo"/>
 		<typeAlias type="com.pj.vegi.vo.RecipeMaterialVo" alias="RecipeMaterialVo"/>
 		<typeAlias type="com.pj.vegi.mywallet.vo.WithDrawReqVO" alias="WithDrawReqVO"/>
+		<typeAlias type="com.pj.vegi.mywallet.vo.DepositReqVO" alias="DepositReqVO"/>
+		<typeAlias type="com.pj.vegi.mywallet.vo.DepositReqListVO" alias="DepositReqListVO"/>
 		<package name="com.pj.vegi.vo"/>
 	</typeAliases>
 
