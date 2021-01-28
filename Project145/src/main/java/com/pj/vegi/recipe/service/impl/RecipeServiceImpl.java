@@ -39,11 +39,11 @@ public class RecipeServiceImpl implements RecipeService {
 //		return dao.recipeUpdate(vo);
 //	}
 //
-//	@Override
-//	public int recipeDelete(RecipeVo vo) {
-//		// TODO Auto-generated method stub
-//		return dao.recipeDelete(vo);
-//	}
+	@Override
+	public int recipeDelete(RecipeVo vo) {
+		// TODO Auto-generated method stub
+		return dao.recipeDelete(vo);
+	}
 	/*
 	 * @Autowired private RecipeMapper dao;
 	 */

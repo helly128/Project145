@@ -13,12 +13,24 @@
 	
 	
 	<insert id="restInsert">
+	<!-- 일반유저 식당 등록 -->
+			<selectKey keyProperty="restId" resultType="string" order="BEFORE">
+        	 SELECT 'rest'||rest_seq.nextval
+        	 FROM DUAL
+    	</selectKey>
 	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
 							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
-							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
-			VALUES('rest'||rest_seq.nextval,#{restName},0,0,
+							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM, REST_ADDRESS_DETAIL) 
+			VALUES(#{restId},#{restName},0,0,
 					#{restAddress},#{restPic},#{restTime},#{mId},0,
-					0,#{restTel},'','false')	
+					0,#{restTel},'','false', #{restAddressDetail})	
+	
+
+	</insert>
+	
+	<insert id="menuInsert">
+		INSERT INTO REST_MENU(MENU_ID, MENU_NAME, MENU_VEGE_TYPE, MENU_PRICE, REST_ID)
+			VALUES('menu' ||menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice}, #{restId})
 	</insert>
 	
 	
@@ -30,8 +42,8 @@
 	</insert>
 	
 	
-	<select id="restNameSerch">
-	SELECT REST_NAME FROM restaurant WHERE REST_NAME LIKE '%#{restName}%'
+	<select id="restNameSerchList" resultType="RestaurantVo">
+	SELECT REST_NAME, REST_ID FROM restaurant WHERE REST_NAME LIKE '%${restName}%'
 	</select>
 	
 
@@ -46,10 +58,6 @@
 	
 	<update id="bizInfoUpdate">
 	Update restaurant set bizNum=#{bizNum} where rest_id = #{restId}
-					  
-		
-          
-	
 	</update>
 
 	<select id="getRestaurantList" resultType="RestaurantVo">

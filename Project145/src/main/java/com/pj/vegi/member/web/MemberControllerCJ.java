@@ -104,6 +104,26 @@ public class MemberControllerCJ {
 		map.get("bizNum");
 		return map;
 	}
+	
+	@RequestMapping("/searchIDPW.do")//아이디 비번 찾기 페이지로
+	public String searchIDPW() {
+		return "login/searchIDPW";
+	}
+	
+	
+	
+	@RequestMapping("/idSearch.do")
+	 @ResponseBody
+	 public MemberVo idSearch( 
+	   @RequestParam(value="email") String email,
+	   @RequestParam(value="mName") String mName,
+	   MemberVo vo){
+	  System.out.println(email+mName);//성공 
+	  vo.setMName(mName);
+	  vo.setEmail(email);
+	  
+	  return memberService.idSearch(vo);
+	 }
 
 	
 	

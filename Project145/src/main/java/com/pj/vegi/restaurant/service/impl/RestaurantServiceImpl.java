@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj.vegi.restaurant.mapper.RestaurantMapper;
 import com.pj.vegi.restaurant.service.RestaurantService;
- 
+import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("restaurantService")
@@ -19,8 +19,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public int restInsert(RestaurantVo vo) throws SQLException {
-		// TODO Auto-generated method stub
+		// 일반 이용자 식당 등록
 		return dao.restInsert(vo);
+	}
+	
+	@Override
+	public int menuInsert(RestMenuVo vo) throws SQLException {
+		// 일반 이용자 식당 등록(메뉴)
+		return dao.menuInsert(vo);
 	}
 
 	@Override
@@ -59,10 +65,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 	
 	@Override
 	public List<RestaurantVo> restNameSerchList(String restName) {
-		
+		//일반사용자 식당 입력페이지에서 식당 이름 검색
 		return dao.restNameSerchList(restName);
 		
 	}
+
+
 
 
 

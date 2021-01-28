@@ -14,6 +14,7 @@ public interface MemberService {
 	boolean memberLoginCheck(MemberVo vo) throws SQLException;	// 멤버 로그인 체크
 	int memberInsert(MemberVo vo) throws SQLException;
 	int idDuplCheck(String data) throws SQLException; //아이디 중복 체크
+	MemberVo idSearch(MemberVo vo);
 	
 
 }

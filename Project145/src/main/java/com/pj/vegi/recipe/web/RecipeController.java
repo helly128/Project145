@@ -70,17 +70,16 @@ public class RecipeController {
 	RecipeMaterialService recipeMaterialService;
 
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
+	public String recipeDesc(LessonVO lVo,RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
 			throws SQLException {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
-
-		LessonVO lessonVo = new LessonVO();
-		lessonVo.setCId(recipeVo.getCId());
-		List<LessonVO> lessonSelectList = lessonService.lessonList(lessonVo);
+		
+		List<LessonVO> lessons =  lessonService.lessonList(lVo);
 		session.setAttribute("rId", rVo.getRId());
+		
 		model.addAttribute("recipeSelect", recipeVo);
-		model.addAttribute("lessonSelectList", lessonSelectList);
+		model.addAttribute("lessons", lessons);
 		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
 
 		return "recipe/recipeDesc";
@@ -107,17 +106,17 @@ public class RecipeController {
 		return "redirect:recipeMain.do";
 	}
 
-//	@RequestMapping("/recipeDelete.do")//삭제
-//	public String recipeDelete(RecipeVo vo) {
-//		String viewPath = null;
-//		int n= recipeService.recipeDelete(vo);
-//		if(n!=0)
-//			viewPath = "redirect:recipeMain.do";
-//		else
-//			viewPath = "recipe/recipeDeleteFail";
-//		return viewPath;
-//	}
-//	
+	@RequestMapping("/recipeDelete.do")//삭제
+	public String recipeDelete(RecipeVo vo) {
+		String viewPath = null;
+		int n= recipeService.recipeDelete(vo);
+		if(n!=0)
+			viewPath = "redirect:recipeMain.do";
+		else
+			viewPath = "recipe/recipeDeleteFail";
+		return viewPath;
+	}
+	
 //	@RequestMapping("/recipeInsertResult.do")
 //	public String recipeInsertResult(RecipeVo vo, Model model) {
 //		String viewPath = null;
