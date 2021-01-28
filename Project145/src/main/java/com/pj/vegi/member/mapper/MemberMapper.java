@@ -11,5 +11,6 @@ public interface MemberMapper {
 	MemberVo memberSelect(MemberVo vo);
 	int memberInsert(MemberVo vo);
 	int idDuplCheck(String data);
+	MemberVo idSearch(MemberVo vo);
 
 }
