@@ -13,7 +13,11 @@
 		where
 		r_id=#{rId}
 	</select>
-
+		<delete id="recipeDelete">
+		delete from recipe
+		where r_id = #{rId}
+	</delete>
+	
 	<!-- <insert id="recipeInsert">
 		insert into recipe (r_id, r_type, r_title, r_content,
 		r_image, m_id, c_id)
@@ -38,10 +42,7 @@
 		where r_id = #{rId)
 	</update>
 
-	<delete id="recipeDelete">
-		delete from recipe
-		where r_id = #{rId}
-	</delete>
+
  -->
 
 </mapper>
