@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.pj.vegi.biz.mapper.ClassBizMapper">
+
+	<select id="classBizList" resultType="LessonVO">
+		SELECT * FROM class
+		WHERE m_id=#{mId}
+	</select>
+
+	<select id="classBizSelect" resultType="LessonVo">
+		SELECT * FROM class
+		WHERE c_id=#{cId}
+	</select>
+
+
+	<delete id="classBizDelete">
+		DELETE FROM class
+		WHERE c_id=#{cId}
+	</delete>
+
+
+
+<update id="classBizUpdate">
+		UPDATE class
+		SET rest_address = #{restAddress},
+		rest_time=#{restTime},
+		rest_tel=#{restTel},
+		rest_pic=#{restPic}
+		WHERE
+		rest_id=#{restId}
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+	<insert id="classBizInsert">
+		INSERT INTO class
+		( 
+		C_ID,           
+		C_TITLE,       
+		C_IMG,               
+		C_DESC,                
+		VEGTYPE,                 
+		C_PRICE,              
+		C_START,                       
+		C_END,                        
+		STATUS,                  
+		LEC_PROFILE,            
+		LEC_CAREER,            
+		LEC_NAME,                
+		LEC_INSTA,              
+		CURRICULUM,            
+		C_HIT,                         
+		M_ID,                    
+		C_PARTI,                       
+		C_JOIN,                        
+		C_LOC,                  
+		BIZNUM                
+		)
+		VALUES('class' || c_seq.nextval,
+		
+		#{cTitle},
+		#{cImg},
+		#{cDesc},
+		#{vegType},
+		#{cPrice},
+		#{cStart},
+		#{cEnd},
+		#{status},
+		#{lecProfile},
+		#{lecCareer},
+		#{lecName},
+		#{lecInsta},
+		#{curriCulum},
+		#{cHit}, 
+		#{mId}, 
+		#{cParti}, 
+		#{cJoin}, 
+		#{cLoc},  
+		#{bizNum}
+		
+		(SELECT biznum FROM member
+		WHERE m_id=#{mId}), 'true')
+		<selectKey keyProperty="seq" resultType="int" order="AFTER">
+			SELECT c_seq.currval
+			FROM DUAL
+		</selectKey>
+	</insert>
+	
+</mapper>
