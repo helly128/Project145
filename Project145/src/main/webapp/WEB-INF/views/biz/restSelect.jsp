@@ -283,7 +283,7 @@
 			}
 			$.ajax({
 				url: url+restId,
-				type: 'get',
+				type: 'post',
 				contentType: "application/json",
 				success: function(result){
 					$.each(result, function(idx, item){
