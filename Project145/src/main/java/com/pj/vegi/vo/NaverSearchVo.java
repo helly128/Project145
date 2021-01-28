@@ -16,7 +16,6 @@ public class NaverSearchVo {
 	private String title;
 	private String link;
 	private String mallName;
-	private String image;
 	private String lprice;
 	private String description;
 

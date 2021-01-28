@@ -8,7 +8,7 @@ public interface RecipeService {
 
 	public List<RecipeVo>getRecipeList(RecipeVo vo);
 	public RecipeVo recipeSelect(RecipeVo vo);
-	public int recipeInsert(RecipeVo vo);
+//	public int recipeInsert(RecipeVo vo);
 	public int recipeUpdate(RecipeVo vo);
 	public int recipeDelete(RecipeVo vo);
 }
