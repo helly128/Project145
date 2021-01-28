@@ -57,53 +57,70 @@
 	$(function() {
 		//ajax db에서 같은 이름의 식당 리스트를 가져온다.
 		$("#searchbtn").click(()=>{
-			$.ajax(
-				{
+			if( $("#restName").val() != "") {
+				$("#restNameList").text("");
+
+				$.ajax({
 					type:"POST",
 					url:"restNameSerchList.do",
 					data:{restName: $("#restName").val()}, //사용하는 함수 
-					
+							
 					dataType:"json",
 					success: function(map){
-						if(map != null && map.length > 0){
-							console.log(map.length);
-							console.log(map[0].restName);
-							var str ='<tr>';
-							$.each(map, function(i){
-								str += '<td>'+'<a href=#>' + map[i].restName + '</a>'+'</td>';
-								str +='</tr>';
-								
-							});
-							$("#restNameList").show();
-							$("#restNameList").append(str);
-							
-							
-							$("#result").text("채식당에 이미 등록된 식당 이름입니다. 같은 식당이 아닌지 확인해주세요.");
-							//submit action위치 바꾸기. 
-								
-						}else{ 
-							var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
+					if(map != null && map.length > 0){
+						console.log(map.length);
+						console.log(map[0].restName);
+						var str = "";
+						$.each(map, function(i){
+						str += '<a href=#>' + map[i].restName + '</a>'+'<br>';
+										
+						});
+						$("#restNameList").show();
+						$("#restNameList").append(str);
+									
+									
+						$("#result").text("채식당에 이미 등록된 식당 이름입니다. 같은 식당이 아닌지 확인해주세요.");
+						//submit action위치 바꾸기. 
+										
+					}else{
+						$("#restNameList").text("");
+						var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
+						$("#result").text(str);
 					}},
-					error:(log)=>{alert("검색에 실패했습니다.")
+						error:(log)=>{alert("검색에 실패했습니다.")
 					}
-						
+								
 				});
+				
+			} else {
+				$("#restNameList").text("");
+				$("#result").text("식당명을 입력해주세요.");
+			}
+			
 		});
 
 	});
 </script>
 <script type="text/javascript">
+	var length = 1;
+	$(function() {
+		$('#PlusButton').on('click', function() {
+			var div = document.createElement('div');
+			div.innerHTML = document.getElementById('childForm').innerHTML;
+			$(div).find('#menuName').attr('name', 'menuVoList['+length+'].menuName');
+			$(div).find('#menuPrice').attr('name', 'menuVoList['+length+'].menuPrice');
+			$(div).find('#menuVegeType').attr('name', 'menuVoList['+length+'].menuVegeType');
+		    document.getElementById('plus').appendChild(div);
+		length++;
+		})
 	
-	function input_append(){
-		var div = document.createElement('div');
-		
-		div.innerHTML = document.getElementById('childForm').innerHTML;
-
-	    document.getElementById('plus').appendChild(div);
-		}
-
-		
+	});
 	
+	document.addEventListener('keydown', function(event) {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		  };
+		}, true);
 </script>
 
 <title>NewRestaurantInsert</title>
@@ -135,7 +152,7 @@
 					<div class="line"></div>
 				</div>
 				<div id="result" style="font-size:1.1rem"></div>
-				<table id="restNameList" style="width:100%; height:30px; font-size:1.3rem; font-weight: bold; display: none"></table>
+				<div id="restNameList" style="width:100%; height:30px; font-size:1.3rem; font-weight: bold; display: none"></div>
 			
 			</div>
 			<div class="labelf">
@@ -155,7 +172,7 @@
 					<div class="line"></div>
 				</div>
 				<input type="text" class="input" id="etcRestAddress" name="restAddressDetail"
-					placeholder="상세 주소를 입력해주세요." required>
+					placeholder="상세 주소를 입력해주세요.">
 				<div class="line-box">
 					<div class="line"></div>
 				</div>
@@ -182,9 +199,9 @@
 			<div class="labelf" id="menuForm">
 				<p class="label-txt" style="font-size: 1.6rem; font-weight: bold;">메뉴</p>
 				<div id="childForm">
-				<input type="text" class="input" id="menuPush" name="menuName" placeholder="메뉴명" style="width: 200px; padding: 17px 0px 17px 0px;" required>
-				<input type="text" class="input" id="menuPush" name="menuPrice" placeholder="가격" style="width: 120px; padding: 17px 0px 17px 0px;" required>
-				<select name="beganType" onchange="" id="menuPush" name="menuVegeType" style="width: 100px; heigh: 50px; font-size:1.3rem;">	
+				<input type="text" class="input" id="menuName" name="menuVoList[0].menuName" placeholder="메뉴명" style="width: 200px; padding: 17px 0px 17px 0px;" required>
+				<input type="text" class="input" id="menuPrice" name="menuVoList[0].menuPrice" placeholder="가격" style="width: 120px; padding: 17px 0px 17px 0px;" required>
+				<select id="menuVegeType" name="menuVoList[0].menuVegeType" style="width: 100px; heigh: 50px; font-size:1.3rem;">	
 						<option value="none" selected disabled>채식타입</option>
 						<option value="began">비건</option>
 						<option value="racto">락토</option>
@@ -200,7 +217,7 @@
 				<div id="plus"></div>
 				
 				<div>
-					<button class="PlusButton" onclick="input_append()">+ 메뉴 추가</button>
+					<button class="PlusButton" id="PlusButton">+ 메뉴 추가</button>
 				</div>
 			</div>
 			

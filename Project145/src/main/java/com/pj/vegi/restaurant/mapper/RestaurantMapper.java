@@ -3,6 +3,7 @@ package com.pj.vegi.restaurant.mapper;
 
 import java.util.List;
 
+import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 
@@ -10,6 +11,7 @@ public interface RestaurantMapper {
 
 	RestaurantVo restaurantSelect(RestaurantVo vo);
 	int restInsert(RestaurantVo vo); //일반 유저 식당등록 
+	int menuInsert(RestMenuVo vo); //일반 유저 식당등록(에 따른 메뉴등록)
 	int restaurantUpdate(RestaurantVo vo); 
 	int restaurantDelete(RestaurantVo vo);
 	
