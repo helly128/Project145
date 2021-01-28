@@ -12,6 +12,9 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class NaverSearchApi {
 	public static void main(String[] args) {
 		String clientId = "1P0F_fye7hGWfHa0ztCe"; // 애플리케이션 클라이언트 아이디값"
