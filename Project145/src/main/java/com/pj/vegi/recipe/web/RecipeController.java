@@ -3,18 +3,16 @@ package com.pj.vegi.recipe.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.pj.vegi.common.ImageIO;
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
@@ -28,11 +26,24 @@ public class RecipeController {
 	@Autowired
 	RecipeService recipeService;
 
-	@RequestMapping("/recipeMain.do")
-	public String recipeMain(Model model, RecipeVo vo) {
-
+	@RequestMapping("/recipeMain.do")//게시글 페이징 처리 추가하기
+	public String recipeMain(Model model, RecipeVo vo,Paging paging) {
+		//	paging
+		paging.setPageUnit(8);
+		//페이지 번호 파라미터
+		if(paging.getPage() == null) {	// && paging.getPageUnit(8) ==null
+			paging.setPage(1);
+		}
+		//시작/마지막레코드 번호
+		vo.setStart(paging.getStartPage());
+		vo.setEnd(paging.getLastPage());
+		//전체 건수
+		paging.setTotalRecord(recipeService.recipeCount(vo));
+		model.addAttribute("paging", paging);
+		//data
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
 		model.addAttribute("recipes", recipes);
+		
 		return "recipe/recipeMain";
 	}
 
@@ -70,17 +81,16 @@ public class RecipeController {
 	RecipeMaterialService recipeMaterialService;
 
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
+	public String recipeDesc(LessonVO lVo,RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
 			throws SQLException {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
-
-		LessonVO lessonVo = new LessonVO();
-		lessonVo.setCId(recipeVo.getCId());
-		List<LessonVO> lessonSelectList = lessonService.lessonList(lessonVo);
+		
+		List<LessonVO> lessons =  lessonService.lessonList(lVo);
 		session.setAttribute("rId", rVo.getRId());
+		
 		model.addAttribute("recipeSelect", recipeVo);
-		model.addAttribute("lessonSelectList", lessonSelectList);
+		model.addAttribute("lessons", lessons);
 		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
 
 		return "recipe/recipeDesc";
@@ -107,17 +117,17 @@ public class RecipeController {
 		return "redirect:recipeMain.do";
 	}
 
-//	@RequestMapping("/recipeDelete.do")//삭제
-//	public String recipeDelete(RecipeVo vo) {
-//		String viewPath = null;
-//		int n= recipeService.recipeDelete(vo);
-//		if(n!=0)
-//			viewPath = "redirect:recipeMain.do";
-//		else
-//			viewPath = "recipe/recipeDeleteFail";
-//		return viewPath;
-//	}
-//	
+	@RequestMapping("/recipeDelete.do")//삭제
+	public String recipeDelete(RecipeVo vo) {
+		String viewPath = null;
+		int n= recipeService.recipeDelete(vo);
+		if(n!=0)
+			viewPath = "redirect:recipeMain.do";
+		else
+			viewPath = "recipe/recipeDeleteFail";
+		return viewPath;
+	}
+	
 //	@RequestMapping("/recipeInsertResult.do")
 //	public String recipeInsertResult(RecipeVo vo, Model model) {
 //		String viewPath = null;

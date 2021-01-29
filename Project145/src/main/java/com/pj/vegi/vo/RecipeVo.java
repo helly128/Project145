@@ -22,5 +22,7 @@ public class RecipeVo {
 	private int rHit;                     
 	private String mId;         
 	private String cId;              
-	private int rReport;          
+	private int rReport;     
+	private int start;
+	private int end;
 }

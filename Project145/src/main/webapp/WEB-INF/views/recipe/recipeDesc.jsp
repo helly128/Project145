@@ -85,7 +85,8 @@ $(document).ready(function){
 		});
 
 		$("#deleteBtn").click(function() {
-			if (confirm("정말...삭제하시겠어요?")) {
+			var delAlert = confirm("정말 삭제 하시겠어요?");
+			if (delAlert == ture) {
 				repleDelete();
 			}
 		});
@@ -189,33 +190,36 @@ $(document).ready(function){
 					}
 				});
 	}
+
+	//재료
+	function matName(name) {
+		console.log(name);
+		$.ajax({
+			type : "get",
+			url : "/recipeMaterial.do/" + name,
+			contentType : "application/json",
+			success : function(result) { //[{},{},{}]를 뽑아야ㅐ해
+				console.log(result);
+				var put = "<ul>";
+				$.each(result, function(idx, item) {//item이 vo다.
+					put += "<li>" + item.title;
+					put += "<li>" + item.lprice + "원";
+					put += "<li>" + "홈페이지 : " + item.mallName;
+					put += "<li>" + "<a href='"+item.link+"'>" + item.link
+							+ "</a>";
+					put += "<hr/>";
+					put += "</ul>";
+				});
+				$("#rMat").html(put);
+			},
+			error : function() {
+				console.log("실패ㅜㅜ");
+			}
+
+		});
+	}
 </script>
-<!-- 댓글 폼 수정용
-<form>
-  <div class="form-group row">
-    <label for="reId" class="col-sm-2 col-form-label">reId</label>
-    <div class="col-sm-3">
-      <input type="text" readonly class="form-control-plaintext" id="reId" value="${reId}">
-    </div>
-    <label for="reDate" class="col-sm-2 col-form-label">reDate</label>
-    <div class="col-sm-3">
-      <input type="text" readonly class="form-control-plaintext" id="reDate" value="email@example.com">
-    </div>
-    <label for="mId" class="col-sm-2 col-form-label">reDate</label>
-    <div class="col-sm-4">
-      <input type="text" readonly class="form-control-plaintext" id="mId" value="작성자">
-    </div>
-    
-  </div>
-  <div class="form-group row">
-    <label for="reContent" class="col-sm-2 col-form-label">댓글 내용</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="reContent" placeholder="댓글을 입력하세요">
-    </div>
-    
-  </div>
-</form>
- -->
+
 </head>
 <body>
 	<div class="container">
@@ -244,15 +248,36 @@ $(document).ready(function){
 			<div class="row">
 				<div class="col-lg-10"></div>
 				<div class="col-lg-2">
-					<button
+					<button type="button" class="btn btn-success"
 						onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button>Delete</button>
+					<button type="button" class="btn btn-danger" data-toggle="modal"
+						data-target="#exampleModal" >Delete</button>
 				</div>
 			</div>
 		</div>
 		<hr />
-
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">게시물을 정말 삭제하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="location.href='/recipeDelete.do?rId=${recipeSelect.getRId()}'">삭제하기</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<br />
 		<!-- 관련 재료 -->
 		<div>
@@ -262,19 +287,18 @@ $(document).ready(function){
 				<div class="col-lg-4">
 					Used Ingredient<br /> <br />
 					<ol style="margin-left: 10%">
-						<c:forEach var="recipeMaterial" items="${recipeMaterial }">
-							<li>${recipeMaterial.getMatName()}&nbsp;${recipeMaterial.getMatVol()}</li>
+						<c:forEach var="recipeMaterial" items="${recipeMaterial}">
+							<li><a onclick="matName('${recipeMaterial.getMatName()}')">${recipeMaterial.getMatName()}</a>&nbsp;${recipeMaterial.getMatVol()}</li>
 						</c:forEach>
 
 					</ol>
 
 				</div>
-				<div class="col-lg-8">
+				<div class="col-lg-8" id="rMat">
 					Go to Cheapest Mall<br /> <br />
 					<ol>
-						<li>mall1_주소 [가격]</li>
-						<li>mall2_주소 [가격]</li>
-						<li>mall3_주소 [가격]</li>
+						<li>값이 없으면 검색되지 않습니다.😂</li>
+
 					</ol>
 				</div>
 			</div>
@@ -285,15 +309,16 @@ $(document).ready(function){
 		<!-- 관련 클래스 -->
 		<div>
 			<h3>📖Related Class</h3>
+			<br /> <br />
 			<div class="row">
 				<!-- 클래스리스트 시작 -->
-				<c:forEach var="recipe" items="${recipe }">
+				<%-- <input type="hidden" value="${lesson}"> --%>
+				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-3 col-md-3">
-						<input type="hidden" value="${recipe.getrId() }">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${recipe.getCId() }"> <img
-									src="/images/${recipe.getCImg() }" width="150" height="250">
+								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+									src="/images/${lesson.getCImg() }" width="150" height="250">
 								</a>
 								<div class="product-action">
 									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>

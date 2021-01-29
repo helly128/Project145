@@ -75,7 +75,7 @@
 									<li class="nav-item"><a class="page-scroll"
 										href="/restaurant.do">식당 </a></li>
 									<li class="nav-item"><a class="page-scroll"
-										href="product-details.html">베지Meet</a></li>
+										href="/vegimeetList.do">베지Meet</a></li>
 								</ul>
 							</div>
 							<ul class="header-btn d-sm-flex">

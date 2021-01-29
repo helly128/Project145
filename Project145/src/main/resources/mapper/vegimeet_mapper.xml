@@ -6,4 +6,37 @@
 	<select id="vegimeetList" resultType="VegimeetVo">
 		SELECT * FROM meet_un
 	</select>
+	
+	<select id="getDday" resultType="int">
+		SELECT ceil(((select meet_start from meet_un where meet_id = #{meetId}) - sysdate))
+		FROM DUAL
+	</select>
+	
+	<insert id="likeInsert">
+		INSERT INTO like_list
+		VALUES('like' || like_seq.nextval, #{originId}, sysdate, #{mId})
+	</insert>
+	
+	<delete id="likeDelete">
+		DELETE FROM like_list
+		WHERE origin_id=#{originId}
+		AND m_id=#{mId}
+	</delete>
+	
+	<select id="likeFlagSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM like_list
+		WHERE m_id=#{mId}
+		AND origin_id=#{originId}
+	</select>
+	
+	<select id="vegimeetSelect" resultType="VegimeetVo">
+		SELECT *
+		FROM meet_un
+		WHERE meet_id=#{meetId}
+	</select>
+	
+	<select id="meetPartiList" resultType="MeetParticipantVo">
+		
+	</select>
 </mapper>

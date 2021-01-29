@@ -118,7 +118,7 @@ article {
 												<li><a href="category-list.html">Category List</a></li>
 											</ul></li>
 										<li class="nav-item"><a class="page-scroll"
-											href="product-details.html">베지Meet</a></li>
+											href="/vegimeetList.do">베지Meet</a></li>
 									</ul>
 								</div>
 								<ul class="header-btn d-sm-flex">
@@ -198,7 +198,7 @@ article {
 								<li><a href="javascript:void(0)">클래스</a></li>
 								<li><a href="/recipeMain.do">레시피</a></li>
 								<li><a href="javascript:void(0)">식당</a></li>
-								<li><a href="javascript:void(0)">베지Meet</a></li>
+								<li><a href="/vegimeetList.do">베지Meet</a></li>
 								<li><a href="javascript:void(0)">Contact</a></li>
 							</ul>
 						</div>

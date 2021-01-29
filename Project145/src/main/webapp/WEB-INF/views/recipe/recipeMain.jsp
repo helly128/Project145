@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="jy" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,6 +61,9 @@
 
 								</div>
 							</div>
+							<div class="col-lg-2 col-sm-3 col-4" >
+							<button  class="btn btn-success" onclick="location.href='/recipeInsert.do'">Write New Now!📝</button>
+							</div>
 
 						</div>
 					</form>
@@ -102,10 +106,36 @@
 				</div>
 			</c:forEach>
 			<!-- 레시피 리스트 카드 끝 -->
-
-
 		</div>
-	<button onclick="location.href='/recipeInsert.do'">Write</button>
+	<!-- 페이징 처리 추가 -->
+	<div class="paging" align="center">
+		<jy:paging paging="${paging}" jsFunc="goList"/>
+		<script>
+		function goList(p){
+			location.href="recipeMain.do?page="+p;
+		}
+		</script>
+		
+	</div>
+	<!-- 페이징 2 -->
+	<div style="display: block; text-align: center;">		
+		<c:if test="${paging.startPage != 1 }">
+			<a href="/recipeMain.do?page=${paging.startPage - 1 }&pageUnit=${paging.pageUnit}">&lt;</a>
+		</c:if>
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:choose>
+				<c:when test="${p == paging.page }">
+					<b>${p }</b>
+				</c:when>
+				<c:when test="${p != paging.page }">
+					<a href="/recipeMain.do?page=${p }&pageUnit=${paging.pageUnit}">${p }</a>
+				</c:when>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${paging.endPage != paging.lastPage}">
+			<a href="/recipeMain.do?page=${paging.endPage+1 }&pageUnit=${paging.pageUnit}">&gt;</a>
+		</c:if>
+	</div>
 	</div>
 
 	<!--====== LATEST PRODUCT PART ENDS ======-->

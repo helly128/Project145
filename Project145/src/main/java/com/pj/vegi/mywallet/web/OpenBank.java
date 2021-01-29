@@ -172,7 +172,7 @@ public class OpenBank {
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();			
 			
-			con.addRequestProperty("Authorization", "Bearer" + vo.getAccessToken());
+			con.addRequestProperty("Authorization", "Bearer" + vo.getAccess_token());
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 			con.setRequestProperty("Content-Length", String.valueOf(query.length()));
