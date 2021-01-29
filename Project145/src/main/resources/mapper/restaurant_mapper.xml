@@ -24,11 +24,10 @@
 			VALUES(#{restId},#{restName},0,0,
 					#{restAddress},#{restPic},#{restTime},#{mId},0,
 					0,#{restTel},'','false', #{restAddressDetail})	
-	
-
 	</insert>
 	
 	<insert id="menuInsert">
+	<!-- 일반유저 식당 등록(메뉴) -->
 		INSERT INTO REST_MENU(MENU_ID, MENU_NAME, MENU_VEGE_TYPE, MENU_PRICE, REST_ID)
 			VALUES('menu' ||menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice}, #{restId})
 	</insert>
@@ -43,6 +42,7 @@
 	
 	
 	<select id="restNameSerchList" resultType="RestaurantVo">
+	<!-- 일반유저 식당 등록에서 식당이름 검색하는 부분 -->
 	SELECT REST_NAME, REST_ID FROM restaurant WHERE REST_NAME LIKE '%${restName}%'
 	</select>
 	
@@ -54,16 +54,30 @@
 	</update>
 	
 	
-	
-	
 	<update id="bizInfoUpdate">
 	Update restaurant set bizNum=#{bizNum} where rest_id = #{restId}
 	</update>
 
+
 	<select id="getRestaurantList" resultType="RestaurantVo">
+	<!-- 식당 전체목록 -->
 	SELECT * FROM RESTAURANT
 	</select>
 
+
+	<select id="getRestaurantDetail" resultType="RestaurantVo">
+	<!-- 식당 상세페이지 -->
+	SELECT *
+	FROM RESTAURANT
+	WHERE REST_ID = #{restId}
+	</select>
+	
+	<select id="getRestaurantMenu" resultType="RestMenuVo">
+	<!-- 식당 메뉴 목록 -->
+	SELECT *
+	FROM REST_MENU
+	WHERE REST_ID = #{restId}
+	</select>
 	
 	
 </mapper>

@@ -88,26 +88,25 @@
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/restaurantImformation.do?restId=${vo.getRestId() }"> 
-									<img src="images/salad.jpg" alt="" height="300px" width="300px">
+								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> 
+									<img src="${vo.getRestPic() }" alt="" height="300px" width="300px">
 								</a>
 								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart-filled" onclick="redheart"></i></a>
-									
-									
+									<a href="#"><i class="lni lni-heart-filled" onclick="redheart"></i></a>	
 								</div>
 							</div>
 
 							<div class="product-content">
 								<div class="namediv">
 									<h3 class="name">
-										<a href="/restaurantImformation.do?restId=${vo.getRestId() }">${vo.getRestName() }</a> 
+										<a href="/restaurantDetail.do?restId=${vo.getRestId() }">${vo.getRestName() }</a> 
 									</h3>
 								</div>
 								<ul class="address">
-									<li><a href="javascript:void(0)"><i class="lni lni-star"></i></i> ${vo.getRestStarAvg() }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${vo.getRestTime()}</a></li>
+									<li><a href="javascript:void(0)">
+										<i class="lni lni-star"></i> ${vo.getRestStarAvg() }</a></li>
+									<li><a href="javascript:void(0)">
+									<i class="lni lni-package"></i> ${vo.getRestTime()}</a></li>
 								</ul>
 							</div>
 						</div>

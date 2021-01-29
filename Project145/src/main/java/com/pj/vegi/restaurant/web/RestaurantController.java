@@ -22,10 +22,10 @@ public class RestaurantController {
 	@Autowired
 	RestaurantService restaurantService;
 
+	//식당 메인 페이지
 	@RequestMapping("/restaurant.do")
 	public String restaurantMain(Model model, RestaurantVo vo) {
 		List<RestaurantVo> restaurants = restaurantService.getRestaurantList(vo);
-		System.out.println(restaurants);
 		model.addAttribute("restaurants", restaurants);
 		return "restaurant/restaurantList";
 	}
@@ -37,7 +37,7 @@ public class RestaurantController {
 	}
 
 	@ResponseBody
-	// ajax 로 받아 올 때
+	// ajax 로 받아 올 때 @ResponseBody 필요
 	@RequestMapping("/restNameSerchList.do")
 	public List<RestaurantVo> restChek(@RequestParam String restName, RestaurantVo vo) {
 		// 일반 사용자 식당등록 페이지에서 식당이름 검색
@@ -64,19 +64,23 @@ public class RestaurantController {
 			return "redirect:/restaurant.do";
 			
 		}
-
-				
-//				restaurantService.menuInsert(vo2);
-//				System.out.println(vo.getRestId());
-//				model.addAttribute("result", "성공");
-//				return "redirect:/restaurant/restaurantList";
-				
-		
-//			model.addAttribute("result", "실패");
-//			return "redirect:/restaurant/restaurantList";			
-		
-
-		
+	
 	}
+	
+	//식당 한 건 상세페이지
+	@RequestMapping("/restaurantDetail.do")
+	public String restaurantDetail(RestaurantVo rVo, Model model, HttpSession session ) {
+		RestaurantVo restaurantVo = restaurantService.getRestaurantDetail(rVo);
+		
+		RestMenuVo mVo = new RestMenuVo();
+		mVo.setRestId(restaurantVo.getRestId());
+		List<RestMenuVo> menuList = restaurantService.getRestaurantMenu(mVo);
+		
+		model.addAttribute("rVo", restaurantVo);
+		model.addAttribute("menuList" ,menuList);
+		
+		return "restaurant/restaurantImformation";
+	}
+	
 
 }
