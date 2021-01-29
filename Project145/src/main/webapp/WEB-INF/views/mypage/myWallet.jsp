@@ -45,7 +45,8 @@
 				</form>
 				<span class="small">보유 충전금만큼 인출이 가능합니다.</span>
 				<hr>
-				<a class="small" href="OobToken.do">계좌등록하기</a>
+				<a class="small" href="#">계좌등록하기</a><br>
+				<a class="small" href="MyWalletHistory.do">지갑 내역 보기</a>
 				<!-- 	
 				<div class="text-center">
 					<a class="small" href="AuthAccount.do">사용자토큰</a><br>
@@ -63,6 +64,7 @@
 
 			if (wPay != "") {
 				if (wPay > 0 && wPay < 2000000) {
+					alert("${mId}" + "님의 계좌에서 " + wPay + "원을 충전을 하시겠습니까?")
 					alert("${mId}" + "님의 지갑에 " + wPay + " 원이 충전되었습니다.")
 					$("#form1").submit()
 				} else {
@@ -82,7 +84,13 @@
 			console.log(cash)
 
 			if (dPay != "") {
-					$("#form2").submit()
+				if ( dPay > 0 && dPay < cash ) {
+					alert("${mId}" + "님의 계좌로 " + dPay + "원을 인출 하시겠습니까?")
+					alert("${mId}" + "님의 지갑에서 " + dPay + " 원이 인출되었습니다.")
+					$("#form2").submit()					
+				} else {
+					alert("금액을 정확히 입력해주세요.")
+				}
 			} else {
 				alert("인출금을 입력해주세요.")
 			}

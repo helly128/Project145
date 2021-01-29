@@ -15,6 +15,7 @@ public class VegimeetVo {
 	private int meetFund;
 	private String mId;
 	private String meetPic;
+	private int minMoney;
 	
 	private int dday;
 	private int likeFlag;

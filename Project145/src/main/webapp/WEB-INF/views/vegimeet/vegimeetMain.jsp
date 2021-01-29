@@ -72,14 +72,14 @@
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/vegimeetSelect.do?unId=${vo.meetId }"> <img
+								<a href="/vegimeetSelect.do?meetId=${vo.meetId }"> <img
 									src="images/salad.jpg">
 								</a>
 							</div>
 							<div class="product-content">
 								<div class="namediv">
 									<h3 class="name"
-										onclick="location.href='/vegimeetSelect.do?unId=${vo.meetId }'">${vo.meetTitle }</h3>
+										onclick="location.href='/vegimeetSelect.do?meetId=${vo.meetId }'">${vo.meetTitle }</h3>
 								</div>
 								<ul class="address">
 									<li><i class="lni lni-user"></i> 이름 넣어야함</li>
@@ -128,29 +128,35 @@
 							'click',
 							'.likeAction',
 							function() {
-								var meetId = $(this).data('id');
-								if ($(this).children('img').attr('src') == '/images/empty_like.png') {
-									$.ajax({
-										url : 'vegimeetLike.do/' + meetId,
-										type : 'post',
-										contentType : "application/json",
-										success : function(result) {
-										}
-									});
-									$(this).children('img').attr('src',
-											'/images/filled_like.png');
-								} else {
-									$(this).children('img').attr('src',
-											'/images/empty_like.png');
-									$.ajax({
-										url : 'vegimeetUnlike.do/' + meetId,
-										type : 'post',
-										contentType : "application/json",
-										success : function(result) {
-										}
-									});
-									$(this).children('img').attr('src',
-											'/images/empty_like.png');
+								if ('${mId}' == null || '${mId}' == ''){
+									alert('로그인 후 이용가능합니다.');
+								} else{
+									var meetId = $(this).data('id');
+									if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+										$.ajax({
+											url : 'vegimeetLike.do/' + meetId,
+											type : 'post',
+											contentType : "application/json",
+											success : function(result) {
+											}
+										});
+										$(this).children('img').attr('src',
+												'/images/filled_like.png');
+									} else {
+										$(this).children('img').attr('src',
+												'/images/empty_like.png');
+										$
+												.ajax({
+													url : 'vegimeetUnlike.do/'
+															+ meetId,
+													type : 'post',
+													contentType : "application/json",
+													success : function(result) {
+													}
+												});
+										$(this).children('img').attr('src',
+												'/images/empty_like.png');
+									}
 								}
 							})
 		});

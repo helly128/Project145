@@ -29,4 +29,14 @@
 		WHERE m_id=#{mId}
 		AND origin_id=#{originId}
 	</select>
+	
+	<select id="vegimeetSelect" resultType="VegimeetVo">
+		SELECT *
+		FROM meet_un
+		WHERE meet_id=#{meetId}
+	</select>
+	
+	<select id="meetPartiList" resultType="MeetParticipantVo">
+		
+	</select>
 </mapper>

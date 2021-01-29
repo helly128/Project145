@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.mywallet.service.MyWalletService;
 import com.pj.vegi.mywallet.vo.DepositReqListVO;
 import com.pj.vegi.mywallet.vo.DepositReqVO;
@@ -160,20 +161,20 @@ public class WalletController {
 
 		// 지갑에 추가
 		m_vo.setWalletCash(cashIn);
-		myWalletService.updateWallet(m_vo);
+		myWalletService.updatePlusWallet(m_vo);
 
 		// 히스토리에 추가
 		w_vo.setWalletMoney(cashIn);
-
-		// model.addAttribute("withDrawContent", withDrawContent);
+		w_vo.setMId(mid);
+		myWalletService.insertPlusWalletHistory(w_vo);
 
 		return "redirect:myWallet.do";
 	}
 
 	// 입금이체 인출버튼(이용기관->회원) p75
 	@RequestMapping("/Deposit.do")
-	public String DepositContent(Model model, @RequestParam("dPay") String dPay, DepositReqListVO req, DepositReqVO vo)
-			throws SQLException {
+	public String DepositContent(WalletHistoryVO w_vo, Model model, @RequestParam("dPay") String dPay, MemberVo m_vo,
+			DepositReqListVO req, DepositReqVO vo, HttpSession session) throws SQLException {
 
 		long randId = System.currentTimeMillis();
 		String randIdStr = Long.toString(randId);
@@ -199,6 +200,9 @@ public class WalletController {
 //		map.put("req_list", mapList);
 
 		// --------------------------------------
+
+		String mid = (String) session.getAttribute("mId");
+		m_vo.setMId(mid);
 
 		ArrayList<DepositReqListVO> reqList = new ArrayList<DepositReqListVO>();
 		req.setTran_no("1"); // 거래순번
@@ -227,12 +231,46 @@ public class WalletController {
 
 		Gson gson = new Gson();
 		DepositResponseVO depositContent = gson.fromJson(result, DepositResponseVO.class);
-		System.out.println(depositContent);
-		//int cashOut = Integer.parseInt(depositContent.getTran_amt());
-		//model.addAttribute("a", cashOut);
 
-		model.addAttribute("depositContent", depositContent.getRes_list());
+		ArrayList<DepositResListVO> list = depositContent.getRes_list();
+		list.get(0).getTran_amt();
 
-		return "wallet/depositContent";
+		// 인출금
+		int cashOut = Integer.parseInt(list.get(0).getTran_amt());
+
+		// 지갑에서 빼기
+		m_vo.setWalletCash(cashOut);
+		myWalletService.updateMinusWallet(m_vo);
+
+		// 히스토리에 추가
+		w_vo.setMId(mid);
+		w_vo.setWalletMoney(cashOut);
+		myWalletService.insertMinusWalletHistory(w_vo);
+
+		return "redirect:myWallet.do";
+	}
+
+	@RequestMapping("MyWalletHistory.do")
+	public String MyWalletHistory(HttpSession session, WalletHistoryVO vo, Model model, Paging paging) {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);				
+		
+		paging.setPageUnit(5);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStartP(paging.getFirst());
+		vo.setEndP(paging.getLast());
+		
+		int cnt = myWalletService.countHistory(vo);
+		paging.setTotalRecord(cnt); // 전체 레코드 건수 임의->paging.java에서 마지막으로 계산해준다
+		
+		List<WalletHistoryVO> list = myWalletService.selectWalletHistory(vo);
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging); // memberList에 my:paging
+
+		return "mypage/myWalletHistory";
 	}
 }

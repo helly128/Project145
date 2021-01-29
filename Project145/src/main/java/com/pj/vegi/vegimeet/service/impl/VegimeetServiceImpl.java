@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.vegimeet.mapper.VegimeetMapper;
 import com.pj.vegi.vegimeet.service.VegimeetService;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 @Service("vegimeetService")
@@ -39,6 +40,16 @@ public class VegimeetServiceImpl implements VegimeetService {
 	@Override
 	public int likeFlagSelect(LikeListVo vo) {
 		return dao.likeFlagSelect(vo);
+	}
+
+	@Override
+	public VegimeetVo vegimeetSelect(VegimeetVo vo) {
+		return dao.vegimeetSelect(vo);
+	}
+
+	@Override
+	public MeetParticipantVo meetPartiList(VegimeetVo vo) {
+		return dao.meetPartiList(vo);
 	}
 
 }
