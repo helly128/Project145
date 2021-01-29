@@ -8,6 +8,7 @@ import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
+import com.pj.vegi.vo.RestaurantVo;
 
 public interface MypageService {
 
@@ -20,4 +21,8 @@ public interface MypageService {
 	List<Map> restSelect(RestReservVo vo) throws SQLException;
 	
 	List<Map> lessonSelect(LessonReservVO vo) throws SQLException;
+	
+	int countRest(RestReservVo vo);
+	int countRecipe(RecipeVo vo);
+	int countLesson(LessonReservVO vo);
 }

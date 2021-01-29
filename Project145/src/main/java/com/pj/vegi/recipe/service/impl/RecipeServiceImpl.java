@@ -47,4 +47,12 @@ public class RecipeServiceImpl implements RecipeService {
 	/*
 	 * @Autowired private RecipeMapper dao;
 	 */
+
+	@Override
+	public int recipeCount(RecipeVo vo) {
+
+		return dao.recipeCount(vo);
+	}
+
+	
 }

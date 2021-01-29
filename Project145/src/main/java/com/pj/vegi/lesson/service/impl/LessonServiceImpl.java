@@ -30,4 +30,9 @@ public class LessonServiceImpl implements LessonService {
 	public int lessonHitUpdate(LessonVO vo) {
 		return dao.lessonHitUpdate(vo);
 	}
+
+	@Override
+	public int countLessonMain(LessonVO vo) {
+		return dao.countLessonMain(vo);
+	}
 }

@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
+import com.pj.vegi.vo.RestaurantVo;
 
 @Controller
 public class MypageController {
@@ -74,24 +76,52 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myRecipe.do")
-	public String myRecipe(RecipeVo vo, Model model, HttpSession session) throws SQLException {
+	public String myRecipe(RecipeVo vo, Model model, HttpSession session, Paging paging) throws SQLException {
 
-		vo.setMId((String) session.getAttribute("mId"));
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);		
+
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countRecipe(vo);
+		paging.setTotalRecord(cnt);
+
 		List<RecipeVo> recipes = mypageService.recipeSelect(vo);
 		model.addAttribute("recipes", recipes);
+		model.addAttribute("paging", paging);
 
 		return "mypage/myRecipe";
 	}
 
 	@RequestMapping("/myClass.do")
-	public String myClass(Model model, LessonReservVO vo, HttpSession session) throws SQLException {
+	public String myClass(Model model, LessonReservVO vo, HttpSession session, Paging paging) throws SQLException {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
 		
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countLesson(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> classList = mypageService.lessonSelect(vo);
 		model.addAttribute("list", classList);
-		
+		model.addAttribute("paging", paging);
+
 		return "mypage/myClass";
 	}
 
@@ -127,15 +157,27 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myRestaurant.do")
-	public String myRestaurant(RestReservVo vo, Model model, HttpSession session) throws SQLException {
+	public String myRestaurant(Paging paging, RestReservVo vo, Model model, HttpSession session) throws SQLException {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
+
+		paging.setPageUnit(5);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countRest(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> reservList = mypageService.restSelect(vo);
 		model.addAttribute("list", reservList);
-		
-		
+		model.addAttribute("paging", paging);
+
 		return "mypage/myRestaurant";
 	}
+
 }

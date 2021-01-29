@@ -1,5 +1,6 @@
 package com.pj.vegi.mywallet.serviceimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,32 @@ public class MyWalletServiceImpl implements MyWalletService {
 	}
 
 	@Override
-	public int updateWallet(MemberVo vo) {
-		return dao.updateWallet(vo);
+	public int updatePlusWallet(MemberVo vo) {
+		return dao.updatePlusWallet(vo);
 	}
 
 	@Override
-	public int insertWalletHistory(WalletHistoryVO vo) {
-		return dao.insertWalletHistory(vo);
+	public int insertPlusWalletHistory(WalletHistoryVO vo) {
+		return dao.insertPlusWalletHistory(vo);
+	}
+
+	@Override
+	public int updateMinusWallet(MemberVo vo) {
+		return dao.updateMinusWallet(vo);
+	}
+
+	@Override
+	public int insertMinusWalletHistory(WalletHistoryVO vo) {
+		return dao.insertMinusWalletHistory(vo);
+	}
+
+	@Override
+	public List<WalletHistoryVO> selectWalletHistory(WalletHistoryVO vo) {
+		return dao.selectWalletHistory(vo);
+	}
+
+	@Override
+	public int countHistory(WalletHistoryVO vo) {
+		return dao.countHistory(vo);
 	}
 }
