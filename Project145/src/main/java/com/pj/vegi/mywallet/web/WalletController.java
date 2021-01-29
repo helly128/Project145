@@ -256,18 +256,14 @@ public class WalletController {
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);				
 		
-		// 페이징처리
-		paging.setPageUnit(5); // 목록2개
-		paging.setPageSize(5); // 페이징박스3개
-		// 페이지번호 파라미터
+		paging.setPageUnit(5);
+		paging.setPageSize(5);
 		if (paging.getPage() == null) {
 			paging.setPage(1);
 		}
-		// 시작/마지막 레코드 번호
 		vo.setStartP(paging.getFirst());
 		vo.setEndP(paging.getLast());
 		
-		// 전체건수 카운트
 		int cnt = myWalletService.countHistory(vo);
 		paging.setTotalRecord(cnt); // 전체 레코드 건수 임의->paging.java에서 마지막으로 계산해준다
 		

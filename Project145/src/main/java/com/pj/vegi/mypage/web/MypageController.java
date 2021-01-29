@@ -76,24 +76,52 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myRecipe.do")
-	public String myRecipe(RecipeVo vo, Model model, HttpSession session) throws SQLException {
+	public String myRecipe(RecipeVo vo, Model model, HttpSession session, Paging paging) throws SQLException {
 
-		vo.setMId((String) session.getAttribute("mId"));
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);		
+
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countRecipe(vo);
+		paging.setTotalRecord(cnt);
+
 		List<RecipeVo> recipes = mypageService.recipeSelect(vo);
 		model.addAttribute("recipes", recipes);
+		model.addAttribute("paging", paging);
 
 		return "mypage/myRecipe";
 	}
 
 	@RequestMapping("/myClass.do")
-	public String myClass(Model model, LessonReservVO vo, HttpSession session) throws SQLException {
+	public String myClass(Model model, LessonReservVO vo, HttpSession session, Paging paging) throws SQLException {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
 		
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countLesson(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> classList = mypageService.lessonSelect(vo);
 		model.addAttribute("list", classList);
-		
+		model.addAttribute("paging", paging);
+
 		return "mypage/myClass";
 	}
 
@@ -133,28 +161,23 @@ public class MypageController {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
-		// 페이징처리
-				paging.setPageUnit(5); // 목록2개
-				paging.setPageSize(5); // 페이징박스3개
-				// 페이지번호 파라미터
-				if (paging.getPage() == null) {
-					paging.setPage(1);
-				}
-				// 시작/마지막 레코드 번호
-				vo.setStart(paging.getFirst());
-				vo.setEnd(paging.getLast());
-				
-				// 전체건수 카운트
-				int cnt = mypageService.countRest(vo);
-				paging.setTotalRecord(cnt);
-		
+
+		paging.setPageUnit(5);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countRest(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> reservList = mypageService.restSelect(vo);
 		model.addAttribute("list", reservList);
 		model.addAttribute("paging", paging);
-		
+
 		return "mypage/myRestaurant";
 	}
-	
-	
+
 }

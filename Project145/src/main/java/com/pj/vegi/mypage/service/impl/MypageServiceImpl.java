@@ -51,6 +51,16 @@ public class MypageServiceImpl implements MypageService {
 		return dao.countRest(vo);
 	}
 
+	@Override
+	public int countRecipe(RecipeVo vo) {
+		return dao.countRecipe(vo);
+	}
+
+	@Override
+	public int countLesson(LessonReservVO vo) {
+		return 0;
+	}
+
 //	@Override
 //	public int recipeHitUpdate(RecipeVo vo) throws SQLException {
 //		return dao.recipeHitUpdate(vo);

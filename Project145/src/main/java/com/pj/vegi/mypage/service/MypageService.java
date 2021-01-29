@@ -23,4 +23,6 @@ public interface MypageService {
 	List<Map> lessonSelect(LessonReservVO vo) throws SQLException;
 	
 	int countRest(RestReservVo vo);
+	int countRecipe(RecipeVo vo);
+	int countLesson(LessonReservVO vo);
 }

@@ -22,4 +22,8 @@ public interface MypageMapper {
 	public List<Map> lessonSelect(LessonReservVO vo);
 	
 	public int countRest(RestReservVo vo);
+	
+	public int countRecipe(RecipeVo vo);
+	
+	public int countLesson(LessonReservVO vo);
 }
