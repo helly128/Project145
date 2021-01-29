@@ -4,14 +4,21 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.vegi.recipe.mapper.RecipeMapper">
 	<select id="getRecipeList" resultType="RecipeVo">
+		select a.* from (select b.*, rownum rn from(
 		select *
 		from recipe
+		order by r_id
+		)b)a where rn between #{start} and #{end}
 	</select>
 	<select id="recipeSelect" resultType="RecipeVo">
 		select *
 		from recipe
 		where
 		r_id=#{rId}
+	</select>
+	<select id="recipeCount" resultType="int">
+		select count(*) 
+		from recipe
 	</select>
 		<delete id="recipeDelete">
 		delete from recipe

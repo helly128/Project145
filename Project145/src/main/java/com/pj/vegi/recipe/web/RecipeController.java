@@ -3,20 +3,16 @@ package com.pj.vegi.recipe.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.pj.vegi.common.ImageIO;
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
@@ -30,11 +26,24 @@ public class RecipeController {
 	@Autowired
 	RecipeService recipeService;
 
-	@RequestMapping("/recipeMain.do")
-	public String recipeMain(Model model, RecipeVo vo) {
-
+	@RequestMapping("/recipeMain.do")//게시글 페이징 처리 추가하기
+	public String recipeMain(Model model, RecipeVo vo,Paging paging) {
+		//	paging
+		paging.setPageUnit(8);
+		//페이지 번호 파라미터
+		if(paging.getPage() == null) {	// && paging.getPageUnit(8) ==null
+			paging.setPage(1);
+		}
+		//시작/마지막레코드 번호
+		vo.setStart(paging.getStartPage());
+		vo.setEnd(paging.getLastPage());
+		//전체 건수
+		paging.setTotalRecord(recipeService.recipeCount(vo));
+		model.addAttribute("paging", paging);
+		//data
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
 		model.addAttribute("recipes", recipes);
+		
 		return "recipe/recipeMain";
 	}
 
