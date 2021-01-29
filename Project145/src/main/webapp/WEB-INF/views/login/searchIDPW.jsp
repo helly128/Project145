@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
@@ -10,17 +10,15 @@
 <title>아이디 비밀번호 찾기</title>
 
 <link rel="stylesheet"
- href="<%=request.getContextPath()%>/resources/assets/css/login.css">
+	href="<%=request.getContextPath()%>/resources/assets/css/login.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script>
 
-
-
 $(function(){ 
- 
- 
+	
+//아이디 찾기 모달창 띄우기 
  $('#idsearch').click(()=>{ 
   var noncon_ins_id = [];//여러값을 아작스로 넘기려면 요렇게 만들어줘야
   noncon_ins_id.push(7);
@@ -83,14 +81,47 @@ $(function(){
    $("#idResult").text("공란이 있습니다. 입력을 완료하세요.");
   }
 });
+
+//======아이디 찾기 끝
+
+//======임시 비밀번호 이메일로 보내기
+
+ $("#pwsearch").click(function(){
+	  var psata= [];//여러값을 아작스로 넘기려면 요렇게 만들어줘야
+	  psata.push(7);
+	  psata.push(8);
+	  var mEmail = $("#emailforpw").val();
+	  var mId =  $("#idforpw").val();
+		  
+	  var allData ={ psata : JSON.stringify(psata),"mId":mId, "email":mEmail};
+	  console.log(allData);
+	  
+	 
+		$.ajax({
+			url : "pwSearch.do",
+			type : "POST",
+			data : allData,
+			datatype: "json",
+			success : function(result) {
+				alert(result);
+			},
+			error:(log)=>{alert("실패")}
+		})
+	});
+
 });
- 
+
+	
+//=======임시 비밀번호 이메일로 보내기 끝
+
 
  
 </script>
 <style type="text/css">
+#idsearch:hover {
+	color: white
+}
 
-#idsearch:hover{ color:white};
 </style>
 
 </head>
@@ -99,100 +130,91 @@ $(function(){
 
 
 
- <div class="form">
+	<div class="form">
 
-  <ul class="tab-group">
-   <li class="tab active"><a href="#signup">아이디 찾기</a></li>
-   <li class="tab"><a href="#login">비밀번호 찾기</a></li>
-  </ul>
+		<ul class="tab-group">
+			<li class="tab active"><a href="#signup">아이디 찾기</a></li>
+			<li class="tab"><a href="#login">비밀번호 찾기</a></li>
+		</ul>
 
-  <div class="tab-content">
-   <div id="signup">
-    <h4>정보를 입력해주세요.</h4>
+		<div class="tab-content">
+			<div id="signup">
+				<h4>정보를 입력해주세요.</h4>
+				<!--아이디 찾기 모달에 띄우기 폼 ====================== -->
+				<form action="/" method="post">
+					<div class="field-wrap">
+						<label> Email<span class="req">*</span>
+						</label> <input type="email" id="emailforid" required autocomplete="off" />
+					</div>
+					<br>
+					<div class="field-wrap">
+						<label> 이름 <span class="req">*</span>
+						</label> <input type="text" id="nameforid" required autocomplete="off" />
+					</div>
+					<br>
+					<div align="center">
+						<a href="#" id="idsearch" class="button button-block"
+							data-toggle="modal" data-target="#smallModal">내 아이디 검색</a>
+					</div>
+				</form>
+			</div>
+			
+			<!-- 이메일로 임시 비번 보내기 폼 ====================== -->
+			<div id="login">
+				<h4>등록된 이메일로만 발송됩니다.</h4>
+				<form action="/" method="post">
+					<div class="field-wrap">
+						<label> Email<span class="req">*</span>
+						</label> <input type="email" id="emailforpw" required autocomplete="off" />
+					</div>
+					<br>
+					<div class="field-wrap">
+						<label> ID<span class="req">*</span>
+						</label> <input type="text" id="idforpw" required autocomplete="off" />
+					</div>
+					<br>
+					<button id="pwsearch" type="button" class="button button-block">비밀번호
+						찾기</button>
+				</form>
+			</div>
+		</div>
+		<!-- tab-content -->
 
-    <form action="/" method="post">
+	</div>
+	<!-- /form -->
 
+	<div class="modal fade" id="smallModal" tabindex="-1" role="dialog"
+		style="padding-top: 200px;" aria-labelledby="basicModal"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">아이디 검색 결과</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="searchResult" class="modal-body" align="center">
 
-     <div class="field-wrap">
-      <label> Email<span class="req">*</span>
-      </label> <input type="email" id="emailforid" required autocomplete="off" />
-     </div>
-<br>
-     <div class="field-wrap">
-      <label> 이름 <span class="req">*</span>
-      </label> <input type="text" id="nameforid" required autocomplete="off" />
-     </div>
-<br>
-     <div align="center">
-     <a href="#" id="idsearch" class="button button-block" data-toggle="modal"
-     data-target="#smallModal">내 아이디 검색</a>
-     </div>
-      
-     
-
-
-   </form>
-
-  </div>
-
-  <div id="login">
-   <h4>등록된 이메일로만 발송됩니다.</h4>
-
-   <form action="/" method="post">
-
-    <div class="field-wrap">
-     <label> Email<span class="req">*</span>
-     </label> <input type="email" id="emailforpw" required autocomplete="off" />
-    </div>
-<br>
-    <div class="field-wrap">
-     <label> ID<span class="req">*</span>
-     </label> <input type="text" id="idforpw" required autocomplete="off" />
-    </div>
-
-
-<br>
-    <button id="pwsearch" type="submit" class="button button-block">비밀번호 찾기</button>
-
-   </form>
-
-  </div>
-
- </div>
- <!-- tab-content -->
-
- </div>
- <!-- /form -->
-
- <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" style="padding-top:200px;"
-  aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-   <div class="modal-content">
-    <div class="modal-header">
-     <h5 class="modal-title" id="myModalLabel">아이디 검색 결과</h5>
-     <button type="button" class="close" data-dismiss="modal"
-      aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-     </button>
-    </div>
-    <div id ="searchResult" class="modal-body" align="center">
-     
-     <h5><a id="idResult"></a></h5>
-    </div>
-
-Rachel🇰🇷🇬🇧 aprendo🇪🇸, [28.01.21 11:39]
-<div class="modal-footer">
-     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-     <button type="button" id="toLogin" style="display:none" class="btn btn-primary" style="background:#1ab188; border:none;">로그인 화면</button>
-    </div>
-   </div>
-  </div>
- </div>
+					<h5>
+						<a id="idResult"></a>
+					</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="toLogin" style="display: none"
+						class="btn btn-primary" style="background:#1ab188; border:none;">로그인
+						화면</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
 
- <script>
+	<script>
 $('.form').find('input, textarea').on('keyup blur focus', function (e) {
    
    var $this = $(this),

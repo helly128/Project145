@@ -48,5 +48,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-webmvc-5.2.7.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tiles-jsp-3.0.7.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/log4jdbc-remix-0.2.7.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mail-1.4.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

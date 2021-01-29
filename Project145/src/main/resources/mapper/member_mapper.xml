@@ -31,5 +31,18 @@
 		FROM member
 		WHERE m_name = #{mName} and email = #{email}
 	</select>
+	
+	<select id="pwSearch" resultType="MemberVo">
+		SELECT
+		*
+		FROM member
+		WHERE  email = #{email} and m_id = #{mId} 
+	</select>
+	
+	<update id="updatePw" >
+	update member set password = #{password} where m_id = #{mId}
+	</update>
+	
+	
 
 </mapper>

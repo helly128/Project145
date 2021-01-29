@@ -1,15 +1,18 @@
 package com.pj.vegi.member.web;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,6 +61,8 @@ public class MemberControllerCJ {
 		}
 		return result;
 	}
+	
+	
 
 	@PostMapping("/memberInsert.do") // 일반 회원 등록 
 	public String memberInsert(@RequestParam String mName,@RequestParam String vegtype, MemberVo vo, Model model) throws SQLException {
@@ -112,7 +117,7 @@ public class MemberControllerCJ {
 	
 	
 	
-	@RequestMapping("/idSearch.do")
+	@RequestMapping("/idSearch.do") //아이디 찾기
 	 @ResponseBody
 	 public MemberVo idSearch( 
 	   @RequestParam(value="email") String email,
@@ -124,8 +129,48 @@ public class MemberControllerCJ {
 	  
 	  return memberService.idSearch(vo);
 	 }
-
 	
+
+	@RequestMapping("/pwSearch.do") //비밀번호 찾기
+	@ResponseBody
+	public String pwSearch( 
+				@RequestParam(value="email") String email,
+				@RequestParam(value="mId") String mId,
+				MemberVo vo ) {
+		System.out.println(email + mId +"받아옴");
+		vo.setEmail(email);
+		vo.setMId(mId);
+		memberService.pwSearch(vo); //빼도 되나?
+		memberService.pwSearch(vo); 
+		String result = null;
+		if(memberService.pwSearch(vo)!=null) {
+			try {				
+				//임시 비밀번호 생성
+				String newpw = "";
+				for (int i = 0; i < 12; i++) {
+					newpw += (char) ((Math.random() * 26) + 97);
+				}
+				vo.setPassword(newpw);
+				// 비밀번호 변경
+				System.out.println(newpw +"새로운 비밀번호");
+				memberService.updatePw(vo);
+				// 비밀번호 변경 메일 발송
+				System.out.println(vo +"비밀번호 변경된 vo");
+				memberService.naverMailSend(vo);
+				System.out.println("메일보내기 성공");
+				result ="이메일 보냄";
+				
+			} catch (Exception e) {
+				result ="이메일 보내기 실패";
+			}
+		}else {
+			result="등록되지 않은 정보입니다. 다시 확인해주세요.";
+		}
+		return result;
+	}
+	
+
+
 	
 	
 	@Autowired
@@ -198,28 +243,5 @@ public class MemberControllerCJ {
 //
 //}
 
-
-
-
-
-//	    //등록폼
-//	    @RequestMapping("insertFormEmp")
-//	    public String insertFormEmp(EmpVO vo) {
-//	        return "emp/insertEmp";
-//	    }
-//
-//	    //등록처리
-//	    @RequestMapping("insertEmp")
-//	    public String insertEmp(EmpVO vo) {
-//	    	memberService.empInsert(vo);
-//	        return "redirect:empList";
-//	    }
-//	    
-//	    //목록조회 
-//	    @RequestMapping("empList")
-//	    public String empList(Model model) {
-//	        model.addAttribute("empList", memberService.getEmpList(null));
-//	        return "emp/empList";
-//	    }
 
 }
