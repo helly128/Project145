@@ -10,6 +10,6 @@ public interface LessonService {
 	List<LessonVO> lessonList(LessonVO vo) throws SQLException;
 	LessonVO lessonSelectOne(LessonVO vo);
 	int lessonHitUpdate(LessonVO vo);
-	
+	int countLessonMain(LessonVO vo);
 	
 }

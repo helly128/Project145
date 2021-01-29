@@ -58,7 +58,7 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public int countLesson(LessonReservVO vo) {
-		return 0;
+		return dao.countLesson(vo);
 	}
 
 //	@Override

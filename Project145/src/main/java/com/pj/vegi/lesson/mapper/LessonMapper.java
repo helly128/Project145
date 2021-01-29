@@ -9,5 +9,6 @@ public interface LessonMapper {
 	public List<LessonVO> lessonList(LessonVO vo);
 	public LessonVO lessonSelectOne(LessonVO vo);
 	public int lessonHitUpdate(LessonVO vo);
+	public int countLessonMain(LessonVO vo);
 
 }

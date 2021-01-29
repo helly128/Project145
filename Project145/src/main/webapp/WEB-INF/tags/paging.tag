@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-
+${paging }
 
 <c:if test="${empty jsFunc}">
 	<c:set var="jsFunc" value="go_page"></c:set>

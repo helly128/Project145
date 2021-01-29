@@ -37,7 +37,11 @@
 	<!-- 마이페이지의 식당 -->
 
 	<select id="restSelect" resultType="map">
-		SELECT r.REST_NAME "restName", 
+		SELECT a.*
+		FROM
+		( SELECT b.*, ROWNUM rn 
+			FROM
+				(SELECT r.REST_NAME "restName", 
 				rr.m_id "mId", 
 				rr.REST_RESERV_DATE "restReservDate", 
 				rr.REST_RESERV_NAME "restReservName", 
@@ -45,7 +49,8 @@
 				rr.REST_RESERV_STATUS "restReservStatus"
 		FROM RESTAURANT r JOIN REST_RESERV rr
 		ON r.REST_ID = rr.REST_ID
-		WHERE rr.m_id = #{mId}
+		WHERE rr.m_id = #{mId} ) b 
+		) a WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 	
 	<!-- 마이페이지의 클래스 -->
@@ -91,7 +96,7 @@
 				cr.m_id "mId"
 			FROM CLASS_RESERV cr JOIN  CLASS c 
 			ON cr.c_id = c.c_id
-			WHERE cr.m_id = m_id=#{mId} )
+			WHERE cr.m_id = #{mId} )
 	</select>
 
 </mapper>
