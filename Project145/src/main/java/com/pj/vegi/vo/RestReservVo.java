@@ -20,6 +20,8 @@ public class RestReservVo {
 	private String restReservStatus;
 	private String mId;
 	private String restId;
+	private int start;
+	private int end;
 	
 	private List<RestReservVo> reservVoList;
 	private String checkFlag;

@@ -6,16 +6,19 @@
 <mapper namespace="com.pj.vegi.lesson.mapper.LessonMapper">
 
 <select id="lessonList" resultType="LessonVO">
-	SELECT * FROM class
+	SELECT * 
+	FROM class
 </select>
 
 <select id="lessonSelectOne" resultType="LessonVO">
-	SELECT * FROM class
+	SELECT * 
+	FROM class
 	WHERE c_id = #{cId}
 </select>
 
 <update id="lessonHitUpdate" parameterType="LessonVO">
-	UPDATE class set c_hit = c_hit + 1
+	UPDATE class 
+	set c_hit = c_hit + 1
 	WHERE c_id = #{cId}	
 </update>
 

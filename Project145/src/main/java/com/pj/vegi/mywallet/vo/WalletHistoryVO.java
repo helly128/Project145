@@ -8,7 +8,9 @@ import lombok.Data;
 public class WalletHistoryVO {
 	private String walletId;
 	private int walletMoney;
-	private String wallet_type;
-	private Date wallet_date;
-	private String m_id;
+	private String walletType;
+	private Date walletDate;
+	private String mId;
+	private int startP;
+	private int endP;
 }

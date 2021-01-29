@@ -7,8 +7,7 @@
 	<!-- 마이페이지 -->
 	<select id="myPageSelect" resultType="MemberVo">
 		SELECT * FROM member
-		WHERE
-		M_ID = #{mId}
+		WHERE M_ID = #{mId}
 	</select>
 
 	<update id="myPageUpdate">
@@ -16,8 +15,7 @@
 		SET password = #{ password,
 		jdbcType=VARCHAR},
 		vegtype = #{ vegtype ,jdbcType=VARCHAR}
-		WHERE m_id=
-		#{ mId}
+		WHERE m_id=#{ mId}
 	</update>
 	
 	<!-- 마이페이지의 레시피 -->
@@ -56,7 +54,13 @@
 				cr.m_id "mId"
 		FROM CLASS_RESERV cr JOIN  CLASS c 
 		ON cr.c_id = c.c_id
-		WHERE cr.m_id = #{mId}
+		WHERE cr.m_id = #{mId }
+	</select>
+	
+	<select id="countRest" resultType="Integer">
+		select count(*) 
+		from REST_RESERV
+		where m_id = #{mId }
 	</select>
 
 </mapper>

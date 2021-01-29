@@ -61,19 +61,66 @@
 		from deposit_req
 	</select>
 	
-	<update id="updateWallet">
+	<update id="updatePlusWallet">
 		update member
 		set wallet_cash = wallet_cash + #{walletCash}
+		where m_id=#{mId}
 	</update>
 	
-	<insert id="insertWalletHistory">
-		insert into wallet_history
+	<update id="updateMinusWallet">
+		update member
+		set wallet_cash = wallet_cash - #{walletCash}
+		where m_id=#{mId}
+	</update>
+	
+	<insert id="insertPlusWalletHistory">
+		insert into wallet_history (
+			wallet_id,
+			m_id,
+			wallet_money,
+			wallet_type,
+			wallet_date
+		)
 		values(
-		'wallet'||wallet_seq.nextval, 
-		#{mId}, 
-		#{walletMoney}, 
-		'충전', 
-		sysdate)
+			'wallet'||wallet_seq.nextval, 
+			#{mId}, 
+			#{walletMoney}, 
+			'충전', 
+			sysdate
+		)
 	</insert>
-
+	
+	<insert id="insertMinusWalletHistory">
+		insert into wallet_history(
+			wallet_id,
+			m_id,
+			wallet_money,
+			wallet_type,
+			wallet_date
+		)
+		values(
+			'wallet'||wallet_seq.nextval, 
+			#{mId}, 
+			#{walletMoney}, 
+			'인출', 
+			sysdate)
+	</insert>
+	
+	<select id="selectWalletHistory" resultType="WalletHistoryVO">
+		SELECT a.*
+		FROM
+		( SELECT b.*, ROWNUM rn 
+			FROM
+				( SELECT *
+				FROM wallet_history
+				WHERE m_id = #{mId}
+				ORDER BY wallet_date DESC ) b 
+		) a WHERE rn BETWEEN #{startP } AND #{endP }
+	</select>
+	
+	<select id="countHistory" resultType="Integer">
+		select count(*) 
+		from wallet_history 
+		where m_id=#{mId}
+	</select>
 </mapper>
