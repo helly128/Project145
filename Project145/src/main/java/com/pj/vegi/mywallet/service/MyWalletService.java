@@ -1,5 +1,6 @@
 package com.pj.vegi.mywallet.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
@@ -12,6 +13,11 @@ public interface MyWalletService {
 	Map<String, Object> depositReqListAll();
 	Map<String, Object> depositReqAll();
 	
-	int updateWallet(MemberVo vo);
-	int insertWalletHistory(WalletHistoryVO vo);
+	int updatePlusWallet(MemberVo vo);
+	int updateMinusWallet(MemberVo vo);	
+	int insertPlusWalletHistory(WalletHistoryVO vo);
+	int insertMinusWalletHistory(WalletHistoryVO vo);
+	
+	List<WalletHistoryVO> selectWalletHistory(WalletHistoryVO vo);
+	int countHistory(WalletHistoryVO vo);
 }
