@@ -8,4 +8,6 @@ public class LessonReservVO {
 	private String cTitle;
 	private String mId;
 	private String cId;
+	private int start;
+	private int end;
 }

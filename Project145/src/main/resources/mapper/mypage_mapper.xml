@@ -21,9 +21,14 @@
 	<!-- 마이페이지의 레시피 -->
 
 	<select id="recipeSelect" resultType="RecipeVo">
-		SELECT * FROM recipe
-		WHERE
-		M_ID = #{mId}
+		SELECT a.*
+		FROM
+		( SELECT b.*, ROWNUM rn 
+			FROM
+				( SELECT * FROM recipe
+				WHERE M_ID = #{mId} ) b 
+		) a WHERE rn BETWEEN #{start } AND #{end }
+		
 	</select>
 
 	<!-- <update id="recipeHitUpdate" parameterType="RecipeVo"> UPDATE recipe 
@@ -32,7 +37,11 @@
 	<!-- 마이페이지의 식당 -->
 
 	<select id="restSelect" resultType="map">
-		SELECT r.REST_NAME "restName", 
+		SELECT a.*
+		FROM
+		( SELECT b.*, ROWNUM rn 
+			FROM
+				(SELECT r.REST_NAME "restName", 
 				rr.m_id "mId", 
 				rr.REST_RESERV_DATE "restReservDate", 
 				rr.REST_RESERV_NAME "restReservName", 
@@ -40,27 +49,54 @@
 				rr.REST_RESERV_STATUS "restReservStatus"
 		FROM RESTAURANT r JOIN REST_RESERV rr
 		ON r.REST_ID = rr.REST_ID
-		WHERE rr.m_id = #{mId}
+		WHERE rr.m_id = #{mId} ) b 
+		) a WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 	
 	<!-- 마이페이지의 클래스 -->
 	<select id="lessonSelect" resultType="map">
-		SELECT c.c_title "cTitle", 
-		 		c.c_start "cStart", 
-		 		c.c_end "cEnd",
-				c.c_img "cImg", 
-				c.c_desc "cDesc", 
-				c.status "cStatus", 
-				cr.m_id "mId"
-		FROM CLASS_RESERV cr JOIN  CLASS c 
-		ON cr.c_id = c.c_id
-		WHERE cr.m_id = #{mId }
+		SELECT a.*
+		FROM
+		( SELECT b.*, ROWNUM rn 
+			FROM
+				(SELECT c.c_title "cTitle", 
+			 		c.c_start "cStart", 
+			 		c.c_end "cEnd",
+					c.c_img "cImg", 
+					c.c_desc "cDesc", 
+					c.status "cStatus", 
+					cr.m_id "mId"
+				FROM CLASS_RESERV cr JOIN  CLASS c 
+				ON cr.c_id = c.c_id
+				WHERE cr.m_id = #{mId } ) b 
+		) a WHERE rn BETWEEN #{start } AND #{end }
+	
 	</select>
 	
 	<select id="countRest" resultType="Integer">
 		select count(*) 
 		from REST_RESERV
 		where m_id = #{mId }
+	</select>
+	
+	<select id="countRecipe" resultType="Integer">
+		select count(*)
+		from Recipe
+		where m_id = #{mId }
+	</select>
+	
+	<select id="countLesson" resultType="Integer">
+		select count(*) from (
+			SELECT c.c_title "cTitle", 
+		 		c.c_start "cStart", 
+		 		c.c_end "cEnd",
+				c.c_img "cImg", 
+				c.c_desc "cDesc", 
+				c.status "cStatus", 
+				cr.m_id "mId"
+			FROM CLASS_RESERV cr JOIN  CLASS c 
+			ON cr.c_id = c.c_id
+			WHERE cr.m_id = #{mId} )
 	</select>
 
 </mapper>
