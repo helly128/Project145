@@ -17,12 +17,9 @@
 		<typeAlias type="com.pj.vegi.vo.RecipeVo" alias="RecipeVo"/>
 		<typeAlias type="com.pj.vegi.vo.RecipeMaterialVo" alias="RecipeMaterialVo"/>
 		<typeAlias type="com.pj.vegi.mywallet.vo.WithDrawReqVO" alias="WithDrawReqVO"/>
-<<<<<<< HEAD
 		<typeAlias type="com.pj.vegi.mywallet.vo.DepositReqVO" alias="DepositReqVO"/>
 		<typeAlias type="com.pj.vegi.mywallet.vo.DepositReqListVO" alias="DepositReqListVO"/>
-=======
 		<typeAlias type="com.pj.vegi.vo.RecipeMaterialVo" alias="MaterialVo"/>
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 		<package name="com.pj.vegi.vo"/>
 	</typeAliases>
 
