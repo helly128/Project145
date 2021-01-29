@@ -60,6 +60,9 @@
 
 								</div>
 							</div>
+							<div class="col-lg-2 col-sm-3 col-4" >
+							<button  class="btn btn-success" onclick="location.href='/recipeInsert.do'">Write New Now!📝</button>
+							</div>
 
 						</div>
 					</form>
@@ -105,7 +108,7 @@
 
 
 		</div>
-	<button onclick="location.href='/recipeInsert.do'">Write</button>
+	
 	</div>
 
 	<!--====== LATEST PRODUCT PART ENDS ======-->
