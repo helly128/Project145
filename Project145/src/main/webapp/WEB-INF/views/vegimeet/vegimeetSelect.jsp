@@ -69,15 +69,15 @@
 					</div>
 					<div>
 						<div class="border-top pt-4 pb-5">
-							<h3>상세정보</h3>
+							<h4>상세정보</h4>
 							<div class="mt-3 px-2">${meetVo.meetContent }</div>
 						</div>
 						<div class="border-top pt-4 pb-5">
-							<h3>주최자</h3>
+							<h4>주최자</h4>
 							<div class="mt-3 px-2"></div>
 						</div>
 						<div class="border-top pt-4 pb-5 border-bottom">
-							<h3>참여자 목록</h3>
+							<h4>참여자 목록</h4>
 							<div class="mt-3 px-2"></div>
 						</div>
 					</div>
