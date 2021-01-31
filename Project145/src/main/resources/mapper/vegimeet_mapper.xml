@@ -37,6 +37,31 @@
 	</select>
 	
 	<select id="meetPartiList" resultType="MeetParticipantVo">
-		
+		SELECT * FROM meet_parti
+		WHERE meet_id=#{meetId}
 	</select>
+	
+	<insert id="meetPartiInsert">
+		INSERT INTO meet_parti(meetp_id, m_id, meet_id, my_fund)
+		VALUES('meetp' || meetp_seq.nextval, #{mId}, #{meetId}, #{myFund})
+	</insert>
+	
+	<update id="meetUpdate">
+		UPDATE meet_un
+		SET meet_participant = meet_participant + 1,
+			meet_fund = meet_fund + #{myFund}
+		WHERE meet_id = #{meetId}
+	</update>
+	
+	<update id="pointDeduct">
+		UPDATE member
+		SET wallet_point = #{walletPoint},
+			wallet_cash = #{walletCash}
+		WHERE m_id = #{mId}
+	</update>
+	
+	<insert id="pointHistoryInsert">
+		INSERT INTO wallet_history
+		VALUES ('wallet' || wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, sysdate)
+	</insert>
 </mapper>
