@@ -47,7 +47,7 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("restAddress").value = roadAddr + "   " + "(우)" + data.zonecode;
+                document.getElementById("restAddress").value = roadAddr;
                 
 	        }
 	    }).open();
