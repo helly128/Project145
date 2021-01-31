@@ -14,25 +14,47 @@
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 .tbl {
-	text-align: center;
 	border-collapse: collapse;
 }
 
 th, td {
 	vertical-align: middle;
 	height: 50px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
-.usePoint {
+th {
+	text-align: right;
+}
+
+.inputStyle {
 	margin: 0px;
 	height: 30px;
 	text-align: right;
+	width: 90%;
+	padding-right: 10px;
 }
 
-.myPoint {
-	text-align: right;
+.pointDesc {
+	font-size: 12px;
+}
+
+#totalPay {
+	margin: 0px;
+	height: 30px;
+}
+
+#payBtn {
+	width: 100px;
+	background: #6C9852;
+	border-radius: 10px;
+	color: white;
+	height: 40px;
+}
+
+#payBtn:hover {
+	color: white;
 }
 </style>
 </head>
@@ -41,54 +63,80 @@ th, td {
 		<div class="row mb-5">
 			<div class="col-xl-2 col-lg-2"></div>
 			<div class="col-xl-8 col-lg-8 col-md-12 mb-5">
-				<form id="frm" action="">
-					<div class="product_info p-2 mb-3">
-						<table class="table mb-4">
+				<form id="frm" action="payProcess.do" method="post">
+					<div class="product_info p-2 my-5 border-bottom">
+						<h3>챌린지</h3>
+						<table class="tbl my-4">
 							<tr>
 								<th>챌린지명</th>
-								<th>기간</th>
-								<th>최소도전금액</th>
+								<td><div class="border-bottom">
+										<input type="hidden" value="${meetVo.meetId }" name="meetId">
+										${meetVo.meetTitle }
+									</div></td>
 							</tr>
 							<tr>
-								<td><input type="hidden" value="${meetVo.meetTitle }">
-									${meetVo.meetTitle }</td>
-								<td>${meetVo.meetStart }&nbsp;~&nbsp;${meetVo.meetEnd }</td>
-								<td>${meetVo.minMoney }원</td>
+								<th>기간</th>
+								<td><div class="border-bottom">${meetVo.meetStart }&nbsp;~&nbsp;${meetVo.meetEnd }</div></td>
+							</tr>
+
+							<tr>
+								<th>최소참가비</th>
+								<td><div class="border-bottom">
+										<fmt:formatNumber value="${meetVo.minMoney }" pattern="#,###" />
+										원
+									</div></td>
 							</tr>
 						</table>
 					</div>
-					<div class="discount_info">
-						<h3>포인트 사용</h3>
-						<table class="tbl">
+					<div class="discount_info my-5">
+						<h3>포인트</h3>
+						<table class="tbl my-4">
 							<tr>
-								<th>도전금액</th>
-								<td><input type="text" class="usePoint fundMoney"
-									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-									name="myFund"></td>
+								<th style="color: black;">*참가비</th>
+								<td><div class="border-bottom">
+										<input type="text" class="inputStyle fundMoney"
+											onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+											name="myFund" required> 원
+									</div></td>
 							</tr>
 							<tr>
-								<th>보유 적립금</th>
-								<td>${memberVo.walletPoint }</td>
-								<th>사용</th>
-								<td>&nbsp;<input type="text" class="usePoint point1"
-									onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></td>
-							</tr>
-							<tr>
-								<th>보유 충전금&nbsp;</th>
-								<td><div class="border-bottom myPoint">
+								<th>보유</th>
+								<td style="width: 220px;"><div class="border-bottom">
+										<input type="text" class="inputStyle myPoint"
+											value="${memberVo.walletPoint + memberVo.walletCash }"
+											disabled> 원
+									</div></td>
+								<td><div class="pointDesc">
+										(적립금:
+										<fmt:formatNumber value="${memberVo.walletPoint }"
+											pattern="#,###" />
+										| 충전금:
 										<fmt:formatNumber value="${memberVo.walletCash }"
 											pattern="#,###" />
-										원
+										)
 									</div></td>
-								<th>사용&nbsp;</th>
+							</tr>
+							<tr>
+								<th>사용</th>
 								<td><div class="border-bottom">
-										<input type="text" class="usePoint point2"
-											onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+										<input type="text" class="usePoint inputStyle"
+											onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+											value="0" name="totalPoint"> 원
+									</div></td>
+								<td class="pointDesc">(적립금이 우선 사용됩니다)</td>
+							</tr>
+							<tr>
+								<th>결제금</th>
+								<td><div class="border-bottom">
+										<input type="text" id="totalPay" class="inputStyle" value="0"
+											style="text-align: right;" readonly> 원
 									</div></td>
 							</tr>
 						</table>
 
-						결제금: <input type="text" id="totalPay" value="0">
+					</div>
+					<div align="right">
+						<button type="button" class="btn btn-hover" id="payBtn">결제하기</button>
 					</div>
 				</form>
 
@@ -100,28 +148,26 @@ th, td {
 
 	<script>
 		$(function() {
+			//화면 로드완료되면 참가비에 focus
+			$('.fundMoney').focus();
+
 			//결제 api
-			$("#rental_pay").click(function() {
+			$("#payBtn").click(function() {
 				//body를 전부 form으로 감싸서 필요한 값 변수 선언
-				var rentalPay = document.getElementById("rentalPay").value;
-				var rentalName = document.getElementById('rentalName').value;
-				var rentalEmail = document.getElementById('email').value;
-				var renTalAddress = document.getElementById('address').value;
-				var renTalPostcode = document.getElementById('postcode').value;
-				var ProductName = document.getElementById('productName').value;
+				var totalPay = $('#totalPay').val();
+				var buyerName = '${memberVo.getMName()}';
+				var productName = '${meetVo.meetTitle}';
+				console.log('imp 실행전');
 				IMP.init('imp34358761');
 				IMP.request_pay({
 					pg : 'inicis',
 					pay_method : 'card',
 					merchant_uid : 'merchant_' + new Date().getTime(),
-					name : ProductName, //결제창에 보이는 상품명
-					amount : rentalPay, //가격
-					buyer_email : rentalEmail, //결제완료에서 뜨는 이메일값
-					buyer_name : rentalName,
-					buyer_tel : "010-1234-1234", //구매자의 연락처: 나도 없음
-					buyer_addr : renTalAddress, //얘도.. 없이 안 해봐서 모름
-					buyer_postcode : renTalPostcode,
-					m_redirect_url : 'ProductList.do' //이렇게 해놔도 form태그의 action을 따라감
+					name : productName, //결제창에 보이는 상품명
+					amount : totalPay, //가격
+					buyer_email : '${memberVo.email}', //결제완료에서 뜨는 이메일값
+					buyer_name : buyerName,
+					//m_redirect_url : '/payProcess.do' //이렇게 해놔도 form태그의 action을 따라감
 				}, function(rsp) {
 					console.log(rsp);
 					if (rsp.success) {
@@ -136,32 +182,67 @@ th, td {
 				});
 			});
 
-			$('.usePoint').on('keyup', function() {
-				var cnt = 2;
+			//결제금 자동계산
+			$('.usePoint, .fundMoney')
+					.on(
+							'keyup',
+							function() {
+								var cnt = 2;
+								var fund = parseInt($(".fundMoney").val() || 0);
+								var usePoint = parseInt($('.usePoint').val() || 0);
+
+								if (usePoint == null || usePoint == '') {
+									$('.usePoint').val('0');
+								}
+								if (fund == null || fund == '') {
+									alert('참가비를 먼저 입력하세요');
+									$('.usePoint').val('');
+									$('.fundMoney').focus();
+								} else {
+									var myPoint = parseInt("${memberVo.walletPoint + memberVo.walletCash }");
+
+									console.log('usePoint: ' + usePoint);
+									if (usePoint > myPoint) {
+										alert('보유 금액 이상 사용은 불가능합니다.');
+										$(".usePoint").val(myPoint);
+									}
+									usePoint = parseInt($('.usePoint').val() || 0);
+									fund = parseInt($(".fundMoney").val() || 0);
+									if (usePoint > fund) {
+										$('.usePoint').val(fund);
+									}
+
+									var sum = fund - $('.usePoint').val();
+									$("#totalPay").val(sum);
+								}
+							});
+
+			//참가비 입력 안하면 최소참가비 입력
+			$('.fundMoney').on('focusout', function() {
 				var fund = parseInt($(".fundMoney").val() || 0);
-
-				for (var i = 1; i < cnt; i++) {
-					var sum = parseInt($(this).val() || 0);
-					sum++
-					console.log(sum);
+				var minMoney = parseInt("${meetVo.minMoney}");
+				if (fund < minMoney) {
+					$('.fundMoney').val(minMoney);
 				}
-				var sum1 = parseInt($(".point1").val() || 0); // input 값을 가져오며 계산하지만 값이 없을경우 0이 대입된다  뒷부분에 ( || 0 ) 없을경우 합계에 오류가 생겨 NaN 값이 떨어진다
-				
-				if (sum1 > fund) {
-					alert('보유 금액 이상 사용은 불가능합니다.');
-					$(".point1").val(parseInt("${memberVo.walletPoint}"));
-				}
-				console.log('sum1 = ' + sum1);
-				var sum2 = parseInt($(".point2").val() || 0);
-				console.log('sum2 = ' + sum2);
-
-				console.log('fund = ' + fund);
-				var sum = fund - sum1 - sum2;
-				console.log('sum = ' + sum);
+				fund = parseInt($(".fundMoney").val() || 0);
+				var sum = fund - $('.usePoint').val();
 				$("#totalPay").val(sum);
 			});
-
 		})
+
+		function inputNumberFormat(obj) {
+			obj.value = comma(uncomma(obj.value));
+		}
+
+		function comma(str) {
+			str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+
+		function uncomma(str) {
+			str = String(str);
+			return str.replace(/[^\d]+/g, '');
+		}
 	</script>
 </body>
 </html>

@@ -57,7 +57,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<section class="container blog-main-content">
+	<section class="container blog-main-content mb-5">
 		<div class="m-3 p-2"></div>
 		<div class="row">
 			<div class="col-md-7 col-sm-6 col-xs-12 product-main">
@@ -77,8 +77,12 @@
 							<div class="mt-3 px-2"></div>
 						</div>
 						<div class="border-top pt-4 pb-5 border-bottom">
-							<h4>참여자 목록</h4>
-							<div class="mt-3 px-2"></div>
+							<h4>참가자 목록</h4>
+							<div class="mt-3 px-2">
+								<c:forEach var="partiVo" items="${partiList}">
+									<span>${partiVo.getMId() }</span>
+								</c:forEach>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -88,9 +92,8 @@
 			<div class="col-md-4 col-sm-5 col-xs-12">
 				<div class="product-sidebar py-3 px-4">
 					<div class="border-bottom p-3">
-						<strong><h3>${meetVo.meetTitle }</h3></strong>
+						<h3>${meetVo.meetTitle }</h3>
 					</div>
-
 
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">진행기간</span>
@@ -123,12 +126,12 @@
 					<div class="p-3">
 						<div class="edd_purchase_submit_wrapper" align="center">
 							<button class="btn joinBtn btn-hover">
-								<span>참여하기</span>
+								참가하기
 							</button>
 						</div>
 					</div>
 					<c:if test="${mId == null or mId == ''}">
-						<span>로그인 후 참여가능합니다.</span>
+						<span>로그인 후 참가가능합니다.</span>
 					</c:if>
 				</div>
 			</div>
@@ -138,7 +141,7 @@
 	<script>
 		$(function() {
 			$('.joinBtn').click(function() {
-				var temp = confirm('[${meetVo.meetTitle}]\n해당 챌린지에 참여하시겠습니까?');
+				var temp = confirm('[${meetVo.meetTitle}]\n해당 챌린지에 참가하시겠습니까?');
 				if (temp) {
 					location.href = "vegimeetJoinPage.do/?meetId=${meetVo.meetId}";
 				}
@@ -148,6 +151,11 @@
 				$('.submitBtn').prop('disabled', true);
 				$('.joinBtn').prop('disabled', true);
 				$('.textarea').prop('disabled', true).attr('style', 'background: #e8e8e8;');
+			}
+			
+			if('${joinFlag}' == true){
+				$('.joinBtn').text('참가완료');
+				$('.joinBtn').prop('disabled', true);
 			}
 		})
 	</script>
