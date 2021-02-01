@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,43 +17,30 @@
 		</div>
 
 		<div class="row">
-
-			<!-- Earnings (Monthly) Card Example -->
-			<div class="col-xl-3 col-md-6 mb-4">
-				<div class="card border-left-primary shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div
-									class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-									컨택트or언택트</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">밑 제목</div>
-							</div>
-							<div class="col-auto">
-								<i class="fas fa-calendar fa-2x text-gray-300"></i>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<!-- Earnings (Annual) Card Example -->
-			<div class="col-xl-3 col-md-6 mb-4">
-				<div class="card border-left-success shadow h-100 py-2">
-					<div class="card-body">
-						<div class="row no-gutters align-items-center">
-							<div class="col mr-2">
-								<div
-									class="text-xs font-weight-bold text-success text-uppercase mb-1">
-									Earnings (Annual)</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+			<c:forEach items="${list }" var="list">
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-success shadow h-100 py-2">
+						<div class="card-body">
+							<div class="row no-gutters align-items-center">
+								<div class="col mr-2">
+									<div
+										class="text-xs font-weight-bold text-success text-uppercase mb-1">
+										<fmt:formatDate value="${list.meetStart }"
+											pattern="yyyy-MM-dd" />
+										-
+										<fmt:formatDate value="${list.meetEnd }" pattern="yyyy-MM-dd" />
+									</div>
+									<div class="h5 mb-0 font-weight-bold text-gray-800">${list.meetTitle }</div>
+								</div>
+								<div class="col-auto">
+									<img alt="" src=""/>
+								</div>
 							</div>
-							<div class="col-auto"><span style="font-size: 20">🤍</span></div>
 						</div>
 					</div>
 				</div>
-			</div>
-
+			</c:forEach>
 			<!-- Tasks Card Example -->
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-left-info shadow h-100 py-2">
@@ -102,5 +91,18 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		function dateFormat(dat) {
+			var date = new Date(dat);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			if (min < 10) {
+				min = '0' + min;
+			}
+			var newDate = year + "-" + month + "-" + day;
+			return newDate;
+		}
+	</script>
 </body>
 </html>

@@ -24,6 +24,7 @@ public class MemberVo {
 	private String reqClientFintechUseNum;
 	private String reqClientName;
 	private String reqClientNum;
+	private String profileImage;
 	
 	
 	

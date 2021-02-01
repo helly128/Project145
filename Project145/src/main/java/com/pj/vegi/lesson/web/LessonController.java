@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.vegi.common.Paging;
@@ -21,7 +22,7 @@ public class LessonController {
 	private LessonService lessonService;
 
 	@RequestMapping("/lessonMain.do")
-	public String lessonMain(LessonVO vo, Model model, Paging paging, HttpSession session) throws SQLException {
+	public String lessonMain(@ModelAttribute("vo") LessonVO vo, Model model, Paging paging, HttpSession session) throws SQLException {
 		
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
@@ -36,6 +37,7 @@ public class LessonController {
 		
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
+		
 		
 		List<LessonVO> lessons = lessonService.lessonList(vo);
 		model.addAttribute("lessons", lessons);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.mypage.mapper.MypageMapper;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
@@ -59,6 +60,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int countLesson(LessonReservVO vo) {
 		return dao.countLesson(vo);
+	}
+
+	@Override
+	public List<Map> meetLikeList(LikeListVo vo) {
+		return dao.meetLikeList(vo);
 	}
 
 //	@Override

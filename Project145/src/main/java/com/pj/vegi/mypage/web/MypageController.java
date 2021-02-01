@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
@@ -58,8 +59,14 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myLikeMeet.do")
-	public String myLikeMeet() {
+	public String myLikeMeet(Model model, LikeListVo vo, HttpSession session) {
 
+		String mid = (String)session.getAttribute("mId");
+		vo.setMId(mid);
+		List<Map> likeList = mypageService.meetLikeList(vo);
+
+		model.addAttribute("list", likeList);
+		
 		return "mypage/myLikeMeet";
 	}
 
@@ -79,7 +86,7 @@ public class MypageController {
 	public String myRecipe(RecipeVo vo, Model model, HttpSession session, Paging paging) throws SQLException {
 
 		String mid = (String) session.getAttribute("mId");
-		vo.setMId(mid);		
+		vo.setMId(mid);
 
 		paging.setPageUnit(8);
 		paging.setPageSize(5);
@@ -105,10 +112,10 @@ public class MypageController {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
+
 		paging.setPageUnit(8);
 		paging.setPageSize(5);
-		
+
 		if (paging.getPage() == null) {
 			paging.setPage(1);
 		}

@@ -27,4 +27,5 @@ public class LessonVO {
 	private String bizNum;
 	private int start;
 	private int end;
+	private String keyword;
 }

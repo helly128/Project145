@@ -39,6 +39,42 @@
 					</div>
 				</div>
 			</div>
+			<div class="search-area">
+				<div class="container">
+					<div class="search-wrapper">
+						<form action="lessonMain.do" method="get" id="form">
+							<div class="row justify-content-center">
+								<div class="col-lg-2 col-sm-4 col-6">
+									<div class="search-input">
+										<label for="category"> <i
+											class="lni lni-grid-alt theme-color"></i></label> <select
+											name="vegType" id="vegType">
+											<option value="none" selected disabled>TYPE</option>
+											<option value="비건"
+												<c:if test="${vo.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
+											<option value="락토"
+												<c:if test="${vo.getVegType() == '락토' }">selected="selected"</c:if>>락토</option>
+											<option value="오보"
+												<c:if test="${vo.getVegType() == '오보' }">selected="selected"</c:if>>오보</option>
+											<option value="락토오보"
+												<c:if test="${vo.getVegType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-lg-3 col-sm-5 col-6">
+									<div class="search-input">
+										<label for="keyword"><a
+											href="javascript:form.submit()"><i
+												class="lni lni-search-alt theme-color"></i></a></label> <input
+											type="text" name="keyword" id="keyword"
+											value="${vo.getKeyword() }">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 			<div class="row">
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-6 col-md-6">
@@ -58,18 +94,15 @@
 									</h3>
 								</div>
 								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.getLecName() }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.getCHit() }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.getCEnd() }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.getVegType() }</a></li>
+									<li><i class="lni lni-user"></i> ${lesson.getLecName() }</li>
+									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }</li>
+									<li><i class="lni lni-map-marker"></i>
+										${lesson.getVegType() }</li>
 								</ul>
 								<div class="product-bottom">
 									<h3 class="price">${lesson.getCPrice() }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
+									<a href="javascript:void(0)" class="link-ad">🤍</a>
 								</div>
 							</div>
 						</div>
@@ -81,7 +114,17 @@
 	</section>
 	<script>
 		function goList(p) {
-			location.href = "lessonMain.do?page=" + p;
+			var vegType = document.getElementById("vegType").value;
+			var keyword = document.getElementById("keyword").value;
+
+			if (vegType == "none" || keyword == '') {
+				location.href = "lessonMain.do?page=" + p
+			} else {
+				location.href = "lessonMain.do?page=" + p + "&vegType="
+						+ vegType + "&keyword=" + keyword;
+
+			}
+
 		}
 	</script>
 </body>
