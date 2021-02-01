@@ -636,14 +636,14 @@ body {
 			<!-- 강사부분 끝 -->
 
 
-			<div class="row">
+			<div class="row" style="text-align: left">
 				<h5>클래스 커리큘럼</h5>
 				
 					<textarea rows="10" placeholder="클래스 커리큘럼" name="curriCulum" required autocomplete="off">
 					</textarea>
 			</div>
 
-			<div class="row">
+			<div class="row" style="text-align: left">
 				<h5>클래스 설명</h5>
 				
 					<textarea rows="10" placeholder="클래스 설명" name="cDesc" required autocomplete="off">
