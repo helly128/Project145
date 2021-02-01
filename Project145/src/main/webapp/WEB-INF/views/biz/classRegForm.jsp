@@ -16,322 +16,11 @@
 	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/assets/css/classform.css">
 <style>
-*, *:before, *:after {
-	box-sizing: border-box;
-}
 
-body {
-	padding: 1em;
-	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 15px;
-	color: #b9b9b9;
-	background-color: #e3e3e3;
-}
-
-h5 {
-	font-size: 1.3em;
-	color: #4e73df;
-	font-weight: 600;
-}
-
-h3 {
-	font-weight: 800;
-}
-
-input, input[type="radio"]+label, input[type="checkbox"]+label:before,
-	select option, select, textarea {
-	width: 100%;
-	padding: 1em;
-	line-height: 1.4;
-	background-color: #f9f9f9;
-	border: 1px solid #e5e5e5;
-	border-radius: 3px;
-	-webkit-transition: 0.35s ease-in-out;
-	-moz-transition: 0.35s ease-in-out;
-	-o-transition: 0.35s ease-in-out;
-	transition: 0.35s ease-in-out;
-	transition: all 0.35s ease-in-out;
-	font-size: 1rem;
-}
-
-input:focus {
-	outline: 0;
-	border-color: #4e73df;
-}
-
-input:focus+.input-icon i {
-	color: #4e73df;
-}
-
-input:focus+.input-icon:after {
-	border-right-color: #4e73df;
-}
-
-input[type="radio"] {
-	display: none;
-}
-
-input[type="radio"]+label, select {
-	display: inline-block;
-	width: 50%;
-	text-align: center;
-	float: left;
-	border-radius: 0;
-}
-
-input[type="radio"]+label:first-of-type {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-}
-
-input[type="radio"]+label:last-of-type {
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-
-input[type="radio"]+label i {
-	padding-right: 0.4em;
-}
-
-input[type="radio"]:checked+label, input:checked+label:before, select:focus,
-	select:active {
-	background-color: #4e73df;
-	color: #fff;
-	border-color: #4e73df;
-}
-
-input[type="checkbox"] {
-	display: none;
-}
-
-input[type="checkbox"]+label {
-	position: relative;
-	display: block;
-	padding-left: 1.6em;
-	font-size: 1.3rem;
-}
-
-input[type="checkbox"]+label:before {
-	position: absolute;
-	top: 0.2em;
-	left: 0;
-	display: block;
-	width: 1em;
-	height: 1em;
-	padding: 0;
-	content: "";
-}
-
-input[type="checkbox"]+label:after {
-	position: absolute;
-	top: 0.45em;
-	left: 0.2em;
-	font-size: 0.8em;
-	color: #fff;
-	opacity: 0;
-	font-family: FontAwesome;
-	content: "\f00c";
-}
-
-input:checked+label:after {
-	opacity: 1;
-}
-
-HTML CSSResult Skip Results Iframe
-input[type="number"] {
-	-webkit-appearance: textfield;
-	-moz-appearance: textfield;
-	appearance: textfield;
-}
-
-input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
-	{
-	-webkit-appearance: none;
-}
-
-.number-input {
-	border: 2px solid #ddd;
-	display: inline-flex;
-}
-
-.number-input, .number-input * {
-	box-sizing: border-box;
-}
-
-.number-input button {
-	outline: none;
-	-webkit-appearance: none;
-	background-color: transparent;
-	border: none;
-	align-items: center;
-	justify-content: center;
-	width: 3rem;
-	height: 3rem;
-	cursor: pointer;
-	margin: 0;
-	position: relative;
-}
-
-.number-input button:before, .number-input button:after {
-	display: inline-block;
-	position: absolute;
-	content: '';
-	width: 1rem;
-	height: 2px;
-	background-color: #212121;
-	transform: translate(-50%, -50%);
-}
-
-.number-input button.plus:after {
-	transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.number-input input[type=number] {
-	font-family: sans-serif;
-	max-width: 5rem;
-	padding: .5rem;
-	border: solid #ddd;
-	border-width: 0 2px;
-	font-size: 1rem;
-	height: 3rem;
-	font-weight: bold;
-	text-align: center;
-}
-
-select {
-	height: 3.4em;
-	line-height: 2;
-}
-
-select:first-of-type {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-}
-
-select:last-of-type {
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
-}
-
-select:focus, select:active {
-	outline: 0;
-}
-
-select option {
-	background-color: #7ed321;
-	color: #fff;
-}
-
-.input-group {
-	margin-bottom: 1em;
-	zoom: 1;
-}
-
-.input-group:before, .input-group:after {
-	content: "";
-	display: table;
-}
-
-.input-group:after {
-	clear: both;
-}
-
-.input-group-icon {
-	position: relative;
-}
-
-.input-group-icon input {
-	padding-left: 4.4em;
-}
-
-.input-group-icon .input-icon {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 3.4em;
-	height: 3.4em;
-	line-height: 3.4em;
-	text-align: center;
-	pointer-events: none;
-}
-
-.input-group-icon .input-icon:after {
-	position: absolute;
-	top: 0.6em;
-	bottom: 0.6em;
-	left: 3.4em;
-	display: block;
-	border-right: 1px solid #e5e5e5;
-	content: "";
-	-webkit-transition: 0.35s ease-in-out;
-	-moz-transition: 0.35s ease-in-out;
-	-o-transition: 0.35s ease-in-out;
-	transition: 0.35s ease-in-out;
-	transition: all 0.35s ease-in-out;
-}
-
-.input-group-icon .input-icon i {
-	-webkit-transition: 0.35s ease-in-out;
-	-moz-transition: 0.35s ease-in-out;
-	-o-transition: 0.35s ease-in-out;
-	transition: 0.35s ease-in-out;
-	transition: all 0.35s ease-in-out;
-}
-
-.container {
-	max-width: 50em;
-	padding: 1em 3em 2em 3em;
-	margin: 0em auto;
-	background-color: #fff;
-	border-radius: 4.2px;
-	box-shadow: 0px 3px 10px -2px rgba(0, 0, 0, 0.2);
-}
-
-.row {
-	zoom: 1;
-	padding: 10px;
-}
-
-.row:before, .row:after {
-	content: "";
-	display: table;
-}
-
-.row:after {
-	clear: both;
-}
-
-.col-half {
-	padding-right: 10px;
-	float: left;
-	width: 50%;
-}
-
-.col-half:last-of-type {
-	padding-right: 0;
-}
-
-.col-third {
-	padding-right: 10px;
-	float: left;
-	width: 33.33333333%;
-}
-
-.col-third:last-of-type {
-	padding-right: 0;
-}
-
-@media only screen and (max-width: 540px) {
-	.col-half {
-		width: 100%;
-		padding-right: 0;
-	}
-}
-
-body {
-	font-family: 'Noto Sans KR', sans-serif;
-}
 </style>
 <title>클래스 등록 폼</title>
 </head>
@@ -339,7 +28,7 @@ body {
 
 
 	<div class="container" align="center">
-		<form>
+		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
 			<br>
 			<div class="pagetitle" align="center">
 				<h3>새로운 클래스 등록</h3>
@@ -397,7 +86,7 @@ body {
 					<input type="checkbox" class="input-text mb-4" id="ovo"
 						name="vegType" value="오보" required><label for="ovo">
 						🥚&nbsp오보</label> &nbsp&nbsp <input type="checkbox"
-						class="input-text mb-4" id="allveg" name="vegType" value="오보"
+						class="input-text mb-4" id="allveg" name="vegType" value="모두"
 						required><label for="allveg"> 🥗&nbsp모두</label>
 				</div>
 
@@ -413,13 +102,13 @@ body {
 				<div class="col-half">
 					<h5>시작일</h5>
 					<div class="input-group">
-						<input type="date" name="" id="">
+						<input type="date" name="cStart" id="cStart">
 					</div>
 				</div>
 				<div class="col-half">
 					<h5>종료일</h5>
 					<div class="input-group">
-						<input type="date" name="" id="">
+						<input type="date" name="cEnd" id="cEnd">
 					</div>
 				</div>
 			</div>
@@ -427,7 +116,7 @@ body {
 			<div class="row">
 				<h5>요일 / 시간</h5>
 				<div class="input-group input-group-icon">
-					<input type="text" name="" id="" placeholder="매주 ** 요일 오전/오후 ** 시"
+					<input type="text" name="ctime" id="ctime" placeholder="매주 ** 요일 오전/오후 ** 시"
 						required autocomplete="off">
 					<div class="input-icon">
 						<i class="fa fa-pencil"></i>
@@ -438,7 +127,7 @@ body {
 			<div class="row">
 				<h5>장소</h5>
 				<div class="input-group input-group-icon">
-					<input type="text" name="" id="" placeholder="장소찾기api" required
+					<input type="text" name="cLoc" id="cLoc" placeholder="장소찾기api" required
 						autocomplete="off">
 					<div class="input-icon">
 						<i class="fa fa-pencil"></i>
@@ -660,9 +349,9 @@ body {
 					<input type="checkbox" id="terms" /> <label for="terms"> 위 내용에 동의합니다.</label>
 				</div>
 			</div>
-			<button class="btn btn-primary" type="button"
+			<button class="btn btn-primary" type="button" id="insertclass"
 				style="margin: 10px; padding: 10px;">클래스 개설 신청</button>
-			<button class="btn btn-primary" type="button"
+			<button class="btn btn-primary" type="button" onClick="location.href='/classBizList.do'"
 				style="margin: 10px; padding: 10px;">클래스 목록으로</button>
 
 		</form>
@@ -702,9 +391,16 @@ body {
 		    	
 		    }
 		 });
+		
+		$("#insertclass").click(function(){
+			alert("등록");
+			$("#cfrm").submit();
+		})
 
 			
 		});
+		
+		
 		
 		
 		
@@ -725,7 +421,8 @@ body {
 		    }
 
 		}
-
+	
+		
 
 		
 	</script>
