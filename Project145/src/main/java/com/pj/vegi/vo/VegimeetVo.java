@@ -16,7 +16,10 @@ public class VegimeetVo {
 	private String mId;
 	private String meetPic;
 	private int minMoney;
+	private int totalDay;
 	
 	private int dday;
 	private int likeFlag;
+	
+	private MeetParticipantVo partiVo;
 }

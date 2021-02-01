@@ -33,6 +33,30 @@
 	border: none;
 	background: transparent;
 }
+
+.insertBtn {
+	width: 130px;
+	background: #6C9852;
+	border-radius: 10px;
+	color: white;
+	height: 40px;
+}
+
+.insertBtn:hover {
+	color: white;
+}
+
+.myCard {
+	border: 1px solid rgba(124, 134, 154, 0.25);
+	border-radius: 10px;
+    transition: all 0.3s ease-out 0s;
+    box-shadow: 0px 3px 35px rgb(218 222 228 / 30%);
+	cursor: pointer;
+}
+
+.myCard:hover {
+	box-shadow: 0px 12px 35px rgba(218, 222, 228, 0.65);
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -40,6 +64,27 @@
 <body>
 	<section class="latest-product-area pt-130 pb-110">
 		<div class="container">
+			<c:if test="${fn:length(myList) != 0}">
+				<div class="addPic mb-5 p-2">
+					<h5>📷 챌린지 인증샷 등록</h5>
+					<div class="row">
+						<c:forEach var="myMeet" items="${myList }">
+							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-2 my-2 "
+								data-id="${myMeet.meetId }">
+								<div class="row">
+									<div class="col-xl-7 col-lg-7 col-md-7">
+										<img src="images/${myMeet.meetPic }" style="width: 300px;">
+									</div>
+									<div class="col-xl-5 col-lg-5 col-md-5">
+										${myMeet.meetTitle }</div>
+								</div>
+								<div align="right">달성률 ${myMeet.partiVo.achiv }%
+									(${myMeet.partiVo.success }/${myMeet.totalDay })</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
 			<div class="row">
 				<div class="mx-auto col-xl-8 col-lg-9 col-md-10">
 					<div class="text-center section-title mb-60">
@@ -109,7 +154,7 @@
 									<c:if test="${vo.dday > 0 }">
 										<h4 style="color: #6C9852;">마감 ${vo.dday }일 전!</h4>
 									</c:if>
-									<c:if test="${vo.dday == 0}">
+									<c:if test="${vo.dday <= 0}">
 										<h4>마감</h4>
 									</c:if>
 								</div>
@@ -117,6 +162,11 @@
 						</div>
 					</div>
 				</c:forEach>
+			</div>
+
+			<div align="right">
+				<button class="btn insertBtn" onclick="location.href='/vegimeet/'">챌린지
+					개설</button>
 			</div>
 		</div>
 	</section>
@@ -128,9 +178,9 @@
 							'click',
 							'.likeAction',
 							function() {
-								if ('${mId}' == null || '${mId}' == ''){
+								if ('${mId}' == null || '${mId}' == '') {
 									alert('로그인 후 이용가능합니다.');
-								} else{
+								} else {
 									var meetId = $(this).data('id');
 									if ($(this).children('img').attr('src') == '/images/empty_like.png') {
 										$.ajax({
@@ -159,6 +209,11 @@
 									}
 								}
 							})
+
+			$('.myCard').on('click', function() {
+				var meetId = $(this).data('id');
+				window.open('vegimeetPicInsertForm.do?meetId='+meetId, '인증샷 등록', 'width=500, height=500');
+			});
 		});
 	</script>
 </body>
