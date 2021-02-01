@@ -110,4 +110,9 @@
 			success = success + 1
 		WHERE meetp_id = #{meetpId}
 	</update>
+	
+	<select id="meetDataList" resultType="MeetDataVo">
+		SELECT * FROM meet_data
+		WHERE meet_id=#{meetId}
+	</select>
 </mapper>

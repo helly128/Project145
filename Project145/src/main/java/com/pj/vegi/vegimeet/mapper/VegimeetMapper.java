@@ -30,4 +30,7 @@ public interface VegimeetMapper {
 	MeetParticipantVo meetpSelect(MeetParticipantVo vo);
 	int uploadMeetDataPic(MeetDataVo vo);
 	int meetPartiUpdate(MeetParticipantVo vo);
+	
+	//다른 참가자의 사진 목록
+	List<MeetDataVo> meetDataList(VegimeetVo vo);
 }

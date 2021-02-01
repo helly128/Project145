@@ -94,4 +94,9 @@ public class VegimeetServiceImpl implements VegimeetService {
 	public int meetPartiUpdate(MeetParticipantVo vo) {
 		return dao.meetPartiUpdate(vo);
 	}
+
+	@Override
+	public List<MeetDataVo> meetDataList(VegimeetVo vo) {
+		return dao.meetDataList(vo);
+	}
 }

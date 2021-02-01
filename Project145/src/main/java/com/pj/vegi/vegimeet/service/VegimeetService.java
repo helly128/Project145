@@ -27,4 +27,6 @@ public interface VegimeetService {
 	MeetParticipantVo meetpSelect(MeetParticipantVo vo);
 	int uploadMeetDataPic(MeetDataVo vo);
 	int meetPartiUpdate(MeetParticipantVo vo);
+	
+	List<MeetDataVo> meetDataList(VegimeetVo vo);
 }

@@ -49,8 +49,8 @@
 .myCard {
 	border: 1px solid rgba(124, 134, 154, 0.25);
 	border-radius: 10px;
-    transition: all 0.3s ease-out 0s;
-    box-shadow: 0px 3px 35px rgb(218 222 228 / 30%);
+	transition: all 0.3s ease-out 0s;
+	box-shadow: 0px 3px 35px rgb(218 222 228/ 30%);
 	cursor: pointer;
 }
 
@@ -94,8 +94,8 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-lg-1"></div>
-				<div class="col-lg-6 col-sm-5 col-10">
+				<div class="col-lg-1 col-sm-1"></div>
+				<div class="col-lg-7 col-sm-5 col-10">
 					<div class="search-input">
 						<label for="keyword"><i
 							class="lni lni-search-alt theme-color"></i></label> <input type="text"
@@ -110,7 +110,7 @@
 						</button>
 					</div>
 				</div>
-				<div class="col-lg-1"></div>
+				<div class="col-lg-1 col-sm-1"></div>
 			</div>
 			<div class="row" id="cards">
 				<c:forEach var="vo" items="${list }" varStatus="status">
@@ -210,10 +210,14 @@
 								}
 							})
 
-			$('.myCard').on('click', function() {
-				var meetId = $(this).data('id');
-				window.open('vegimeetPicInsertForm.do?meetId='+meetId, '인증샷 등록', 'width=500, height=500');
-			});
+			$('.myCard').on(
+					'click',
+					function() {
+						var meetId = $(this).data('id');
+						window.open(
+								'vegimeetPicInsertForm.do?meetId=' + meetId,
+								'인증샷 등록', 'width=500, height=500');
+					});
 		});
 	</script>
 </body>

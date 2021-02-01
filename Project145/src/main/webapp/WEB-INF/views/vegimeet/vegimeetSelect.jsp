@@ -76,11 +76,21 @@
 							<h4>주최자</h4>
 							<div class="mt-3 px-2"></div>
 						</div>
-						<div class="border-top pt-4 pb-5 border-bottom">
+						<div class="border-top pt-4 pb-5">
 							<h4>참가자 목록</h4>
 							<div class="mt-3 px-2">
 								<c:forEach var="partiVo" items="${partiList}">
 									<span>${partiVo.getMId() }</span>
+								</c:forEach>
+							</div>
+						</div>
+						<div class="border-top pt-4 pb-5 border-bottom">
+							<h4>다른 참가자의 사진</h4>
+							<div class="row mt-3 px-2">
+								<c:forEach var="datavo" items="${dataList }">
+									<div class="p-2 col-xl-3 col-lg-3 col-md-4">
+										<img src="/images/${datavo.dataPic }">
+									</div>
 								</c:forEach>
 							</div>
 						</div>

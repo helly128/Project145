@@ -62,7 +62,7 @@ public class VegimeetController {
 	public String vegimeetSelect(Model model, VegimeetVo vo, HttpSession session) {
 		vo = vegimeetService.vegimeetSelect(vo);
 		List<MeetParticipantVo> partiList = vegimeetService.meetPartiList(vo);
-		String joinFlag = "";
+		String joinFlag = "";	//참여여부
 		String mId = (String) session.getAttribute("mId");
 		for (MeetParticipantVo partiVo : partiList) {
 			if (partiVo.getMId().equals(mId)) {
@@ -73,6 +73,10 @@ public class VegimeetController {
 		model.addAttribute("meetVo", vo);
 		model.addAttribute("partiList", partiList);
 		model.addAttribute("joinFlag", joinFlag);
+		
+		//다른 참가자의 사진 목록
+		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo);
+		model.addAttribute("dataList", dataList);
 		return "vegimeet/vegimeetSelect";
 	}
 
