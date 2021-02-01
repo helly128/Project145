@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.pj.vegi.vo.RestMenuVo;
+import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 public interface RestaurantService {
@@ -21,6 +22,8 @@ public interface RestaurantService {
 	
 	RestaurantVo getRestaurantDetail(RestaurantVo vo); //식당 상세페이지
 	List<RestMenuVo> getRestaurantMenu(RestMenuVo mVo); //식당 메뉴리스트
+	
+	int reservInsert(RestReservVo vo); //식당 예약
 	
 	
 	

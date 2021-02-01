@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.restaurant.mapper.RestaurantMapper;
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.RestMenuVo;
+import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("restaurantService")
@@ -80,6 +81,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public List<RestMenuVo> getRestaurantMenu(RestMenuVo mVo) {
 		//식당 메뉴
 		return dao.getRestaurantMenu(mVo);
+	}
+
+	@Override
+	public int reservInsert(RestReservVo vo) {
+		//식당 에약
+		return dao.reservInsert(vo);
 	}
 	
 	

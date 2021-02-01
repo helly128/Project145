@@ -1,8 +1,11 @@
 package com.pj.vegi.restaurant.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.RestMenuVo;
+import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Controller
@@ -82,5 +85,26 @@ public class RestaurantController {
 		return "restaurant/restaurantImformation";
 	}
 	
+	
+	@RequestMapping("/reservInsert.do")
+	public String reservInsert(RestReservVo vo,  Model model , HttpServletResponse response) throws IOException {
+		int n = restaurantService.reservInsert(vo);
+		response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+		if(n != 0) {
+
+            out.println("<script>alert('예약대기 상태입니다. 마이페이지에서 예약을 확인해주세요.'); location.href='restaurant.do';</script>");
+            out.flush();
+            return null;
+		}else {
+			
+            out.println("<script>alert('예약실패'); location.href='restaurant.do';</script>");
+            out.flush();
+            return null;
+		}
+		
+	
+		
+	}
 
 }
