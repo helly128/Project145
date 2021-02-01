@@ -4,8 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+<<<<<<< HEAD
+=======
+${paging}
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 <c:if test="${empty jsFunc}">
-	<c:set var="jsFunc" value="go_page"></c:set>
+	<c:set var="jsFunc" value="goList"></c:set>
 </c:if>
 <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
 	<ul class="pagination">

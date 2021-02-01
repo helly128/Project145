@@ -5,8 +5,22 @@
 <mapper namespace="com.pj.vegi.recipeMaterial.mapper.RecipeMaterialMapper">
 
 	<select id="recipeMaterialSelect" resultType="RecipeMaterialVo">
-	select mat_id,mat_name, mat_vol
-	from recipe_material
-	where r_id=#{rId}
+	select 
+		mat_id,mat_name, mat_vol, r_id
+	from 
+		recipe_material
+	where 
+		r_id=#{rId}
 	</select>
+	
+	<update id = "recipeMaterialUpdate">
+	update recipe_material 
+	set 
+		MAT_ID=#{matId}, 
+		MAT_NAME=#{matName}, 
+		MAT_VOL=#{matVol}
+	where 
+		r_id=#{rId}; 
+	
+	</update>
 </mapper>

@@ -92,7 +92,7 @@
 									<li><a href="/logout.do"
 										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 								</c:if>
-								<c:if test="${mId ne null}">
+								<c:if test="${mId ne null && auth ne 'admin'}">
 									<li><a href="/mypage.do"
 										class="main-btn btn-hover d-none d-md-block"> <span
 											class="d-md-none"><i class="lni lni-user"></i></span> <span
@@ -102,6 +102,10 @@
 								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
 									<li><a href="/restBizList.do"
 										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+								</c:if>
+								<c:if test="${auth eq 'admin'}">
+									<li><a href="/adminMain.do"
+										class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
 								</c:if>
 							</ul>
 						</nav>
@@ -174,7 +178,7 @@
 									<option value="none">강원</option>
 									<option value="none">충남</option>
 									<option value="none">충북</option>
-									<option value="none">경상</option>
+									<option value="none">경북</option>
 									<option value="none">경남</option>
 									<option value="none">전북</option>
 									<option value="none">전남</option>

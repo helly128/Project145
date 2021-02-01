@@ -106,17 +106,7 @@ article {
 										<li class="nav-item"><a class="page-scroll"
 											href="/recipeMain.do">레시피 </a></li>
 										<li class="nav-item"><a class="page-scroll"
-											data-toggle="collapse" data-target="#sub-nav"
-											aria-controls="sub-nav" aria-expanded="false"
-											aria-label="Toggle navigation" href="javascript:void(0)">식당
-												<div class="sub-nav-toggler">
-													<span></span>
-												</div>
-										</a>
-											<ul class="sub-menu collapse" id="sub-nav">
-												<li><a href="category.html">Category Grid</a></li>
-												<li><a href="category-list.html">Category List</a></li>
-											</ul></li>
+											href="/restaurant.do">식당</a></li>
 										<li class="nav-item"><a class="page-scroll"
 											href="/vegimeetList.do">베지Meet</a></li>
 									</ul>
@@ -153,6 +143,10 @@ article {
 									<c:if test="${mId ne null && password ne null}">
 										<li><a href="/mypage.do"
 											class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
+									</c:if>
+									<c:if test="${auth eq 'admin'}">
+									<li><a href="/adminMain.do"
+										class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
 									</c:if>
 
 								</ul>

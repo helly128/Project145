@@ -79,5 +79,11 @@
 	WHERE REST_ID = #{restId}
 	</select>
 	
+	<insert id="reservInsert">
+	<!-- 예약하기 -->
+	insert into REST_RESERV(REST_RESERV_NUM, REST_RESERV_DATE, REST_RESERV_NAME, REST_RESERV_PEOPLE, M_ID, REST_ID)
+	values('REST_RESERV'||rest_reserv_seq.nextval, #{restReservDate}, #{restReservName}, #{restReservPeople}, #{mId}, #{restId})
+	</insert>
+	
 	
 </mapper>

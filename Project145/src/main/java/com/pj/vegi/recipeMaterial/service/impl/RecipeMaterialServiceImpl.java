@@ -15,11 +15,11 @@ public class RecipeMaterialServiceImpl implements RecipeMaterialService{
 	@Autowired
 	RecipeMaterialMapper dao;
 	
-//	@Override
-//	public List<RecipeMaterialVo> getMaterialList(RecipeMaterialVo vo) {
-//		// TODO Auto-generated method stub
-//		return dao.getMaterialList(vo);
-//	}
+	@Override
+	public List<RecipeMaterialVo> getMaterialList(RecipeMaterialVo vo) {
+		// TODO Auto-generated method stub
+		return dao.getMaterialList(vo);
+	}
 
 	@Override
 	public List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo vo) {
@@ -32,12 +32,12 @@ public class RecipeMaterialServiceImpl implements RecipeMaterialService{
 //		// TODO Auto-generated method stub
 //		return 0;
 //	}
-//
-//	@Override
-//	public int RecipeMaterialUpdate(RecipeMaterialVo vo) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+
+	@Override
+	public RecipeMaterialVo recipeMaterialUpdate(RecipeMaterialVo vo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 //
 //	@Override
 //	public int RecipeMaterialDelete(RecipeMaterialVo vo) {
