@@ -117,7 +117,7 @@
 		</script>
 		
 	</div>
-	<!-- 페이징 2 -->
+	<%-- <!-- 페이징 2 -->
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/recipeMain.do?page=${paging.startPage - 1 }&pageUnit=${paging.pageUnit}">&lt;</a>
@@ -135,7 +135,7 @@
 		<c:if test="${paging.endPage != paging.lastPage}">
 			<a href="/recipeMain.do?page=${paging.endPage+1 }&pageUnit=${paging.pageUnit}">&gt;</a>
 		</c:if>
-	</div>
+	</div> --%>
 	</div>
 
 	<!--====== LATEST PRODUCT PART ENDS ======-->

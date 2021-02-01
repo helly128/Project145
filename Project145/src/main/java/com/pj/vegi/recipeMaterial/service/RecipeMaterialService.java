@@ -6,9 +6,9 @@ import com.pj.vegi.vo.RecipeMaterialVo;
 
 public interface RecipeMaterialService {
 
-//	public List<RecipeMaterialVo>getMaterialList(RecipeMaterialVo vo);
-	public List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo vo);
+	public List<RecipeMaterialVo>getMaterialList(RecipeMaterialVo vo);
+	public List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo rmVo);
 //	public int RecipeMaterialInsert(RecipeMaterialVo vo);
-//	public int RecipeMaterialUpdate(RecipeMaterialVo vo);
+	public RecipeMaterialVo recipeMaterialUpdate(RecipeMaterialVo vo);
 //	public int RecipeMaterialDelete(RecipeMaterialVo vo);
 }

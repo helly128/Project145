@@ -25,22 +25,27 @@ public class RecipeController {
 
 	@Autowired
 	RecipeService recipeService;
+	
+	@Autowired
+	RecipeMaterialService rmService;
 
 	@RequestMapping("/recipeMain.do")//게시글 페이징 처리 추가하기
 	public String recipeMain(Model model, RecipeVo vo,Paging paging) {
 		//	paging
 		paging.setPageUnit(8);
+		paging.setPageSize(5);
 		//페이지 번호 파라미터
 		if(paging.getPage() == null) {	// && paging.getPageUnit(8) ==null
 			paging.setPage(1);
 		}
-		//시작/마지막레코드 번호
-		vo.setStart(paging.getStartPage());
-		vo.setEnd(paging.getLastPage());
+		//한 페이지의 시작/마지막레코드 번호
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+		
 		//전체 건수
 		paging.setTotalRecord(recipeService.recipeCount(vo));
 		model.addAttribute("paging", paging);
-		//data
+		//data 불러오기
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
 		model.addAttribute("recipes", recipes);
 		
@@ -103,18 +108,29 @@ public class RecipeController {
 	}
 
 	@RequestMapping("/recipeUpdate.do") // 수정 폼
-	public String recipeUpdate(RecipeVo vo, Model model, HttpServletRequest request,
-			@RequestParam MultipartFile uploadfile) throws IllegalStateException, IOException {
-		// 사진 업로드 처리
-		if (uploadfile != null && uploadfile.getSize() > 0) {
-			String name = ImageIO.imageUpload(request, uploadfile, vo.getRImage());
-			vo.setRImage(name);
-		}
-		recipeService.recipeUpdate(vo);
+	public String recipeUpdate(RecipeVo vo,RecipeMaterialVo rmVo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
 		
+		RecipeVo recipeVo = recipeService.recipeSelect(vo);
 		model.addAttribute("rId",vo.getRId());
-		
+		model.addAttribute("select", recipeVo);
+		List<RecipeMaterialVo>rms =  rmService.recipeMaterialSelect(rmVo);
+		model.addAttribute("rm", rms);
+		return "recipe/recipeUpdate";
+	}
+	
+	@RequestMapping("/recipeUpdateResult.do") //수정 처리
+	public String recipeUpdateResult(RecipeMaterialVo rmVo,RecipeVo vo, Model model,HttpServletRequest request,
+			@RequestParam MultipartFile uploadFile) throws IllegalStateException, IOException {
+		  // 사진 업로드 처리 
+		if (uploadFile != null && uploadFile.getSize() > 0) { 
+			String name = ImageIO.imageUpload(request, uploadFile, vo.getRImage());
+		  vo.setRImage(name); }
+		recipeService.recipeUpdate(vo);
+		model.addAttribute("recipeUp", vo.getRId());
+		rmService.recipeMaterialSelect(rmVo);
+		model.addAttribute("rm",rmVo.getMatName());
 		return "redirect:recipeMain.do";
+		 
 	}
 
 	@RequestMapping("/recipeDelete.do")//삭제
