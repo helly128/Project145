@@ -153,10 +153,25 @@
 				$('.textarea').prop('disabled', true).attr('style', 'background: #e8e8e8;');
 			}
 			
-			if('${joinFlag}' == true){
+			if('${joinFlag}' == 'true'){
 				$('.joinBtn').text('참가완료');
 				$('.joinBtn').prop('disabled', true);
 			}
+			
+			//마감표시
+			if('${joinFlag}' != 'true' && '${meetVo.dday}' <= 0) {
+				$('.joinBtn').text('마감');
+				$('.joinBtn').prop('disabled', true);
+			}
+			
+			//마감 표시
+			var today = new Date();
+			today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+			var start = '${meetVo.meetStart}';
+			var dayArr = start.split('-');
+			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
+			console.log((startDay.getTime() - today.getTime())/1000/60/60/24);
+			
 		})
 	</script>
 </body>
