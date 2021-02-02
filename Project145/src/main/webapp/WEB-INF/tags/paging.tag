@@ -4,10 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<<<<<<< HEAD
-=======
-${paging}
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 <c:if test="${empty jsFunc}">
 	<c:set var="jsFunc" value="goList"></c:set>
 </c:if>
