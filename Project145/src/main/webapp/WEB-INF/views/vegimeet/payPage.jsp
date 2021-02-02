@@ -157,29 +157,33 @@ th {
 				var totalPay = $('#totalPay').val();
 				var buyerName = '${memberVo.getMName()}';
 				var productName = '${meetVo.meetTitle}';
-				console.log('imp 실행전');
-				IMP.init('imp34358761');
-				IMP.request_pay({
-					pg : 'inicis',
-					pay_method : 'card',
-					merchant_uid : 'merchant_' + new Date().getTime(),
-					name : productName, //결제창에 보이는 상품명
-					amount : totalPay, //가격
-					buyer_email : '${memberVo.email}', //결제완료에서 뜨는 이메일값
-					buyer_name : buyerName,
+				if (totalPay > 0) {
+					IMP.init('imp34358761');
+					IMP.request_pay({
+						pg : 'inicis',
+						pay_method : 'card',
+						merchant_uid : 'merchant_' + new Date().getTime(),
+						name : productName, //결제창에 보이는 상품명
+						amount : totalPay, //가격
+						buyer_email : '${memberVo.email}', //결제완료에서 뜨는 이메일값
+						buyer_name : buyerName,
 					//m_redirect_url : '/payProcess.do' //이렇게 해놔도 form태그의 action을 따라감
-				}, function(rsp) {
-					console.log(rsp);
-					if (rsp.success) {
-						var msg = '결제가 완료되었습니다.';
-						//결제 성공시 상품리스트로 이동
-						$("#frm").submit();
-					} else {
-						var msg = '결제에 실패하였습니다.';
-					}
-					alert(msg);
+					}, function(rsp) {
+						console.log(rsp);
+						if (rsp.success) {
+							var msg = '결제가 완료되었습니다.';
+							//결제 성공시 상품리스트로 이동
+							$("#frm").submit();
+						} else {
+							var msg = '결제에 실패하였습니다.';
+						}
+						alert(msg);
 
-				});
+					});
+				} else {
+					$("#frm").submit();
+					alert('결제가 완료되었습니다.');
+				}
 			});
 
 			//결제금 자동계산

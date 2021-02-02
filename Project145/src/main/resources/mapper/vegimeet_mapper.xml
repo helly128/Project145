@@ -74,45 +74,97 @@
 	</insert>
 
 	<resultMap type="MeetParticipantVo" id="MeetParticipantVo">
-		<result column="m_id" property="mId"/>
+		<result column="m_id" property="mId" />
 		<result column="success" property="success" />
 		<result column="achiv" property="achiv" />
+		<result column="today_flag" property="todayFlag" />
 	</resultMap>
 	<resultMap type="VegimeetVo" id="VegimeetVo">
 		<result column="meet_title" property="meetTitle" />
 		<result column="meet_id" property="meetId" />
 		<result column="total_day" property="totalDay" />
-		<result column="meet_pic" property="meetPic" /> 
-		<collection property="partiVo" resultMap="MeetParticipantVo" />
+		<result column="meet_pic" property="meetPic" />
+		<collection property="partiVo"
+			resultMap="MeetParticipantVo" />
 	</resultMap>
 	<select id="myMeetList" resultMap="VegimeetVo">
-		SELECT u.meet_title, p.m_id, u.meet_id, u.total_day,
-				p.success, p.achiv, u.meet_pic
-		FROM meet_un u JOIN meet_parti p
-		ON (u.meet_id = p.meet_id)
+		SELECT u.meet_title, p.m_id,
+		u.meet_id, u.total_day,
+		p.success, p.achiv, u.meet_pic, p.today_flag
+		FROM meet_un u
+		JOIN meet_parti p
+		ON (u.meet_id =
+		p.meet_id)
 		WHERE p.m_id=#{mId}
 	</select>
-	
+
 	<select id="meetpSelect" resultType="MeetParticipantVo">
 		SELECT *
 		FROM meet_parti
 		WHERE m_id=#{mId} AND meet_id=#{meetId}
 	</select>
-	
+
 	<insert id="uploadMeetDataPic">
 		INSERT INTO meet_data
-		VALUES('meetd' || meetd_seq.nextval, #{meetpId}, #{dataPic}, #{meetId})
+		VALUES('meetd' ||
+		meetd_seq.nextval, #{meetpId}, #{dataPic}, #{meetId})
 	</insert>
-	
+
 	<update id="meetPartiUpdate">
 		UPDATE meet_parti
 		SET achiv=#{achiv},
-			success = success + 1
+		success = success
+		+ 1,
+		today_flag = 'true'
 		WHERE meetp_id = #{meetpId}
 	</update>
-	
+
 	<select id="meetDataList" resultType="MeetDataVo">
 		SELECT * FROM meet_data
 		WHERE meet_id=#{meetId}
 	</select>
+
+	<select id="ongoingMeetList" resultType="VegimeetVo">
+		SELECT meet_id FROM
+		meet_un
+		WHERE sysdate BETWEEN meet_start and meet_end
+	</select>
+
+	<update id="addFailCount">
+		UPDATE meet_parti
+		SET fail = fail + 1
+		WHERE
+		meetp_id=#{meetpId}
+	</update>
+
+	<update id="allFalseSet">
+		UPDATE meet_parti
+		SET today_flag = 'false'
+		WHERE
+		meetp_id=#{meetpId}
+	</update>
+
+	<select id="endMeetSelect" resultType="VegimeetVo">
+		SELECT * FROM meet_un
+		WHERE meet_end = TRUNC(sysdate, 'dd') - 1
+	</select>
+
+	<update id="cashUpdate">
+		UPDATE member
+		SET wallet_cash = wallet_cash + #{payBack}
+		WHERE m_id=#{mId}
+	</update>
+	
+	<update id="pointUpdate">
+		UPDATE member
+		SET wallet_point = wallet_point + #{reward}
+		WHERE m_id=#{mId}
+	</update>
+	
+	<insert id="vegimeetInsert">
+		INSERT INTO meet_un(meet_id, meet_title, meet_start, meet_end, 
+							meet_content, m_id, meet_pic, min_money)
+		VALUES('meet' || meet_seq.nextval, #{meetTitle}, #{meetStart}, #{meetEnd},
+			#{meetContent}, #{mId}, #{meetPic}, #{minMoney})
+	</insert>
 </mapper>

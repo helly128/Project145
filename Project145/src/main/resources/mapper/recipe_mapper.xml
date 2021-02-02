@@ -4,11 +4,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.vegi.recipe.mapper.RecipeMapper">
 	<select id="getRecipeList" resultType="RecipeVo">
-		select a.* from (select b.*, rownum rn from(
+		select a.* from (select
+		b.*, rownum rn from(
 		select *
 		from recipe
 		order by r_id
-		)b)a where rn between #{start} and #{end}
+		)b)a where rn
+		between #{start} and #{end}
 	</select>
 	<select id="recipeSelect" resultType="RecipeVo">
 		select *
@@ -17,38 +19,74 @@
 		r_id=#{rId}
 	</select>
 	<select id="recipeCount" resultType="int">
-		select count(*) 
+		select count(*)
 		from recipe
 	</select>
-		<delete id="recipeDelete">
+	<delete id="recipeDelete">
 		delete from recipe
 		where r_id = #{rId}
 	</delete>
-	
-	<!-- <insert id="recipeInsert">
-		insert into recipe (r_id, r_type, r_title, r_content,
-		r_image, m_id, c_id)
-		values (
-		#{rId),
-		#{rType},
-		#{rTitle},
-		#{rContent},
-		#{rImage},
-		#{mId},
-		#{cId} )
-	</insert>
 
- -->
+	<!-- <insert id="recipeInsert"> insert into recipe (r_id, r_type, r_title, 
+		r_content, r_image, m_id, c_id) values ( #{rId), #{rType}, #{rTitle}, #{rContent}, 
+		#{rImage}, #{mId}, #{cId} ) </insert> -->
 	<update id="recipeUpdate">
 		update recipe set
 		r_type = #{rType},
-		r_title =#{rTitle},
+		r_title
+		=#{rTitle},
 		r_content = #{rContent},
 		r_image = #{rImage},
 		c_id = #{cId}
 		where r_id = #{rId)
 	</update>
+	
+	<select id="searchlessonList" resultType="LessonVO">
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM class
+		<where>
+			<if test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+				and vegType in('비건','락토','오보','락토오보')
+			</if>
+			<if test="(vegType == null or vegType == '') and keyword != null and keyword != '' ">
+				and vegType in('비건','락토','오보','락토오보')
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+			<if test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+				and vegType = #{vegType}
+			</if>
+			<if test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+				and vegType = #{vegType}
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
 
-
+	<select id="lessonSearch" resultType="LessonVO">
+	select c_id,c_title,lec_name,c_desc
+	from class
+	<where>
+			<if test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+				and vegType in('비건','락토','오보','락토오보')
+			</if>
+			<if test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+				and vegType in('비건','락토','오보','락토오보')
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+			<if test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+				and vegType = #{vegType}
+			</if>
+			<if test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+				and vegType = #{vegType}
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 
 </mapper>

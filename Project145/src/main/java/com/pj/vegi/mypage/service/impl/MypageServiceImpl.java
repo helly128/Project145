@@ -67,6 +67,27 @@ public class MypageServiceImpl implements MypageService {
 		return dao.meetLikeList(vo);
 	}
 
+	@Override
+	public List<Map> lessonLikeList(LikeListVo vo) {
+		return dao.lessonLikeList(vo);
+	}
+
+	@Override
+	public List<Map> recipeLikeList(LikeListVo vo) {
+		return dao.recipeLikeList(vo);
+	}
+
+	@Override
+	public List<Map> restLikeList(LikeListVo vo) {
+		return dao.restLikeList(vo);
+	}
+
+	@Override
+	public int heartCancel(LikeListVo vo) {
+		return dao.heartCancel(vo);
+	}
+
+
 //	@Override
 //	public int recipeHitUpdate(RecipeVo vo) throws SQLException {
 //		return dao.recipeHitUpdate(vo);
