@@ -1,20 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 <mapper namespace="com.pj.vegi.biz.mapper.ClassBizMapper">
 
 	<select id="classBizList" resultType="LessonVO">
 		SELECT * FROM class
-		WHERE m_id=#{mId}
+		WHERE
+		m_id=#{mId}
+
 	</select>
 
-	<select id="classBizSelect" resultType="LessonVo">
-		SELECT * FROM class
-		WHERE c_id=#{cId}
-	</select>
+
 
 
 	<delete id="classBizDelete">
@@ -24,7 +22,7 @@
 
 
 
-<update id="classBizUpdate">
+	<update id="classBizUpdate">
 		UPDATE class
 		SET rest_address = #{restAddress},
 		rest_time=#{restTime},
@@ -34,68 +32,52 @@
 		rest_id=#{restId}
 	</update>
 
-
-
-
-
-
-
-
-
+	<select id="classBizNum" resultType="MemberVo">
+		SELECT bizNum FROM member
+		WHERE m_id=#{mId}
+	</select>
 
 
 	<insert id="classBizInsert">
-		INSERT INTO class
-		( 
-		C_ID,           
-		C_TITLE,       
-		C_IMG,               
-		C_DESC,                
-		VEGTYPE,                 
-		C_PRICE,              
-		C_START,                       
-		C_END,                        
-		STATUS,                  
-		LEC_PROFILE,            
-		LEC_CAREER,            
-		LEC_NAME,                
-		LEC_INSTA,              
-		CURRICULUM,            
-		C_HIT,                         
-		M_ID,                    
-		C_PARTI,                       
-		C_JOIN,                        
-		C_LOC,                  
-		BIZNUM                
-		)
-		VALUES('class' || c_seq.nextval,
-		
-		#{cTitle},
-		#{cImg},
-		#{cDesc},
-		#{vegType},
-		#{cPrice},
-		#{cStart},
-		#{cEnd},
-		#{status},
-		#{lecProfile},
-		#{lecCareer},
-		#{lecName},
-		#{lecInsta},
-		#{curriCulum},
-		#{cHit}, 
-		#{mId}, 
-		#{cParti}, 
-		#{cJoin}, 
-		#{cLoc},  
-		#{bizNum}
-		
-		(SELECT biznum FROM member
-		WHERE m_id=#{mId}), 'true')
-		<selectKey keyProperty="seq" resultType="int" order="AFTER">
-			SELECT c_seq.currval
+		<selectKey keyProperty="cId" resultType="String"
+			order="AFTER">
+			SELECT
+			c_seq.currval
 			FROM DUAL
 		</selectKey>
+		INSERT INTO class(
+		C_ID, C_TITLE,C_IMG,C_DESC,VEGTYPE,C_PRICE,C_START,
+		C_END,STATUS,CURRICULUM,
+		M_ID,C_PARTI,C_LOC,BIZNUM,C_TIME
+		)
+		VALUES(
+		'class'||c_seq.nextval,#{cTitle},#{cImg},#{cDesc},#{vegType},#{cPrice},#{cStart},
+		#{cEnd},#{status},#{curriCulum},
+		#{mId},#{cParti},#{cLoc},#{bizNum},#{cTime}
+		)
+
 	</insert>
-	
+
+	<insert id="classLecturerInsert">
+		INSERT INTO LECTURER(
+		LEC_ID,M_ID,C_ID,BIZNUM,LEC_CAREER,PROPOSAL,RESPONSE
+		)
+		VALUES(
+		'lec' ||lec_seq.nextval, #{mId},#{cId},#{bizNum},
+		#{lecCareer},#{proposal},#{response}
+		)
+	</insert>
+
+	<select id="classBizSelect" resultType="LessonVo">
+		SELECT * FROM class
+		WHERE
+		c_id=#{cId}
+	</select>
+
+	<select id="lecBizSelect" resultType="LecturerVo">
+		SELECT * FROM lecturer
+		WHERE
+		c_id=#{cId}
+	</select>
+
 </mapper>
