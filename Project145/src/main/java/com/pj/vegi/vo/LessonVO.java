@@ -25,9 +25,12 @@ public class LessonVO {
 	private int cJoin;
 	private String cLoc;
 	private String bizNum;
+	
 	private int start;
 	private int end;
 	private String keyword;
+	private int likeFlag;
+	
 	private String cTime;
 	
 }

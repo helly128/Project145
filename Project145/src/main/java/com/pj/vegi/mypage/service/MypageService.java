@@ -14,13 +14,28 @@ import com.pj.vegi.vo.RestaurantVo;
 public interface MypageService {
 
 	MemberVo myPageSelect(MemberVo vo) throws SQLException;
-	int myPageUpdate(MemberVo vo) throws SQLException;	
+
+	int myPageUpdate(MemberVo vo) throws SQLException;
+
 	List<RecipeVo> recipeSelect(RecipeVo vo) throws SQLException;
-	//int recipeHitUpdate(RecipeVo vo) throws SQLException;	
-	List<Map> restSelect(RestReservVo vo) throws SQLException;	
-	List<Map> lessonSelect(LessonReservVO vo) throws SQLException;	
-	int countRest(RestReservVo vo);
 	int countRecipe(RecipeVo vo);
+
+	// int recipeHitUpdate(RecipeVo vo) throws SQLException;
+	
+	List<Map> restSelect(RestReservVo vo) throws SQLException;
+	int countRest(RestReservVo vo);
+
+	List<Map> lessonSelect(LessonReservVO vo) throws SQLException;
 	int countLesson(LessonReservVO vo);
+
+
 	List<Map> meetLikeList(LikeListVo vo);
+
+	List<Map> lessonLikeList(LikeListVo vo);
+	int heartCancel(LikeListVo vo);
+
+	List<Map> recipeLikeList(LikeListVo vo);
+
+	List<Map> restLikeList(LikeListVo vo);
+
 }

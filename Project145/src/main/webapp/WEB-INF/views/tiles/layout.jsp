@@ -89,8 +89,8 @@ article {
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="index.html">채식당 <a
-								class="navbar-brand" href="/main.do"> </a>
+							<a class="navbar-brand" href="/">채식당 <a class="navbar-brand"
+								href="/main.do"> </a>
 								<button class="navbar-toggler" type="button"
 									data-toggle="collapse" data-target="#navbarSupportedContent"
 									aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -125,6 +125,21 @@ article {
 										<li><a href="/logout.do"
 											class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
+									<c:if test="${mId ne null && auth ne 'admin'}">
+										<li><a href="/mypage.do"
+											class="main-btn btn-hover d-none d-md-block"> <span
+												class="d-md-none"><i class="lni lni-user"></i></span> <span
+												class="d-none d-md-block">마이페이지</span>
+										</a></li>
+										<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
+											<li><a href="/restBizList.do"
+												class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+										</c:if>
+										<c:if test="${auth eq 'admin'}">
+											<li><a href="/adminMain.do"
+												class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
+										</c:if>
+									</c:if>
 									<!-- <li><a href="#" class="main-btn account-btn"> <span
 										class="d-md-none"><i class="lni lni-user"></i></span> <span
 										class="d-none d-md-block">My Account</span>
@@ -145,8 +160,8 @@ article {
 											class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
 									</c:if>
 									<c:if test="${auth eq 'admin'}">
-									<li><a href="/adminMain.do"
-										class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
+										<li><a href="/adminMain.do"
+											class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
 									</c:if>
 
 								</ul>
