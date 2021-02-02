@@ -12,4 +12,8 @@ public class MeetParticipantVo {
 	private int success;
 	private int fail;
 	private int myFund;
+	private String todayFlag;
+	
+	private int payBack;
+	private int reward;
 }

@@ -51,12 +51,16 @@
 	border-radius: 10px;
 	transition: all 0.3s ease-out 0s;
 	box-shadow: 0px 3px 35px rgb(218 222 228/ 30%);
-	cursor: pointer;
 }
 
 .myCard:hover {
 	box-shadow: 0px 12px 35px rgba(218, 222, 228, 0.65);
 }
+
+/* .addBtn:hover {
+	background: #6C9852;
+	border-color: #6C9852;
+} */
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -69,8 +73,7 @@
 					<h5>📷 챌린지 인증샷 등록</h5>
 					<div class="row">
 						<c:forEach var="myMeet" items="${myList }">
-							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-2 my-2 "
-								data-id="${myMeet.meetId }">
+							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-2 my-2">
 								<div class="row">
 									<div class="col-xl-7 col-lg-7 col-md-7">
 										<img src="images/${myMeet.meetPic }" style="width: 300px;">
@@ -78,8 +81,18 @@
 									<div class="col-xl-5 col-lg-5 col-md-5">
 										${myMeet.meetTitle }</div>
 								</div>
-								<div align="right">달성률 ${myMeet.partiVo.achiv }%
-									(${myMeet.partiVo.success }/${myMeet.totalDay })</div>
+								<div class="row mt-2">
+									<div class="col-xl-6 col-lg-6">달성률 ${myMeet.partiVo.achiv }%
+										(${myMeet.partiVo.success }/${myMeet.totalDay })</div>
+									<div class="col-xl-6 col-lg-6" align="right">
+										<c:if test="${myMeet.partiVo.todayFlag eq 'true' }">
+											<button class="btn btn-outline-dark"
+											data-id="${myMeet.meetId }" disabled>등록완료</button></c:if>
+										<c:if test="${myMeet.partiVo.todayFlag eq 'false' }">
+											<button class="btn btn-outline-dark addBtn"
+											data-id="${myMeet.meetId }">인증샷 등록</button></c:if>
+									</div>
+								</div>
 							</div>
 						</c:forEach>
 					</div>
@@ -165,7 +178,7 @@
 			</div>
 
 			<div align="right">
-				<button class="btn insertBtn" onclick="location.href='/vegimeet/'">챌린지
+				<button class="btn insertBtn" onclick="location.href='vegimeetInsertForm.do'">챌린지
 					개설</button>
 			</div>
 		</div>
@@ -210,7 +223,7 @@
 								}
 							})
 
-			$('.myCard').on(
+			$('.addBtn').on(
 					'click',
 					function() {
 						var meetId = $(this).data('id');

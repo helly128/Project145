@@ -29,4 +29,12 @@ public interface VegimeetService {
 	int meetPartiUpdate(MeetParticipantVo vo);
 	
 	List<MeetDataVo> meetDataList(VegimeetVo vo);
+	
+	List<VegimeetVo> ongoingMeetList();
+	int addFailCount(MeetParticipantVo vo);
+	int allFalseSet(MeetParticipantVo vo);
+
+	List<VegimeetVo> endMeetSelect();
+	int cashUpdate(MeetParticipantVo vo);
+	int pointUpdate(MeetParticipantVo vo);
 }
