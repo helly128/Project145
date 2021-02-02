@@ -86,7 +86,6 @@
 		}
 		
 		$(function(){
-			console.log('${vo.meetId}')
 			$('.submitBtn').on('click', function(){
 				
 				$.ajax({

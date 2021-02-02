@@ -62,7 +62,7 @@ public class VegimeetController {
 	public String vegimeetSelect(Model model, VegimeetVo vo, HttpSession session) {
 		vo = vegimeetService.vegimeetSelect(vo);
 		List<MeetParticipantVo> partiList = vegimeetService.meetPartiList(vo);
-		String joinFlag = "";	//참여여부
+		String joinFlag = ""; // 참여여부
 		String mId = (String) session.getAttribute("mId");
 		for (MeetParticipantVo partiVo : partiList) {
 			if (partiVo.getMId().equals(mId)) {
@@ -73,8 +73,8 @@ public class VegimeetController {
 		model.addAttribute("meetVo", vo);
 		model.addAttribute("partiList", partiList);
 		model.addAttribute("joinFlag", joinFlag);
-		
-		//다른 참가자의 사진 목록
+
+		// 다른 참가자의 사진 목록
 		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo);
 		model.addAttribute("dataList", dataList);
 		return "vegimeet/vegimeetSelect";
@@ -153,10 +153,11 @@ public class VegimeetController {
 			vegimeetService.pointDeduct(memVo); // 적립금, 충전금 차감 쿼리 실행
 
 			if (diff != 0) { // 보유한 적립금 이상 사용 시 적립금 내역 wallet_history에 추가
-				hisVo.setWalletMoney(point);
-				hisVo.setWalletType("적립금사용");
-				vegimeetService.pointHistoryInsert(hisVo);
-
+				if (point != 0) {
+					hisVo.setWalletMoney(point);
+					hisVo.setWalletType("적립금사용");
+					vegimeetService.pointHistoryInsert(hisVo);
+				}
 				hisVo.setWalletMoney(diff);
 				hisVo.setWalletType("충전금사용");
 				vegimeetService.pointHistoryInsert(hisVo);
@@ -181,21 +182,21 @@ public class VegimeetController {
 			throws IllegalStateException, IOException {
 		MeetDataVo vo = new MeetDataVo();
 		vo.setMeetId(meetId);
-		
+
 		MeetParticipantVo partiVo = new MeetParticipantVo();
 		String mId = (String) session.getAttribute("mId");
 		partiVo.setMId(mId);
 		partiVo.setMeetId(meetId);
-		partiVo = vegimeetService.meetpSelect(partiVo);	//meetp_id 읽어오기 위해
+		partiVo = vegimeetService.meetpSelect(partiVo); // meetp_id 읽어오기 위해
 		vo.setMeetpId(partiVo.getMeetpId());
-		
+
 		if (uploadfile != null && uploadfile.getSize() > 0) {
 			String name = ImageIO.imageUpload(request, uploadfile);
 			vo.setDataPic(name);
 		}
-		vegimeetService.uploadMeetDataPic(vo);	//meet_data에 insert
-		
-		//meet_parti update
+		vegimeetService.uploadMeetDataPic(vo); // meet_data에 insert
+
+		// meet_parti update
 		VegimeetVo meetVo = new VegimeetVo();
 		meetVo.setMeetId(meetId);
 		meetVo = vegimeetService.vegimeetSelect(meetVo);
@@ -204,6 +205,17 @@ public class VegimeetController {
 		int achiv = 100 * success / total;
 		partiVo.setAchiv(achiv);
 		vegimeetService.meetPartiUpdate(partiVo);
+
+	}
+	
+	@RequestMapping("/vegimeetInsertForm.do")
+	public String vegimeetInsertForm() {
+		return "vegimeet/vegimeetInsert";
+	}
+	
+	@RequestMapping("/vegimeetInsert.do")
+	public String vegimeetInsert(HttpSession session) {
 		
+		return "";
 	}
 }
