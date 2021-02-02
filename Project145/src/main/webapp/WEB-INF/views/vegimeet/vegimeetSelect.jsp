@@ -74,7 +74,8 @@
 						</div>
 						<div class="border-top pt-4 pb-5">
 							<h4>주최자</h4>
-							<div class="mt-3 px-2"></div>
+							<div class="mt-3 px-2">
+							${meetVo.getMId() }</div>
 						</div>
 						<div class="border-top pt-4 pb-5">
 							<h4>참가자 목록</h4>

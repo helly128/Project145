@@ -99,4 +99,34 @@ public class VegimeetServiceImpl implements VegimeetService {
 	public List<MeetDataVo> meetDataList(VegimeetVo vo) {
 		return dao.meetDataList(vo);
 	}
+
+	@Override
+	public List<VegimeetVo> ongoingMeetList() {
+		return dao.ongoingMeetList();
+	}
+
+	@Override
+	public int addFailCount(MeetParticipantVo vo) {
+		return dao.addFailCount(vo);
+	}
+
+	@Override
+	public int allFalseSet(MeetParticipantVo vo) {
+		return dao.allFalseSet(vo);
+	}
+
+	@Override
+	public List<VegimeetVo> endMeetSelect() {
+		return dao.endMeetSelect();
+	}
+
+	@Override
+	public int cashUpdate(MeetParticipantVo vo) {
+		return dao.cashUpdate(vo);
+	}
+
+	@Override
+	public int pointUpdate(MeetParticipantVo vo) {
+		return dao.pointUpdate(vo);
+	}
 }

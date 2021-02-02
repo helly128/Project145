@@ -9,10 +9,7 @@ public class Paging {
 	int startPage;
 	int endPage;
 	int first;				//페이지 번호에 해당하는 시작글번호
-	int last;				//페이지 번호에 해당하는 마지막글번호
-
-	
-	
+	int last;				//페이지 번호에 해당하는 마지막글번호	
 	
 	public int getFirst() {
 		first = (getPage() - 1) * getPageUnit() + 1;

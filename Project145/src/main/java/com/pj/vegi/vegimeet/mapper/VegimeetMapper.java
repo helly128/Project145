@@ -33,4 +33,17 @@ public interface VegimeetMapper {
 	
 	//다른 참가자의 사진 목록
 	List<MeetDataVo> meetDataList(VegimeetVo vo);
+	
+	//자정 후 인증샷 미업로드시 fail+1 
+	List<VegimeetVo> ongoingMeetList();
+	int addFailCount(MeetParticipantVo vo);
+	int allFalseSet(MeetParticipantVo vo);
+	
+	//보상금 처리
+	List<VegimeetVo> endMeetSelect();
+	int cashUpdate(MeetParticipantVo vo);
+	int pointUpdate(MeetParticipantVo vo);
+	
+	//새 베지밋 생성
+	int vegimeetInsert();
 }
