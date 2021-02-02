@@ -37,30 +37,36 @@
 <body id="page-top">
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">나의 지갑 내역을 확인하세요! 🤍</h1><br>
+		<h1 class="h3 mb-2 text-gray-800">나의 지갑 내역을 확인하세요! 🤍</h1>
+		<br>
 
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
-		<!-- 
+			<!-- 
 			<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">DataTables
 					Example</h6>
 			</div>
 		 -->
 			<div class="card-body">
-			<!-- 
 				<div class="col-sm-12 col-md-6">
 					<div class="dataTables_length" id="dataTable_length">
-						<label><select name="dataTable_length"
-							aria-controls="dataTable"
-							class="custom-select custom-select-sm form-control form-control-sm"><option
-									value="10">Type</option>
-								<option value="25">충전</option>
-								<option value="50">인출</option>
-								<option value="100">적립</option></select> </label>
+						<form action="" method="get" id="form">
+							<label><select name="walletType" id="walletType"
+								aria-controls="dataTable"
+								class="custom-select custom-select-sm form-control form-control-sm"
+								onchange="javascript:form.submit()">
+									<option value="none" selected disabled>Type</option>
+									<option value="충전"
+										<c:if test="${vo.getWalletType() == '충전' }">selected="selected"</c:if>>충전</option>
+									<option value="인출"
+										<c:if test="${vo.getWalletType() == '인출' }">selected="selected"</c:if>>인출</option>
+									<option value="적립"
+										<c:if test="${vo.getWalletType() == '적립' }">selected="selected"</c:if>>적립</option>
+							</select> </label>
+						</form>
 					</div>
 				</div>
-			 -->
 				<div class="table-responsive">
 					<table class="table table-bordered" id="dataTable" width="100%"
 						cellspacing="0">
@@ -96,7 +102,14 @@
 	</div>
 	<script>
 		function goList(p) {
-			location.href = "MyWalletHistory.do?page=" + p;
+			var walletType = document.getElementById("walletType").value;
+			
+			if (walletType == "none") {
+				location.href = "MyWalletHistory.do?page=" + p
+			} else {
+				location.href = "MyWalletHistory.do?page=" + p + "&walletType="
+						+ walletType;
+			}
 		}
 
 		function dateFormat(dat) {

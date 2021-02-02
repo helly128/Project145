@@ -4,6 +4,7 @@ package com.pj.vegi.restaurant.mapper;
 import java.util.List;
 
 import com.pj.vegi.vo.RestMenuVo;
+import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 
@@ -24,5 +25,8 @@ public interface RestaurantMapper {
 	
 	RestaurantVo getRestaurantDetail(RestaurantVo vo); //식당 상세 페이지
 	List<RestMenuVo> getRestaurantMenu(RestMenuVo vo); //식당 메뉴 리스트
+	
+	int reservInsert(RestReservVo vo); //  식당 예약하기
+	
 	
 }

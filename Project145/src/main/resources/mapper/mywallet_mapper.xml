@@ -7,120 +7,141 @@
 
 	<select id="selectMember" resultType="MemberVo">
 		select
-			req_client_fintech_use_num "req_client_fintech_use_num",
-			req_client_name "req_client_name",
-			req_client_num "req_client_num"
+		req_client_fintech_use_num "req_client_fintech_use_num",
+		req_client_name "req_client_name",
+		req_client_num "req_client_num"
 		from member
 		where m_id = #{ mId}
 	</select>
 
 	<select id="withReqAll" resultType="map">
-		select ACCESS_TOKEN "access_token",
-			BANK_TRAN_ID "bank_tran_id",
-			CNTR_ACCOUNT_TYPE "cntr_account_type",
-			CNTR_ACCOUNT_NUM "cntr_account_num",
-			FINTECH_USE_NUM "fintech_use_num",
-			DPS_PRINT_CONTENT "dps_print_content",
-			TRAN_AMT "tran_amt",
-			TRAN_DTIME "tran_dtime",
-			TRANSFER_PURPOSE "transfer_purpose",
-			RECV_CLIENT_ACCOUNT_NUM "recv_client_account_num",
-			RECV_CLIENT_NAME "recv_client_name",
-			RECV_CLIENT_BANK_CODE "recv_client_bank_code",
-			REQ_CLIENT_FINTECH_USE_NUM "req_client_fintech_use_num",
-			REQ_CLIENT_NAME "req_client_name",
-			REQ_CLIENT_NUM "req_client_num"
+		select ACCESS_TOKEN
+		"access_token",
+		BANK_TRAN_ID "bank_tran_id",
+		CNTR_ACCOUNT_TYPE "cntr_account_type",
+		CNTR_ACCOUNT_NUM "cntr_account_num",
+		FINTECH_USE_NUM "fintech_use_num",
+		DPS_PRINT_CONTENT "dps_print_content",
+		TRAN_AMT "tran_amt",
+		TRAN_DTIME "tran_dtime",
+		TRANSFER_PURPOSE "transfer_purpose",
+		RECV_CLIENT_ACCOUNT_NUM "recv_client_account_num",
+		RECV_CLIENT_NAME "recv_client_name",
+		RECV_CLIENT_BANK_CODE "recv_client_bank_code",
+		REQ_CLIENT_FINTECH_USE_NUM "req_client_fintech_use_num",
+		REQ_CLIENT_NAME "req_client_name",
+		REQ_CLIENT_NUM "req_client_num"
 		from with_draw_req
 	</select>
-	
+
 	<select id="depositReqListAll" resultType="map">
 		select
-			TRAN_NO "tran_no",
-			BANK_TRAN_ID "bank_tran_id",
-			FINTECH_USE_NUM "fintech_use_num",
-			PRINT_CONTENT "print_content",
-			TRAN_AMT "tran_amt",
-			TRANSFER_PURPOSE "transfer_purpose",
-			REQ_CLIENT_NAME "req_client_name",
-			REQ_CLIENT_NUM "req_client_num",
-			REQ_CLIENT_FINTECH_USE_NUM "req_client_fintech_use_num"
+		TRAN_NO "tran_no",
+		BANK_TRAN_ID "bank_tran_id",
+		FINTECH_USE_NUM "fintech_use_num",
+		PRINT_CONTENT "print_content",
+		TRAN_AMT "tran_amt",
+		TRANSFER_PURPOSE "transfer_purpose",
+		REQ_CLIENT_NAME "req_client_name",
+		REQ_CLIENT_NUM "req_client_num",
+		REQ_CLIENT_FINTECH_USE_NUM "req_client_fintech_use_num"
 		from deposit_req_list
 	</select>
-	
+
 	<select id="depositReqAll" resultType="map">
 		select
-			ACCESS_TOKEN "access_token",
-			CNTR_ACCOUNT_TYPE "cntr_account_type",
-			CNTR_ACCOUNT_NUM "cntr_account_num",
-			WD_PASS_PHRASE "wd_pass_phrase",
-			WD_PRINT_CONTENT "wd_print_content",
-			NAME_CHECK_OPTION "name_check_option",
-			TRAN_DTIME "tran_dtime",
-			REQ_CNT "req_cnt",
-			REQ_LIST "req_list"
+		ACCESS_TOKEN "access_token",
+		CNTR_ACCOUNT_TYPE "cntr_account_type",
+		CNTR_ACCOUNT_NUM "cntr_account_num",
+		WD_PASS_PHRASE "wd_pass_phrase",
+		WD_PRINT_CONTENT "wd_print_content",
+		NAME_CHECK_OPTION "name_check_option",
+		TRAN_DTIME "tran_dtime",
+		REQ_CNT "req_cnt",
+		REQ_LIST "req_list"
 		from deposit_req
 	</select>
-	
+
 	<update id="updatePlusWallet">
 		update member
-		set wallet_cash = wallet_cash + #{walletCash}
+		set wallet_cash = wallet_cash +
+		#{walletCash}
 		where m_id=#{mId}
 	</update>
-	
+
 	<update id="updateMinusWallet">
 		update member
-		set wallet_cash = wallet_cash - #{walletCash}
+		set wallet_cash = wallet_cash -
+		#{walletCash}
 		where m_id=#{mId}
 	</update>
-	
+
 	<insert id="insertPlusWalletHistory">
 		insert into wallet_history (
-			wallet_id,
-			m_id,
-			wallet_money,
-			wallet_type,
-			wallet_date
+		wallet_id,
+		m_id,
+		wallet_money,
+		wallet_type,
+		wallet_date
 		)
 		values(
-			'wallet'||wallet_seq.nextval, 
-			#{mId}, 
-			#{walletMoney}, 
-			'충전', 
-			sysdate
+		'wallet'||wallet_seq.nextval,
+		#{mId},
+		#{walletMoney},
+		'충전',
+		sysdate
 		)
 	</insert>
-	
+
 	<insert id="insertMinusWalletHistory">
 		insert into wallet_history(
-			wallet_id,
-			m_id,
-			wallet_money,
-			wallet_type,
-			wallet_date
+		wallet_id,
+		m_id,
+		wallet_money,
+		wallet_type,
+		wallet_date
 		)
 		values(
-			'wallet'||wallet_seq.nextval, 
-			#{mId}, 
-			#{walletMoney}, 
-			'인출', 
-			sysdate)
+		'wallet'||wallet_seq.nextval,
+		#{mId},
+		#{walletMoney},
+		'인출',
+		sysdate)
 	</insert>
-	
+
 	<select id="selectWalletHistory" resultType="WalletHistoryVO">
 		SELECT a.*
 		FROM
-		( SELECT b.*, ROWNUM rn 
-			FROM
-				( SELECT *
-				FROM wallet_history
-				WHERE m_id = #{mId}
-				ORDER BY wallet_date DESC ) b 
+		( SELECT b.*, ROWNUM rn
+		FROM
+		(
+		SELECT *
+		FROM wallet_history
+		<where>
+			<if test=" walletType == null or walletType == '' ">
+				and m_id = #{mId}
+			</if>
+			<if test=" walletType != null and walletType != '' ">
+				and m_id = #{mId}
+				and wallet_type like '%' || #{walletType} || '%'
+			</if>
+		</where>
+		ORDER BY wallet_date DESC
+		) b
 		) a WHERE rn BETWEEN #{startP } AND #{endP }
 	</select>
-	
+
 	<select id="countHistory" resultType="Integer">
-		select count(*) 
-		from wallet_history 
-		where m_id=#{mId}
+		select count(*)
+		from wallet_history
+		<where>
+			<if test=" walletType == null or walletType == '' ">
+				and m_id = #{mId}
+			</if>
+			<if test=" walletType != null and walletType != '' ">
+				and m_id = #{mId}
+				and wallet_type like '%' || #{walletType} || '%'
+			</if>
+		</where>
 	</select>
 </mapper>

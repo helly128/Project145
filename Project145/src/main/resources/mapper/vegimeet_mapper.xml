@@ -6,62 +6,113 @@
 	<select id="vegimeetList" resultType="VegimeetVo">
 		SELECT * FROM meet_un
 	</select>
-	
+
 	<select id="getDday" resultType="int">
-		SELECT ceil(((select meet_start from meet_un where meet_id = #{meetId}) - sysdate))
+		SELECT ceil(((select meet_start
+		from meet_un where meet_id = #{meetId}) - sysdate))
 		FROM DUAL
 	</select>
-	
+
 	<insert id="likeInsert">
 		INSERT INTO like_list
-		VALUES('like' || like_seq.nextval, #{originId}, sysdate, #{mId})
+		VALUES('like' ||
+		like_seq.nextval, #{originId}, sysdate, #{mId})
 	</insert>
-	
+
 	<delete id="likeDelete">
 		DELETE FROM like_list
 		WHERE origin_id=#{originId}
-		AND m_id=#{mId}
+		AND
+		m_id=#{mId}
 	</delete>
-	
+
 	<select id="likeFlagSelect" resultType="int">
 		SELECT COUNT(*)
-		FROM like_list
+		FROM
+		like_list
 		WHERE m_id=#{mId}
 		AND origin_id=#{originId}
 	</select>
-	
+
 	<select id="vegimeetSelect" resultType="VegimeetVo">
 		SELECT *
 		FROM meet_un
 		WHERE meet_id=#{meetId}
 	</select>
-	
+
 	<select id="meetPartiList" resultType="MeetParticipantVo">
 		SELECT * FROM meet_parti
 		WHERE meet_id=#{meetId}
 	</select>
-	
+
 	<insert id="meetPartiInsert">
-		INSERT INTO meet_parti(meetp_id, m_id, meet_id, my_fund)
-		VALUES('meetp' || meetp_seq.nextval, #{mId}, #{meetId}, #{myFund})
+		INSERT INTO meet_parti(meetp_id, m_id, meet_id,
+		my_fund)
+		VALUES('meetp' || meetp_seq.nextval, #{mId}, #{meetId},
+		#{myFund})
 	</insert>
-	
+
 	<update id="meetUpdate">
 		UPDATE meet_un
-		SET meet_participant = meet_participant + 1,
-			meet_fund = meet_fund + #{myFund}
+		SET meet_participant = meet_participant
+		+ 1,
+		meet_fund = meet_fund + #{myFund}
 		WHERE meet_id = #{meetId}
 	</update>
-	
+
 	<update id="pointDeduct">
 		UPDATE member
 		SET wallet_point = #{walletPoint},
-			wallet_cash = #{walletCash}
+		wallet_cash = #{walletCash}
 		WHERE m_id = #{mId}
 	</update>
-	
+
 	<insert id="pointHistoryInsert">
 		INSERT INTO wallet_history
-		VALUES ('wallet' || wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, sysdate)
+		VALUES ('wallet' ||
+		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, sysdate)
 	</insert>
+
+	<resultMap type="MeetParticipantVo" id="MeetParticipantVo">
+		<result column="m_id" property="mId"/>
+		<result column="success" property="success" />
+		<result column="achiv" property="achiv" />
+	</resultMap>
+	<resultMap type="VegimeetVo" id="VegimeetVo">
+		<result column="meet_title" property="meetTitle" />
+		<result column="meet_id" property="meetId" />
+		<result column="total_day" property="totalDay" />
+		<result column="meet_pic" property="meetPic" /> 
+		<collection property="partiVo" resultMap="MeetParticipantVo" />
+	</resultMap>
+	<select id="myMeetList" resultMap="VegimeetVo">
+		SELECT u.meet_title, p.m_id, u.meet_id, u.total_day,
+				p.success, p.achiv, u.meet_pic
+		FROM meet_un u JOIN meet_parti p
+		ON (u.meet_id = p.meet_id)
+		WHERE p.m_id=#{mId}
+	</select>
+	
+	<select id="meetpSelect" resultType="MeetParticipantVo">
+		SELECT *
+		FROM meet_parti
+		WHERE m_id=#{mId} AND meet_id=#{meetId}
+	</select>
+	
+	<insert id="uploadMeetDataPic">
+		INSERT INTO meet_data
+		VALUES('meetd' || meetd_seq.nextval, #{meetpId}, #{dataPic}, #{meetId})
+	</insert>
+	
+	<update id="meetPartiUpdate">
+		UPDATE meet_parti
+		SET achiv=#{achiv},
+			success = success + 1
+		WHERE meetp_id = #{meetpId}
+	</update>
+	
+	<select id="meetDataList" resultType="MeetDataVo">
+		SELECT * FROM meet_data
+		WHERE meet_id=#{meetId}
+	</select>
 </mapper>

@@ -9,32 +9,15 @@
 <body>
 	<section class="container blog-main-content">
 		<div class="mayosis-floating-share">
-			<div class="theiaStickySidebar">
-				<div class="mayosis-float-social hidden-xs">
-					<a
-						href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgraygrids.com%2Ftemplates%2Fclassilist-classified-ads-and-listing-website-template%2F"
-						onclick="if (!window.__cfRLUnblockHandlers) return false; window.open(this.href, 'facebookwindow','left=20,top=20,width=500,height=400,toolbar=0,resizable=1'); return false;"
-						class="facebook"><i class="zil zi-facebook"></i></a><a
-						href="https://twitter.com/share?url=https%3A%2F%2Fgraygrids.com%2Ftemplates%2Fclassilist-classified-ads-and-listing-website-template%2F&amp;text=ClassiList+%E2%80%93+Classified+Ads+and+Listing+Bootstrap+5+Template"
-						onclick="if (!window.__cfRLUnblockHandlers) return false; window.open(this.href, 'twitterwindow','left=20,top=20,width=500,height=400,toolbar=0,resizable=1'); return false;"
-						class="twitter"><i class="zil zi-twitter"></i></a><a
-						href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fgraygrids.com%2Ftemplates%2Fclassilist-classified-ads-and-listing-website-template%2F&amp;description=ClassiList+%E2%80%93+Classified+Ads+and+Listing+Bootstrap+5+Template"
-						onclick="if (!window.__cfRLUnblockHandlers) return false; window.open(this.href, 'pinterestwindow','left=20,top=20,width=500,height=400,toolbar=0,resizable=1'); return false;"
-						class="pinterest"><i class="zil zi-pinterest"></i></a>
-				</div>
-			</div>
+			<div class="theiaStickySidebar"></div>
 		</div>
 		<div class="row">
 			<div class="col-md-8 col-sm-7 col-xs-12">
 				<div class="single-post-block single-prime-layout">
 					<div class="prime-layout-gallery">
-						<a rel="nofollow"
-							href="http://preview.graygrids.com/item/classilist-classified-ads-and-listing-website-template/"><img
-							width="750" height="480"
-							src="/images/${lesson.getCImg() }"
+						<img width="750" height="480" src="/images/${lesson.getCImg() }"
 							class="attachment-full size-full wp-post-image" alt=""
-							loading="lazy"							
-							sizes="(max-width: 750px) 100vw, 750px"></a>
+							loading="lazy" sizes="(max-width: 750px) 100vw, 750px">
 					</div>
 					<br>
 					<hr>
@@ -43,8 +26,7 @@
 					<div id="jp-relatedposts" class="jp-relatedposts"
 						style="display: block;">
 						<h3>강사명</h3>
-						<p class="jp-relatedposts-post-excerpt">
-							${lesson.getLecName() }</p>
+						<p class="jp-relatedposts-post-excerpt">${lesson.getLecName() }</p>
 
 						<div
 							class="jp-relatedposts-items jp-relatedposts-items-visual jp-relatedposts-grid ">
@@ -158,7 +140,7 @@
 				<div id="product_release_info-3"
 					class="theme--sidebar--widget product_release_info">
 					<h4 class="widget-title">수강기간</h4>
-					<p>${lesson.getCStart() }- ${lesson.getCEnd() }</p>
+					<p>${lesson.getCStart() }-${lesson.getCEnd() }</p>
 					<br>
 					<hr>
 					<br>

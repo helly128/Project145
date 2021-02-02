@@ -23,16 +23,15 @@
 					<div class="btns-container">
 						<div class="profile-links">
 							<a class="zoom-avatar" href="#"><img
-								src="https://dl.dropboxusercontent.com/s/5liaxzvwbfuqzpo/zoom.png"></a>
+								src=""></a>
 							<a class="read-more" href="#"><img
-								src="https://dl.dropboxusercontent.com/s/62dfoo9h44o58lw/more.png"></a>
+								src=""></a>
 							<a class="view-map" href="#"><img
-								src="https://dl.dropboxusercontent.com/s/9ofmihok0h64lvn/location.png"></a>
+								src=""></a>
 						</div>
 					</div>
 					<a href="#"><img
-						src="https://dl.dropboxusercontent.com/s/7pcnqq18skh1myk/avatar.jpg"
-						alt="Anis M" /></a>
+						src="/images/${member.getProfileImage() }" width="150" height="150"/></a>
 				</div>
 				<div class="profile-details">
 					<h1>${mid }</h1>

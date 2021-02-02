@@ -5,29 +5,63 @@
 
 <mapper namespace="com.pj.vegi.lesson.mapper.LessonMapper">
 
-<select id="lessonList" resultType="LessonVO">
-	SELECT a.*
-	FROM ( SELECT b.*, ROWNUM rn 
-			FROM
-				(SELECT * 
-				FROM class) b 
-		) a WHERE rn BETWEEN #{start } AND #{end }
-</select>
+	<select id="lessonList" resultType="LessonVO">
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM class
+		<where>
+			<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+				and vegType in('비건','락토','오보','락토오보')
+			</if>
+			<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+				and vegType in('비건','락토','오보','락토오보')
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+			<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+				and vegType = #{vegType}
+			</if>
+			<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+				and vegType = #{vegType}
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
 
-<select id="lessonSelectOne" resultType="LessonVO">
-	SELECT * 
-	FROM class
-	WHERE c_id = #{cId}
-</select>
+	<select id="lessonSelectOne" resultType="LessonVO">
+		SELECT *
+		FROM class
+		WHERE c_id = #{cId}
+	</select>
 
-<update id="lessonHitUpdate" parameterType="LessonVO">
-	UPDATE class 
-	set c_hit = c_hit + 1
-	WHERE c_id = #{cId}	
-</update>
+	<update id="lessonHitUpdate" parameterType="LessonVO">
+		UPDATE class
+		set c_hit = c_hit + 1
+		WHERE c_id = #{cId}
+	</update>
 
-<select id="countLessonMain" resultType="Integer">
-	select count(*)
-	from class
-</select>
+	<select id="countLessonMain" resultType="Integer">
+		select count(*)
+		from class
+				<where>
+			<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+				and vegType in('비건','락토','오보','락토오보')
+			</if>
+			<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+				and vegType in('비건','락토','오보','락토오보')
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+			<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+				and vegType = #{vegType}
+			</if>
+			<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+				and vegType = #{vegType}
+				and c_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</select>
 </mapper>

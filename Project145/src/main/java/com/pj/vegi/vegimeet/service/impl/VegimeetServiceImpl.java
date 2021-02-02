@@ -9,6 +9,7 @@ import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vegimeet.mapper.VegimeetMapper;
 import com.pj.vegi.vegimeet.service.VegimeetService;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MeetDataVo;
 import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.VegimeetVo;
@@ -72,5 +73,30 @@ public class VegimeetServiceImpl implements VegimeetService {
 	@Override
 	public int pointHistoryInsert(WalletHistoryVO vo) {
 		return dao.pointHistoryInsert(vo);
+	}
+
+	@Override
+	public List<VegimeetVo> myMeetList(String mId) {
+		return dao.myMeetList(mId);
+	}
+
+	@Override
+	public MeetParticipantVo meetpSelect(MeetParticipantVo vo) {
+		return dao.meetpSelect(vo);
+	}
+
+	@Override
+	public int uploadMeetDataPic(MeetDataVo vo) {
+		return dao.uploadMeetDataPic(vo);
+	}
+
+	@Override
+	public int meetPartiUpdate(MeetParticipantVo vo) {
+		return dao.meetPartiUpdate(vo);
+	}
+
+	@Override
+	public List<MeetDataVo> meetDataList(VegimeetVo vo) {
+		return dao.meetDataList(vo);
 	}
 }

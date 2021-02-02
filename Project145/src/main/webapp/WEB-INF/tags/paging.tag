@@ -4,13 +4,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-
+<<<<<<< HEAD
+=======
+${paging}
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 <c:if test="${empty jsFunc}">
-	<c:set var="jsFunc" value="go_page"></c:set>
+	<c:set var="jsFunc" value="goList"></c:set>
 </c:if>
 <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
 	<ul class="pagination">
-		<li class="paginate_button page-item previous disabled" id="dataTable_previous">
+		<li class="paginate_button page-item previous" id="dataTable_previous">
 		<a href="javascript:${jsFunc}(${paging.startPage>2?paging.startPage-1:1})" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
 		</li>	
 		<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">

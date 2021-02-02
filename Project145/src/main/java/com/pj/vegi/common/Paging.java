@@ -11,6 +11,9 @@ public class Paging {
 	int first;				//페이지 번호에 해당하는 시작글번호
 	int last;				//페이지 번호에 해당하는 마지막글번호
 
+	
+	
+	
 	public int getFirst() {
 		first = (getPage() - 1) * getPageUnit() + 1;
 		return first;
@@ -68,6 +71,12 @@ public class Paging {
 	}
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
+	}
+	@Override
+	public String toString() {
+		return "Paging [pageUnit=" + pageUnit + ", pageSize=" + pageSize + ", lastPage=" + lastPage + ", totalRecord="
+				+ totalRecord + ", page=" + page + ", startPage=" + startPage + ", endPage=" + endPage + ", first="
+				+ first + ", last=" + last + "]";
 	}
 
 }

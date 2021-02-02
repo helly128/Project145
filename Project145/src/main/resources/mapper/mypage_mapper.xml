@@ -12,9 +12,8 @@
 
 	<update id="myPageUpdate">
 		UPDATE member
-		SET password = #{ password,
-		jdbcType=VARCHAR},
-		vegtype = #{ vegtype ,jdbcType=VARCHAR}
+		SET password = #{ password,	jdbcType=VARCHAR},
+		vegtype = #{ vegtype, jdbcType=VARCHAR}
 		WHERE m_id=#{ mId}
 	</update>
 	
@@ -97,6 +96,17 @@
 			FROM CLASS_RESERV cr JOIN  CLASS c 
 			ON cr.c_id = c.c_id
 			WHERE cr.m_id = #{mId} )
+	</select>
+	
+	<select id="meetLikeList" resultType="map">
+		select m.meet_title "meetTitle", 
+				m.meet_pic "meetPic", 
+				li.origin_id "originId",
+				m.meet_start "meetStart", 
+				m.meet_end "meetEnd"
+		from like_list li join meet_un m
+		on li.origin_id = m.meet_id
+		where li.m_id = #{mId}
 	</select>
 
 </mapper>

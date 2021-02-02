@@ -38,11 +38,11 @@
 		#{cId} )
 	</insert>
 
+ -->
 	<update id="recipeUpdate">
 		update recipe set
 		r_type = #{rType},
-		r_title =
-		#{rTitle},
+		r_title =#{rTitle},
 		r_content = #{rContent},
 		r_image = #{rImage},
 		c_id = #{cId}
@@ -50,6 +50,5 @@
 	</update>
 
 
- -->
 
 </mapper>
