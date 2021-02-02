@@ -28,6 +28,6 @@ public class LessonVO {
 	private int start;
 	private int end;
 	private String keyword;
-	private private String cTime;
+	private String cTime;
 	
 }
