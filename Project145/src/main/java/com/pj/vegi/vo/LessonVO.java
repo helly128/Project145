@@ -1,6 +1,8 @@
 package com.pj.vegi.vo;
 
 import java.sql.Date;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -29,5 +31,7 @@ public class LessonVO {
 	private int end;
 	private String keyword;
 	private String cTime;
+	
+	private List<LessonVO> classVoList;
 	
 }
