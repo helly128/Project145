@@ -2,6 +2,7 @@ package com.pj.vegi.lesson.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class LessonServiceImpl implements LessonService {
 	}
 
 	@Override
-	public LessonVO lessonSelectOne(LessonVO vo) {
+	public Map<String, Object> lessonSelectOne(LessonVO vo) {
 		return dao.lessonSelectOne(vo);
 	}
 
@@ -50,5 +51,10 @@ public class LessonServiceImpl implements LessonService {
 	@Override
 	public int likeDelete(LikeListVo vo) {
 		return dao.likeDelete(vo);
+	}
+
+	@Override
+	public List<Map> lessonSelectMember(LessonVO vo) {
+		return dao.lessonSelectMember(vo);
 	}
 }

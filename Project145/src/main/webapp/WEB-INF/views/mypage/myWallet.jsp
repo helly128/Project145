@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,15 +17,14 @@
 					<h1 class="h4 text-gray-900 mb-4">지갑을 채워주세요!! 🤑</h1>
 				</div>
 				<div class="form-group">
-					&nbsp; 보유 적립금<input readonly="readonly" type="text"
-						class="form-control form-control-user"
-						aria-describedby="emailHelp" placeholder="적림금잔액 가져오기"
-						value="${member.getWalletPoint()}">
+					&nbsp; 보유 적립금
+					<input readonly="readonly" type="text" class="form-control form-control-user" aria-describedby="emailHelp" placeholder="적림금잔액 가져오기"
+						value="<fmt:formatNumber value="${member.getWalletPoint() }" pattern="#,###" />원"   >
 				</div>
 				<div class="form-group">
-					&nbsp; 보유 충전금<input id="cash" readonly="readonly" type="text"
-						class="form-control form-control-user" placeholder="충전금 잔액 가져오기"
-						value="${member.getWalletCash() }"><br>
+					&nbsp; 보유 충전금
+					<input id="cash" readonly="readonly" type="text" class="form-control form-control-user" placeholder="충전금 잔액 가져오기"
+						value="<fmt:formatNumber value="${member.getWalletCash() }" pattern="#,###" />원"   ><br>
 				</div>
 				<hr>
 				<hr>
@@ -64,7 +64,7 @@
 
 			if (wPay != "") {
 				if (wPay > 0 && wPay < 2000000) {
-					alert("${mId}" + "님의 계좌에서 " + wPay + "원을 충전을 하시겠습니까?")
+					alert("${mId}" + "님의 계좌에서 " + wPay + "원을 충전을 하시겠습니까? 비밀번호입력후 옳으면 실행해보기")
 					alert("${mId}" + "님의 지갑에 " + wPay + " 원이 충전되었습니다.")
 					$("#form1").submit()
 				} else {
@@ -85,7 +85,7 @@
 
 			if (dPay != "") {
 				if ( dPay > 0 && dPay < cash ) {
-					alert("${mId}" + "님의 계좌로 " + dPay + "원을 인출 하시겠습니까?")
+					alert("${mId}" + "님의 계좌로 " + dPay + "원을 인출 하시겠습니까? 비밀번호입력후 옳으면 실행해보기")
 					alert("${mId}" + "님의 지갑에서 " + dPay + " 원이 인출되었습니다.")
 					$("#form2").submit()					
 				} else {

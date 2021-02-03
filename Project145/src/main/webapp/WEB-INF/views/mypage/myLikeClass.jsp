@@ -29,7 +29,6 @@
 						<div class="card-body">
 							<h4 class="card-title">${list.cTitle }</h4>
 							<ul class="address" align="left">
-								<li>강사명 : ${list.lecName }</li>
 								<li>수강기간 : <br> <fmt:formatDate
 										value="${list.cStart }" pattern="yyyy/MM/dd" /> - <br> <fmt:formatDate
 										value="${list.cEnd }" pattern="yyyy/MM/dd" />

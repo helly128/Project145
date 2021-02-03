@@ -35,7 +35,9 @@
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+			<a
+				class="sidebar-brand d-flex align-items-center justify-content-center"
+				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
 				<div class="sidebar-brand-text mx-3">채식당</div>
 			</a>
@@ -79,13 +81,11 @@
 						<h6 class="collapse-header">I Like it</h6>
 						<a class="collapse-item" href="/myLikeClass.do">Class</a> <a
 							class="collapse-item" href="/myLikeRecipe.do">Recipe</a> <a
-							class="collapse-item" href="/myLikeMeet.do">Meet</a>
-							<a
+							class="collapse-item" href="/myLikeMeet.do">Meet</a> <a
 							class="collapse-item" href="/myLikeRestaurant.do">Restaurant</a>
 					</div>
 				</div></li>
 
-			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item"><a class="nav-link" href="/myClass.do">
 					🎨 <span>My Class</span>
 			</a></li>
@@ -94,21 +94,21 @@
 					🍙 <span>My Restaurant</span>
 			</a></li>
 
-			<!-- Nav Item - Charts -->
 			<li class="nav-item"><a class="nav-link" href="/myRecipe.do">
 					🍺 <span>My Recipe</span>
 			</a></li>
 
-			<!-- Divider -->
 			<hr class="sidebar-divider">
 
-
-			<!-- Nav Item - Tables -->
 			<li class="nav-item"><a class="nav-link" href="/myWallet.do">
 					👜 <span>My Wallet</span>
 			</a></li>
 
-			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
+
+			<li class="nav-item"><a class="nav-link" href="/myQuestion.do"> 💌 <span>My
+						Question</span>
+			</a></li>
 			<hr class="sidebar-divider d-none d-md-block">
 
 			<!-- Sidebar Toggler (Sidebar) -->

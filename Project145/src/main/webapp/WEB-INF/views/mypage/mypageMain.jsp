@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,74 +21,27 @@
 					</ul>
 				</div>
 				<div class="profile-avatar">
-					<div class="btns-container">
-						<div class="profile-links">
-							<a class="zoom-avatar" href="#"><img
-								src=""></a>
-							<a class="read-more" href="#"><img
-								src=""></a>
-							<a class="view-map" href="#"><img
-								src=""></a>
-						</div>
-					</div>
-					<a href="#"><img
-						src="/images/${member.getProfileImage() }" width="150" height="150"/></a>
-				</div>
-				<div class="profile-details">
-					<h1>${mid }</h1>
-					<h6>${member.getEmail() }</h6>
+					<a href="#"><img src="/images/${member.getProfileImage() }"
+						width="150" height="150" /></a>
 				</div>
 			</div>
-			<div class="profile-info" style="display: none;">
-				<h1>About Me</h1>
-				<div class="info-area">Lorem ipsum dolor sit amet, consetetur
-					sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-					et dolore magna aliquyam erat.Stet clita kasd gubergren, no sea
-					takimata sanctus est.Lorem ipsum dolor sit amet, consectetuer
-					adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-					dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam,
-					quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut
-					aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet,
-					consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-					ut labore et dolore magna aliquyam erat, sed diam voluptua.</div>
-				<div class="clear"></div>
-			</div>
-			<div class="profile-map" style="display: none;">
-				<iframe width="100%" height="150" frameborder="0" scrolling="no"
-					marginheight="0" marginwidth="0"
-					src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Saveology+New+York&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=40.052282,86.572266&amp;t=h&amp;ie=UTF8&amp;hq=Saveology&amp;hnear=New+York&amp;ll=40.552027,-74.420902&amp;spn=0.357117,0.912844&amp;iwloc=near&amp;output=embed"></iframe>
-				<div class="clear"></div>
-			</div>
-			<div class="profile-content">
-				<br> <a href="/myPageEdit.do?mId=${mid }"
-					class="btn btn-light btn-icon-split"> <span
-					class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
-				</span> <span class="text">내 정보 수정</span>
-				</a><br> <br>
-				<div class="card shadow mb-4">
-					<!-- Card Header - Accordion -->
-					<a href="#collapseCardExample" class="d-block card-header py-3"
-						data-toggle="collapse" role="button" aria-expanded="true"
-						aria-controls="collapseCardExample">
-						<h6 class="m-0 font-weight-bold text-primary">내 보유금을 확인하세요 ✔</h6>
-					</a>
-					<!-- Card Content - Collapse -->
-					<div class="collapse show" id="collapseCardExample" style="">
-						<div class="card-body">
-							<div class="row">
-								적립금&nbsp; <input type="text" value="${member.getWalletPoint() }">&nbsp;&nbsp;
-								충전금&nbsp; <input type="text" value="${member.getWalletCash() }"><br>
-								MyWallet 에서 충전을 해보세요!!
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="clear"></div>
-				<br>
-			</div>
-		</div>
+			<h2>${mid }</h2>
+			<h2>${member.getEmail() }</h2>
+			<br> <a href="/myPageEdit.do?mId=${mid }"
+				class="btn btn-light btn-icon-split"> <span
+				class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
+			</span> <span class="text">내 정보 수정</span>
+			</a>
+		</div>   
 	</div>
-
+	<div align="center">
+		<div>
+			적립금&nbsp; <input readonly="readonly" type="text" value="<fmt:formatNumber value="${member.getWalletPoint() }" pattern="#,###" />원"  >&nbsp;&nbsp; 충전금&nbsp; 
+				<input readonly="readonly" type="text" value="<fmt:formatNumber value="${member.getWalletCash() }" pattern="#,###" />원">
+		</div>
+		<br>
+		<div>MyWallet 에서 충전을 해보세요!!</div>
+	</div>
 	<script src="/resources/my/js/myjs.js"></script>
 </body>
 </html>

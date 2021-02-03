@@ -9,14 +9,12 @@
 <head>
 <meta charset="utf-8">
 <title>lessonMain.jsp</title>
-
 <style type="text/css">
-	.likeAction {
+.likeAction {
 	border: none;
 	background: transparent;
 }
 </style>
-
 </head>
 <body>
 	<section class="latest-product-area pt-130 pb-110">
@@ -84,14 +82,15 @@
 									</h3>
 								</div>
 								<ul class="address">
-									<li><i class="lni lni-user"></i> ${lesson.getLecName() }</li>
-									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
-									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }</li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }
+										- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${lesson.getCStart() }</li>
 									<li><i class="lni lni-map-marker"></i>
 										${lesson.getVegType() }</li>
+									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
 								</ul>
 								<div class="product-bottom">
-									<h3 class="price">${lesson.getCPrice() }원</h3>
+									<h3 class="price"><fmt:formatNumber value="${lesson.getCPrice() }" pattern="#,###" />
+							원 </h3>
 									<div>
 										<button type="button" class="likeAction"
 											data-id="${lesson.getCId() }">
@@ -131,36 +130,42 @@
 
 		$(function() {
 
-			$("#cards").on('click', '.likeAction', function() {
-				
-				if ( '${mId}' == null || '${mId}' == '' ) {
-					alert("로그인 후 이용가능합니다.")
-				} else {
-					var classId = $(this).data('id')
-					
-					if ( $(this).children('img').attr('src') == '/images/empty_like.png' ) {
-						$.ajax({
-							url:'lessonLike.do/' + classId,
-							type:'post',
-							contentType:"application/json",
-							success:function(result) {
-								
-							}
-						})	// ajax end
-						$(this).children('img').attr('src', '/images/filled_like.png')
-					} else {
-						$.ajax({
-							url:'lessonUnLike.do/' + classId,
-							type:'post',
-							contentType:'application/json',
-							success:function(result) {
-								
-							}
-						}) //ajax end
-						$(this).children('img').attr('src', '/images/empty_like.png')
-					}
-				}
-			})
+			$("#cards")
+					.on(
+							'click',
+							'.likeAction',
+							function() {
+
+								if ('${mId}' == null || '${mId}' == '') {
+									alert("로그인 후 이용가능합니다.")
+								} else {
+									var classId = $(this).data('id')
+
+									if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+										$.ajax({
+											url : 'lessonLike.do/' + classId,
+											type : 'post',
+											contentType : "application/json",
+											success : function(result) {
+
+											}
+										}) // ajax end
+										$(this).children('img').attr('src',
+												'/images/filled_like.png')
+									} else {
+										$.ajax({
+											url : 'lessonUnLike.do/' + classId,
+											type : 'post',
+											contentType : 'application/json',
+											success : function(result) {
+
+											}
+										}) //ajax end
+										$(this).children('img').attr('src',
+												'/images/empty_like.png')
+									}
+								}
+							})
 
 		})//ready end
 	</script>

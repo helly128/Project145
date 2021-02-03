@@ -2,6 +2,7 @@ package com.pj.vegi.lesson.web;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -62,12 +63,14 @@ public class LessonController {
 	@RequestMapping("/lessonProduct.do")
 	public String lessonProduct(LessonVO vo, Model model) {
 
-		LessonVO lesson = lessonService.lessonSelectOne(vo);
+		Map<String, Object> lesson = lessonService.lessonSelectOne(vo);
+		List<Map> memberDetail = lessonService.lessonSelectMember(vo);
 		model.addAttribute("lesson", lesson);
+		model.addAttribute("mDetail", memberDetail);
 
 		lessonService.lessonHitUpdate(vo);
 
-		return "lesson/lessonProduct";
+		return "lesson/lessonDetail";
 	}
 
 	@ResponseBody

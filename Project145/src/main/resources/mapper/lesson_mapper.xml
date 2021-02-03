@@ -32,10 +32,36 @@
 		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 
-	<select id="lessonSelectOne" resultType="LessonVO">
-		SELECT *
-		FROM class
-		WHERE c_id = #{cId}
+	<select id="lessonSelectOne" resultType="map">
+		SELECT c.c_img "cImg", 
+				c.c_desc "cDesc", 
+				c.vegtype "vegtype", 
+				c.curriculum "curriculum", 
+				c.c_title "cTitle", 
+				c.c_start "cStart", 
+				c.c_end "cEnd",
+				c.c_time "cTime", 
+				c.c_price "cPrice", 
+				c.c_loc "cLoc", 
+				c.c_join "cJoin", 
+				c.c_parti "cParti",	
+				c.status "status", 
+				m.m_id "mId", 
+				m.m_name "mName", 
+				m.profile_image "profileImage", 
+				m.career "career"
+		FROM class c, member m
+		WHERE c.lec_id = m.m_id
+		AND c.c_id = #{cId}
+	</select>
+	
+	<select id="lessonSelectMember" resultType="map">
+		SELECT r.m_id "mId", 
+				m.m_name "mName", 
+				m.profile_image "profileImage"
+		FROM class_reserv r, member m
+		WHERE r.m_id = m.m_id
+		AND r.c_id = #{cId}
 	</select>
 
 	<update id="lessonHitUpdate" parameterType="LessonVO">

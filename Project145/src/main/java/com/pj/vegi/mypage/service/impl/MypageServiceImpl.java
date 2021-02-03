@@ -11,10 +11,12 @@ import com.pj.vegi.mypage.mapper.MypageMapper;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 @Service("mypageService")
 public class MypageServiceImpl implements MypageService {
@@ -85,6 +87,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int heartCancel(LikeListVo vo) {
 		return dao.heartCancel(vo);
+	}
+	
+	@Override
+	public List<Map> meetSelect(MeetParticipantVo vo) {
+		return dao.meetSelect(vo);
+	}
+
+	@Override
+	public List<Map> myCreateMeet(VegimeetVo vo) {
+		return dao.myCreateMeet(vo);
 	}
 
 

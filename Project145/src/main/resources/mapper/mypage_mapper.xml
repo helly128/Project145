@@ -52,7 +52,33 @@
 		) a WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 	
-	<!-- 마이페이지의 클래스 -->
+	<select id="meetSelect" resultType="map">
+		SELECT m.meet_title "meetTitle", 
+				m.meet_start "meetStart", 
+				m.meet_end "meetEnd", 
+				p.my_fund "myFund", 
+				p.today_flag "todayFlag", 
+				p.achiv "achiv"
+		FROM meet_un m JOIN meet_parti p
+		ON m.meet_id = p.meeT_id
+		WHERE p.m_id = #{mId}
+	</select>	
+	
+	<select id="myCreateMeet" resultType="map">
+		SELECT m.meet_title "meetTitle", 
+				m.meet_start "meetStart", 
+				m.meet_end "meetEnd", 
+				m.meet_participant "meetParticipant", 
+				m.meet_fund "meetFund", 
+				p.meet_id "meetId", 
+				sum(achiv) "achiv", 
+				sum(achiv)/m.meet_participant "allAchiv"  
+		FROM meet_un m JOIN meet_parti p
+		ON m.meet_id = p.meet_id
+		WHERE m.m_id = #{mId}
+		GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund
+	</select>
+	
 	<select id="lessonSelect" resultType="map">
 		SELECT a.*
 		FROM
@@ -118,12 +144,11 @@
 				c.c_start "cStart", 
 				c.c_end "cEnd", 
 				c.status "status", 
-				c.lec_name "lecName", 
 				c.c_hit "cHit", 
 				li.origin_id "originId"
 		FROM like_list li JOIN class c
 		ON li.origin_id = c.c_id
-		WHERE c.m_id = #{mId}
+		WHERE li.m_id = #{mId}
 	</select>
 	
 	<delete id="heartCancel">

@@ -18,10 +18,12 @@ import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 @Controller
 public class MypageController {
@@ -29,7 +31,6 @@ public class MypageController {
 	@Autowired
 	MypageService mypageService;
 
-	// 마이페이지 홈, 세션
 	@RequestMapping("/mypage.do")
 	public String mypage(MemberVo vo, Model model, HttpSession session) throws SQLException {
 
@@ -43,21 +44,37 @@ public class MypageController {
 		return "mypage/mypageMain";
 	}
 
-	@RequestMapping("/myBegiContact.do")
-	public String myBegiContact() {
-
-		return "mypage/myBegiContact";
-	}
+//	@RequestMapping("/myBegiContact.do")
+//	public String myBegiContact() {
+//
+//		return "mypage/myBegiContact";
+//	}
 
 	@RequestMapping("/myBegiUntact.do")
-	public String myBegiUntact() {
+	public String myBegiUntact(Model model, HttpSession session, MeetParticipantVo vo) {
 
+		String mid = (String) session.getAttribute("mId");
+		model.addAttribute("mid", mid);
+		vo.setMId(mid);
+		
+		List<Map> list = mypageService.meetSelect(vo);
+		
+		model.addAttribute("list", list);
+		
 		return "mypage/myBegiUntact";
 	}
 
 	@RequestMapping("/myMeet.do")
-	public String myMeet() {
+	public String myMeet(Model model, HttpSession session, VegimeetVo vo) {
 
+		String mid = (String) session.getAttribute("mId");
+		model.addAttribute("mid", mid);
+		vo.setMId(mid);
+		
+		List<Map> list = mypageService.myCreateMeet(vo);
+		
+		model.addAttribute("list", list);
+		
 		return "mypage/myMeet";
 	}
 
@@ -229,6 +246,12 @@ public class MypageController {
 		model.addAttribute("paging", paging);
 
 		return "mypage/myRestaurant";
+	}
+	
+	@RequestMapping("/myQuestion.do")
+	public String myQuestion() {
+		
+		return "mypage/myQuestion";
 	}
 
 }
