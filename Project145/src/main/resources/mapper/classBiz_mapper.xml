@@ -63,7 +63,7 @@
 		LEC_ID,M_ID,C_ID,BIZNUM,LEC_CAREER,PROPOSAL,RESPONSE
 		)
 		VALUES(
-		'lec' ||lec_seq.nextval, #{mId},#{cId},#{bizNum},
+		'lec' ||lec_seq.nextval, #{mId},'class'|| #{cId},#{bizNum},
 		#{lecCareer},#{proposal},#{response}
 		)
 	</insert>
@@ -79,5 +79,12 @@
 		WHERE
 		c_id=#{cId}
 	</select>
+	
+	<update id="myCareerUpdate">
+		UPDATE member
+		set career = #{career}
+		WHERE
+		m_id=#{lecId}
+	</update>
 
 </mapper>

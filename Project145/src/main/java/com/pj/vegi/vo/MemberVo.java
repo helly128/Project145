@@ -25,6 +25,7 @@ public class MemberVo {
 	private String reqClientName;
 	private String reqClientNum;
 	private String profileImage;
+	private String career;
 	
 	private int start; //페이징 시작
 	private int end; //페이징 끝

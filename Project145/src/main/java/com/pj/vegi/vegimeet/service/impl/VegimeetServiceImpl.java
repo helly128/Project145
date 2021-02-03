@@ -1,6 +1,7 @@
 package com.pj.vegi.vegimeet.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,8 +77,13 @@ public class VegimeetServiceImpl implements VegimeetService {
 	}
 
 	@Override
-	public List<VegimeetVo> myMeetList(String mId) {
+	public List<Map> myMeetList(String mId) {
 		return dao.myMeetList(mId);
+	}
+	
+	@Override
+	public Map myMeetOne(MeetParticipantVo vo) {
+		return dao.myMeetOne(vo);
 	}
 
 	@Override

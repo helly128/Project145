@@ -53,4 +53,9 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.lecBizSelect(lvo);
 	}
 
+	@Override
+	public int myCareerUpdate(MemberVo vo) {
+		return dao.myCareerUpdate(vo);
+	}
+
 }

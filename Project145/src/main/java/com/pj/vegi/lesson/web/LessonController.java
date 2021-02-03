@@ -2,9 +2,8 @@ package com.pj.vegi.lesson.web;
 
 import java.sql.SQLException;
 import java.util.List;
-
+import java.util.Map;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.vo.LessonVO;
@@ -42,14 +40,14 @@ public class LessonController {
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
 
-		List<LessonVO> lessons = lessonService.lessonList(vo);
-		for (LessonVO lesson_vo : lessons) {
+		List<Map> lessons = lessonService.lessonList(vo);
+		for (Map lesson_vo : lessons) {
 			
 			LikeListVo like_vo = new LikeListVo();
 			like_vo.setMId(mid);
-			like_vo.setOriginId(lesson_vo.getCId());
+			like_vo.setOriginId(((LessonVO) lesson_vo).getCId());
 			
-			lesson_vo.setLikeFlag(lessonService.likeFlagCount(like_vo));
+			((LessonVO) lesson_vo).setLikeFlag(lessonService.likeFlagCount(like_vo));
 			
 		}
 
