@@ -9,14 +9,14 @@
 
 	<select id="getDday" resultType="int">
 		SELECT ceil(((select meet_start
-		from meet_un where meet_id = #{meetId}) - sysdate))
+		from meet_un where meet_id = #{meetId}) - current_date))
 		FROM DUAL
 	</select>
 
 	<insert id="likeInsert">
 		INSERT INTO like_list
 		VALUES('like' ||
-		like_seq.nextval, #{originId}, sysdate, #{mId})
+		like_seq.nextval, #{originId}, current_date, #{mId})
 	</insert>
 
 	<delete id="likeDelete">
@@ -70,7 +70,7 @@
 	<insert id="pointHistoryInsert">
 		INSERT INTO wallet_history
 		VALUES ('wallet' ||
-		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, sysdate)
+		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, current_date)
 	</insert>
 
 	<resultMap type="MeetParticipantVo" id="MeetParticipantVo">
@@ -127,7 +127,7 @@
 	<select id="ongoingMeetList" resultType="VegimeetVo">
 		SELECT meet_id FROM
 		meet_un
-		WHERE sysdate BETWEEN meet_start and meet_end
+		WHERE current_date BETWEEN meet_start and meet_end
 	</select>
 
 	<update id="addFailCount">
@@ -146,7 +146,7 @@
 
 	<select id="endMeetSelect" resultType="VegimeetVo">
 		SELECT * FROM meet_un
-		WHERE meet_end = TRUNC(sysdate, 'dd') - 1
+		WHERE meet_end = TRUNC(current_date, 'dd') - 1
 	</select>
 
 	<update id="cashUpdate">
