@@ -8,7 +8,7 @@ import com.pj.vegi.vo.LikeListVo;
 
 public interface LessonMapper {
 
-	public List<LessonVO> lessonList(LessonVO vo);
+	public List<Map> lessonList(LessonVO vo);
 
 	public Map<String, Object> lessonSelectOne(LessonVO vo);
 	public List<Map> lessonSelectMember(LessonVO vo);

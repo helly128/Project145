@@ -9,7 +9,7 @@ import com.pj.vegi.vo.LikeListVo;
 
 public interface LessonService {
 
-	List<LessonVO> lessonList(LessonVO vo) throws SQLException;
+	List<Map> lessonList(LessonVO vo) throws SQLException;
 
 	Map<String, Object> lessonSelectOne(LessonVO vo);
 	List<Map> lessonSelectMember(LessonVO vo);

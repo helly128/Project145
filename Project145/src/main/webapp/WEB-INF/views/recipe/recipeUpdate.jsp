@@ -12,15 +12,22 @@ input, textarea {
 	border: 1px solid #6C9852;
 }
 </style>
-
+<!-- ckeditor 4 -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/ckeditor/contents.css">
+<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/ckeditor/ckeditor.js"></script>
 </head>
 <body>
+
 	<div class="container">
 		<div>
 			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
 		</div>
 		<form id="frm" name="frm" method="post"
 			action="/recipeUpdateResult.do" encType="multipart/form-data">
+			<input type="hidden" name="RId" value="${select.RId }">
 			<div class="category-list-item">
 				<div class="row">
 
@@ -35,24 +42,28 @@ input, textarea {
 			</div>
 			<div>
 				<div class="row">
-					<div class="col-lg-12">
+					<%-- <div class="col-lg-12">
 						<textarea rows="5" cols="120" id="rContent" name="rContent">${select.RContent } </textarea>
+					</div> --%>
+					<div class="col-lg-12">
+						﻿
+						<textarea id="ckeditor" id="rContent" name="rContent" rows=10>${select.RContent }</textarea>
 					</div>
 				</div>
-
+				<br /> <br />
 				<div class="row">
 					<div class="col-lg-3">
 						<i class="lni lni-users">작성자</i> <input type="text" id="mId"
 							name="mId" value="${select.MId }" readonly>
 					</div>
 					<div class="col-lg-3">
-						<i class="lni lni-calendar">작성일자</i> <input type="text"
-							id="reDate" name="rDate" value="${select.RDate }" readonly>
+						<i class="lni lni-calendar">작성일자</i>
+						<p id="rDate" name="rDate"></p>
 
 					</div>
 					<div class="col-lg-3">
 						<p>이미지 수정</p>
-						<input type="file" name="rImage" id="rImage" name="rImage"
+						<input type="file" name="rImageFile" id="rImageFile"
 							multiple="multiple">
 					</div>
 					<div class="col-lg-2 col-sm-4 col-5">
@@ -60,8 +71,7 @@ input, textarea {
 							<i class="lni lni-grid-alt theme-color">비건타입 </i>
 						</p>
 						<div class="search-input">
-							<label for="category"></label> <select name="category"
-								id="category">
+							<label for="category"></label> <select name="rType" id="rType">
 								<option value="none" selected disabled>비건 레벨</option>
 								<option value="none">비건</option>
 								<option value="none">락토</option>
@@ -88,13 +98,14 @@ input, textarea {
 						<%-- <c:forEach var="rm" items="${rm}">
 							
 						</c:forEach> --%>
-						<table border="0" class="col-lg-12 " id="dataTable" name="dataTable">
+						<table border="0" class="col-lg-12 " id="dataTable"
+							name="dataTable">
 							<tbody>
 								<tr name="trMat">
-									<td class="col-md-5"><input type="text" name="matName"
-										placeholder="재료명"></td>
-									<td class="col-md-5"><input type="text" name="matVol"
-										placeholder="재료 양"></td>
+									<td class="col-md-5"><input type="text"
+										placeholder="재료명을 추가하여 입력하세요" readonly="readonly"></td>
+									<td class="col-md-5"><input type="text"
+										placeholder="재료 양을 추가하여 입력하세요" readonly="readonly"></td>
 									<td class="col-md-1"></td>
 									<td class="col-md-1">
 										<button type="button" name="addMat" id="addMat"
@@ -153,20 +164,20 @@ input, textarea {
 				} 
 				*/
 				
-				<c:set var="listLength" value="${fn:length(recipeVo.recipeVoList) }" /> 
+				<c:set var="listLength" value="${fn:length(recipeMaterialVo.recipeMatVoList) }" /> 
 				var length = '<c:out value="${listLength}"/>';
 				$(function(){
-					//메뉴추가 버튼 클릭 시 행 추가
+					//추가 버튼 클릭 시 행 추가
 					$("#addMat").on('click', function(){
 						var tr = $("<tr>").attr("role", "row");
-						tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+						tr.append($("<td>").append($("<input>").addClass('mat-input').attr({
 							type: 'text',
-							name: 'recipeVoList['+length+'].matName',
+							name: 'recipeMatVoList['+length+'].matName',
 							required: 'true'
 						})));
-						tr.append($("<td>").append($("<input>").addClass('menu-input').attr({
+						tr.append($("<td>").append($("<input>").addClass('mat-input').attr({
 							type: 'text',
-							name: 'recipeVoList['+length+'].matVol'
+							name: 'recipeMatVoList['+length+'].matVol'
 						})));
 						tr.append($("<td>"));
 						tr.append($("<td>").append($("<button>").addClass('btn btn-primary delMat delMat'+length).attr({
@@ -176,8 +187,6 @@ input, textarea {
 						
 						length++;
 					});
-					
-					
 					//입력취소 버튼 누르면 해당하는 행 삭제
 					$('#dataTable').on('click', '.delMat', function(){
 						$(this).closest('tr').remove();
@@ -185,7 +194,6 @@ input, textarea {
 				});
 			</script>
 			<!-- 관련 클래스 -->
-			<c:set var="clistLength" value="${fn:length(lessonVO.classVoList) }" /> 
 			<div>
 				<div class="row">
 					<h3>Related Class📖</h3>
@@ -222,15 +230,13 @@ input, textarea {
 				</div>
 			</div>
 			<div class="col-md-12" align="right">
-				<button type="submit" class="btn btn-primary" value="">수정하기</button>
+				<button type="submit" class="btn btn-primary" value="updateFrm">수정하기</button>
 			</div>
 
 			<script>
+			<c:set var="clistLength" value="${fn:length(lessonVO.classVoList) }" />
 			var clength = '<c:out value="${clistLength}"/>';
-			
-
 				//클래스 검색 버튼 클릭 검색할 코드를 넘겨서 값을 가져온다. 
-				
 					$("#searchC").click(function() {
 						/* //alert("검색 버튼 클릭!");
 						var keyword = $("#searchCd").serialize(); */
@@ -246,13 +252,15 @@ input, textarea {
 								var output = "<table>";
 								for ( var i in data) {
 									output += "<tr>";
-									output += "<td width='100'>" + data[i].lecName;
+									output += "<td width='100'>" + data[i].lname;
 									output += "<td width='200'>" + data[i].ctitle;
 									output += "<td width='250'>" + data[i].cdesc;
-									output += "<td width='60'>"+"<input type='checkbox' name='class_check' data-id='"+data[i].cid+"'>";
+									output += "<td width='60'>"+
+												"<input type='checkbox' name='cIdArr' value='"+data[i].cId+"' class='class-checked'>";
 									output += "</tr>" 
 								}
 								output += "</table>";
+								length++;
 								$("#search-result").html(output);
 								// success
 							},
@@ -264,35 +272,39 @@ input, textarea {
 				/*  data-id='"+data[i].cid+"'> 읽어올때는 $(this).data('id') */
 				//검색한 클래스 선택 체크박스
 					function checkboxArr() {
-					    var checkArr = [];     // 배열 초기화
+					   /*  var checkArr = [];     // 배열 초기화 */
 					    $("input[name='class_check']:checked").each(function(i) {
-					        checkArr.push($(this).data('id'));     // 체크된 것만 값을 뽑아서 배열에 push
-					    console.log('id: '+$(this).data('id'));
-					    })
+					    	$(this).parents.find("<input>").attr(name='classVoList['+clength+'].cId')
+					    	clength++;
+					    	/* classVoList.push($(this).find('<tr>').data('id'));     // 체크된 것만 값을 뽑아서 배열에 push */
+					   		
+					    });
 					 
 					}
+					/* var classParams = {
+						"classList": checkArr
+					}; */
 				
-					$(function(){
-						
+					$(document).ready(function(){
+						var today = new Date("${select.RDate }");
+						var year = today.getFullYear().toString().substr(2, 4);
+						var month = today.getMonth() + 1;
+						var day = today.getDate();
+						var date = year + "/" + month + "/" + day
+						$('#rDate').text(date);
+
+						$("#updateBtn").click(function(){
 							checkboxArr();
-						
-					});
-				/* //최종 수정
-					$("#updateBtn").click(function(){
-						recipeUpdate();//수정 버튼 클릭시 실행
-						checkboxArr();//체크된 클래스 부르고
-					});
-					function recipeUpdate(){
-						$.ajax({
-							type:"post",
-							url:"/recipeUpdateResult.do",
-							data:{
-								valueClassArr: checkArr,
-								valueMatArr: matArr,
-							}
+							console.log(clength);
+							
 						});
-					} */
+							
+					});
 			</script>
+			<script>
+				CKEDITOR.replace('ckeditor'); // 에디터로 생성
+			</script>
+
 		</form>
 		<br />
 	</div>

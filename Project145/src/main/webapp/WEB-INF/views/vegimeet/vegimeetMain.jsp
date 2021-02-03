@@ -61,6 +61,39 @@
 	background: #6C9852;
 	border-color: #6C9852;
 } */
+.div-image {
+	position: relative;
+	text-align: center;
+	width: 120px;
+	text-align: center;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.label {
+	position: relative;
+	z-index: 0;
+	display: inline-block;
+	width: 100%;
+	background: #6C9852;
+	color: #fff;
+	padding: 10px 0;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.uploadPic {
+	display: inline-block;
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 50px;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -73,26 +106,46 @@
 					<h5>📷 챌린지 인증샷 등록</h5>
 					<div class="row">
 						<c:forEach var="myMeet" items="${myList }">
-							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-2 my-2">
+							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-3 my-2">
+								<div class="row mb-2">
+									<h5>${myMeet.meetTitle }</h5>
+								</div>
 								<div class="row">
-									<div class="col-xl-7 col-lg-7 col-md-7">
+									<div class="col-xl-6 col-lg-6 col-md-6 ps-1">
 										<img src="images/${myMeet.meetPic }" style="width: 300px;">
 									</div>
-									<div class="col-xl-5 col-lg-5 col-md-5">
-										${myMeet.meetTitle }</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-xl-6 col-lg-6">달성률 ${myMeet.partiVo.achiv }%
-										(${myMeet.partiVo.success }/${myMeet.totalDay })</div>
-									<div class="col-xl-6 col-lg-6" align="right">
-										<c:if test="${myMeet.partiVo.todayFlag eq 'true' }">
-											<button class="btn btn-outline-dark"
-											data-id="${myMeet.meetId }" disabled>등록완료</button></c:if>
-										<c:if test="${myMeet.partiVo.todayFlag eq 'false' }">
-											<button class="btn btn-outline-dark addBtn"
-											data-id="${myMeet.meetId }">인증샷 등록</button></c:if>
+									<div class="col-xl-6 col-lg-6 col-md-6"
+										style="align: right; vertical-align: bottom;">
+										<c:if test="${myMeet.todayFlag eq 'false' }">
+											<form id="frm"
+												action="/vegimeetPicInsert.do/${myMeet.meetId}"
+												method="post" enctype="multipart/form-data">
+												<div class="image-container pe-1">
+													<img id="upload-image" src="/images/images-empty.png"
+														width="95%">
+													<div class="div-image mb-4">
+														<span class="label">사진 업로드</span> <input type="file"
+															name="uploadfile" class="uploadPic" accept="image/*"
+															onchange="setImage(event);">
+													</div>
+													<button type="button"
+														class="btn btn-outline-dark submitBtn"
+														data-id="${myMeet.meetId }" disabled>등록</button>
+												</div>
+											</form>
+										</c:if>
+										<c:if test="${myMeet.todayFlag eq 'true' }">
+											<div style="text-align: center;">
+												<br>
+												<h6>오늘의 인증샷</h6>
+												<h6>등록 완료!</h6>
+											</div>
+										</c:if>
 									</div>
 								</div>
+								<div class="mt-2 achiv" id="${myMeet.meetId }" align="right"
+									style="vertical-align: bottom;">달성률
+									${myMeet.achiv }% (${myMeet.success }/${myMeet.totalDay })</div>
 							</div>
 						</c:forEach>
 					</div>
@@ -178,13 +231,27 @@
 			</div>
 
 			<div align="right">
-				<button class="btn insertBtn" onclick="location.href='vegimeetInsertForm.do'">챌린지
-					개설</button>
+				<button class="btn insertBtn"
+					onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
 			</div>
 		</div>
 	</section>
 
 	<script>
+		//사진 미리보기 설정
+		function setImage(event) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var img = document.getElementById("upload-image");
+				img.setAttribute("src", event.target.result);
+
+			}
+
+			reader.readAsDataURL(event.target.files[0]);
+
+			$('.submitBtn').prop('disabled', false);
+		}
+
 		$(function() {
 			$('#cards')
 					.on(
@@ -221,15 +288,47 @@
 												'/images/empty_like.png');
 									}
 								}
-							})
+							});
 
-			$('.addBtn').on(
+			/* $('.addBtn').on(
 					'click',
 					function() {
 						var meetId = $(this).data('id');
 						window.open(
 								'vegimeetPicInsertForm.do?meetId=' + meetId,
 								'인증샷 등록', 'width=500, height=500');
+					}); */
+
+			$('.submitBtn').on(
+					'click',
+					function() {
+						var formData = new FormData($("#frm")[0]);
+						var meetId = $(this).data('id');
+						var photoArea = $(this).parent().parent().parent();
+						photoArea.empty();
+						var achivDiv = $('#'+meetId);
+						achivDiv.empty();
+
+						$.ajax({
+							type : 'post',
+							url : 'vegimeetPicInsert.do/' + meetId,
+							processData : false,
+							contentType : false,
+							data : formData,
+							success : function(result) {
+								//해당하는 베지밋의 카드만 새로고침
+								photoArea.append($('<div>').attr('style',
+										'text-align: center;')
+										.append($('<br>')).append(
+												$('<h6>').text('오늘의 인증샷'))
+										.append($('<h6>').text('등록 완료!')));
+
+								achivDiv.text('달성률' + result.achiv
+												+ '% (' + result.success + '/'
+												+ result.totalDay + ')');
+								console.log(result);
+							}
+						});
 					});
 		});
 	</script>

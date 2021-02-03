@@ -89,7 +89,7 @@
 		#{mId},
 		#{walletMoney},
 		'충전',
-		sysdate
+		current_date
 		)
 	</insert>
 
@@ -106,7 +106,7 @@
 		#{mId},
 		#{walletMoney},
 		'인출',
-		sysdate)
+		current_date)
 	</insert>
 
 	<select id="selectWalletHistory" resultType="WalletHistoryVO">

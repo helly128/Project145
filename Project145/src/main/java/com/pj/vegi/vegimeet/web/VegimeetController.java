@@ -3,6 +3,7 @@ package com.pj.vegi.vegimeet.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,7 +50,7 @@ public class VegimeetController {
 		}
 
 		// 내가 참여중인 베지밋 목록
-		List<VegimeetVo> myList = vegimeetService.myMeetList(mId);
+		List<Map> myList = vegimeetService.myMeetList(mId);
 		model.addAttribute("myList", myList);
 
 		model.addAttribute("list", list);
@@ -177,7 +178,7 @@ public class VegimeetController {
 
 	@ResponseBody
 	@RequestMapping("/vegimeetPicInsert.do/{meetId}")
-	public void vegimeetPicInsert(Model model, @PathVariable String meetId, HttpSession session,
+	public Map vegimeetPicInsert(Model model, @PathVariable String meetId, HttpSession session,
 			HttpServletRequest request, @RequestParam MultipartFile uploadfile)
 			throws IllegalStateException, IOException {
 		MeetDataVo vo = new MeetDataVo();
@@ -187,7 +188,7 @@ public class VegimeetController {
 		String mId = (String) session.getAttribute("mId");
 		partiVo.setMId(mId);
 		partiVo.setMeetId(meetId);
-		partiVo = vegimeetService.meetpSelect(partiVo); // meetp_id 읽어오기 위해
+		partiVo = vegimeetService.meetpSelect(partiVo); // meetp_id 읽어오기 위해 전체 조회
 		vo.setMeetpId(partiVo.getMeetpId());
 
 		if (uploadfile != null && uploadfile.getSize() > 0) {
@@ -205,7 +206,10 @@ public class VegimeetController {
 		int achiv = 100 * success / total;
 		partiVo.setAchiv(achiv);
 		vegimeetService.meetPartiUpdate(partiVo);
-
+		
+		//해당 밋의 정보 다시 읽어오기
+		Map newMeetVo = vegimeetService.myMeetOne(partiVo);
+		return newMeetVo;
 	}
 	
 	@RequestMapping("/vegimeetInsertForm.do")

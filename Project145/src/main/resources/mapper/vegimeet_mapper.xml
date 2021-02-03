@@ -9,14 +9,14 @@
 
 	<select id="getDday" resultType="int">
 		SELECT ceil(((select meet_start
-		from meet_un where meet_id = #{meetId}) - sysdate))
+		from meet_un where meet_id = #{meetId}) - current_date))
 		FROM DUAL
 	</select>
 
 	<insert id="likeInsert">
 		INSERT INTO like_list
 		VALUES('like' ||
-		like_seq.nextval, #{originId}, sysdate, #{mId})
+		like_seq.nextval, #{originId}, current_date, #{mId})
 	</insert>
 
 	<delete id="likeDelete">
@@ -70,32 +70,36 @@
 	<insert id="pointHistoryInsert">
 		INSERT INTO wallet_history
 		VALUES ('wallet' ||
-		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, sysdate)
+		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, current_date)
 	</insert>
 
-	<resultMap type="MeetParticipantVo" id="MeetParticipantVo">
-		<result column="m_id" property="mId" />
-		<result column="success" property="success" />
-		<result column="achiv" property="achiv" />
-		<result column="today_flag" property="todayFlag" />
-	</resultMap>
-	<resultMap type="VegimeetVo" id="VegimeetVo">
-		<result column="meet_title" property="meetTitle" />
-		<result column="meet_id" property="meetId" />
-		<result column="total_day" property="totalDay" />
-		<result column="meet_pic" property="meetPic" />
-		<collection property="partiVo"
-			resultMap="MeetParticipantVo" />
-	</resultMap>
-	<select id="myMeetList" resultMap="VegimeetVo">
-		SELECT u.meet_title, p.m_id,
-		u.meet_id, u.total_day,
-		p.success, p.achiv, u.meet_pic, p.today_flag
-		FROM meet_un u
-		JOIN meet_parti p
-		ON (u.meet_id =
-		p.meet_id)
+	<select id="myMeetList" resultType="map">
+		SELECT u.meet_title "meetTitle",
+			   p.m_id		"mId",
+			   u.meet_id	"meetId",
+			   u.total_day	"totalDay",
+			   p.success	"success",
+			   p.achiv		"achiv",
+			   u.meet_pic	"meetPic",
+			   p.today_flag	"todayFlag"
+		FROM meet_un u JOIN meet_parti p
+		ON (u.meet_id = p.meet_id)
 		WHERE p.m_id=#{mId}
+	</select>
+	
+	<select id="myMeetOne" resultType="map">
+		SELECT u.meet_title "meetTitle",
+			   p.m_id		"mId",
+			   u.meet_id	"meetId",
+			   u.total_day	"totalDay",
+			   p.success	"success",
+			   p.achiv		"achiv",
+			   u.meet_pic	"meetPic",
+			   p.today_flag	"todayFlag"
+		FROM meet_un u JOIN meet_parti p
+		ON (u.meet_id = p.meet_id)
+		WHERE p.m_id=#{mId}
+		AND p.meet_id=#{meetId}
 	</select>
 
 	<select id="meetpSelect" resultType="MeetParticipantVo">
@@ -127,7 +131,7 @@
 	<select id="ongoingMeetList" resultType="VegimeetVo">
 		SELECT meet_id FROM
 		meet_un
-		WHERE sysdate BETWEEN meet_start and meet_end
+		WHERE current_date BETWEEN meet_start and meet_end
 	</select>
 
 	<update id="addFailCount">
@@ -146,7 +150,7 @@
 
 	<select id="endMeetSelect" resultType="VegimeetVo">
 		SELECT * FROM meet_un
-		WHERE meet_end = TRUNC(sysdate, 'dd') - 1
+		WHERE meet_end = TRUNC(current_date, 'dd') - 1
 	</select>
 
 	<update id="cashUpdate">
