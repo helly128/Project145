@@ -16,10 +16,7 @@ public class LessonVO {
 	private Date cStart;
 	private Date cEnd;
 	private String status;
-	private String lecProfile;
-	private String lecCareer;
-	private String lecName;
-	private String lecInsta;
+	
 	private String curriCulum;
 	private int cHit;
 	private String mId;

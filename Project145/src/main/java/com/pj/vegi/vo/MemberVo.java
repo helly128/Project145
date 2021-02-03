@@ -25,6 +25,7 @@ public class MemberVo {
 	private String reqClientName;
 	private String reqClientNum;
 	private String profileImage;
+	private String career;
 	
 	
 	

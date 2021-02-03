@@ -20,4 +20,6 @@ public interface ClassBizService {
 
 	LecturerVo lecBizSelect(LecturerVo lvo);
 
+	int myCareerUpdate(MemberVo vo);
+
 }
