@@ -1,9 +1,8 @@
 package com.pj.vegi.recipe.mapper;
 
 import java.util.List;
-import java.util.Map;
-
 import com.pj.vegi.vo.LessonVO;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RecipeVo;
 
 public interface RecipeMapper {
@@ -22,4 +21,10 @@ public interface RecipeMapper {
 	List<LessonVO> searchlessonList(LessonVO lvo);//클래스 전체 조회
 	
 	List<LessonVO> lessonSearch(LessonVO lVo);//클래스 검색
+
+	Object recipeUnlike(LikeListVo vo);
+
+	int likeInsert(LikeListVo vo);
+	int likeDelete(LikeListVo vo);
+	int likeFlagSelect(LikeListVo vo);
 }

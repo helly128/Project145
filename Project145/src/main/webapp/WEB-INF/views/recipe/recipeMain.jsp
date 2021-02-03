@@ -11,7 +11,6 @@
 .single-product {
 	height: 500px;
 }
-
 </style>
 <script>
 	function moveurl(category) {
@@ -61,8 +60,10 @@
 
 								</div>
 							</div>
-							<div class="col-lg-2 col-sm-3 col-4" >
-							<button  class="btn btn-success" onclick="location.href='/recipeInsert.do'">Write New Now!📝</button>
+							<div class="col-lg-2 col-sm-3 col-4">
+								<button class="btn btn-success"
+									onclick="location.href='/recipeInsert.do'">Write New
+									Now!📝</button>
 							</div>
 
 						</div>
@@ -72,15 +73,16 @@
 		</div>
 		<p />
 		<!-- 검색바 끝 -->
-		<div class="row">
-			<!-- 레시피리스트 시작 -->
-			<%-- ${recipes} --%>
-			<c:forEach var="vo" items="${recipes}">
+		<!-- 레시피리스트 시작 -->
+		<%-- ${recipes} --%>
+		
+		<div class="row" id="cards">
+			<c:forEach var="vo" items="${recipes}" varStatus="status">
 				<div class="col-xl-3 col-lg-6 col-md-6">
 					<div class="single-product">
 						<div class="product-img">
 							<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-								src="${vo.getRImage()}" alt=""  height="300px" width="300px">
+								src="${vo.getRImage()}" alt="" height="300px" width="300px">
 							</a>
 						</div>
 						<div class="product-content">
@@ -98,26 +100,87 @@
 											class="lni lni-package"></i> Used</a></li> -->
 							</ul>
 							<div class="product-bottom">
-								<h5 class="price"></h5>
-								<a  ></a>
+								<h3 class="price"></h3>
+								<div>
+									<button type="button" class="likeAction" data-id="${vo.RId }">
+										<c:if test="${vo.likeFlag > 0 }">
+											<img class="likeImg" src="/images/filled_like.png"
+												style="width: 30px;">
+										</c:if>
+										<c:if test="${vo.likeFlag == 0 }">
+											<img class="likeImg" src="/images/empty_like.png"
+												style="width: 30px;">
+										</c:if>
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
-			<!-- 레시피 리스트 카드 끝 -->
 		</div>
-	<!-- 페이징 처리 추가 -->
-	<div class="paging" align="center">
-		<jy:paging paging="${paging}" jsFunc="goList"/>
-		<script>
-		function goList(p){
-			location.href="recipeMain.do?page="+p;
-		}
-		</script>
-		
-	</div>
-	<%-- <!-- 페이징 2 -->
+		<!-- 레시피 리스트 카드 끝 -->
+		<!-- 페이징 처리 추가 -->
+		<div class="paging" align="center">
+			<jy:paging paging="${paging}" jsFunc="goList" />
+			<script>
+				function goList(p) {
+					location.href = "recipeMain.do?page=" + p;
+				}
+				$(function() {
+					$('#cards')
+							.on(
+									'click',
+									'.likeAction',
+									function() {
+										if ('${mId}' == null || '${mId}' == '') {
+											alert('로그인 후 이용가능합니다.');
+										} else {
+											var meetId = $(this).data('id');
+											if ($(this).children('img').attr(
+													'src') == '/images/empty_like.png') {
+												$
+														.ajax({
+															url : 'recipeLike.do/'
+																	+ meetId,
+															type : 'post',
+															contentType : "application/json",
+															success : function(
+																	result) {
+															}
+														});
+												$(this)
+														.children('img')
+														.attr('src',
+																'/images/filled_like.png');
+											} else {
+												$(this)
+														.children('img')
+														.attr('src',
+																'/images/empty_like.png');
+												$
+														.ajax({
+															url : 'recipeUnlike.do/'
+																	+ meetId,
+															type : 'post',
+															contentType : "application/json",
+															success : function(
+																	result) {
+															}
+														});
+												$(this)
+														.children('img')
+														.attr('src',
+																'/images/empty_like.png');
+											}
+										}
+									})
+
+				});
+			</script>
+
+		</div>
+		<%-- <!-- 페이징 2 -->
 	<div style="display: block; text-align: center;">		
 		<c:if test="${paging.startPage != 1 }">
 			<a href="/recipeMain.do?page=${paging.startPage - 1 }&pageUnit=${paging.pageUnit}">&lt;</a>

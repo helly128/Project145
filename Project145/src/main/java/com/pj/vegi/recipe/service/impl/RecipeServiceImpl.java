@@ -1,14 +1,12 @@
 package com.pj.vegi.recipe.service.impl;
 
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pj.vegi.recipe.mapper.RecipeMapper;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.vo.LessonVO;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RecipeVo;
 
 @Service("recipeService")
@@ -69,5 +67,20 @@ public class RecipeServiceImpl implements RecipeService {
 		return dao.lessonSearch(lVo);
 	}
 
-	
+	@Override
+	public int likeDelete(LikeListVo vo) {
+		// TODO Auto-generated method stub
+		return dao.likeDelete(vo);
+	}
+
+	@Override
+	public int likeInsert(LikeListVo vo) {
+		// TODO Auto-generated method stub
+		return dao.likeInsert(vo);
+	}
+
+	@Override
+	public int likeFlagSelect(LikeListVo vo) {
+		return dao.likeFlagSelect(vo);
+	}
 }

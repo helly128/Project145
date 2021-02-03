@@ -103,4 +103,26 @@
 		</where>
 	</select>
 
+
+	<insert id="likeInsert">
+		INSERT INTO like_list
+		VALUES('like' ||
+		like_seq.nextval, #{originId}, current_date, #{mId})
+	</insert>
+
+	<delete id="likeDelete">
+		DELETE FROM like_list
+		WHERE origin_id=#{originId}
+		AND
+		m_id=#{mId}
+	</delete>
+
+	<select id="likeFlagSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		like_list
+		WHERE m_id=#{mId}
+		AND origin_id=#{originId}
+	</select>
+
 </mapper>

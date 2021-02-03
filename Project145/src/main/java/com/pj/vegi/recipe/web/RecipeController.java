@@ -3,12 +3,12 @@ package com.pj.vegi.recipe.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.common.Paging;
-import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
 import com.pj.vegi.vo.LessonVO;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RecipeMaterialVo;
 import com.pj.vegi.vo.RecipeVo;
 
@@ -34,7 +34,10 @@ public class RecipeController {
 	RecipeMaterialService rmService;
 
 	@RequestMapping("/recipeMain.do") // 게시글 페이징 처리 추가하기
-	public String recipeMain(Model model, RecipeVo vo, Paging paging) {
+	public String recipeMain(Model model, RecipeVo vo, Paging paging, HttpSession session) {
+		
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
 		// paging
 		paging.setPageUnit(8);
 		paging.setPageSize(5);
@@ -51,6 +54,12 @@ public class RecipeController {
 		model.addAttribute("paging", paging);
 		// data 불러오기
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
+		for(RecipeVo recipe_vo : recipes) {
+			LikeListVo like_vo = new LikeListVo();
+			like_vo.setMId(mid);
+			like_vo.setOriginId(((RecipeVo) recipe_vo).getRId());
+			((RecipeVo) recipe_vo).setLikeFlag(recipeService.likeFlagSelect(like_vo));
+		}
 		model.addAttribute("recipes", recipes);
 
 		return "recipe/recipeMain";
@@ -166,6 +175,26 @@ public class RecipeController {
 		return recipeService.lessonSearch(param);  
 
 	}
+	
+	// 좋아요
+		@ResponseBody
+		@RequestMapping("/recipeLike.do/{rId}")
+		public void vegimeetLike(@PathVariable String RId, HttpSession session) {
+			LikeListVo vo = new LikeListVo();
+			vo.setMId((String) session.getAttribute("mId"));
+			vo.setOriginId(RId);
+			recipeService.likeInsert(vo);
+		}
+
+		// 좋아요 취소
+		@ResponseBody
+		@RequestMapping("/recipeUnlike.do/{rId}")
+		public void vegimeetUnlike(@PathVariable String RId, HttpSession session) {
+			LikeListVo vo = new LikeListVo();
+			vo.setMId((String) session.getAttribute("mId"));
+			vo.setOriginId(RId);
+			recipeService.likeDelete(vo);
+		}
 
 //	// 검색
 //	@RequestMapping(value = "/recipeLesson.do", method = RequestMethod.GET)

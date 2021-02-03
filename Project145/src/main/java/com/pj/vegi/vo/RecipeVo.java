@@ -28,4 +28,6 @@ public class RecipeVo {
 	private int end;
 	private int startPage;
 	private int endPage;
+	
+	private int likeFlag;
 }
