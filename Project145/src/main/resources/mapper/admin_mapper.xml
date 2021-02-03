@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.vegi.admin.mapper.AdminMapper">
+
+	<select id="adminMemberSelect" resultType="MemberVo">
+		<!-- 관리자 멤버 전체 조회 -->
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM member
+		<where>
+			<if
+				test="( available == null or available == '') and keyword == null and keyword == '' ">
+				AND available in('able','unable')
+			</if>
+			<if
+				test="( available == null or available == '') and keyword != null and keyword != '' ">
+				AND available in('able','unable')
+				AND m_name like '%' || #{keyword} || '%'
+			</if>
+			<if
+				test=" available != null and available != '' and (keyword == null or keyword == '') ">
+				AND available = #{available}
+			</if>
+			<if
+				test=" available != null and available != '' and keyword != null and keyword != '' ">
+				AND available = #{available}
+				AND m_name like '%' || #{available} || '%'
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+
+	<select id="countMember" resultType="Integer">
+	<!-- 회원 목록 페이징에 카운트하는 부분  -->
+		SELECT count(*)
+		FROM member
+		<where>
+			<if
+				test="( available == null or available == '') and keyword == null and keyword == '' ">
+				AND available in('able','unable')
+			</if>
+			<if
+				test="( available == null or available == '') and keyword != null and keyword != '' ">
+				AND available in('able','unable')
+				AND m_name like '%' || #{keyword} || '%'
+			</if>
+			<if
+				test=" available != null and available != '' and (keyword == null or keyword == '') ">
+				AND available = #{available}
+			</if>
+			<if
+				test=" available != null and available != '' and keyword != null and keyword != '' ">
+				AND available = #{available}
+				AND m_name like '%' || #{available} || '%'
+			</if>
+		</where>
+	</select>
+	
+	<update id="changUnable" parameterType="MemberVo">
+	<!-- 회원 이용현황 unable로 변경 -->
+		UPDATE MEMBER SET AVAILABLE = 'unable' WHERE m_id = #{mId}
+	</update>
+	
+	<update id="changAble" parameterType="MemberVo">
+	<!-- 회원 이용현황 able로 변경 -->
+		UPDATE MEMBER SET AVAILABLE = 'able' WHERE m_id = #{mId}
+	</update>
+
+</mapper>

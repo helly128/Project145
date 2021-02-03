@@ -63,14 +63,6 @@ public class MemberController {
 		return "redirect:/";
 
 	}
-	
-	@RequestMapping("/adminMain.do")
-	public String adminMain(Model model, HttpSession session) {
-		//관리자 첫 화면+ 회원 목록화면 
-		
-		//model.addAttribute("memberList", memberList);
-		return "admin/adminMemberList";
-	}
 
 	
 
