@@ -16,6 +16,7 @@ public class ImageIO {
 		file = rename(file);
 
 		uploadfile.transferTo(file);
+		System.out.println("==file path==" + file.getAbsolutePath());
 		return file.getName();
 	}
 	

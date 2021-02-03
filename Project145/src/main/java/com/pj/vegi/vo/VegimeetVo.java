@@ -21,5 +21,5 @@ public class VegimeetVo {
 	private int dday;
 	private int likeFlag;
 	
-	private MeetParticipantVo partiVo;
+	private MeetParticipantVo partiVo;	//join때문에 추가
 }
