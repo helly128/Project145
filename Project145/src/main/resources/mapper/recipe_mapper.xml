@@ -81,7 +81,7 @@
 		on c.m_id = m.m_id
 		<where>
 			<if
-				test="( vegType == null or vegType == '') and keyword == null or keyword == '' ">
+				test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
 				and c.vegType in('비건','락토','오보','락토오보')
 			</if>
 			<if

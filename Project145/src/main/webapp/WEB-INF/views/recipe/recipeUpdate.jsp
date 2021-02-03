@@ -247,9 +247,9 @@ input, textarea {
 								var output = "<table>";
 								for ( var i in data) {
 									output += "<tr>";
-									output += "<td width='100'>" + data[i].lName;
-									output += "<td width='200'>" + data[i].cTitle;
-									output += "<td width='250'>" + data[i].cDesc;
+									output += "<td width='100'>" + data[i].lname;
+									output += "<td width='200'>" + data[i].ctitle;
+									output += "<td width='250'>" + data[i].cdesc;
 									output += "<td width='60'>"+
 												"<input type='checkbox' name='cIdArr' value='"+data[i].cId+"' class='class-checked'>";
 									output += "</tr>" 

@@ -159,7 +159,7 @@ public class RecipeController {
 
 	@PostMapping(value="/lessonSearch.do")
 	@ResponseBody
-	public List<LessonVO> lessonSearch(@RequestParam LessonVO param, HttpServletRequest request,LessonVO lvo) {
+	public List<LessonVO> lessonSearch(LessonVO param, HttpServletRequest request,LessonVO lvo) {
 		// ModelAndView mav = new ModelAndView();
 //		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
 		
