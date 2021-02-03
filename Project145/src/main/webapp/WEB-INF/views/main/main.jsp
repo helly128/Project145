@@ -104,7 +104,7 @@
 										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
 								</c:if>
 								<c:if test="${auth eq 'admin'}">
-									<li><a href="/adminMain.do"
+									<li><a href="/adminMemberSelect.do"
 										class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
 								</c:if>
 							</ul>

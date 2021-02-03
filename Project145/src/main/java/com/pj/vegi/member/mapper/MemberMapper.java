@@ -14,5 +14,6 @@ public interface MemberMapper {
 	int updatePw(MemberVo vo);
 	
 	
+	
 
 }

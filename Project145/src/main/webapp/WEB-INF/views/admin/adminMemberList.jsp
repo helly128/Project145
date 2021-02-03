@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,33 +45,40 @@
 				<h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
 			</div>
 			<div class="card-body">
-				<div class="col-sm-12 col-md-6">
-					<div class="dataTables_length" id="dataTable_length">
-						<label>
-						<select name="dataTable_length"
-							aria-controls="dataTable"
-							class="custom-select custom-select-sm form-control form-control-sm">
-							<option value="10">Type</option>
-							<option value="25">25</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-						</select> 
-						</label>
+			<form action="adminMemberSelect.do" method="get" id="frm">
+				<div>
+					<div class="col-sm-5 col-md-4 col-lg-1"
+						style="margin-right: 0px; float: left;">
+						<div class="dataTables_length" id="dataTable_length">
+							<label> <select name="available" id="available"
+								aria-controls="dataTable"
+								class="custom-select custom-select-sm form-control form-control-sm">
+									<option value="none" selected disabled>이용현황</option>
+									<option value="able"
+										<c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
+									<option value="unable"
+										<c:if test="${vo.available == 'unable' }">selected="selected"</c:if>>이용정지</option>
+							</select>
+							</label>
+						</div>
 					</div>
-					<div id="dataTable_filter" class="dataTables_filter">
-						<label>
-						<input type="search" class="form-control form-control-sm">
-						<button style="border: 1px; background: none;">검색</button>
-						</label>
+					<div class="" style="margin-right: 0px; float: left;">
+						<div id="" class="dataTables_filter">
+							<input type="search" id="keyword" name="keyword"
+								class="form-control form-control-sm col-sm-4 col-md-6 col-lg-9"
+								style="float: left;" value="${vo.getKeyword() }">
+							<button style="border: 1px; background: none; float: right;" onclick = "location.href = 'javascript:frm.submit()'">검색</button>
+						</div>
 					</div>
 				</div>
+			</form>
 				<div class="table-responsive">
 					<table class="table table-bordered" id="dataTable" width="100%"
 						cellspacing="0">
 						<thead>
 							<tr>
 								<th>회원 ID</th>
-								<th>비건 타립</th>
+								<th>회원이름</th>
 								<th>이메일</th>
 								<th>회원 권한</th>
 								<th>누적신고 횟수</th>
@@ -77,26 +86,25 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:foreach var="vo items="${ }">
-							<tr>
-								<td>${vo.getMId() }</td>
-								<td>${vo.getVegtype() }</td>
-								<td>${vo.getEmail() }</td>
-								<td>${vo.getAuth() }</td>
-								<td>${vo.getReport() }</td>
-								<td>
-								<label>
-									<select name="dataTable_length"
+							<c:forEach var="vo" items="${adminMember }">
+								<tr>
+									<td id="mid">${vo.getMId() }</td>
+									<td id="mname">${vo.getMName() }</td>
+									<td id="email">${vo.email }</td>
+									<td id="auth">${vo.auth }</td>
+									<td id="report">${vo.report }</td>
+									<td>
+										<label> 
+											<select name="dataTable_length" id="availableSelect"
 											aria-controls="dataTable"
 											class="custom-select custom-select-sm form-control form-control-sm">
-										<option value="able">이용가능</option>
-										<option value="unable">이용정지</option>
-									</select> 
-								</label>
-								
-								</td>
-							</tr>
-							</c:foreach>
+												<option value="able"  <c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
+												<option value="unable" <c:if test="${vo.available == 'unable' }">selected="selected"</c:if>>이용정지</option>
+											</select>
+										</label>
+									</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 						<tfoot>
 							<tr>
@@ -110,36 +118,62 @@
 						</tfoot>
 					</table>
 				</div>
-				<div class="dataTables_paginate paging_simple_numbers"
-					id="dataTable_paginate">
-					<ul class="pagination">
-						<li class="paginate_button page-item previous disabled"
-							id="dataTable_previous"><a href="#"
-							aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-							class="page-link">Previous</a></li>
-						<li class="paginate_button page-item active"><a href="#"
-							aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-							class="page-link">1</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-							class="page-link">2</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-							class="page-link">3</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-							class="page-link">4</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-							class="page-link">5</a></li>
-						<li class="paginate_button page-item next" id="dataTable_next"><a
-							href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0"
-							class="page-link">Next</a></li>
-					</ul>
-				</div>
+				<my:paging paging="${paging }" jsFunc="goList" />
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function goList(p) {
+			var available = document.getElementById("available").value;
+			var keyword = document.getElementById("keyword").value;
+
+			if (available == "none" || keyword == '') {
+				location.href = "adminMemberSelect.do?page=" + p
+			} else {
+				location.href = "adminMemberSelect.do?page=" + p
+						+ "&available=" + available + "&keyword=" + keyword;
+			}
+
+		}
+		
+		
+		$(function() {
+			$("#availableSelect").change(function() {
+				 var returnValue = confirm('회원의 이용현황을 바꾸시겠습니까?');
+				 //alert(returnValue);
+
+				 if ( returnValue == true ) {
+					 console.log(returnValue);
+					 if ("${vo.available}" == "able" ) {						
+						 console.log('${vo.available}');
+						 var memberId = $(this).$('#mid').val()
+						 $.ajax({
+							 url:'changUnable.do/' + memberId,
+							 type:'post',
+							 contentType:"json",
+							 success:function(result) {
+	
+							 }
+						 }) // ajax end
+						 $(this).val("unable");
+					 } else if ( '${available}' == 'unable' ) {
+						 $.ajax({
+							 url:'changAble.do' + memberId,
+							 type:'post',
+							 contentType:"json",
+							 success:function(result) {
+		
+							 }
+						 }) // ajax end
+						 $(this).val("able");
+					 }
+				 } 
+			})
+		});
+	</script>
+
+
 </body>
 
 </html>

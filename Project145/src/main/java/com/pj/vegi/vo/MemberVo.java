@@ -26,6 +26,9 @@ public class MemberVo {
 	private String reqClientNum;
 	private String profileImage;
 	
+	private int start; //페이징 시작
+	private int end; //페이징 끝
 	
+	private String keyword;
 	
 }

@@ -36,9 +36,10 @@
 							<div class="row justify-content-center">
 								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="search-input">
-										<label for="category"> <i
-											class="lni lni-grid-alt theme-color"></i></label> <select
-											name="vegType" id="vegType">
+										<label for="category"> 
+										<i class="lni lni-grid-alt theme-color"></i>
+										</label> 
+										<select name="vegType" id="vegType">
 											<option value="none" selected disabled>TYPE</option>
 											<option value="비건"
 												<c:if test="${vo.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
@@ -53,9 +54,12 @@
 								</div>
 								<div class="col-lg-3 col-sm-5 col-6">
 									<div class="search-input">
-										<label for="keyword"><a
-											href="javascript:form.submit()"><i
-												class="lni lni-search-alt theme-color"></i></a></label> <input
+										<label for="keyword">
+											<a href="javascript:form.submit()">
+												<i class="lni lni-search-alt theme-color"></i>
+											</a>
+										</label> 
+										<input
 											type="text" name="keyword" id="keyword"
 											value="${vo.getKeyword() }">
 									</div>
