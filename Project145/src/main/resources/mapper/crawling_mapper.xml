@@ -7,7 +7,7 @@
 		insert into recipe(R_ID, R_TITLE, R_CONTENT, R_IMAGE,
 		R_DATE, m_id)
 		values('rec' || rec_seq.nextval, #{rTitle}, #{rContent},
-		#{rImage}, sysdate,
+		#{rImage}, localtimestamp,
 		'hee1')
 	</insert>
 

@@ -19,7 +19,7 @@
 	
 	<insert id="insert">
 		insert into reple (re_id,re_content,re_date, m_id,r_id)
-		values('re'||re_seq.nextval,#{reContent},sysdate,#{mId},#{rId} )
+		values('re'||re_seq.nextval,#{reContent},localtimestamp,#{mId},#{rId} )
 		
 	</insert>
 
