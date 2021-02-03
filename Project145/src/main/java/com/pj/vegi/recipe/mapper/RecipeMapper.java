@@ -21,5 +21,5 @@ public interface RecipeMapper {
 	
 	List<LessonVO> searchlessonList(LessonVO lvo);//클래스 전체 조회
 	
-	List<LessonVO> lessonSearch(Map<String, Object> map);//클래스 검색
+	List<LessonVO> lessonSearch(LessonVO lVo);//클래스 검색
 }

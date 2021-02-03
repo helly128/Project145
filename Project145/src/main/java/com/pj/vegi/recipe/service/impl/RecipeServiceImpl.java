@@ -64,9 +64,9 @@ public class RecipeServiceImpl implements RecipeService {
 
 
 	@Override
-	public List<LessonVO> lessonSearch(Map<String, Object> map) {
+	public List<LessonVO> lessonSearch(LessonVO lVo) {
 		// TODO Auto-generated method stub
-		return dao.lessonSearch(map);
+		return dao.lessonSearch(lVo);
 	}
 
 	

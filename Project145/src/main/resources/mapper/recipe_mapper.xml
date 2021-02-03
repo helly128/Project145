@@ -33,14 +33,14 @@
 	<update id="recipeUpdate">
 		update recipe set
 		r_type = #{rType},
-		r_title
-		=#{rTitle},
+		r_title =
+		#{rTitle},
 		r_content = #{rContent},
 		r_image = #{rImage},
 		c_id = #{cId}
-		where r_id = #{rId)
+		where r_id = #{rId}
 	</update>
-	
+
 	<select id="searchlessonList" resultType="LessonVO">
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
@@ -48,19 +48,25 @@
 		(SELECT *
 		FROM class
 		<where>
-			<if test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+			<if
+				test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
 				and vegType in('비건','락토','오보','락토오보')
 			</if>
-			<if test="(vegType == null or vegType == '') and keyword != null and keyword != '' ">
+			<if
+				test="(vegType == null or vegType == '') and keyword != null and keyword != '' ">
 				and vegType in('비건','락토','오보','락토오보')
-				and c_title like '%' || #{keyword} || '%'
+				and c_title like '%' ||
+				#{keyword} || '%'
 			</if>
-			<if test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+			<if
+				test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
 				and vegType = #{vegType}
 			</if>
-			<if test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+			<if
+				test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
 				and vegType = #{vegType}
-				and c_title like '%' || #{keyword} || '%'
+				and c_title like '%' || #{keyword} ||
+				'%'
 			</if>
 		</where>
 		) b
@@ -69,22 +75,30 @@
 	</select>
 
 	<select id="lessonSearch" resultType="LessonVO">
-	select c_id,c_title,lec_name,c_desc
-	from class
-	<where>
-			<if test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-				and vegType in('비건','락토','오보','락토오보')
+		select c.c_id "cId", c.c_title "cTitle",c.c_desc "cDesc" ,m.m_name
+		"lName"
+		from class c join member m
+		on c.m_id = m.m_id
+		<where>
+			<if
+				test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+				and c.vegType in('비건','락토','오보','락토오보')
 			</if>
-			<if test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-				and vegType in('비건','락토','오보','락토오보')
-				and c_title like '%' || #{keyword} || '%'
+			<if
+				test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+				and c.vegType in('비건','락토','오보','락토오보')
+				and c.c_title like '%'
+				|| #{keyword} || '%'
 			</if>
-			<if test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
-				and vegType = #{vegType}
+			<if
+				test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+				and c.vegType = #{vegType}
 			</if>
-			<if test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-				and vegType = #{vegType}
-				and c_title like '%' || #{keyword} || '%'
+			<if
+				test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+				and c.vegType = #{vegType}
+				and c.c_title like '%' || #{keyword}
+				|| '%'
 			</if>
 		</where>
 	</select>
