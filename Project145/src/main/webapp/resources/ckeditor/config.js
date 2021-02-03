@@ -15,7 +15,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.resize_minHeight = 200;
 	config.resize_maxHeight = 600;
     // 업로드 설정
-    config.filebrowserUploadUrl      = '/upld/uploadFile.do?type=Files',
+    config.filebrowserUploadUrl      = '/images/uploadFile.do?type=Files',
     config.filebrowserImageUploadUrl = '/images/uploadFile.do?type=Images',
     config.filebrowserWindowWidth = '640',
     config.filebrowserWindowHeight= '480'

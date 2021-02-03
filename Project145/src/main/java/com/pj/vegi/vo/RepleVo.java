@@ -26,4 +26,6 @@ public class RepleVo {
 	private String mId;
 	private String conId;
 	private String unId;
+	private String reParent;
+	private String reDepth;
 }

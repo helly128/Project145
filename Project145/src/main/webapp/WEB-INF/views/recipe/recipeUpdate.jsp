@@ -23,7 +23,9 @@ input, textarea {
 
 	<div class="container">
 		<div>
-			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
+			<h2>
+				<a href="/recipeMain.do" style="margin-top: 5%">⬅</a>
+			</h2>
 		</div>
 		<form id="frm" name="frm" method="post"
 			action="/recipeUpdateResult.do" encType="multipart/form-data">
@@ -58,7 +60,7 @@ input, textarea {
 					</div>
 					<div class="col-lg-3">
 						<i class="lni lni-calendar">작성일자</i>
-						<p id="rDate" name="rDate"></p>
+						<p id="rDate"></p>
 
 					</div>
 					<div class="col-lg-3">
@@ -292,7 +294,9 @@ input, textarea {
 						var day = today.getDate();
 						var date = year + "/" + month + "/" + day
 						$('#rDate').text(date);
-
+						CKEDITOR.replace('ckeditor',{
+							filebrowserUploadUrl: '<%=request.getContextPath()%>/images/uploadFile.do'
+						});
 						$("#updateBtn").click(function(){
 							checkboxArr();
 							console.log(clength);
@@ -304,7 +308,6 @@ input, textarea {
 			<script>
 				CKEDITOR.replace('ckeditor'); // 에디터로 생성
 			</script>
-
 		</form>
 		<br />
 	</div>

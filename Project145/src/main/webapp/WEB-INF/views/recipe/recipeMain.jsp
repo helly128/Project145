@@ -9,7 +9,10 @@
 <title>recipeMain</title>
 <style>
 .single-product {
-	height: 500px;
+	height: 400px;
+}
+.product-content{
+height: 40px;
 }
 </style>
 <script>
@@ -75,49 +78,43 @@
 		<!-- 검색바 끝 -->
 		<!-- 레시피리스트 시작 -->
 		<%-- ${recipes} --%>
-		
-		<div class="row" id="cards">
-			<c:forEach var="vo" items="${recipes}" varStatus="status">
-				<div class="col-xl-3 col-lg-6 col-md-6">
-					<div class="single-product">
-						<div class="product-img">
-							<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-								src="${vo.getRImage()}" alt="" height="300px" width="300px">
-							</a>
-						</div>
-						<div class="product-content">
-							<div class="namediv">
-								<h5 class="name">
-									<a href="/recipeDesc.do?rId=${vo.getRId()} ">${vo.getRTitle()}</a>
-								</h5>
+		<div>
+			<div class="row" id="cards">
+				<c:forEach var="vo" items="${recipes}" varStatus="status">
+					<div class="col-xl-3 col-lg-6 col-md-6">
+						<div class="single-product">
+							<div class="product-img">
+								<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
+									src="${vo.getRImage()}" alt="" height="300px" width="300px">
+								</a>
 							</div>
-							<ul class="address">
-								<li><a href="javascript:void(0)"><i
-										class="lni lni-calendar"></i>${vo.getRDate() }</a></li>
-								<li><a href="javascript:void(0)"><i
-										class="lni lni-user"></i>${vo.getMId() }</li>
-								<!-- <li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> Used</a></li> -->
-							</ul>
-							<div class="product-bottom">
-								<h3 class="price"></h3>
-								<div>
-									<button type="button" class="likeAction" data-id="${vo.RId }">
-										<c:if test="${vo.likeFlag > 0 }">
-											<img class="likeImg" src="/images/filled_like.png"
-												style="width: 30px;">
-										</c:if>
-										<c:if test="${vo.likeFlag == 0 }">
-											<img class="likeImg" src="/images/empty_like.png"
-												style="width: 30px;">
-										</c:if>
-									</button>
+							<div class="product-content">
+								<div class="namediv">
+									<h5 class="name">
+										<a href="/recipeDesc.do?rId=${vo.getRId()} ">${vo.getRTitle()}</a>
+									</h5>
 								</div>
+								<ul class="address">
+									<li><i class="lni lni-calendar"></i>${vo.getRDate() }</li>
+									<li><i class="lni lni-user"></i>${vo.getMId() }</li>
+								</ul>
+							</div>
+							<div align="right">
+								<button type="button" class="likeAction" data-id="${vo.RId }">
+									<c:if test="${vo.likeFlag > 0 }">
+										<img class="likeImg" src="/images/filled_like.png"
+											style="width: 30px;">
+									</c:if>
+									<c:if test="${vo.likeFlag == 0 }">
+										<img class="likeImg" src="/images/empty_like.png"
+											style="width: 30px;">
+									</c:if>
+								</button>
 							</div>
 						</div>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</div>
 		</div>
 		<!-- 레시피 리스트 카드 끝 -->
 		<!-- 페이징 처리 추가 -->
