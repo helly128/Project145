@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.vegi.biz.service.ClassBizService;
 import com.pj.vegi.member.service.MemberService;
@@ -36,9 +37,23 @@ public class ClassBizController {
 	}
 
 	@RequestMapping("/classRegForm.do")
-	public String classRegForm() {
+	public String classRegForm(Model model, MemberVo vo,LessonVO cvo, HttpSession session) throws SQLException {
 		System.out.println("클래스 등록폼");
-
+		String mId = (String) session.getAttribute("mId");
+		System.out.println(mId+"세션아이디입니다.");
+		vo.setMId(mId);
+		//mId로 member의 정보 가져오기. 
+		MemberVo vo2 = memberService.memberSelect(vo);
+		String bizNum = vo2.getBizNum();
+	
+		System.out.println(bizNum +"사업자번호 아래의 모든 강사의 MemberVo List를 찾습니다.");
+		List<MemberVo> lecList = classBizService.getLecList(bizNum);
+		//비즈넘버 아래의 강사 리스트 가져오기.
+		System.out.println(lecList);
+		
+		model.addAttribute("mvo", vo2);
+		model.addAttribute("lecList", lecList);
+		
 		return "biz/classRegForm";
 
 	}
@@ -83,15 +98,18 @@ public class ClassBizController {
 		return "biz/classEdit";
 	}
 
-	
+	@ResponseBody
 	@RequestMapping("/myCareerUpdate.do")
 	public int myCareerUpdate(@RequestParam String career, Model model, HttpSession session, MemberVo vo) {
 		vo.setCareer(career);
 		System.out.println(career);
-		System.out.println(session.getId());
-		vo.setMId(session.getId());
+		String mId = (String) session.getAttribute("mId");
+		System.out.println(mId+"입니다.");
+		vo.setMId(mId);
+		vo.setCareer(career);
 		int n = 0;
 		n = classBizService.myCareerUpdate(vo);
+		System.out.println(n + "건 입력완료");
 		return n;
 	}
 	

@@ -16,6 +16,7 @@ public interface ClassBizMapper {
 	int classLecturerInsert(LecturerVo lvo);
 	LecturerVo lecBizSelect(LecturerVo lvo);
 	int myCareerUpdate(MemberVo vo);
+	List<MemberVo> getLecList(String bizNum);
 	
 
 

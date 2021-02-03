@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.pj.vegi.biz.mapper.ClassBizMapper">
 
 	<select id="classBizList" resultType="LessonVO">
@@ -11,8 +10,6 @@
 		m_id=#{mId}
 
 	</select>
-
-
 
 
 	<delete id="classBizDelete">
@@ -63,7 +60,7 @@
 		LEC_ID,M_ID,C_ID,BIZNUM,LEC_CAREER,PROPOSAL,RESPONSE
 		)
 		VALUES(
-		'lec' ||lec_seq.nextval, #{mId},'class'|| #{cId},#{bizNum},
+		'lec'||lec_seq.nextval, #{mId},'class'|| #{cId},#{bizNum},
 		#{lecCareer},#{proposal},#{response}
 		)
 	</insert>
@@ -84,7 +81,15 @@
 		UPDATE member
 		set career = #{career}
 		WHERE
-		m_id=#{lecId}
+		m_id=#{mId}
 	</update>
+	
+	<select id="getLecList" resultType="MemberVo">
+		
+		SELECT M_ID, M_NAME,PROFILE_IMAGE,INSTA,CAREER
+		FROM member
+		WHERE M_ID in 
+		(SELECT LEC_ID FROM ClASS WHERE BIZNUM = #{bizNum})
 
+	</select>
 </mapper>

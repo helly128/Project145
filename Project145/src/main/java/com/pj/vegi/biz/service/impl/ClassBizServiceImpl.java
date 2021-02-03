@@ -53,9 +53,16 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.lecBizSelect(lvo);
 	}
 
+
 	@Override
 	public int myCareerUpdate(MemberVo vo) {
+		// TODO Auto-generated method stub
 		return dao.myCareerUpdate(vo);
+	}
+
+	@Override
+	public List<MemberVo> getLecList(String bizNum) {
+		return dao.getLecList(bizNum);
 	}
 
 }

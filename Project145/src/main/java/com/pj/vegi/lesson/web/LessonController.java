@@ -3,10 +3,7 @@ package com.pj.vegi.lesson.web;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

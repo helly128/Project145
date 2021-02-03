@@ -29,33 +29,36 @@
 <title>클래스 등록 폼</title>
 </head>
 <body style="padding: 0;">
-<script>
-$(function(){   
-    
+	<script>
+$(function(){ 
+
     $("#savecareer").click(()=>{
+    	console.log($("#career").val());
        $.ajax(
-          {
+          { 
              type:"POST",
-             url:"myCareerUpdare.do",
+             url:"myCareerUpdate.do",
              data:{career: $("#career").val()}, //사용하는 함수 
              dataType:"json",
              success: function(n){
-                if(n==1){
+                if(n!=0){
                    $("#saveResult").text("이력이 등록되었습니다.");
-                   $("#savecareer").val() ="이력 재수정";
+                   var btnmsg="이력 재수정";
+                   $("#savecareer").text(btnmsg);
+                   
                 }
                 else{
                    $("#saveResult").text("등록 실패");
                    
                 }
-             
-             }},
+             	alert("등록되었습니다.");
+             },
              error:(log)=>{alert("실패+log")
              }
                 
           });
     });
-    }   
+    })   
 
 </script>
 
@@ -66,6 +69,9 @@ $(function(){
 			<br>
 			<div class="pagetitle" align="center">
 				<h3>새로운 클래스 등록</h3>
+				<h1>${ sessionScope.mId }</h1>
+				<h1>${ mvo.getMName() }</h1>
+				<h1></h1>
 			</div>
 			<br>
 			<div class="row" id="uploadpic">
@@ -269,18 +275,21 @@ $(function(){
 				<br>
 				<div class="row">
 					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름</h5><div id="showlecName">mName</div>
+						<h5 style="padding-top: 20px;">강사이름</h5>
+						<div id="showlecName"></div>
 					</div>
-					<div class="col-half">
+					<div class="col-half" align="left">
+						<h5 style="padding-top: 20px;">강사아이디</h5>
 						<div class="input-group">
-							<select name="lecturerId1" onchange=""
-								style="width: 90%; padding: 0px; margin: 0px;">
-								<option value="">강사 선택 옵션</option>
-								<option value="${sessionScope.mId}">내가 강사임 ID :
-									${sessionScope.mId}</option>
-								<option value="rachelistic">강사1 강사Id</option>
-								<option>강사2 강사Id</option>
-							</select>
+							<select id="lecturerId1" 
+							style="width: 80%; padding: 0px; margin-right:50px;"
+							class="form-control">
+								<option selected value="${sessionScope.mId}">
+								기본 계정 : ${sessionScope.mId}</option>
+								<c:forEach items="${lecList}" var="lec">
+									<option><c:out value="${lec.getMId()}" /></option>
+								</c:forEach>
+							</select> 
 
 						</div>
 					</div>
@@ -355,8 +364,7 @@ $(function(){
 							<div class="profile-cover">
 								<div class="profile-avatar">
 									<img style="border-radius: 50%;"
-										src="https://dl.dropboxusercontent.com/s/7pcnqq18skh1myk/avatar.jpg"
-										alt="Anis M" />
+										src="/images/${ mvo.profileImage }" alt="" />
 								</div>
 
 								<div class="profile-details" style="font-size: 1.5rem">
@@ -377,7 +385,7 @@ $(function(){
 								<h5>내 강사 이력 수정</h5>
 								<br> 강사 ID <input type="text" style="width: 90%"
 									name="lecId" id="myId" value="${sessionScope.mId}" readonly>
-								<textarea rows="8" name="career"  style="width: 90%"></textarea>
+								<textarea rows="8" name="career" id="career" style="width: 90%"></textarea>
 
 
 							</div>
@@ -409,12 +417,12 @@ $(function(){
 					</div>
 					<div class="col-12">
 						<button class="btn btn-warning"
-							style="margin: 20px; width: 90%; padding: 10px;"
+							style="margin: 20px; width: 90%; padding: 10px; display: none;"
 							id="sendmsg">강사에게 콜라보 신청</button>
 
-						<button class="btn btn-warning"
-							type="button" style="margin: 10px; width: 90%; padding: 10px;"
-							id="savecareer">내 이력 저장</button>
+						<button class="btn btn-warning" type="button"
+							style="margin: 10px; width: 90%; padding: 10px;" id="savecareer">내
+							이력 저장</button>
 
 
 
@@ -438,8 +446,8 @@ $(function(){
 				<textarea rows="5" placeholder="클래스 설명" name="cDesc" required
 					autocomplete="off"></textarea>
 			</div>
-			
-<!-- 			<div class="row">
+
+			<!-- 			<div class="row">
 				<h5>확인 내용</h5>
 				<div class="input-group">
 					<input type="checkbox" id="terms" /> <label for="terms"> 위
@@ -486,13 +494,15 @@ $(function(){
 				}
 			});
 
-			$("#insertclass").click(function() {
+			$("#insertclass").click(function() { 
 				alert("등록");
 				$("#cfrm").submit();
 			})
 
 		});
-
+		
+		
+		
 		function showSection(lec) { //강사 추가 나를 강사로 추가 || 다른 강사 추가
 
 			if (lec.value == "${sessionScope.mId}") {
