@@ -12,12 +12,14 @@ input, textarea {
 	border: 1px solid #6C9852;
 }
 </style>
-
+<!-- ckeditor 4 -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/ckeditor/contents.css">
+<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/ckeditor/ckeditor.js"></script>
 </head>
 <body>
-<script>
-
-</script>
 
 	<div class="container">
 		<div>
@@ -25,7 +27,7 @@ input, textarea {
 		</div>
 		<form id="frm" name="frm" method="post"
 			action="/recipeUpdateResult.do" encType="multipart/form-data">
-			<input type="hidden"  name="RId" value="${select.RId }">
+			<input type="hidden" name="RId" value="${select.RId }">
 			<div class="category-list-item">
 				<div class="row">
 
@@ -40,24 +42,28 @@ input, textarea {
 			</div>
 			<div>
 				<div class="row">
-					<div class="col-lg-12">
+					<%-- <div class="col-lg-12">
 						<textarea rows="5" cols="120" id="rContent" name="rContent">${select.RContent } </textarea>
+					</div> --%>
+					<div class="col-lg-12">
+						﻿
+						<textarea id="ckeditor" id="rContent" name="rContent" rows=10>${select.RContent }</textarea>
 					</div>
 				</div>
-
+				<br /> <br />
 				<div class="row">
 					<div class="col-lg-3">
 						<i class="lni lni-users">작성자</i> <input type="text" id="mId"
 							name="mId" value="${select.MId }" readonly>
 					</div>
 					<div class="col-lg-3">
-						<i class="lni lni-calendar">작성일자</i> 
-						<p id="rDate" name="rDate" ></p>
+						<i class="lni lni-calendar">작성일자</i>
+						<p id="rDate" name="rDate"></p>
 
 					</div>
 					<div class="col-lg-3">
 						<p>이미지 수정</p>
-						<input type="file" name="rImageFile" id="rImageFile" 
+						<input type="file" name="rImageFile" id="rImageFile"
 							multiple="multiple">
 					</div>
 					<div class="col-lg-2 col-sm-4 col-5">
@@ -65,8 +71,7 @@ input, textarea {
 							<i class="lni lni-grid-alt theme-color">비건타입 </i>
 						</p>
 						<div class="search-input">
-							<label for="category"></label> <select name="rType"
-								id="rType">
+							<label for="category"></label> <select name="rType" id="rType">
 								<option value="none" selected disabled>비건 레벨</option>
 								<option value="none">비건</option>
 								<option value="none">락토</option>
@@ -99,7 +104,7 @@ input, textarea {
 								<tr name="trMat">
 									<td class="col-md-5"><input type="text"
 										placeholder="재료명을 추가하여 입력하세요" readonly="readonly"></td>
-									<td class="col-md-5"><input type="text" 
+									<td class="col-md-5"><input type="text"
 										placeholder="재료 양을 추가하여 입력하세요" readonly="readonly"></td>
 									<td class="col-md-1"></td>
 									<td class="col-md-1">
@@ -225,9 +230,9 @@ input, textarea {
 				</div>
 			</div>
 			<div class="col-md-12" align="right">
-				<button type="submit" class="btn btn-primary" value="updateFrm" >수정하기</button>
+				<button type="submit" class="btn btn-primary" value="updateFrm">수정하기</button>
 			</div>
-			
+
 			<script>
 			<c:set var="clistLength" value="${fn:length(lessonVO.classVoList) }" />
 			var clength = '<c:out value="${clistLength}"/>';
@@ -296,6 +301,10 @@ input, textarea {
 							
 					});
 			</script>
+			<script>
+				CKEDITOR.replace('ckeditor'); // 에디터로 생성
+			</script>
+
 		</form>
 		<br />
 	</div>
