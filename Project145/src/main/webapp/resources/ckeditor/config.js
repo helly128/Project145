@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.resize_maxHeight = 600;
     // 업로드 설정
     config.filebrowserUploadUrl      = '/upld/uploadFile.do?type=Files',
-    config.filebrowserImageUploadUrl = '/upld/uploadFile.do?type=Images',
+    config.filebrowserImageUploadUrl = '/images/uploadFile.do?type=Images',
     config.filebrowserWindowWidth = '640',
     config.filebrowserWindowHeight= '480'
     // 메뉴 버튼
@@ -131,4 +131,3 @@ CKEDITOR.on('dialogDefinition', function( ev ){
             break;
     }
 });
-[출처] ckeditor  4 + spring + 파일 업로드|작성자 지워진기억
