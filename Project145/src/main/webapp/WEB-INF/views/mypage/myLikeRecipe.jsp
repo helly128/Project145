@@ -1,78 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>myLikeRecipe.jsp</title>
+<style type="text/css">
+.likeAction {
+	border: none;
+	background: transparent;
+}
+</style>
 </head>
 <body>
 	<div class="container">
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h1 class="h3 mb-0 text-gray-800">내가 좋아하는 RECIPE 🧡</h1>
 		</div>
-		<!-- Page Features -->
-		<div class="row text-center">
 
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
+		<div class="row">
+			<c:forEach items="${list }" var="list">
+				<div class="col-lg-3 col-md-6 mb-4">
+					<div class="card h-100">
+						<img class="card-img-top" src="${list.rImage }" width="100"
+							height="200">
+						<div class="card-body">
+							<h4 class="card-title">${list.rTitle }</h4>
+							<ul class="address" align="left">
+								<li>베지타입 : ${list.rType }</li>
+								<li>작성자 : ${list.mId }</li>
+								<li>조회수 : ${list.rHit }</li>
+							</ul>
+						</div>
+						<div class="card-footer" align="right">
+							<button type="button" class="likeAction"
+								data-id="${list.originId }">
+								<img class="likeImg" src="/images/filled_like.png"
+									style="width: 30px;">
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">레시피제목</h4>
-						<p class="card-text">레시피 설명</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">좋아요버튼</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Explicabo magni sapiente, tempore debitis
-							beatae culpa natus architecto.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-
+			</c:forEach>
 		</div>
-		<!-- /.row -->
-
 	</div>
+	<script>
+		$(function() {
+			$(".likeAction").on('click', function() {
+				var originId = $(this).data('id')
+				$.ajax({
+					url : 'HeartCancel.do/' + originId,
+					type : 'post',
+					contentType : 'application/json',
+					success : function(result) {
+						location.reload();
+					}
+				}) // ajax end
+				//$(this).chileren('img').attr('src','/images/empty_like.png')
+
+			}) // click end 
+		}) // ready end
+	</script>
 </body>
 </html>

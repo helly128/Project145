@@ -9,11 +9,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
+import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
@@ -61,25 +64,66 @@ public class MypageController {
 	@RequestMapping("/myLikeMeet.do")
 	public String myLikeMeet(Model model, LikeListVo vo, HttpSession session) {
 
-		String mid = (String)session.getAttribute("mId");
+		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
+
 		List<Map> likeList = mypageService.meetLikeList(vo);
 
 		model.addAttribute("list", likeList);
-		
+
 		return "mypage/myLikeMeet";
 	}
 
 	@RequestMapping("/myLikeRecipe.do")
-	public String myLikeRecipe() {
+	public String myLikeRecipe(Model model, LikeListVo vo, HttpSession session) {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+
+		List<Map> likeList = mypageService.recipeLikeList(vo);
+
+		model.addAttribute("list", likeList);
 
 		return "mypage/myLikeRecipe";
 	}
 
 	@RequestMapping("/myLikeClass.do")
-	public String myLikeClass() {
+	public String myLikeClass(Model model, LikeListVo vo, LessonVO lesson_vo, HttpSession session) {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		List<Map> likeList = mypageService.lessonLikeList(vo);
+
+		model.addAttribute("list", likeList);
 
 		return "mypage/myLikeClass";
+
+	}
+	
+	@ResponseBody
+	@RequestMapping("/HeartCancel.do/{originId}")
+	public void HeartCancel(Model model, LikeListVo vo, @PathVariable String originId, HttpSession session) {
+		
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		vo.setOriginId(originId);
+		
+		mypageService.heartCancel(vo);
+		
+	}
+
+	@RequestMapping("/myLikeRestaurant.do")
+	public String myLikeRestaurant(Model model, LikeListVo vo, HttpSession session) {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+
+		List<Map> likeList = mypageService.restLikeList(vo);
+		model.addAttribute("list", likeList);
+
+		return "mypage/myLikeRestaurant";
 	}
 
 	@RequestMapping("/myRecipe.do")

@@ -73,19 +73,19 @@
 	</select>
 	
 	<select id="countRest" resultType="Integer">
-		select count(*) 
-		from REST_RESERV
-		where m_id = #{mId }
+		SELECT count(*) 
+		FROM REST_RESERV
+		WHERE m_id = #{mId }
 	</select>
 	
 	<select id="countRecipe" resultType="Integer">
-		select count(*)
-		from Recipe
-		where m_id = #{mId }
+		SELECT count(*)
+		FROM Recipe
+		WHERE m_id = #{mId }
 	</select>
 	
 	<select id="countLesson" resultType="Integer">
-		select count(*) from (
+		SELECT count(*) FROM (
 			SELECT c.c_title "cTitle", 
 		 		c.c_start "cStart", 
 		 		c.c_end "cEnd",
@@ -101,12 +101,59 @@
 	<select id="meetLikeList" resultType="map">
 		select m.meet_title "meetTitle", 
 				m.meet_pic "meetPic", 
-				li.origin_id "originId",
+				li.origin_id "originId", 
 				m.meet_start "meetStart", 
-				m.meet_end "meetEnd"
+				m.meet_end "meetEnd", 
+				m.m_id "mId",
+				m.meet_fund "meetFund"
 		from like_list li join meet_un m
 		on li.origin_id = m.meet_id
-		where li.m_id = #{mId}
+		where li.m_id=#{mId}
+	</select>
+	
+	<select id="lessonLikeList" resultType="map">
+		SELECT c.c_title "cTitle", 
+				c.c_img "cImg", 
+				c.vegtype "vegType", 
+				c.c_start "cStart", 
+				c.c_end "cEnd", 
+				c.status "status", 
+				c.lec_name "lecName", 
+				c.c_hit "cHit", 
+				li.origin_id "originId"
+		FROM like_list li JOIN class c
+		ON li.origin_id = c.c_id
+		WHERE c.m_id = #{mId}
+	</select>
+	
+	<delete id="heartCancel">
+		DELETE from like_list
+		WHERE origin_id = #{originId}
+		AND m_id = #{mId}
+	</delete>
+	
+	<select id="recipeLikeList" resultType="map">
+		SELECT li.origin_id "originId", 
+				r.r_title "rTitle", 
+				r.r_type "rType", 
+				r.r_image "rImage", 
+				r.r_hit "rHit", 
+				r.m_id "mId"
+		FROM like_list li JOIN recipe r
+		ON li.origin_id = r.r_id
+		WHERE li.m_id = #{mId}
+	</select>
+	
+	<select id="restLikeList" resultType="map">
+		SELECT li.origin_id "originId", 
+				r.rest_name "restName", 
+				r.rest_address "restAddress", 
+				r.rest_pic "restPic", 
+				r.rest_tel "restTel", 
+				r.rest_review_count "restReviewCount"
+		FROM like_list li JOIN restaurant r
+		ON li.origin_id = r.rest_id
+		WHERE li.m_id = #{mId}
 	</select>
 
 </mapper>

@@ -8,27 +8,27 @@
 	<select id="lessonList" resultType="LessonVO">
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
-		FROM
-		(SELECT *
-		FROM class
-		<where>
-			<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-				and vegType in('비건','락토','오보','락토오보')
-			</if>
-			<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-				and vegType in('비건','락토','오보','락토오보')
-				and c_title like '%' || #{keyword} || '%'
-			</if>
-			<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
-				and vegType = #{vegType}
-			</if>
-			<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-				and vegType = #{vegType}
-				and c_title like '%' || #{keyword} || '%'
-			</if>
-		</where>
-		) b
-		) a
+				FROM
+					(SELECT *
+					FROM class
+					<where>
+						<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+							AND vegType in('비건','락토','오보','락토오보')
+						</if>
+						<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+							AND vegType in('비건','락토','오보','락토오보')
+							AND c_title like '%' || #{keyword} || '%'
+						</if>
+						<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+							AND vegType = #{vegType}
+						</if>
+						<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+							AND vegType = #{vegType}
+							AND c_title like '%' || #{keyword} || '%'
+						</if>
+					</where>
+				) b
+			) a
 		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 
@@ -40,28 +40,47 @@
 
 	<update id="lessonHitUpdate" parameterType="LessonVO">
 		UPDATE class
-		set c_hit = c_hit + 1
+		SET c_hit = c_hit + 1
 		WHERE c_id = #{cId}
 	</update>
 
 	<select id="countLessonMain" resultType="Integer">
-		select count(*)
-		from class
-				<where>
-			<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-				and vegType in('비건','락토','오보','락토오보')
-			</if>
-			<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-				and vegType in('비건','락토','오보','락토오보')
-				and c_title like '%' || #{keyword} || '%'
-			</if>
-			<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
-				and vegType = #{vegType}
-			</if>
-			<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-				and vegType = #{vegType}
-				and c_title like '%' || #{keyword} || '%'
-			</if>
-		</where>
+		SELECT count(*)
+		FROM class
+			<where>
+				<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
+					AND vegType in('비건','락토','오보','락토오보')
+				</if>
+				<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
+					AND vegType in('비건','락토','오보','락토오보')
+					AND c_title like '%' || #{keyword} || '%'
+				</if>
+				<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+					AND vegType = #{vegType}
+				</if>
+				<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
+					AND vegType = #{vegType}
+					AND c_title like '%' || #{keyword} || '%'
+				</if>
+			</where>
 	</select>
+	
+	<select id="likeFlagCount" resultType="Integer">
+		SELECT count(*)
+		FROM like_list
+		WHERE m_id = #{mId}
+		AND origin_id = #{originId} 
+	</select>
+	
+	<insert id="likeInsert">
+		INSERT INTO like_list
+		VALUES('like'||like_seq.nextval, #{originId}, sysdate, #{mId})
+	</insert>
+	
+	<delete id="likeDelete">
+		DELETE FROM like_list
+		WHERE origin_id = #{originId}
+		AND m_id = #{mId}
+	</delete>
+	
 </mapper>

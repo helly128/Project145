@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.lesson.mapper.LessonMapper;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.vo.LessonVO;
+import com.pj.vegi.vo.LikeListVo;
 
 @Service("lessonService")
 public class LessonServiceImpl implements LessonService {
@@ -34,5 +35,20 @@ public class LessonServiceImpl implements LessonService {
 	@Override
 	public int countLessonMain(LessonVO vo) {
 		return dao.countLessonMain(vo);
+	}
+
+	@Override
+	public int likeFlagCount(LikeListVo vo) {
+		return dao.likeFlagCount(vo);
+	}
+
+	@Override
+	public int likeInsert(LikeListVo vo) {
+		return dao.likeInsert(vo);
+	}
+
+	@Override
+	public int likeDelete(LikeListVo vo) {
+		return dao.likeDelete(vo);
 	}
 }

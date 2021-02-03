@@ -2,88 +2,121 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pj.vegi.restaurant.mapper.RestaurantMapper">
+<mapper
+	namespace="com.pj.vegi.restaurant.mapper.RestaurantMapper">
 
 	<select id="bizCheckList" resultType="RestaurantVo">
-		SELECT 
+		SELECT
 		*
 		FROM restaurant
 		WHERE rest_name = #{restName}
 	</select>
-	
-	
+
+
 	<insert id="restInsert">
-	<!-- 일반유저 식당 등록 -->
-			<selectKey keyProperty="restId" resultType="string" order="BEFORE">
-        	 SELECT 'rest'||rest_seq.nextval
-        	 FROM DUAL
-    	</selectKey>
-	INSERT INTO restaurant(REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
-							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
-							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM, REST_ADDRESS_DETAIL) 
-			VALUES(#{restId},#{restName},0,0,
-					#{restAddress},#{restPic},#{restTime},#{mId},0,
-					0,#{restTel},'','false', #{restAddressDetail})	
+		<!-- 일반유저 식당 등록 -->
+		<selectKey keyProperty="restId" resultType="string"
+			order="BEFORE">
+			SELECT 'rest'||rest_seq.nextval
+			FROM DUAL
+		</selectKey>
+		INSERT INTO restaurant(REST_ID, REST_NAME,
+		REST_STAR_AVG,REST_REVIEW_COUNT,
+		REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+		REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM, REST_ADDRESS_DETAIL)
+		VALUES(#{restId},#{restName},0,0,
+		#{restAddress},#{restPic},#{restTime},#{mId},0,
+		0,#{restTel},'','false', #{restAddressDetail})
 	</insert>
-	
+
 	<insert id="menuInsert">
-	<!-- 일반유저 식당 등록(메뉴) -->
-		INSERT INTO REST_MENU(MENU_ID, MENU_NAME, MENU_VEGE_TYPE, MENU_PRICE, REST_ID)
-			VALUES('menu' ||menu_seq.nextval, #{menuName}, #{menuVegeType}, #{menuPrice}, #{restId})
+		<!-- 일반유저 식당 등록(메뉴) -->
+		INSERT INTO REST_MENU(MENU_ID, MENU_NAME, MENU_VEGE_TYPE, MENU_PRICE,
+		REST_ID)
+		VALUES('menu' ||menu_seq.nextval, #{menuName},
+		#{menuVegeType}, #{menuPrice},
+		#{restId})
 	</insert>
-	
-	
+
+
 	<insert id="restInsertNull">
-	INSERT INTO restaurant (REST_ID, REST_NAME, REST_STAR_AVG,REST_REVIEW_COUNT,
-							REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
-							REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM) 
-          VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'false')
+		INSERT INTO restaurant (REST_ID, REST_NAME,
+		REST_STAR_AVG,REST_REVIEW_COUNT,
+		REST_ADDRESS,REST_PIC,REST_TIME,M_ID,REST_RESERV_WAIT,
+		REST_RESERV_ACCEPT,REST_TEL,BIZNUM,ADMIN_CONFIRM)
+		VALUES('rest'||rest_seq.nextval,#{restName},0,0,#{restAddress},'','','',0,0,#{restTel},#{bizNum},'false')
 	</insert>
-	
-	
+
+
 	<select id="restNameSerchList" resultType="RestaurantVo">
-	<!-- 일반유저 식당 등록에서 식당이름 검색하는 부분 -->
-	SELECT REST_NAME, REST_ID FROM restaurant WHERE REST_NAME LIKE '%${restName}%'
+		<!-- 일반유저 식당 등록에서 식당이름 검색하는 부분 -->
+		SELECT REST_NAME, REST_ID FROM restaurant WHERE REST_NAME LIKE
+		'%${restName}%'
 	</select>
-	
+
 
 	<update id="restUpdate">
-	Update restaurant 
-	set bizNum=#{bizNum} 
-	where rest_id = #{restId}	
+		Update restaurant
+		set bizNum=#{bizNum}
+		where rest_id =
+		#{restId}
 	</update>
-	
-	
+
+
 	<update id="bizInfoUpdate">
-	Update restaurant set bizNum=#{bizNum} where rest_id = #{restId}
+		Update restaurant set bizNum=#{bizNum} where rest_id
+		= #{restId}
 	</update>
 
 
 	<select id="getRestaurantList" resultType="RestaurantVo">
-	<!-- 식당 전체목록 -->
-	SELECT * FROM RESTAURANT
+		<!-- 식당 전체목록 -->
+		SELECT * FROM RESTAURANT
 	</select>
 
 
 	<select id="getRestaurantDetail" resultType="RestaurantVo">
-	<!-- 식당 상세페이지 -->
-	SELECT *
-	FROM RESTAURANT
-	WHERE REST_ID = #{restId}
+		<!-- 식당 상세페이지 -->
+		SELECT *
+		FROM RESTAURANT
+		WHERE REST_ID = #{restId}
 	</select>
-	
+
 	<select id="getRestaurantMenu" resultType="RestMenuVo">
-	<!-- 식당 메뉴 목록 -->
-	SELECT *
-	FROM REST_MENU
-	WHERE REST_ID = #{restId}
+		<!-- 식당 메뉴 목록 -->
+		SELECT *
+		FROM REST_MENU
+		WHERE REST_ID = #{restId}
 	</select>
-	
+
 	<insert id="reservInsert">
-	<!-- 예약하기 -->
-	insert into REST_RESERV(REST_RESERV_NUM, REST_RESERV_DATE, REST_RESERV_NAME, REST_RESERV_PEOPLE, M_ID, REST_ID)
-	values('REST_RESERV'||rest_reserv_seq.nextval, #{restReservDate}, #{restReservName}, #{restReservPeople}, #{mId}, #{restId})
+		<!-- 예약하기 -->
+		insert into REST_RESERV(REST_RESERV_NUM, REST_RESERV_DATE,
+		REST_RESERV_NAME, REST_RESERV_PEOPLE, M_ID, REST_ID)
+		values('REST_RESERV'||rest_reserv_seq.nextval, #{restReservDate},
+		#{restReservName}, #{restReservPeople}, #{mId}, #{restId})
 	</insert>
-	
-	
+
+	<insert id="restLikeInsert">
+		INSERT INTO like_list
+		VALUES('like' ||
+		like_seq.nextval, #{originId}, localtimestamp, #{mId})
+	</insert>
+
+	<delete id="restLikeDelete">
+		DELETE FROM like_list
+		WHERE origin_id=#{originId}
+		AND
+		m_id=#{mId}
+	</delete>
+
+	<select id="restLikeFlagSelect" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		like_list
+		WHERE m_id=#{mId}
+		AND origin_id=#{originId}
+	</select>
+
+
 </mapper>

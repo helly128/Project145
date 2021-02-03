@@ -8,25 +8,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
 <title>lessonMain.jsp</title>
-<!-- Custom fonts for this template -->
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
-	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<style type="text/css">
+	.likeAction {
+	border: none;
+	background: transparent;
+}
+</style>
 
-<!-- Custom styles for this page -->
-<link href="vendor/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet">
 </head>
 <body>
 	<section class="latest-product-area pt-130 pb-110">
@@ -75,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" id="cards">
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
@@ -102,7 +92,19 @@
 								</ul>
 								<div class="product-bottom">
 									<h3 class="price">${lesson.getCPrice() }원</h3>
-									<a href="javascript:void(0)" class="link-ad">🤍</a>
+									<div>
+										<button type="button" class="likeAction"
+											data-id="${lesson.getCId() }">
+											<c:if test="${lesson.getLikeFlag() > 0 }">
+												<img class="likeImg" src="/images/filled_like.png"
+													style="width: 30px;">
+											</c:if>
+											<c:if test="${lesson.getLikeFlag() == 0 }">
+												<img class="likeImg" src="/images/empty_like.png"
+													style="width: 30px;">
+											</c:if>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -126,6 +128,41 @@
 			}
 
 		}
+
+		$(function() {
+
+			$("#cards").on('click', '.likeAction', function() {
+				
+				if ( '${mId}' == null || '${mId}' == '' ) {
+					alert("로그인 후 이용가능합니다.")
+				} else {
+					var classId = $(this).data('id')
+					
+					if ( $(this).children('img').attr('src') == '/images/empty_like.png' ) {
+						$.ajax({
+							url:'lessonLike.do/' + classId,
+							type:'post',
+							contentType:"application/json",
+							success:function(result) {
+								
+							}
+						})	// ajax end
+						$(this).children('img').attr('src', '/images/filled_like.png')
+					} else {
+						$.ajax({
+							url:'lessonUnLike.do/' + classId,
+							type:'post',
+							contentType:'application/json',
+							success:function(result) {
+								
+							}
+						}) //ajax end
+						$(this).children('img').attr('src', '/images/empty_like.png')
+					}
+				}
+			})
+
+		})//ready end
 	</script>
 </body>
 </html>

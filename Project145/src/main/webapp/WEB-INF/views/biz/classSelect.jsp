@@ -25,7 +25,8 @@
 <title>클래스 등록 폼</title>
 </head>
 <body style="padding:0;">
-
+${cvo.getCTitle()} <br>
+${lvo.lec_id}
 
 	<div class="container" align="center">
 		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
@@ -33,7 +34,7 @@
 		
 			<br>
 			<div class="pagetitle" align="center">
-				<h3>새로운 클래스 등록</h3>
+				<h3>클래스 상세 페이지 </h3>
 			</div>
 			<br>
 			<div class="row" id="uploadpic">

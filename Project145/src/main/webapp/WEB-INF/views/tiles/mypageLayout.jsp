@@ -35,9 +35,7 @@
 			id="accordionSidebar">
 
 			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="/">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
 				<div class="sidebar-brand-text mx-3">채식당</div>
 			</a>
@@ -82,6 +80,8 @@
 						<a class="collapse-item" href="/myLikeClass.do">Class</a> <a
 							class="collapse-item" href="/myLikeRecipe.do">Recipe</a> <a
 							class="collapse-item" href="/myLikeMeet.do">Meet</a>
+							<a
+							class="collapse-item" href="/myLikeRestaurant.do">Restaurant</a>
 					</div>
 				</div></li>
 

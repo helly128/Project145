@@ -1,8 +1,8 @@
 package com.pj.vegi.vo;
 
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +29,6 @@ public class RecipeVo {
 	private int end;
 	private int startPage;
 	private int endPage;
+	
+	private List<RecipeVo> recipeVoList;
 }

@@ -20,8 +20,8 @@ Configuration 2.1//EN"
 		<put-attribute name="content" value="/WEB-INF/views/biz/{1}.jsp" />
 	</definition>
 	
-	<definition name="adminM/*"	template="/WEB-INF/views/tiles/mypageLayout.jsp">
-		<put-attribute name="content" value="/WEB-INF/views/adminM/{1}.jsp" />
+	<definition name="admin/*"	template="/WEB-INF/views/tiles/adminpageLayout.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp" />
 	</definition>
 	
 	<definition name="lesson/*"	template="/WEB-INF/views/tiles/layout.jsp">

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.pj.vegi.restaurant.mapper.RestaurantMapper;
 import com.pj.vegi.restaurant.service.RestaurantService;
+import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
@@ -16,7 +17,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Autowired
 	private RestaurantMapper dao;	
-
 
 	@Override
 	public int restInsert(RestaurantVo vo) throws SQLException {
@@ -32,30 +32,24 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Override
 	public List<RestaurantVo> bizCheckList(String restName) throws SQLException {
-		
 		return dao.bizCheckList(restName);
 	}
 
 	@Override
-	public int bizInfoUpdate(RestaurantVo vo) {
-		
-		return dao.bizInfoUpdate(vo);
-		
+	public int bizInfoUpdate(RestaurantVo vo) {	
+		return dao.bizInfoUpdate(vo);	
 	}
 	
 
 	@Override
 	public int restInsertNull(RestaurantVo vo) throws SQLException {
-		// TODO Auto-generated method stub
 		return dao.restInsertNull(vo);
 	}
 
-	
-
 	@Override
-	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) {
+	public List<RestaurantVo> getRestaurantList() {
 		// 식당 목록페이지
-		return dao.getRestaurantList(vo);
+		return dao.getRestaurantList();
 	}
 
 	@Override
@@ -68,7 +62,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public List<RestaurantVo> restNameSerchList(String restName) {
 		//일반사용자 식당 입력페이지에서 식당 이름 검색
 		return dao.restNameSerchList(restName);
-		
 	}
 
 	@Override
@@ -87,6 +80,24 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public int reservInsert(RestReservVo vo) {
 		//식당 에약
 		return dao.reservInsert(vo);
+	}
+
+	@Override
+	public int restLikeInsert(LikeListVo vo) {
+		//좋아요 선택
+		return dao.restLikeInsert(vo);
+	}
+
+	@Override
+	public int restLikeDelete(LikeListVo vo) {
+		//좋아요 취소
+		return dao.restLikeDelete(vo);
+	}
+
+	@Override
+	public int restLikeFlagSelect(LikeListVo vo) {
+		//좋아요 여부 확인
+		return dao.restLikeFlagSelect(vo);
 	}
 	
 	

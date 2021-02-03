@@ -6,29 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>RestaurantMain.jsp</title>
-
-<style type="text/css">
-
-#restInsert:hover {
-	background-color:#6c9852;
-	color:white;
-}
-
-.lni-heart-filled {
-	color: white;
-}
-
-.lni-heart-filled:hover {
-	color: pink;
-}
-
-.lni-heart-filled:clicked {
-	color: red;
-}
-
+<style>
+	.likeAction {
+	border: none;
+	background: transparent;
+	}
+	
 </style>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
 </head>
+
+
 <body>
 	<section class="latest-product-area pt-130 pb-110">
 		<div class="container">
@@ -46,11 +36,11 @@
 						<form action="#">
 							<div class="row justify-content-center">
 								<div class="col-lg-2 col-sm-4 col-6">
-									<div class="search-input" >
-										<label for="category">
-										<i class="lni lni-grid-alt theme-color"></i>
-										</label> 
-										<select name="category" onchange="moveurl(this.value);" id="category">
+									<div class="search-input">
+										<label for="category"> <i
+											class="lni lni-grid-alt theme-color"></i>
+										</label> <select name="category" onchange="moveurl(this.value);"
+											id="category">
 											<form name=move method=post>
 												<option value="none" selected disabled>Categories</option>
 												<option value="/restaurantBegan.do">비건</option>
@@ -71,8 +61,10 @@
 								</div>
 								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="restaurantInsertButton" style="margin-bottom: 5%">
-										<input class="aaa" type="button" name="restInsert" id="restInsert" onclick="location.href='restaurantForm.do'"
-											   style="border-radius: 50px; text-align:center;" value="식당 제보하기">
+										<input class="aaa" type="button" name="restInsert"
+											id="restInsert" onclick="location.href='restaurantForm.do'"
+											style="border-radius: 50px; text-align: center;"
+											value="식당 제보하기">
 									</div>
 								</div>
 							</div>
@@ -82,32 +74,41 @@
 			</div>
 			<!-- 검색바 끝 -->
 			<%-- ${restaurant} --%>
-			<div class="row">
-			<!-- 식당 리스트 시작 -->
+			<div class="row" id="cards">
+				<!-- 식당 리스트 시작 -->
 				<c:forEach var="vo" items="${restaurants}">
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> 
-									<img src="${vo.getRestPic() }" alt="" height="300px" width="300px">
+								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> <img
+									src="images/salad.jpg" alt="" height="300px" width="300px">
 								</a>
-								<div class="product-action">
-									<a href="#"><i class="lni lni-heart-filled" onclick="redheart"></i></a>	
-								</div>
 							</div>
 
 							<div class="product-content">
-								<div class="namediv">
+								<div class="namediv" style="float: left;">
 									<h3 class="name">
-										<a href="/restaurantDetail.do?restId=${vo.getRestId() }">${vo.getRestName() }</a> 
+										<a href="/restaurantDetail.do?restId=${vo.getRestId() }">${vo.getRestName() }</a>
 									</h3>
+									<i class="lni lni-star"></i> ${vo.getRestStarAvg() }
 								</div>
-								<ul class="address">
-									<li><a href="javascript:void(0)">
-										<i class="lni lni-star"></i> ${vo.getRestStarAvg() }</a></li>
-									<li><a href="javascript:void(0)">
-									<i class="lni lni-package"></i> ${vo.getRestTime()}</a></li>
-								</ul>
+								<br>
+								<br>
+								<!-- 좋아요 -->
+									<div class="likehear" align="right" >
+										<button type="button" class="likeAction"
+											data-id="${vo.restId }">
+											<c:if test="${vo.likeFlag > 0 }">
+												<img class="likeImg" src="/images/filled_like.png"
+													style="width: 30px;">
+											</c:if>
+											<c:if test="${vo.likeFlag == 0 }">
+												<img class="likeImg" src="/images/empty_like.png"
+													style="width: 30px;">
+											</c:if>
+										</button>
+									</div>
+				
 							</div>
 						</div>
 					</div>
@@ -115,5 +116,43 @@
 			</div>
 		</div>
 	</section>
+	
+	<script>
+	$(function() {
+		$('#cards')
+				.on(
+						'click',
+						'.likeAction',
+						function() {
+							if ('${mId}' == null || '${mId}' == '') {
+								alert('로그인 후 이용가능합니다.');
+							} else {
+								/* 로그인 된 상태 */
+								var restId = $(this).data('id');
+								if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+									$.ajax({
+										url : 'restaurantLike.do/' + restId,
+										type : 'post',
+										contentType : "application/json",
+										success : function(result) {
+										}
+									});
+									$(this).children('img').attr('src', '/images/filled_like.png');
+								} else {
+									$(this).children('img').attr('src','/images/empty_like.png');
+									$.ajax({
+												url : 'restaurantUnlike.do/'+ restId,
+												type : 'post',
+												contentType : "application/json",
+												success : function(result) {
+												console.log(result);
+												}
+											});
+									$(this).children('img').attr('src','/images/empty_like.png');
+								}
+							}
+						})
+					});
+	</script>
 </body>
 </html>
