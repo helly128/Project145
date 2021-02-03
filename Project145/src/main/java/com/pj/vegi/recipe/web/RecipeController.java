@@ -2,30 +2,19 @@ package com.pj.vegi.recipe.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
@@ -95,8 +84,9 @@ public class RecipeController {
 		return "recipe/recipeRactoOvo";
 	}
 
-	@Autowired
-	LessonService lessonService;
+	/*
+	 * @Autowired LessonService lessonService;
+	 */
 	@Autowired
 	RecipeMaterialService recipeMaterialService;
 
@@ -106,7 +96,7 @@ public class RecipeController {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
 
-		List<LessonVO> lessons = lessonService.lessonList(lVo);
+		List<LessonVO> lessons = recipeService.lessonSearch(lVo);
 		session.setAttribute("rId", rVo.getRId());
 
 		model.addAttribute("recipeSelect", recipeVo);
@@ -134,17 +124,25 @@ public class RecipeController {
 		return "recipe/recipeUpdate";
 	}
 
-	@RequestMapping("/recipeUpdateResult.do") // 수정 처리
-	public String recipeUpdateResult(RecipeMaterialVo rmVo, RecipeVo vo, Model model, HttpServletRequest request,
-			@RequestParam MultipartFile uploadFile) throws IllegalStateException, IOException {
+	@RequestMapping(value="/recipeUpdateResult.do",method=RequestMethod.POST) // 수정 처리
+	public String recipeUpdateResult(RecipeMaterialVo rmVo,LessonVO lVo, RecipeVo vo, Model model, HttpServletRequest request,
+			@RequestParam(name = "rImageFile") MultipartFile rImage) throws IllegalStateException, IOException, SQLException {
 		// 사진 업로드 처리
-		if (uploadFile != null && uploadFile.getSize() > 0) {
-			String name = ImageIO.imageUpload(request, uploadFile, vo.getRImage());
+		if (rImage != null && rImage.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, rImage);
 			vo.setRImage(name);
 		}
+		vo.setCId(vo.getCIdArr().toString()); 
 		recipeService.recipeUpdate(vo);
+		List<RecipeMaterialVo> matList = rmVo.getRecipeMatVoList();
+		for(RecipeMaterialVo rmVo1 : matList) {
+			recipeMaterialService.recipeMaterialUpdate(rmVo1);
+		}
+		recipeService.lessonSearch(lVo);
+		model.addAttribute("cId", lVo.getCId());
+		model.addAttribute("rId", vo.getRId());
 		
-		return "redirect:recipeMain.do";
+		return "redirect:recipeDesc.do";
 
 	}
 
@@ -161,7 +159,7 @@ public class RecipeController {
 
 	@PostMapping(value="/lessonSearch.do")
 	@ResponseBody
-	public List<LessonVO> lessonSearch(@RequestParam Map<String, Object>param, HttpServletRequest request,LessonVO lvo) {
+	public List<LessonVO> lessonSearch(LessonVO param, HttpServletRequest request,LessonVO lvo) {
 		// ModelAndView mav = new ModelAndView();
 //		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
 		

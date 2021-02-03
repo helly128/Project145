@@ -242,7 +242,7 @@ $(document).ready(function){
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<img src="${recipeSelect.getRImage()}" height="200px" width="200px">
+					<img src="/images/${recipeSelect.getRImage()}" height="200px" width="200px">
 				</div>
 			</div>
 			<div class="row">
@@ -312,7 +312,7 @@ $(document).ready(function){
 			<br /> <br />
 			<div class="row">
 				<!-- 클래스리스트 시작 -->
-				<%-- <input type="hidden" value="${lesson}"> --%>
+				 <input type="hidden" value="${lesson}"> 
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="single-product">

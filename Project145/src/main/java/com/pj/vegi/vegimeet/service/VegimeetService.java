@@ -1,6 +1,7 @@
 package com.pj.vegi.vegimeet.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vo.LikeListVo;
@@ -12,7 +13,8 @@ import com.pj.vegi.vo.VegimeetVo;
 public interface VegimeetService {
 	List<VegimeetVo> vegimeetList();
 	int getDday(VegimeetVo vo);
-	List<VegimeetVo> myMeetList(String mId);
+	List<Map> myMeetList(String mId);
+	Map myMeetOne(MeetParticipantVo vo);
 	
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);

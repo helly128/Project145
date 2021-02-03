@@ -17,6 +17,11 @@ public class LessonVO {
 	private Date cEnd;
 	private String status;
 	
+	private String lecProfile;
+	private String lecCareer;
+	private String lName;//지우지마세요...제발
+	private String lecName;
+	private String lecInsta;
 	private String curriCulum;
 	private int cHit;
 	private String mId;

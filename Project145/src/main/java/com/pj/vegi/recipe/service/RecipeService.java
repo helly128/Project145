@@ -16,5 +16,5 @@ public interface RecipeService {
 	public int recipeDelete(RecipeVo vo);
 	
 	public List<LessonVO>searchlessonList(LessonVO lvo);
-	public List<LessonVO> lessonSearch(Map<String,Object>map);
+	public List<LessonVO> lessonSearch(LessonVO lVo);
 }

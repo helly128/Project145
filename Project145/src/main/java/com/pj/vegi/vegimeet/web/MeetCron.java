@@ -21,9 +21,10 @@ public class MeetCron {
 	@Autowired
 	VegimeetService vegimeetService;
 
-	@Scheduled(cron = "0 0 0 * * *")	// 매일 자정 실행
+	@Scheduled(cron = "50 59 23 * * *")	// 매일 자정 전 실행
 	public void autoUpdate() {
 		
+		System.out.println("cron 실행");
 		//false count
 		//현재 진행중인 meetid만 가져오기
 		List<VegimeetVo> meetList = vegimeetService.ongoingMeetList();
@@ -39,7 +40,10 @@ public class MeetCron {
 		}
 		
 		
-		
+	}
+	
+	@Scheduled(cron = "05 00 00 * * *")	//매일 자정 후 실행
+	public void autoReward() {
 		//보상금 처리
 		List<VegimeetVo> endList = vegimeetService.endMeetSelect();
 		for(VegimeetVo vo : endList	) {
@@ -82,6 +86,5 @@ public class MeetCron {
 				}
 			}
 		}
-		
 	}
 }
