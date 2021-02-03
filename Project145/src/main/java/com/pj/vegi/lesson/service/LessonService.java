@@ -2,13 +2,14 @@ package com.pj.vegi.lesson.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
 
 public interface LessonService {
 
-	List<LessonVO> lessonList(LessonVO vo) throws SQLException;
+	List<Map> lessonList(LessonVO vo) throws SQLException;
 
 	LessonVO lessonSelectOne(LessonVO vo);
 

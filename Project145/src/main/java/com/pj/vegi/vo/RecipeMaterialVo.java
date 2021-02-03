@@ -1,6 +1,6 @@
 package com.pj.vegi.vo;
 
-import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +18,6 @@ public class RecipeMaterialVo {
 	private String matName;
 	private String matVol;
 	private String rId;
+	
+	private List<RecipeMaterialVo> recipeMatVoList;
 }

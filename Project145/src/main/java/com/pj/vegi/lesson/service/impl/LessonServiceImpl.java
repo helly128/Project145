@@ -2,6 +2,7 @@ package com.pj.vegi.lesson.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class LessonServiceImpl implements LessonService {
 	private LessonMapper dao;
 
 	@Override
-	public List<LessonVO> lessonList(LessonVO vo) throws SQLException {
+	public List<Map> lessonList(LessonVO vo) throws SQLException {
 		return dao.lessonList(vo);
 	}
 
