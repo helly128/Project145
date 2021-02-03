@@ -100,7 +100,7 @@
 	<insert id="restLikeInsert">
 		INSERT INTO like_list
 		VALUES('like' ||
-		like_seq.nextval, #{originId}, localtimestamp, #{mId})
+		like_seq.nextval, #{originId}, current_date, #{mId})
 	</insert>
 
 	<delete id="restLikeDelete">
