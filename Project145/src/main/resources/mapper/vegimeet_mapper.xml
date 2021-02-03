@@ -73,29 +73,33 @@
 		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, current_date)
 	</insert>
 
-	<resultMap type="MeetParticipantVo" id="MeetParticipantVo">
-		<result column="m_id" property="mId" />
-		<result column="success" property="success" />
-		<result column="achiv" property="achiv" />
-		<result column="today_flag" property="todayFlag" />
-	</resultMap>
-	<resultMap type="VegimeetVo" id="VegimeetVo">
-		<result column="meet_title" property="meetTitle" />
-		<result column="meet_id" property="meetId" />
-		<result column="total_day" property="totalDay" />
-		<result column="meet_pic" property="meetPic" />
-		<collection property="partiVo"
-			resultMap="MeetParticipantVo" />
-	</resultMap>
-	<select id="myMeetList" resultMap="VegimeetVo">
-		SELECT u.meet_title, p.m_id,
-		u.meet_id, u.total_day,
-		p.success, p.achiv, u.meet_pic, p.today_flag
-		FROM meet_un u
-		JOIN meet_parti p
-		ON (u.meet_id =
-		p.meet_id)
+	<select id="myMeetList" resultType="map">
+		SELECT u.meet_title "meetTitle",
+			   p.m_id		"mId",
+			   u.meet_id	"meetId",
+			   u.total_day	"totalDay",
+			   p.success	"success",
+			   p.achiv		"achiv",
+			   u.meet_pic	"meetPic",
+			   p.today_flag	"todayFlag"
+		FROM meet_un u JOIN meet_parti p
+		ON (u.meet_id = p.meet_id)
 		WHERE p.m_id=#{mId}
+	</select>
+	
+	<select id="myMeetOne" resultType="map">
+		SELECT u.meet_title "meetTitle",
+			   p.m_id		"mId",
+			   u.meet_id	"meetId",
+			   u.total_day	"totalDay",
+			   p.success	"success",
+			   p.achiv		"achiv",
+			   u.meet_pic	"meetPic",
+			   p.today_flag	"todayFlag"
+		FROM meet_un u JOIN meet_parti p
+		ON (u.meet_id = p.meet_id)
+		WHERE p.m_id=#{mId}
+		AND p.meet_id=#{meetId}
 	</select>
 
 	<select id="meetpSelect" resultType="MeetParticipantVo">
