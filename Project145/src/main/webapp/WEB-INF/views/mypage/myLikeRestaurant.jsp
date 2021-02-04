@@ -24,7 +24,7 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="/images/${list.restPic }"
-							width="100" height="200">
+							width="100" height="200" onerror="this.src='/images/loveurth (3).jpg'">
 						<div class="card-body">
 							<h4 class="card-title">${list.restName }</h4>
 							<ul class="address" align="left">

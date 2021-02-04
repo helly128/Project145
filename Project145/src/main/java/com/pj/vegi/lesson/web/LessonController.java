@@ -11,17 +11,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
+import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Controller
 public class LessonController {
 
 	@Autowired
 	private LessonService lessonService;
+	@Autowired
+	private MemberService memberService;
+
 
 	@RequestMapping("/lessonMain.do")
 	public String lessonMain(@ModelAttribute("vo") LessonVO vo, Model model, Paging paging, HttpSession session)
@@ -96,9 +105,37 @@ public class LessonController {
 		
 	}
 	
-	@RequestMapping("/LessonEnq.do")
-	public String LessonEnq() {
+	@RequestMapping("/lessonEnq.do")
+	public String lessonEnq(enquiryVO vo, HttpSession session) {
 		
-		return "mypage/myQuestionList";
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+		
+		lessonService.lessonEnqSubmit(vo);
+		
+		//알림+1		
+	
+		
+		return "redirect:lessonProduct.do?cId=" + vo.getOriginId();
 	}
+	
+	@RequestMapping("/lessonJoin.do")
+	public String lessonJoin(Model model, HttpSession session, LessonVO l_vo, MemberVo m_vo) {
+		
+		String mid = (String) session.getAttribute("mId");
+		m_vo.setMId(mid);
+		try {
+			m_vo = memberService.memberSelect(m_vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Map<String, Object> lesson = lessonService.lessonSelectOne(l_vo);
+		
+		model.addAttribute("member", m_vo);
+		model.addAttribute("lesson", lesson);
+		
+		return "lesson/lessonPayPage";
+	}
+	
 }
