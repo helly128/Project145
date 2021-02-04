@@ -41,8 +41,9 @@ public class LessonController {
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
 
-		List<Map> lessons = lessonService.lessonList(vo);
-		for (Map lesson_vo : lessons) {
+		List<LessonVO> lessons = lessonService.lessonList(vo);
+		
+		for (LessonVO lesson_vo : lessons) {
 			
 			LikeListVo like_vo = new LikeListVo();
 			like_vo.setMId(mid);
@@ -93,5 +94,11 @@ public class LessonController {
 		vo.setOriginId(classId);
 		lessonService.likeDelete(vo);
 		
+	}
+	
+	@RequestMapping("/LessonEnq.do")
+	public String LessonEnq() {
+		
+		return "mypage/myQuestionList";
 	}
 }

@@ -65,6 +65,15 @@ td {
 .submitBtn:hover {
 	color: white;
 }
+
+.exampleImg {
+	height: 180px;
+}
+
+.imageTr td {
+	text-align: center;
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -76,48 +85,41 @@ td {
 				<table class="tbl" style="width: 70%;">
 					<tr>
 						<th width="100px;">챌린지 제목</th>
-						<td><input type="text" name="meetTitle"
+						<td colspan="3"><input type="text" name="meetTitle"
 							placeholder="제목을 입력하세요" required></td>
 					</tr>
 					<tr>
 						<th>기간</th>
-						<td><input type="date" name="meetStart" style="width: 40%"
-							min="" required> ~ <input type="date" name="meetEnd"
-							style="width: 40%" required></td>
+						<td colspan="3"><input type="date" name="meetStart"
+							style="width: 40%" min="" required> ~ <input type="date"
+							name="meetEnd" style="width: 40%" required></td>
 					<tr>
 						<th>챌린지 내용</th>
-						<td><textarea placeholder="챌린지 내용을 입력하세요" required></textarea></td>
+						<td colspan="3"><textarea placeholder="챌린지 내용을 입력하세요"
+								required></textarea></td>
 					</tr>
-					<tr>
-						<th>대표 사진</th>
-						<td><div class="row" id="imageRadio">
-								<div class="col-xl-4 col-lg-4 col-md-6 mb-4">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample1.jpg" checked> <img
-										src="/images/sample1.jpg">
-								</div>
-								<div class="col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample2.jpg"> <img src="">
-								</div>
-								<div class="col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample2.jpg"> <img src="">
-								</div>
-								<div class="image-container col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio imageSelect">
-									<div class="myImage">
-										<img id="upload-image" width="100%" class="mb-4">
-										<div class="div-image">
-											<span class="label">사진 업로드</span> <input type="file"
-												name="uploadfile" class="uploadPic" accept="image/*"
-												onchange="setImage(event);">
-										</div>
-									</div>
-								</div>
+					<tr class="imageTr">
+						<th rowspan="2">대표 사진</th>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample1.jpg" checked> <img class="exampleImg"
+							src="/images/sample1.jpg"></td>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample2.jpg"> <img class="exampleImg"
+							src="/images/sample2.jpg"></td>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample3.jpg"> <img class="exampleImg"
+							src="/images/sample3.jpg"></td>
+					</tr>
+					<tr class="imageTr">
+						<td style="padding-top:20px;"><input type="radio" name="meetPic"
+							class="radio imageSelect"> <img id="upload-image"
+							width="250px" class="mb-4">
+							<div class="div-image">
+								<span class="label">사진 업로드</span> <input type="file"
+									name="uploadfile" class="uploadPic" accept="image/*"
+									onchange="setImage(event);">
 							</div></td>
 					</tr>
-
 				</table>
 			</div>
 			<div align="right">
@@ -157,7 +159,7 @@ td {
 					$('input[name=meetEnd]').val(start);
 				}
 			});
-			
+
 		});
 
 		function dateFormat(today) { //today는 date타입
@@ -172,15 +174,18 @@ td {
 			today = today.getFullYear() + '-' + month + '-' + day;
 			return today; //리턴은 string
 		}
-		
+
 		//개설 버튼 눌렀을 때 사진 required
-		function checkFrm(){
-			if($('.imageSelect').is(':checked')){
-				if($('.uploadPic').val() == '' || $('.uploadPic').val() == null){
-					alert('사진을 선택해주세요');
+		function checkFrm() {
+			if ($('.imageSelect').is(':checked')) {
+				$('.imageSelect').val($('.uploadPic').val());
+				console.log($('.imageSelect').val($('.uploadPic').val()));
+				if ($('.uploadPic').val() == ''
+						|| $('.uploadPic').val() == null) {
+					alert('사진을 업로드해주세요');
 					return false;
-				} else{
-					return true;
+				} else {
+					return false;
 				}
 			}
 		}
