@@ -19,7 +19,7 @@ public class LessonServiceImpl implements LessonService {
 	private LessonMapper dao;
 
 	@Override
-	public List<Map> lessonList(LessonVO vo) throws SQLException {
+	public List<LessonVO> lessonList(LessonVO vo) throws SQLException {
 		return dao.lessonList(vo);
 	}
 

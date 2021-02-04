@@ -160,19 +160,18 @@
 						<h5>${lesson.cJoin }명/${lesson.cParti }명</h5>
 					</div>
 					<div class="border-bottom p-3">
-						<form action="">
+						<form action="LessonEnq.do" id="form">
 							<span class="widget-title mb-2">문의하기</span>
 							<textarea class="textarea" rows="3"></textarea>
 							<div align="right">
 								<c:if test="${mId == null or mId == ''}">
-									<button class="btn submitBtn btn-hover" type="submit"
-										disabled="disabled">등록</button>
+									<button class="btn submitBtn btn-hover" disabled="disabled">등록</button>
 									<br>
 									<br>
 									<span>로그인 후 사용가능합니다.</span>
 								</c:if>
 								<c:if test="${mId != null and mId != ''}">
-									<button class="btn submitBtn btn-hover" type="submit">등록</button>
+									<button class="btn submitBtn btn-hover">등록</button>
 								</c:if>
 							</div>
 						</form>
@@ -180,8 +179,7 @@
 					<div class="p-3" align="center">
 						<div class="edd_purchase_submit_wrapper" align="center">
 							<c:if test="${mId == null or mId == ''}">
-								<button class="btn joinBtn btn-hover" disabled="disabled">클래스
-									등록</button>
+								<button class="btn joinBtn btn-hover" disabled="disabled">클래스 등록</button>
 								<br>
 								<br>
 								<span>로그인 후 참가가능합니다.</span>
