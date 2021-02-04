@@ -83,27 +83,32 @@ $(document).ready(function){
 		$("#repleBtn").click(function() {
 			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
-	
-		$("#repleList").on( 'click','.delBtn',function() {
+
+		$("#repleList").on('click', '.delBtn', function() {
 			/* var delAlert = confirm("정말 삭제 하시겠어요?");delAlert == ture */
 			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
-			if (confirm("정말 삭제 하시겠어요?")){
-				
-				repleDelete();
-			}else{
-				alert("본인이 작성한 댓글만 삭제 가능합니다.");
+			var mid = $(event.target).parent().prev().text()
+			console.log($(event.target).parent().prev().text())
+			if (confirm("정말 삭제 하시겠어요?")) {
+
+				if (mid == "${sessionScope.mId}") {
+					repleDelete();
+					alert("삭제되었습니다.");
+
+				} else {
+					alert("본인이 작성한 댓글만 삭제 가능합니다.");
+				}
 			}
 		});
-		
+
 	});
 	//댓글 삭제
 	function repleDelete() {
-		id=$(event.target).data("id")
+		id = $(event.target).data("id")
 		$.ajax({
 			type : "delete",
-			url : "/reple/reple.do/"+id,
+			url : "/reple/reple.do/" + id,
 			success : function(result) {
-				alert("댓글이 삭제되었습니다.");
 				repleList();
 
 			}
@@ -117,7 +122,7 @@ $(document).ready(function){
 	var date = year + "년" + month + "월" + day + "일"
 	$('#wDate').text(date);
 
-	 //댓글 입력
+	//댓글 입력
 	function repleWrite() {
 		var reContent = $("#reContent").val();
 		var rId = "${RepleVo.RId}"
@@ -144,8 +149,6 @@ $(document).ready(function){
 			}
 		})
 	}
-	
-	
 
 	/* //댓글 입력
 	function repleWrite() {
@@ -195,26 +198,30 @@ $(document).ready(function){
 
 	//댓글 목록 출력
 	function repleList() {
-		$.ajax({
-			type : "get",
-			url : "/reple/reple.do?RId=${recipeVo.RId}",
-			success : function(result) {
-				var output = "<table>";
-				console.log(result);
-				for ( var i in result) {
-					output += "<tr>";
-					output += "<td width='60' class='delBtn'>";
-					output += "<td width='200'>" + result[i].reContent;
-					output += "<td width='100'>" + result[i].reDate;
-					output += "<td width='60' data-mid='"+result[i].mid+"'>" + result[i].mid;
-					output += "<td width='60'>"
-							+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제"
-					output += "<tr>"
-				}
-				output += "</table>";
-				$("#repleList").html(output);
-			}
-		});
+		$
+				.ajax({
+					type : "get",
+					url : "/reple/reple.do?RId=${recipeVo.RId}",
+					success : function(result) {
+						var output = "<table>";
+						console.log(result);
+						for ( var i in result) {
+							output += "<tr>";
+							output += "<td width='60' class='delBtn'>";
+							output += "<td width='200'>" + result[i].reContent;
+							output += "<td width='100'>" + result[i].reDate;
+							output += "<td width='60' data-mid='"+result[i].mid+"'>"
+									+ result[i].mid;
+							output += "<td width='60'>"
+									+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제";
+							output += "<td width='60'>"
+									+ "<button type='button' class='reBtn' id='reBtn'>답글";
+							output += "</tr>"
+						}
+						output += "</table>";
+						$("#repleList").html(output);
+					}
+				});
 	}
 
 	//재료
@@ -390,8 +397,7 @@ $(document).ready(function){
 				<br />
 				<div id="reloadReple">
 					<div class="row" align="left">
-						<div class="col-lg-1">번호</div>
-						<div class="col-lg-6">댓글 내용</div>
+						<div class="col-lg-6" align="center">댓글 내용</div>
 						<div class="col-lg-2">작성일자</div>
 						<div class="col-lg-2">작성자</div>
 						<div class="col-lg-1">비고</div>
