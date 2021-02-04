@@ -230,7 +230,7 @@
 				</c:forEach>
 			</div>
 
-			<div align="right">
+			<div align="right" class="newChallenge">
 				<button class="btn insertBtn"
 					onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
 			</div>
@@ -330,6 +330,12 @@
 							}
 						});
 					});
+			
+			var mId = '${mId}';
+			if(mId == null || mId == ''){
+				$('.insertBtn').prop('disabled', true);
+				$('.newChallenge').append($('<p>').attr('style', 'font-size: 12px;').text('로그인 후 이용가능합니다.'));
+			}
 		});
 	</script>
 </body>

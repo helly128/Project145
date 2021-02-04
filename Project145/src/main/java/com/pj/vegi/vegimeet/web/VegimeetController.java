@@ -219,7 +219,7 @@ public class VegimeetController {
 	
 	@RequestMapping("/vegimeetInsert.do")
 	public String vegimeetInsert(HttpSession session) {
-		
+		String mId = (String) session.getAttribute("mId");
 		return "";
 	}
 }
