@@ -100,7 +100,8 @@
 									</a></li>
 								</c:if>
 								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
-									<li><a href="/restBizList.do"
+									<li><a <c:if test="${auth == 'rbiz'}">href='/restBizList.do'</c:if>
+									<c:if test="${auth =='cbiz'}">href='/classBizList.do'</c:if>
 										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
 								</c:if>
 								<c:if test="${auth eq 'admin'}">

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <!DOCTYPE html>
 <html>
@@ -214,7 +215,7 @@
 									</li>
 								</ul>
 								<div class="product-bottom border-bottom">
-									<h4 class="price">${vo.meetFund }원</h4>
+									<h4 class="price"><fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />원</h4>
 									<div>
 										<button type="button" class="likeAction"
 											data-id="${vo.meetId }">
@@ -246,11 +247,9 @@
 			<!-- 페이징 -->
 			<my:paging paging="${paging }" jsFunc="goList" />
 		</div>
-		</div>
 		<div align="right" class="newChallenge">
 			<button class="btn insertBtn"
 				onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
-		</div>
 		</div>
 	</section>
 
