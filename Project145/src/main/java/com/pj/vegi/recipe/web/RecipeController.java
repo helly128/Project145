@@ -107,7 +107,6 @@ public class RecipeController {
 
 		List<LessonVO> lessons = recipeService.lessonSearch(lVo);
 		session.setAttribute("rId", rVo.getRId());
-
 		model.addAttribute("recipeSelect", recipeVo);
 		model.addAttribute("lessons", lessons);
 		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
@@ -116,10 +115,23 @@ public class RecipeController {
 	}
 
 	@RequestMapping("/recipeInsert.do") // 등록 폼
-	public String recipeInsert(RecipeVo vo, Model model) {
+	public String recipeInsert() {
 
 		return "recipe/recipeInsert";
 	}
+	
+	
+//	@RequestMapping("/recipeInsertResult.do")
+//	public String recipeInsertResult(RecipeVo vo, Model model) {
+//		String viewPath = null;
+//		int n = recipeService.recipeInsert(vo);
+//		if (n != 0)
+//			viewPath = "redirect:recipeMain.do";
+//		else
+//			viewPath = "recipe/recipeInsertFail";
+//
+//		return viewPath;
+//	}
 
 	@RequestMapping("/recipeUpdate.do") // 수정 폼
 	public String recipeUpdate(RecipeVo vo, RecipeMaterialVo rmVo, Model model, HttpServletRequest request)
@@ -179,20 +191,20 @@ public class RecipeController {
 	// 좋아요
 		@ResponseBody
 		@RequestMapping("/recipeLike.do/{rId}")
-		public void vegimeetLike(@PathVariable String RId, HttpSession session) {
+		public void vegimeetLike(@PathVariable String rId, HttpSession session) {
 			LikeListVo vo = new LikeListVo();
 			vo.setMId((String) session.getAttribute("mId"));
-			vo.setOriginId(RId);
+			vo.setOriginId(rId);
 			recipeService.likeInsert(vo);
 		}
 
 		// 좋아요 취소
 		@ResponseBody
 		@RequestMapping("/recipeUnlike.do/{rId}")
-		public void vegimeetUnlike(@PathVariable String RId, HttpSession session) {
+		public void vegimeetUnlike(@PathVariable String rId, HttpSession session) {
 			LikeListVo vo = new LikeListVo();
 			vo.setMId((String) session.getAttribute("mId"));
-			vo.setOriginId(RId);
+			vo.setOriginId(rId);
 			recipeService.likeDelete(vo);
 		}
 
@@ -213,18 +225,7 @@ public class RecipeController {
 	
 	
 	
-	
-//	@RequestMapping("/recipeInsertResult.do")
-//	public String recipeInsertResult(RecipeVo vo, Model model) {
-//		String viewPath = null;
-//		int n = recipeService.recipeInsert(vo);
-//		if (n != 0)
-//			viewPath = "redirect:recipeMain.do";
-//		else
-//			viewPath = "recipe/recipeInsertFail";
-//
-//		return viewPath;
-//	}
+
 //
 //	@RequestMapping("/recipeUpdateResult.do")
 //	public String recipeUpdateResult(RecipeVo vo, Model model) {
