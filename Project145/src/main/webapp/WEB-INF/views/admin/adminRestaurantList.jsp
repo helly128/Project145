@@ -15,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>adminMemeber</title>
+<title>adminRestaurant</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -37,35 +37,41 @@
 
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">회원 관리</h1>
+		<h1 class="h3 mb-2 text-gray-800">식당 관리</h1>
 
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
+				<h6 class="m-0 font-weight-bold text-primary">식당 목록</h6>
 			</div>
 			<div class="card-body">
-			<form action="adminMemberSelect.do" method="get" id="frm">
+			<form action="adminRestaurant.do" method="get" id="frm">
 				<div>
 					<div class="col-sm-5 col-md-4 col-lg-1"
 						style="margin-right: 0px; float: left;">
 						<div class="dataTables_length" id="dataTable_length">
-							<label> <select name="available" id="available"
-								aria-controls="dataTable"
-								class="custom-select custom-select-sm form-control form-control-sm">
-									<option value="none" selected disabled>이용현황</option>
-									<option value="able"
-										<c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
-									<option value="unable"
-										<c:if test="${vo.available == 'unable' }">selected="selected"</c:if>>이용정지</option>
+							<label> 
+								<select name="adminConfirm" id="adminConfirm"
+										aria-controls="dataTable"
+										class="custom-select custom-select-sm form-control form-control-sm">
+									<option value="none" selected disabled>등록현황</option>
+									<option value="true"
+										<c:if test="${vo.adminConfirm == 'true' }">selected="selected"</c:if>>등록허가
+									</option>
+									<option value="false"
+										<c:if test="${vo.adminConfirm == 'false' }">selected="selected"</c:if>>등록대기
+									</option>
+									<option value="canceled"
+										<c:if test="${vo.adminConfirm == 'canceled' }">selected="selected"</c:if>>등록거부
+									</option>
 							</select>
 							</label>
 						</div>
 					</div>
 					<div class="" style="margin-right: 0px; float: left;">
 						<div id="" class="dataTables_filter">
-							<input type="search" id="keyword" name="keyword" placeholder="회원ID/이름"
-								class="form-control form-control-sm col-sm-4 col-md-6 col-lg-9" 
+							<input type="search" id="keyword" name="keyword"
+								class="form-control form-control-sm col-sm-4 col-md-6 col-lg-9"
 								style="float: left;" value="${vo.getKeyword() }">
 							<button style="border: 1px; background: none; float: right;" onclick = "location.href = 'javascript:frm.submit()'">검색</button>
 						</div>
@@ -73,33 +79,29 @@
 				</div>
 			</form>
 				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%"
-						cellspacing="0">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th>회원 ID</th>
-								<th>회원이름</th>
-								<th>이메일</th>
-								<th>회원 권한</th>
-								<th>누적신고 횟수</th>
-								<th>이용 현황</th>
+								<th>식당 ID</th>
+								<th>식당이름</th>
+								<th>등록 현황</th>
+								<th>비고</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${adminMember }">
+							<c:forEach var="vo" items="${adminRestaurant }">
 								<tr>
-									<td id="mid">${vo.getMId() }</td>
-									<td id="mname">${vo.getMName() }</td>
-									<td id="email">${vo.email }</td>
-									<td id="auth">${vo.auth }</td>
-									<td id="report">${vo.report }</td>
+									<td id="restid">${vo.getRestId() }</td>
+									<td id="restname">${vo.getRestName() }</td>
+									<td id="adminConfirm">${vo.getAdminConfirm() }</td>
 									<td>
 										<label> 
-											<select name="dataTable_length" id="availableSelect" data-mid="${vo.getMId()}"
-											aria-controls="dataTable" onchange="changeAvailable(this)"
+											<select name="dataTable_length" id="adminConfirmSelect" data-mid="${vo.getRestId()}"
+											aria-controls="dataTable" onchange="changConfirm(this)"
 											class="custom-select custom-select-sm form-control form-control-sm">
-												<option value="able"  <c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
-												<option value="unable" <c:if test="${vo.available == 'unable' }">selected="selected"</c:if>>이용정지</option>
+												<option value="true"  <c:if test="${vo.adminConfirm == 'true' }">selected="selected"</c:if>>등록허가</option>
+												<option value="false" <c:if test="${vo.adminConfirm == 'false' }">selected="selected"</c:if>>등록대기</option>
+												<option value="canceled" <c:if test="${vo.adminConfirm == 'canceled' }">selected="selected"</c:if>>등록거부</option>
 											</select>
 										</label>
 									</td>
@@ -108,12 +110,10 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>회원 ID</th>
-								<th>비건 타립</th>
-								<th>이메일</th>
-								<th>회원 권한</th>
-								<th>누적신고 횟수</th>
-								<th>이용 현황</th>
+								<th>식당 ID</th>
+								<th>식당이름</th>
+								<th>등록 현황</th>
+								<th>비고</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -125,20 +125,19 @@
 
 	<script type="text/javascript">
 		function goList(p) {
-			var available = document.getElementById("available").value;
+			var restaurant = document.getElementById("restaurant").value;
 			var keyword = document.getElementById("keyword").value;
 
 			if (available == "none" || keyword == '') {
-				location.href = "adminMemberSelect.do?page=" + p
+				location.href = "#" + p
 			} else {
-				location.href = "adminMemberSelect.do?page=" + p
-						+ "&available=" + available + "&keyword=" + keyword;
+				location.href = "#" + p + "&restaurant=" + restaurant + "&keyword=" + keyword;
 			}
 
 		}
 		
 		
-		/* 회원이용현황 변경 */
+/* 		/* 회원이용현황 변경 */
 		function changeAvailable(c) {
 			 var returnValue = confirm('회원의 이용현황을 바꾸시겠습니까?');
 			 //alert(returnValue);
@@ -168,7 +167,7 @@
 					 
 
 			 } 
-		}
+		} */
 	</script>
 
 

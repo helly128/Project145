@@ -43,14 +43,18 @@
 			</a>
 
 			<!--회원 관리 메뉴 -->
-			<li class="nav-item"><a class="nav-link" href="/adminMain.do">
+			<li class="nav-item">
+				<a class="nav-link" href="/adminMemberSelect.do">
 					🍓 <span>회원 관리</span>
-			</a></li>
+				</a>
+			</li>
 
 			<!-- 식당 관리 -->
-			<li class="nav-item"><a class="nav-link" href="#"> 🍊 <span>식당
-						관리</span>
-			</a></li>
+			<li class="nav-item">
+				<a class="nav-link" href="/adminRestaurant.do"> 
+					🍊 <span>식당 관리</span>
+				</a>
+			</li>
 
 			<!-- 클래스 관리 메뉴 -->
 			<li class="nav-item"><a class="nav-link collapsed"
