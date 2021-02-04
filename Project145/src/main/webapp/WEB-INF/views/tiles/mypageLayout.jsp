@@ -106,8 +106,8 @@
 
 			<hr class="sidebar-divider d-none d-md-block">
 
-			<li class="nav-item"><a class="nav-link" href="/myQuestion.do"> 💌 <span>My
-						Question</span>
+			<li class="nav-item"><a class="nav-link" href="/myQuestion.do">
+					💌 <span>My Question</span>
 			</a></li>
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -184,7 +184,6 @@
 						</div>
 						</li>
 
-						<%-- 	
 						<!-- Nav Item - Alerts -->
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
@@ -231,8 +230,8 @@
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Show All Alerts</a>
 							</div></li>
-						
-						
+
+
 						<!-- Nav Item - Messages -->
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
@@ -294,8 +293,8 @@
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Read More Messages</a>
 							</div></li>
-							
-						--%>
+
+
 
 						<div class="topbar-divider d-none d-sm-block"></div>
 

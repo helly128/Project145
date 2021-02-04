@@ -73,7 +73,7 @@
 						<div class="single-product">
 							<div class="product-img">
 								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="images/salad.jpg" alt="">
+									src="/images/${lesson.getCImg() }" width="100" height="250" onerror="this.src='/images/loveurth (3).jpg'">
 								</a>
 								<div class="product-action">
 									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>

@@ -83,23 +83,32 @@ $(document).ready(function){
 		$("#repleBtn").click(function() {
 			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
-
-		$("#deleteBtn").click(function() {
-			var delAlert = confirm("정말 삭제 하시겠어요?");
-			if (delAlert == ture) {
+	
+		$("#repleList").on( 'click','.delBtn',function() {
+			/* var delAlert = confirm("정말 삭제 하시겠어요?");delAlert == ture */
+			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
+			if (confirm("정말 삭제 하시겠어요?")){
+				
 				repleDelete();
+			}else{
+				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
-
-		$(".descBtn").click(function() {//댓글 상세 보기 모달 창
-			console.log("정보");
-			var reId = $(this).parents().find("td").eq(0).text();
-			var reContent = $(this).parents().find("td").eq(1).text();
-			var reDate = $(this).parents().find("td").eq(2).text();
-			var MId = $(this).parents().find("td").eq(3).text();
-
-		})
+		
 	});
+	//댓글 삭제
+	function repleDelete() {
+		id=$(event.target).data("id")
+		$.ajax({
+			type : "delete",
+			url : "/reple/reple.do/"+id,
+			success : function(result) {
+				alert("댓글이 삭제되었습니다.");
+				repleList();
+
+			}
+		});
+	}
 
 	var today = new Date();
 	var year = today.getFullYear();
@@ -108,7 +117,7 @@ $(document).ready(function){
 	var date = year + "년" + month + "월" + day + "일"
 	$('#wDate').text(date);
 
-	//댓글 입력
+	 //댓글 입력
 	function repleWrite() {
 		var reContent = $("#reContent").val();
 		var rId = "${RepleVo.RId}"
@@ -135,60 +144,77 @@ $(document).ready(function){
 			}
 		})
 	}
-	//댓글 수정
-	function repleEdit() {
+	
+	
+
+	/* //댓글 입력
+	function repleWrite() {
+		var reContent = $("#reContent").val();
+		var rId = "${RepleVo.RId}";
+		var mId = "${mId}";
+		var objParams = {
+				rId : rId,
+				reParent : reParent,
+				reDept : reDept,
+				reContent : reContent,
+				reDate : date,
+				mId : mId
+		};
+		
 		$.ajax({
-			type : "put",
-			url : "/reple/{reId}",
-			success : function(result) {
-				alert("댓글이 수정되었습니다.");
+			type : "post",
+			url : "/reple/reple.do",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			dataType : "text",
+			data : JSON.stringify(objParams),
+			success : function() {
+				alert("댓글이 등록되었습니다.");
 				$("#repleList").empty();
 				//$("#repleList").append('#repleList');
 				repleList();
 				$("#reContent").val("");
 			}
 		})
-	}
-	//댓글 삭제
-	function repleDelete() {
-		$.ajax({
-			type : "delete",
-			url : "/reple/reple.do/{reId}",
-			success : function(result) {
-				alert("댓글이 삭제되었습니다.");
-				$("#repleList").empty();
-				$("#repleList").load(location.href + '#repleList');
+	} */
+	/* 	//댓글 수정
+	 function repleEdit() {
+	 $.ajax({
+	 type : "put",
+	 url : "/reple/{reId}",
+	 success : function(result) {
+	 alert("댓글이 수정되었습니다.");
+	 $("#repleList").empty();
+	 //$("#repleList").append('#repleList');
+	 repleList();
+	 $("#reContent").val("");
+	 }
+	 })
+	 } */
 
-			}
-		})
-	}
-	//댓글 상세 보기
-	function repleDesc() {
-
-	}
 	//댓글 목록 출력
 	function repleList() {
-		$
-				.ajax({
-					type : "get",
-					url : "/reple/reple.do?RId=${recipeVo.RId}",
-					success : function(result) {
-						var output = "<table>";
-						console.log(result);
-						for ( var i in result) {
-							output += "<tr>";
-							output += "<td width='60'>" + result[i].reId;
-							output += "<td width='200'>" + result[i].reContent;
-							output += "<td width='100'>" + result[i].reDate;
-							output += "<td width='60'>" + result[i].mid;
-							output += "<td width='60'>"
-									+ "<button class='descBtn' data-toggle='modal' data-target='#repleDesc'>상세보기"
-							output += "<tr>"
-						}
-						output += "</table>";
-						$("#repleList").html(output);
-					}
-				});
+		$.ajax({
+			type : "get",
+			url : "/reple/reple.do?RId=${recipeVo.RId}",
+			success : function(result) {
+				var output = "<table>";
+				console.log(result);
+				for ( var i in result) {
+					output += "<tr>";
+					output += "<td width='60' class='delBtn'>";
+					output += "<td width='200'>" + result[i].reContent;
+					output += "<td width='100'>" + result[i].reDate;
+					output += "<td width='60' data-mid='"+result[i].mid+"'>" + result[i].mid;
+					output += "<td width='60'>"
+							+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제"
+					output += "<tr>"
+				}
+				output += "</table>";
+				$("#repleList").html(output);
+			}
+		});
 	}
 
 	//재료
@@ -242,7 +268,8 @@ $(document).ready(function){
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<img src="/images/${recipeSelect.getRImage()}" height="200px" width="200px">
+					<img src="/images/${recipeSelect.getRImage()}" height="200px"
+						width="200px">
 				</div>
 			</div>
 			<div class="row">
@@ -252,7 +279,7 @@ $(document).ready(function){
 						onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-danger" data-toggle="modal"
-						data-target="#exampleModal" >Delete</button>
+						data-target="#exampleModal">Delete</button>
 				</div>
 			</div>
 		</div>
@@ -271,7 +298,8 @@ $(document).ready(function){
 					</div>
 					<div class="modal-body">게시물을 정말 삭제하시겠습니까?</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" onclick="location.href='/recipeDelete.do?rId=${recipeSelect.getRId()}'">삭제하기</button>
+						<button type="button" class="btn btn-danger"
+							onclick="location.href='/recipeDelete.do?rId=${recipeSelect.getRId()}'">삭제하기</button>
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소하기</button>
 					</div>
@@ -312,7 +340,7 @@ $(document).ready(function){
 			<br /> <br />
 			<div class="row">
 				<!-- 클래스리스트 시작 -->
-				 <input type="hidden" value="${lesson}"> 
+				<input type="hidden" value="${lesson}">
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="single-product">
@@ -412,7 +440,28 @@ $(document).ready(function){
 				</div>
 			</div>
 		</div>
-
+		<!-- reple Modal -->
+		<div class="modal fade" id="repleModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="repleModalLabel">게시물 삭제</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">게시물을 정말 삭제하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							onclick="repleDelete()">삭제하기</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- 댓글-->
 		<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
 		<%-- <c:if test="${sessionScope.mId != null }">

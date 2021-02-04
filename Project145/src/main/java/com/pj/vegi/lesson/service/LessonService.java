@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface LessonService {
 
@@ -24,4 +25,5 @@ public interface LessonService {
 	
 	int likeDelete(LikeListVo vo);
 
+	int lessonEnqSubmit(enquiryVO vo);
 }

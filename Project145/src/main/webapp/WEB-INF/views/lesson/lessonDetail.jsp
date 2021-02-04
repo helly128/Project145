@@ -64,7 +64,7 @@
 				<div>
 					<div class="mb-5">
 						<img width="750" src="/images/${lesson.cImg }" width="50"
-							height="600">
+							height="600" onerror="this.src='/images/loveurth (3).jpg'">
 					</div>
 					<div>
 						<div class="border-top pt-4 pb-5">
@@ -92,7 +92,7 @@
 									<tbody>
 										<tr style="vertical-align: middle;">
 											<td><img src="/images/${lesson.profileImage }" width=100
-												" height="100"></td>
+												" height="100" onerror="this.src='/images/loveurth (3).jpg'"></td>
 											<th scope="row">${lesson.mId }</th>
 											<td>${lesson.mName }</td>
 											<td>${lesson.career }</td>
@@ -103,7 +103,8 @@
 							</div>
 						</div>
 						<div class="border-top pt-4 pb-5">
-							<h4>클래스 등록한 수강생</h4><br>
+							<h4>클래스 등록한 수강생</h4>
+							<br>
 							<div class="mt-3 px-2">
 								<table class="table table-bordered">
 									<tbody>
@@ -111,8 +112,10 @@
 											<tr style="vertical-align: middle;">
 												<th scope="row">${member.mId }</th>
 												<td>${member.mName }</td>
-												<td align="center"><img src="/images/${member.profileImage }"
-													width=100 " height="100"></td>
+												<td align="center"><img
+													src="/images/${member.profileImage }" width=100
+													" height="100"
+													onerror="this.src='/images/loveurth (3).jpg'"></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -152,7 +155,7 @@
 						</h5>
 					</div>
 					<div class="border-bottom p-3">
-						<span class="widget-title mb-2">장소</span>
+						<span class="widget-title mb-2">장소 </span>
 						<h5>${lesson.cLoc }</h5>
 					</div>
 					<div class="border-bottom p-3">
@@ -160,9 +163,12 @@
 						<h5>${lesson.cJoin }명/${lesson.cParti }명</h5>
 					</div>
 					<div class="border-bottom p-3">
-						<form action="LessonEnq.do" id="form">
-							<span class="widget-title mb-2">문의하기</span>
-							<textarea class="textarea" rows="3"></textarea>
+						<span class="widget-title mb-2">문의하기</span>
+						<form action="lessonEnq.do" method="get" id="form">
+							<input id="originId" name="originId" type="hidden"
+								value="${lesson.cId }">
+							<textarea class="textarea" rows="3" id="enqContent"
+								name="enqContent" required="required"></textarea>
 							<div align="right">
 								<c:if test="${mId == null or mId == ''}">
 									<button class="btn submitBtn btn-hover" disabled="disabled">등록</button>
@@ -170,40 +176,58 @@
 									<br>
 									<span>로그인 후 사용가능합니다.</span>
 								</c:if>
+
 								<c:if test="${mId != null and mId != ''}">
-									<button class="btn submitBtn btn-hover">등록</button>
+									<button id="eq" class="btn submitBtn btn-hover">등록</button>
 								</c:if>
-							</div>
 						</form>
 					</div>
-					<div class="p-3" align="center">
-						<div class="edd_purchase_submit_wrapper" align="center">
-							<c:if test="${mId == null or mId == ''}">
-								<button class="btn joinBtn btn-hover" disabled="disabled">클래스 등록</button>
-								<br>
-								<br>
-								<span>로그인 후 참가가능합니다.</span>
-							</c:if>
-							<c:if test="${mId != null and mId != ''}">
-								<button class="btn joinBtn btn-hover">클래스 등록</button>
-							</c:if><br>
-							등록->결제완료-> m,c -> C_R in m wh c -> C c_join+1< c_parti ajax
-							버튼c_j=c_p 마감
-						</div>
+				</div>
+				<div class="p-3" align="center">
+					<div class="edd_purchase_submit_wrapper" align="center">
+						<c:if test="${mId == null or mId == ''}">
+							<button class="btn joinBtn btn-hover" disabled="disabled">클래스
+								등록</button>
+							<br>
+							<br>
+							<span>로그인 후 참가가능합니다.</span>
+						</c:if>
+						<c:if test="${mId != null and mId != ''}">
+							<button class="btn joinBtn btn-hover">클래스 등록</button>
+						</c:if>
+						<br> 등록->결제완료-> m,c -> C_R in m wh c -> C c_join+1< c_parti
+						ajax 버튼c_j=c_p 마감
 					</div>
 				</div>
 			</div>
 		</div>
+		</div>
 	</section>
-	<%-- 
+
 	<script>
+	
 		$(function() {
+
+			$("#eq").click(function() {
+
+				alert("문의가 등록되었습니다. 마이페이지의 문의내역에서 확인해주세요.")
+				$("#form").submit()
+
+			})
+			
+			
 			$('.joinBtn').click(function() {
-				var temp = confirm('[${meetVo.meetTitle}]\n해당 챌린지에 참가하시겠습니까?');
+				var temp = confirm('[ ${lesson.cTitle } ]\n해당 챌린지에 참가하시겠습니까?');
 				if (temp) {
-					location.href = "vegimeetJoinPage.do/?meetId=${meetVo.meetId}";
+					location.href = "lessonJoin.do/?cId=${lesson.cId}"
 				}
 			});
+
+		}) // ready end
+		
+		
+	<%--
+			
 			
 			if('${mId}' == null || '${mId}' == ''){
 				$('.submitBtn').prop('disabled', true);
@@ -229,9 +253,10 @@
 			var dayArr = start.split('-');
 			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
 			console.log((startDay.getTime() - today.getTime())/1000/60/60/24);
-			
-		})
+			--%>
+		
 	</script>
---%>
+
+
 </body>
 </html>

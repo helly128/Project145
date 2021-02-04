@@ -132,9 +132,11 @@
 				m.meet_end "meetEnd", 
 				m.m_id "mId",
 				m.meet_fund "meetFund"
+				li.like_date
 		from like_list li join meet_un m
 		on li.origin_id = m.meet_id
 		where li.m_id=#{mId}
+		order by li.like_date desc
 	</select>
 	
 	<select id="lessonLikeList" resultType="map">
@@ -145,10 +147,12 @@
 				c.c_end "cEnd", 
 				c.status "status", 
 				c.c_hit "cHit", 
-				li.origin_id "originId"
+				li.origin_id "originId",
+				li.like_date
 		FROM like_list li JOIN class c
 		ON li.origin_id = c.c_id
 		WHERE li.m_id = #{mId}
+		ORDER BY li.like_date desc
 	</select>
 	
 	<delete id="heartCancel">
@@ -164,9 +168,11 @@
 				r.r_image "rImage", 
 				r.r_hit "rHit", 
 				r.m_id "mId"
+				li.like_date
 		FROM like_list li JOIN recipe r
 		ON li.origin_id = r.r_id
 		WHERE li.m_id = #{mId}
+		ORDER BY li.like_date desc
 	</select>
 	
 	<select id="restLikeList" resultType="map">
@@ -176,9 +182,11 @@
 				r.rest_pic "restPic", 
 				r.rest_tel "restTel", 
 				r.rest_review_count "restReviewCount"
+				li.like_date
 		FROM like_list li JOIN restaurant r
 		ON li.origin_id = r.rest_id
 		WHERE li.m_id = #{mId}
+		ORDER BY li.like_date desc
 	</select>
 
 </mapper>
