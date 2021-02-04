@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<h1 class="h3 mb-2 text-gray-800">나의 문의 ❔❕</h1>
+		<h1 class="h3 mb-2 text-gray-800">나의 문의 내역</h1>
 	</div>
 </body>
 </html>

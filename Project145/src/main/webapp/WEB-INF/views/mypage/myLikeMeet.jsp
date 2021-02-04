@@ -32,7 +32,7 @@
 									<button type="button" class="likeAction"
 										data-id="${list.originId }" align="center">
 										<img class="likeImg" src="/images/filled_like.png"
-											style="width: 30px;">
+											style="width: 30px;" onerror="this.src='/images/loveurth (3).jpg'">
 									</button>
 									<br>
 									<br>
