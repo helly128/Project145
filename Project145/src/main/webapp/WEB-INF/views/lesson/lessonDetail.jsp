@@ -205,7 +205,6 @@
 	</section>
 
 	<script>
-	
 		$(function() {
 
 			$("#eq").click(function() {
@@ -214,8 +213,7 @@
 				$("#form").submit()
 
 			})
-			
-			
+
 			$('.joinBtn').click(function() {
 				var temp = confirm('[ ${lesson.cTitle } ]\n해당 챌린지에 참가하시겠습니까?');
 				if (temp) {
@@ -226,9 +224,7 @@
 		}) // ready end
 		
 		
-	<%--
-			
-			
+	<%--			
 			if('${mId}' == null || '${mId}' == ''){
 				$('.submitBtn').prop('disabled', true);
 				$('.joinBtn').prop('disabled', true);
@@ -253,7 +249,7 @@
 			var dayArr = start.split('-');
 			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
 			console.log((startDay.getTime() - today.getTime())/1000/60/60/24);
-			--%>
+	--%>
 		
 	</script>
 
