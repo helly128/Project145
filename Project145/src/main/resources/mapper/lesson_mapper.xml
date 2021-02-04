@@ -12,18 +12,10 @@
 					(SELECT *
 					FROM class
 					<where>
-						<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-							AND vegType in('비건','락토','오보','락토오보')
-						</if>
-						<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-							AND vegType in('비건','락토','오보','락토오보')
-							AND c_title like '%' || #{keyword} || '%'
-						</if>
-						<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+						<if	test=" vegType != null and vegType != '' ">
 							AND vegType = #{vegType}
 						</if>
-						<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-							AND vegType = #{vegType}
+						<if	test=" keyword != null and keyword != '' ">
 							AND c_title like '%' || #{keyword} || '%'
 						</if>
 					</where>
