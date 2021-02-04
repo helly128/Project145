@@ -45,12 +45,13 @@
 		INSERT INTO class(
 		C_ID, C_TITLE,C_IMG,C_DESC,VEGTYPE,C_PRICE,C_START,
 		C_END,STATUS,CURRICULUM,
-		M_ID,C_PARTI,C_LOC,BIZNUM,C_TIME
+		M_ID,C_PARTI,C_LOC,BIZNUM,C_TIME,Lec_PROPOSAL, LEC_RESPONSE, LEC_ID
 		)
 		VALUES(
 		'class'||c_seq.nextval,#{cTitle},#{cImg},#{cDesc},#{vegType},#{cPrice},#{cStart},
 		#{cEnd},#{status},#{curriCulum},
-		#{mId},#{cParti},#{cLoc},#{bizNum},#{cTime}
+		#{mId},#{cParti},#{cLoc},#{bizNum},#{cTime},#{lecProposal},#{lecResponse},
+		#{lecId}
 		)
 
 	</insert>
@@ -61,7 +62,7 @@
 		)
 		VALUES(
 		'lec'||lec_seq.nextval, #{mId},'class'|| #{cId},#{bizNum},
-		#{lecCareer},#{proposal},#{response}
+		#{lecCareer},#{lecProposal},#{lecResponse}
 		)
 	</insert>
 
@@ -82,6 +83,13 @@
 		set career = #{career}
 		WHERE
 		m_id=#{mId}
+	</update>
+	
+	<update id="applyCollabo">
+		UPDATE class
+		set lec_proposal = #{lecProposal}
+		WHERE
+		c_id=#{cId}
 	</update>
 	
 	<select id="getLecList" resultType="MemberVo">

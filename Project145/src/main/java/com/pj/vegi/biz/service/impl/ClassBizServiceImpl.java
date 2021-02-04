@@ -65,4 +65,10 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.getLecList(bizNum);
 	}
 
+	@Override
+	public int applyCollabo(LessonVO vo) {
+		
+		return dao.applyCollabo(vo);
+	}
+
 }

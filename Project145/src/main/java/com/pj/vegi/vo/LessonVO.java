@@ -35,6 +35,10 @@ public class LessonVO {
 	private String keyword;
 	private int likeFlag;
 	
+	private String lecProposal;
+	private String lecResponse;
+	private String lecId;
+	
 	private String cTime;
 	
 	private List<LessonVO> classVoList;

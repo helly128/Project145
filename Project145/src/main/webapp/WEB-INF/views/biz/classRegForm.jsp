@@ -30,8 +30,8 @@
 </head>
 <body style="padding: 0;">
 	<script>
-$(function(){ 
-
+$(function(){  
+//자기 이력 member에 등록/수정 
     $("#savecareer").click(()=>{
     	console.log($("#career").val());
        $.ajax(
@@ -58,6 +58,62 @@ $(function(){
                 
           });
     });
+    
+  
+    // 메세지 프리뷰 
+   $("#preview").click(()=>{
+	 console.log($("#cTitle").val());
+	 console.log($("#cStart").val());
+	 console.log($("#cEnd").val());
+	 console.log($("#cTime").val());
+	 console.log($("#cLoc").val());
+	 console.log($("#cParti").val());
+	 console.log($("#cPrice").val());
+	 console.log($("#proposal2").val());
+	 
+	 var title = "안녕하세요 강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
+	 var start = $("#cStart").val() + " ~  " ;
+	 var end = $("#cEnd").val() + "까지 ";
+	 var time = $("#cTime").val() +"에 ";
+	 var loc = $("#cLoc").val() +"에서 ";
+	 var parti = "정원 "+$("#cParti").val() + "명 으로 ";
+	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
+	 var msg =  $("#proposal2").val() ;
+	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
+	 var lecId =  $("#lecturerId1").val() ;
+	 $("#lecId").val(lecId);
+	 $("#lecProposal").val(proposal);
+ });
+    
+ // 두번째 아작스, 강사에게 콜라보 신청 보내기 (proposal 메세지만 보내면 됨)
+   $("#applyCollabo").click(()=>{
+    	console.log($("#lecProposal").val());
+       $.ajax(
+          { 
+             type:"POST",
+             url:"applyCollabo.do",
+             data:{lecProposal: $("#lecProposal").val(), cId : $("#cId").val()}, //사용하는 함수 
+             dataType:"json",
+             success: function(n){
+                if(n!=0){
+                   $("#applyResult").text("메세지를 보냈습니다.");
+                   var btnmsg="메세지 다시 보내기";
+                   $("#savecareer").text(btnmsg);
+                   
+                }
+                else{
+                   $("#saveResult").text("등록 실패");
+                   
+                }
+             	alert("등록되었습니다.");
+             },
+             error:(log)=>{alert("실패+log")
+             }
+                
+          });
+    });
+ 
+//
     })   
 
 </script>
@@ -65,13 +121,12 @@ $(function(){
 	<div class="container" align="center">
 		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
-
+			<input type="hidden" name="cId" id="cId" value='${cvo.getCId()}'>
 			<br>
 			<div class="pagetitle" align="center">
 				<h3>새로운 클래스 등록</h3>
-				<h1>${ sessionScope.mId }</h1>
-				<h1>${ mvo.getMName() }</h1>
-				<h1></h1>
+				
+				<h1>${cvo.getCId()}</h1>
 			</div>
 			<br>
 			<div class="row" id="uploadpic">
@@ -154,38 +209,8 @@ $(function(){
 					<input type="text" id="vegi" readonly value="비건" required
 						name="vegtype"
 						style="text-align: center; display: none; height: 3rem; padding: 10px;">
-
-
 				</div>
-
-
-
 			</div>
-
-			<!-- <div class="row">
-				<div class="col-half">
-					<input type="checkbox" class="input-text mb-4" id="vegan"
-						name="vegType" value="비건" required> <label for="vegan">🥦&nbsp비건</label>
-
-					&nbsp&nbsp <input type="checkbox" class="input-text mb-4"
-						id="locto" name="vegType" value="락토" required><label
-						for="locto">🧀&nbsp락토</label>
-
-				</div>
-				<div class="col-half">
-
-					<input type="checkbox" class="input-text mb-4" id="ovo"
-						name="vegType" value="오보" required><label for="ovo">
-						🥚&nbsp오보</label> &nbsp&nbsp <input type="checkbox"
-						class="input-text mb-4" id="allveg" name="vegType" value="모두"
-						required><label for="allveg"> 🥗&nbsp모두</label>
-				</div>
-
-
-
-			</div>
- -->
-			<div class="row"></div>
 
 
 
@@ -256,7 +281,7 @@ $(function(){
 					</div>
 				</div>
 			</div>
-
+			<!-- 강사 선택 옵션 탭  -->
 			<div class="row">
 				<h5>강사 정보</h5>
 				<div class="input-group">
@@ -266,10 +291,10 @@ $(function(){
 						name="lectureropt" value="lecadd" id="lecadd" class="lectureropt" />
 					<label for="lecadd"> <span><i
 							class="fa fa-user-plus"></i>강사 추가/수정</span></label>
-
 				</div>
 
 			</div>
+			
 			<!-- 기존 강사 목록에서 선택  -->
 			<div class="card shadow mb-4" id="leclistdiv">
 				<br>
@@ -281,15 +306,16 @@ $(function(){
 					<div class="col-half" align="left">
 						<h5 style="padding-top: 20px;">강사아이디</h5>
 						<div class="input-group">
-							<select id="lecturerId1" 
-							style="width: 80%; padding: 0px; margin-right:50px;"
-							class="form-control">
-								<option selected value="${sessionScope.mId}">
-								기본 계정 : ${sessionScope.mId}</option>
+							<!-- 같은 비즈 넘버 아래의 강사 아이디 보여주는 부분 -->
+							<select id="lecturerId1"
+								style="width: 80%; padding: 0px; margin-right: 50px;"
+								class="form-control" onclick="changeprofile(this)">
+								<option selected value="${sessionScope.mId}">기본 계정 :
+									${sessionScope.mId}</option>
 								<c:forEach items="${lecList}" var="lec">
 									<option><c:out value="${lec.getMId()}" /></option>
 								</c:forEach>
-							</select> 
+							</select>
 
 						</div>
 					</div>
@@ -300,16 +326,15 @@ $(function(){
 					<div class="col-half">
 						<div class="profile-cover">
 							<div class="profile-avatar">
-								<img style="border-radius: 50%;"
-									src="https://dl.dropboxusercontent.com/s/7pcnqq18skh1myk/avatar.jpg"
-									alt="Anis M" />
+								<img style="border-radius: 50%;" width="200px" height="200px;"
+									src="" alt="" id="showlecImage" />
 							</div>
 
 							<div class="profile-details" style="font-size: 1.5rem">
 								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp<a
-									href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-instagram"></i></a> &nbsp<a
+									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp <a
+									id="showlecInsta" href="naver.com" target="blank"> <i
+									class="fa fa-instagram"></i></a> &nbsp<a
 									href="https://www.instagram.com/maxencefvl/?hl=ko"
 									target="blank"><i class="fa fa-envelope-o"></i></a>
 							</div>
@@ -321,19 +346,39 @@ $(function(){
 						<div class="msg" align="left">
 							<div>
 								<h5>강사이력</h5>
-								<div id="lecCareer">
+								<div id="showlecCareer">
 									<br> 강사의 이력은 이렇슴 애플<br> 삼성<br> 테슬라<br> 예담<br>
 								</div>
 							</div>
 
 						</div>
+						<br>
+						<div class="msg" id="lecprop" align="left">
+
+
+							<h5>강사에게 메세지</h5>
+
+							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
+
+							<div>
+								<button type="button" id="preview">Preview</button>
+							</div>
+							<div id="result"></div>
+							<br>
+
+
+							<textarea rows="8" name="lecProposal" id="lecProposal"
+								style="width: 90%"></textarea>
+						</div>
+
 					</div>
 					<br>
 
-					<button class="btn btn-warning"
+					<!-- <button class="btn btn-warning" type="button"
+						id ="applyCollabo"
 						style="margin: 20px; width: 100%; padding: 10px;">강사에게
 						콜라보 신청</button>
-
+ -->
 				</div>
 			</div>
 
@@ -383,30 +428,33 @@ $(function(){
 							<div class="msg" id="melec" align="left">
 
 								<h5>내 강사 이력 수정</h5>
-								<br> 강사 ID <input type="text" style="width: 90%"
-									name="lecId" id="myId" value="${sessionScope.mId}" readonly>
+								
 								<textarea rows="8" name="career" id="career" style="width: 90%"></textarea>
 
 
 							</div>
 
 							<div class="msg" id="otherlec" align="left" style="display: none">
-								<h5>강사 제안서 본문</h5>
-								강사 ID <input type="text" style="width: 90%" name="lecId"
-									value="">
+							
+								강사 ID <input type="text" style="width: 90%" id="lecId" name="lecId" value="">
 
-								<textarea rows="3" style="width: 90%" id="proposal"></textarea>
 
-								<div id="proposal2" style="width: 90%">클래스 내용 입력시 자동으로
-									완성되는 부분입니다.</div>
 
-								<br>
+							<h5>강사에게 메세지</h5>
 
-								<h5>강사에게 메세지</h5>
-								<textarea rows="8" name="proposal2" style="width: 90%"></textarea>
-								<br>
-								<textarea rows="8" name="lec_proposal" id="proposal"
-									style="width: 90%"></textarea>
+							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
+
+							<div>
+								<button type="button" id="preview">Preview</button>
+							</div>
+							<div id="result"></div>
+							<br>
+
+
+							<textarea rows="8" name="lecProposal" id="lecProposal"
+								style="width: 90%"></textarea>
+						
+								
 							</div>
 						</div>
 
@@ -416,13 +464,14 @@ $(function(){
 
 					</div>
 					<div class="col-12">
-						<button class="btn btn-warning"
+						<div class="applyResult"></div>
+						<!-- <button class="btn btn-warning"
 							style="margin: 20px; width: 90%; padding: 10px; display: none;"
 							id="sendmsg">강사에게 콜라보 신청</button>
 
 						<button class="btn btn-warning" type="button"
 							style="margin: 10px; width: 90%; padding: 10px;" id="savecareer">내
-							이력 저장</button>
+							이력 저장</button> -->
 
 
 
@@ -518,10 +567,40 @@ $(function(){
 				$("#melec").hide();
 				$("#savecareer").hide();
 				$("#sendmsg").show();
-
 			}
-
 		}
+		
+		var lecList = ${lecList2};
+		function changeprofile(pro) {
+			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
+			console.log("정보 검색 시작" + lecturer);
+			
+			for(i = 0; i < lecList.length ; i ++){
+				if ( lecList[i].mid == lecturer ) {
+					console.log(lecList[i].mid + "가 아이디임");
+					console.log(lecList[i].mname + "가 이름임");
+					console.log(lecList[i].career + "가 커리어임");
+					console.log('/images/'+lecList[i].profileImage);
+					console.log(lecList[i].insta +'인스타임');
+					$("#showlecName").text(lecList[i].mname);
+					$("#showlecCareer").text(lecList[i].career);
+					$("#showlecImage").attr('src','/images/'+lecList[i].profileImage);
+					$('#showlecInsta').prop('href',lecList[i].insta)
+					
+				
+					
+				}else{ console.log("그런 정보 없음")}
+				
+			}
+			console.log("정보 검색 끝 ");
+		}
+		
+
+		
+
+	 	
+		
+		
 
 		//채식타입 선택 폼 
 
@@ -540,6 +619,8 @@ $(function(){
 			}
 		});
 
+		
+		
 		//주소 검색 api
 		function RestAddr() {
 			new daum.Postcode({
@@ -577,7 +658,11 @@ $(function(){
 		
 		
 		
+		
+		
 	</script>
+
+
 
 </body>
 </html>
