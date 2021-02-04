@@ -52,6 +52,10 @@
 	color: #545454;
 	font-size: 14px;
 }
+
+div, h3 {
+	word-break:keep-all;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

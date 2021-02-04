@@ -24,10 +24,13 @@ public class RestaurantVo {
 	private String restTel;
 	private String bizNum;
 	private String adminConfirm;
+	private String confirmReason;
 	private int start;
 	private int end;
 	
 	private int likeFlag;
 	private int seq;
+	
+	private String keyword;
 
 }

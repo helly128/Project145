@@ -65,59 +65,74 @@ td {
 .submitBtn:hover {
 	color: white;
 }
+
+.exampleImg {
+	height: 180px;
+}
+
+.imageTr td {
+	text-align: center;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container my-5">
-		<form id="frm" action="" onsubmit="return checkFrm();">
+		<form id="frm" action="vegimeetInsert.do"
+			onsubmit="return checkFrm();" method="post" enctype="multipart/form-data">
 			<div align="center">
 				<table class="tbl" style="width: 70%;">
 					<tr>
 						<th width="100px;">챌린지 제목</th>
-						<td><input type="text" name="meetTitle"
+						<td colspan="3"><input type="text" name="meetTitle"
 							placeholder="제목을 입력하세요" required></td>
 					</tr>
 					<tr>
 						<th>기간</th>
-						<td><input type="date" name="meetStart" style="width: 40%"
-							min="" required> ~ <input type="date" name="meetEnd"
-							style="width: 40%" required></td>
+						<td colspan="3"><input type="date" name="meetStart"
+							style="width: 40%" min="" required> ~ <input type="date"
+							name="meetEnd" style="width: 40%" required></td>
 					<tr>
 						<th>챌린지 내용</th>
-						<td><textarea placeholder="챌린지 내용을 입력하세요" required></textarea></td>
+						<td colspan="3"><textarea placeholder="챌린지 내용을 입력하세요"
+								name="meetContent" required></textarea></td>
 					</tr>
-					<tr>
-						<th>대표 사진</th>
-						<td><div class="row" id="imageRadio">
-								<div class="col-xl-4 col-lg-4 col-md-6 mb-4">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample1.jpg" checked> <img
-										src="/images/sample1.jpg">
-								</div>
-								<div class="col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample2.jpg"> <img src="">
-								</div>
-								<div class="col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio"
-										value="sample2.jpg"> <img src="">
-								</div>
-								<div class="image-container col-xl-4 col-lg-4 col-md-6">
-									<input type="radio" name="meetPic" class="radio imageSelect">
-									<div class="myImage">
-										<img id="upload-image" width="100%" class="mb-4">
-										<div class="div-image">
-											<span class="label">사진 업로드</span> <input type="file"
-												name="uploadfile" class="uploadPic" accept="image/*"
-												onchange="setImage(event);">
-										</div>
-									</div>
+					<tr class="imageTr">
+						<th rowspan="2">대표 사진</th>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample1.jpg" checked> <img class="exampleImg"
+							src="/images/sample1.jpg"></td>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample2.jpg"> <img class="exampleImg"
+							src="/images/sample2.jpg"></td>
+						<td><input type="radio" name="meetPic" class="radio"
+							value="sample3.jpg"> <img class="exampleImg"
+							src="/images/sample3.jpg"></td>
+					</tr>
+					<tr class="imageTr">
+						<td style="padding-top: 20px;"><label><input
+								type="radio" name="meetPic" class="radio imageSelect"
+								style="width: 30px;" value="">사진 업로드</label>
+							<div class="visibility" style="display: none">
+								<img id="upload-image" width="250px" class="mb-4">
+								<div class="div-image">
+									<span class="label">파일 찾기</span> <input type="file"
+										name="uploadfile" class="uploadPic" accept="image/*"
+										onchange="setImage(event);">
 								</div>
 							</div></td>
 					</tr>
+					<tr>
+						<th>최소 참가금액</th>
+						<td><input type="text" name="minMoney" class="minMoney"
+							onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+							style="width: 80%; text-align: right;" required> 원</td>
+						<td><span style="font-size: 12px;">*최소 참가금액은 5000원입니다</span>
+						</td>
 
+
+					</tr>
 				</table>
 			</div>
 			<div align="right">
@@ -157,9 +172,27 @@ td {
 					$('input[name=meetEnd]').val(start);
 				}
 			});
-			
+
+			//라디오버튼 옮겨갈 때마다 사진업로드 표시유무 변경
+			$('.radio').on('click', function() {
+				if ($('.imageSelect').is(':checked')) {
+					$('.visibility').attr('style', 'display: block');
+				} else {
+					$('.visibility').attr('style', 'display: none');
+				}
+			});
+
+			//최소금액 5000원 이상으로
+			$('.minMoney').on('focusout', function() {
+				var setMoney = parseInt($(".minMoney").val() || 0);
+				var minMoney = 5000;
+				if (setMoney < minMoney) {
+					$('.minMoney').val(minMoney);
+				}
+			});
 		});
 
+		
 		function dateFormat(today) { //today는 date타입
 			var day = today.getDate();
 			if (day < 10) {
@@ -172,16 +205,20 @@ td {
 			today = today.getFullYear() + '-' + month + '-' + day;
 			return today; //리턴은 string
 		}
-		
+
 		//개설 버튼 눌렀을 때 사진 required
-		function checkFrm(){
-			if($('.imageSelect').is(':checked')){
-				if($('.uploadPic').val() == '' || $('.uploadPic').val() == null){
-					alert('사진을 선택해주세요');
+		function checkFrm() {
+			if ($('.imageSelect').is(':checked')) {
+				if ($('.uploadPic').val() == ''
+						|| $('.uploadPic').val() == null) {
+					alert('사진을 업로드해주세요');
 					return false;
-				} else{
+				} else {
+					$('.imageSelect').val($('.uploadPic').val());
 					return true;
 				}
+			} else { //사진 업로드해놓고 샘플 사진 고른 경우 업로드한 사진 정보 날리기
+				$('.uploadPic').val('');
 			}
 		}
 	</script>

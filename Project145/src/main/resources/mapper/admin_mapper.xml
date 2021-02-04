@@ -13,13 +13,15 @@
 		FROM member
 		<where>
 			<if
-				test="( available == null or available == '') and keyword == null and keyword == '' ">
+				test="( available == null or available == '') and keyword == null or keyword == '' ">
 				AND available in('able','unable')
 			</if>
 			<if
 				test="( available == null or available == '') and keyword != null and keyword != '' ">
-				AND available in('able','unable')
 				AND m_name like '%' || #{keyword} || '%'
+				OR m_id like '%' ||
+				#{keyword} || '%'
+				AND available in('able','unable')
 			</if>
 			<if
 				test=" available != null and available != '' and (keyword == null or keyword == '') ">
@@ -27,8 +29,10 @@
 			</if>
 			<if
 				test=" available != null and available != '' and keyword != null and keyword != '' ">
+				AND ( m_name like '%' || #{keyword} || '%'
+				or m_id like '%' ||
+				#{keyword} || '%')
 				AND available = #{available}
-				AND m_name like '%' || #{available} || '%'
 			</if>
 		</where>
 		) b
@@ -37,18 +41,20 @@
 	</select>
 
 	<select id="countMember" resultType="Integer">
-	<!-- 회원 목록 페이징에 카운트하는 부분  -->
+		<!-- 회원 목록 페이징에 카운트하는 부분 -->
 		SELECT count(*)
 		FROM member
 		<where>
 			<if
-				test="( available == null or available == '') and keyword == null and keyword == '' ">
+				test="( available == null or available == '') and keyword == null or keyword == '' ">
 				AND available in('able','unable')
 			</if>
 			<if
 				test="( available == null or available == '') and keyword != null and keyword != '' ">
-				AND available in('able','unable')
 				AND m_name like '%' || #{keyword} || '%'
+				OR m_id like '%' ||
+				#{keyword} || '%'
+				AND available in('able','unable')
 			</if>
 			<if
 				test=" available != null and available != '' and (keyword == null or keyword == '') ">
@@ -56,20 +62,62 @@
 			</if>
 			<if
 				test=" available != null and available != '' and keyword != null and keyword != '' ">
+				AND ( m_name like '%' || #{keyword} || '%'
+				or m_id like '%' ||
+				#{keyword} || '%')
 				AND available = #{available}
-				AND m_name like '%' || #{available} || '%'
+			</if>
+		</where>
+	</select>
+
+	<update id="changAvailable" parameterType="MemberVo">
+		<!-- 회원 이용현황 변경 -->
+		UPDATE MEMBER SET AVAILABLE = #{available} WHERE m_id = #{mId}
+	</update>
+
+
+	<select id="adminRestaurant" resultType="RestaurantVo">
+		<!-- 관리자 식당 전체 조회 -->
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM restaurant
+		<where>
+			<if
+				test="keyword != null and keyword != '' ">
+				AND rest_name like '%' || #{keyword} || '%'
+				OR rest_id like '%' || #{keyword} || '%'
+			</if>
+			<if
+				test=" adminConfirm != null and adminConfirm != '' ">
+				AND admin_confirm = #{adminConfirm}
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+
+
+	<select id="countAdminRestaurant" resultType="Integer">
+	<!-- 회원 목록 페이징에 카운트하는 부분 -->
+		SELECT count(*)
+		FROM restaurant 
+		<where>
+			<if
+				test="keyword != null and keyword != '' ">
+				AND rest_name like '%' || #{keyword} || '%'
+				OR rest_id like '%' || #{keyword} || '%'
+			</if>
+			<if
+				test=" adminConfirm != null and adminConfirm != '' ">
+				AND admin_confirm = #{adminConfirm}
 			</if>
 		</where>
 	</select>
 	
-	<update id="changUnable" parameterType="MemberVo">
-	<!-- 회원 이용현황 unable로 변경 -->
-		UPDATE MEMBER SET AVAILABLE = 'unable' WHERE m_id = #{mId}
-	</update>
 	
-	<update id="changAble" parameterType="MemberVo">
-	<!-- 회원 이용현황 able로 변경 -->
-		UPDATE MEMBER SET AVAILABLE = 'able' WHERE m_id = #{mId}
-	</update>
+	
 
 </mapper>

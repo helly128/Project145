@@ -6,10 +6,11 @@ import java.util.Map;
 
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface LessonService {
 
-	List<Map> lessonList(LessonVO vo) throws SQLException;
+	List<LessonVO> lessonList(LessonVO vo) throws SQLException;
 
 	Map<String, Object> lessonSelectOne(LessonVO vo);
 	List<Map> lessonSelectMember(LessonVO vo);
@@ -24,4 +25,5 @@ public interface LessonService {
 	
 	int likeDelete(LikeListVo vo);
 
+	int lessonEnqSubmit(enquiryVO vo);
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pj.vegi.common.ImageIO;
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vegimeet.service.VegimeetService;
@@ -36,10 +37,22 @@ public class VegimeetController {
 
 	// 메인페이지 출력
 	@RequestMapping("/vegimeetList.do")
-	public String vegimeetList(Model model, HttpSession session) {
+	public String vegimeetList(Model model, HttpSession session, Paging paging) {
 		// 전체 베지밋 목록
 		String mId = (String) session.getAttribute("mId");
-		List<VegimeetVo> list = vegimeetService.vegimeetList();
+		VegimeetVo meetVo = new VegimeetVo();
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		meetVo.setStart(paging.getFirst());
+		meetVo.setEnd(paging.getLast());
+
+		int cnt = vegimeetService.countMeetList(meetVo);
+		paging.setTotalRecord(cnt);
+		
+		List<VegimeetVo> list = vegimeetService.vegimeetList(meetVo);
 		for (VegimeetVo vo : list) {
 			vo.setDday(vegimeetService.getDday(vo));
 
@@ -206,20 +219,29 @@ public class VegimeetController {
 		int achiv = 100 * success / total;
 		partiVo.setAchiv(achiv);
 		vegimeetService.meetPartiUpdate(partiVo);
-		
-		//해당 밋의 정보 다시 읽어오기
+
+		// 해당 밋의 정보 다시 읽어오기
 		Map newMeetVo = vegimeetService.myMeetOne(partiVo);
 		return newMeetVo;
 	}
-	
+
 	@RequestMapping("/vegimeetInsertForm.do")
 	public String vegimeetInsertForm() {
 		return "vegimeet/vegimeetInsert";
 	}
-	
+
+	//베지밋 개설
 	@RequestMapping("/vegimeetInsert.do")
-	public String vegimeetInsert(HttpSession session) {
+	public String vegimeetInsert(HttpSession session, VegimeetVo vo, @RequestParam MultipartFile uploadfile,
+			HttpServletRequest request) throws IllegalStateException, IOException {
+		String mId = (String) session.getAttribute("mId");
+		vo.setMId(mId);
+		if (uploadfile != null && uploadfile.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, uploadfile);
+			vo.setMeetPic(name);
+		}
+		vegimeetService.vegimeetInsert(vo);
 		
-		return "";
+		return "redirect:vegimeetList.do";
 	}
 }

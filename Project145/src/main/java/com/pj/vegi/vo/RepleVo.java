@@ -15,15 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RepleVo {
 
-	private String reId;//
 	private String rId;//
 	private String reContent;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy년mm월dd일")
 	private Date reDate;
 	private int reReport;
-	private int reLevle;
-	private int reAbel;
+	private int reAble;
 	private String mId;
 	private String conId;
 	private String unId;
+	private String reId;
+	private int reDepth;
+	private int reParent;
 }
