@@ -11,10 +11,11 @@ import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 public interface VegimeetMapper {
-	List<VegimeetVo> vegimeetList();
+	List<VegimeetVo> vegimeetList(VegimeetVo vo);
 	int getDday(VegimeetVo vo);
 	List<Map> myMeetList(String mId);
 	Map myMeetOne(MeetParticipantVo vo);
+	int countMeetList(VegimeetVo vo);	//페이징
 	
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);
@@ -47,5 +48,6 @@ public interface VegimeetMapper {
 	int pointUpdate(MeetParticipantVo vo);
 	
 	//새 베지밋 생성
-	int vegimeetInsert();
+	int vegimeetInsert(VegimeetVo vo);
+	int calcTotalDay();
 }

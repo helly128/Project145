@@ -4,7 +4,28 @@
 
 <mapper namespace="com.pj.vegi.vegimeet.mapper.VegimeetMapper">
 	<select id="vegimeetList" resultType="VegimeetVo">
-		SELECT * FROM meet_un
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+				FROM
+					(SELECT *
+					FROM meet_un
+					<where>
+						<if	test="options == '모집중'">
+							<![CDATA[ current_date < meet_start ]]>
+						</if>
+						<if	test="options == '마감'">
+							current_date BETWEEN meet_start AND meet_end
+						</if>
+						<if	test="options == '종료'">
+							<![CDATA[ current_date > meet_end ]]>
+						</if>
+						<if	test="keyword != null and keyword != '' ">
+							AND meet_title like '%' || #{keyword} || '%'
+						</if>
+					</where>
+				) b
+			) a
+		WHERE rn BETWEEN #{start } AND #{end } 
 	</select>
 
 	<select id="getDday" resultType="int">
@@ -167,8 +188,18 @@
 	
 	<insert id="vegimeetInsert">
 		INSERT INTO meet_un(meet_id, meet_title, meet_start, meet_end, 
-							meet_content, m_id, meet_pic, min_money)
+							meet_content, m_id, meet_pic, min_money, total_day)
 		VALUES('meet' || meet_seq.nextval, #{meetTitle}, #{meetStart}, #{meetEnd},
-			#{meetContent}, #{mId}, #{meetPic}, #{minMoney})
+			#{meetContent}, #{mId}, #{meetPic}, #{minMoney}, #{meetEnd} - #{meetStart} + 1)
 	</insert>
+	
+	<select id="countMeetList" resultType="int">
+		SELECT COUNT(*)
+		FROM meet_un
+			<where>
+				<if	test="keyword != null and keyword != '' ">
+					meet_title LIKE '%' || #{keyword} || '%'
+				</if>
+			</where>
+	</select>
 </mapper>
