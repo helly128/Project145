@@ -91,9 +91,10 @@ div, h3 {
 						</div>
 						<div class="border-top pt-4 pb-5 border-bottom">
 							<h4>다른 참가자의 사진</h4>
-							<div class="row mt-3 px-2">
+							<div class="row mt-3 px-2 infiniteScroll">
 								<c:forEach var="datavo" items="${dataList }">
-									<div class="p-2 col-xl-3 col-lg-3 col-md-4">
+									<div class="p-2 col-xl-3 col-lg-3 col-md-4" style="
+									display:flex; align-items:center;">
 										<img src="/images/${datavo.dataPic }">
 									</div>
 								</c:forEach>
@@ -152,7 +153,6 @@ div, h3 {
 			</div>
 		</div>
 	</section>
-
 	<script>
 		$(function() {
 			$('.joinBtn').click(function() {
@@ -187,7 +187,55 @@ div, h3 {
 			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
 			console.log((startDay.getTime() - today.getTime())/1000/60/60/24);
 			
-		})
+			
+			//무한 스크롤 사진 로딩
+			//https://victorydntmd.tistory.com/194
+			/* let isEnd = false;
+			
+			$(window).scroll(function(){
+				var $window = $(this);
+				var scrollTop = $window.scrollTop();
+	            var windowHeight = $window.height();
+	            var documentHeight = $(document).height();
+	            
+	            console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight );
+	            
+	            // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+	            if( scrollTop + windowHeight + 30 > documentHeight ){
+	                fetchList();
+	            }
+	           fetchList(); 
+			}); */
+		});
+		
+		var fetchList = function(){
+	        if(isEnd == true){
+	            return;
+	        }
+	        
+	        // 방명록 리스트를 가져올 때 시작 번호
+	        // renderList 함수에서 html 코드를 보면 <li> 태그에 data-no 속성이 있는 것을 알 수 있다.
+	        // ajax에서는 data- 속성의 값을 가져오기 위해 data() 함수를 제공.
+	        let startNo = $(".infiniteScroll div").last().data("no") || 1;
+	        $.ajax({
+	            url:"/scrollNewImage.do?" + startNo ,
+	            type: "GET",
+	            dataType: "json",
+	            success: function(result){
+	                // 컨트롤러에서 가져온 방명록 리스트는 result.data에 담겨오도록 했다.
+	                // 남은 데이터가 5개 이하일 경우 무한 스크롤 종료
+	                let length = result.data.length;
+	                if( length < 5 ){
+	                    isEnd = true;
+	                }
+	                $.each(result.data, function(index, vo){
+	                    renderList(false, vo);
+	                });
+	            }
+	        });
+	        
+	        
+	    }
 	</script>
 </body>
 </html>
