@@ -30,7 +30,7 @@
 	</update>
 
 	<delete id="delete">
-		delete from reple where r_id = #{rId}
+		delete from reple where re_id = #{reId}
 	</delete>
 
 	 <select id = "getListWithPaging" resultType="com.pj.vegi.vo.RepleVo"> 
