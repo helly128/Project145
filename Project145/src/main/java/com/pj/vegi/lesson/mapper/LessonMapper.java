@@ -5,10 +5,11 @@ import java.util.Map;
 
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface LessonMapper {
 
-	public List<Map> lessonList(LessonVO vo);
+	public List<LessonVO> lessonList(LessonVO vo);
 
 	public Map<String, Object> lessonSelectOne(LessonVO vo);
 	public List<Map> lessonSelectMember(LessonVO vo);
@@ -22,5 +23,7 @@ public interface LessonMapper {
 	public int likeInsert(LikeListVo vo);
 	
 	public int likeDelete(LikeListVo vo);
+	
+	public int lessonEnqSubmit(enquiryVO vo);
 
 }

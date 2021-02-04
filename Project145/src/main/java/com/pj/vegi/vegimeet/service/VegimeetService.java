@@ -11,10 +11,11 @@ import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 public interface VegimeetService {
-	List<VegimeetVo> vegimeetList();
+	List<VegimeetVo> vegimeetList(VegimeetVo vo);
 	int getDday(VegimeetVo vo);
 	List<Map> myMeetList(String mId);
 	Map myMeetOne(MeetParticipantVo vo);
+	int countMeetList(VegimeetVo vo);
 	
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);
@@ -39,4 +40,7 @@ public interface VegimeetService {
 	List<VegimeetVo> endMeetSelect();
 	int cashUpdate(MeetParticipantVo vo);
 	int pointUpdate(MeetParticipantVo vo);
+
+	int vegimeetInsert(VegimeetVo vo);
+	int calcTotalDay();
 }

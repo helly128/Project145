@@ -5,11 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- jQuery -->
+<title>lessonPayPage.jsp</title>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- iamport.payment.js -->
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
@@ -63,26 +61,32 @@ th {
 		<div class="row mb-5">
 			<div class="col-xl-2 col-lg-2"></div>
 			<div class="col-xl-8 col-lg-8 col-md-12 mb-5">
-				<form id="frm" action="/payProcess.do" method="post">
+				<form id="frm" action="#" method="post">
 					<div class="product_info p-2 my-5 border-bottom">
-						<h3>챌린지</h3>
+						<h3>클래스</h3>
 						<table class="tbl my-4">
 							<tr>
-								<th>챌린지명</th>
+								<th>클래스명</th>
 								<td><div class="border-bottom">
-										<input type="hidden" value="${meetVo.meetId }" name="meetId">
-										${meetVo.meetTitle }
+										<input type="hidden" value="${lesson.cTitle }" name="meetId">
+										${lesson.cTitle }
 									</div></td>
 							</tr>
 							<tr>
 								<th>기간</th>
-								<td><div class="border-bottom">${meetVo.meetStart }&nbsp;~&nbsp;${meetVo.meetEnd }</div></td>
+								<td><div class="border-bottom">
+										<fmt:formatDate value="${lesson.cStart }"
+											pattern="yyyy-MM-dd HH:MM:SS" />
+										&nbsp;~&nbsp;
+										<fmt:formatDate value="${lesson.cEnd }"
+											pattern="yyyy-MM-dd HH:MM:SS" />
+									</div></td>
 							</tr>
 
 							<tr>
-								<th>최소참가비</th>
+								<th>클래스 수강료</th>
 								<td><div class="border-bottom">
-										<fmt:formatNumber value="${meetVo.minMoney }" pattern="#,###" />
+										<fmt:formatNumber value="${lesson.cPrice }" pattern="#,###" />
 										원
 									</div></td>
 							</tr>
@@ -92,9 +96,10 @@ th {
 						<h3>포인트</h3>
 						<table class="tbl my-4">
 							<tr>
-								<th style="color: black;">*참가비</th>
+								<th style="color: black;">*수강료</th>
 								<td><div class="border-bottom">
-										<input type="text" class="inputStyle fundMoney"
+										<input readonly="readonly" type="text"
+											class="inputStyle fundMoney"
 											onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
 											name="myFund" required> 원
 									</div></td>
@@ -103,15 +108,15 @@ th {
 								<th>보유</th>
 								<td style="width: 220px;"><div class="border-bottom">
 										<input type="text" class="inputStyle myPoint"
-											value="${memberVo.walletPoint + memberVo.walletCash }"
-											disabled> 원
+											value="${member.walletPoint + member.walletCash }" disabled>
+										원
 									</div></td>
 								<td><div class="pointDesc">
 										(적립금:
-										<fmt:formatNumber value="${memberVo.walletPoint }"
+										<fmt:formatNumber value="${member.walletPoint }"
 											pattern="#,###" />
 										| 충전금:
-										<fmt:formatNumber value="${memberVo.walletCash }"
+										<fmt:formatNumber value="${member.walletCash }"
 											pattern="#,###" />
 										)
 									</div></td>
@@ -155,8 +160,8 @@ th {
 			$("#payBtn").click(function() {
 				//body를 전부 form으로 감싸서 필요한 값 변수 선언
 				var totalPay = $('#totalPay').val();
-				var buyerName = '${memberVo.getMName()}';
-				var productName = '${meetVo.meetTitle}';
+				var buyerName = '${member.getMName()}';
+				var productName = '${lesson.cTitle}';
 				if (totalPay > 0) {
 					IMP.init('imp34358761');
 					IMP.request_pay({
@@ -165,8 +170,9 @@ th {
 						merchant_uid : 'merchant_' + new Date().getTime(),
 						name : productName, //결제창에 보이는 상품명
 						amount : totalPay, //가격
-						buyer_email : '${memberVo.email}', //결제완료에서 뜨는 이메일값
+						buyer_email : '${member.email}', //결제완료에서 뜨는 이메일값
 						buyer_name : buyerName,
+					//m_redirect_url : '/payProcess.do' //이렇게 해놔도 form태그의 action을 따라감
 					}, function(rsp) {
 						console.log(rsp);
 						if (rsp.success) {
@@ -191,8 +197,12 @@ th {
 							'keyup',
 							function() {
 								var cnt = 2;
-								$('.fundMoney').val($('.fundMoney').val().replace(/(^0+)/, ""));
-								$('.usePoint').val($('.usePoint').val().replace(/(^0+)/, ""));
+								$('.fundMoney').val(
+										$('.fundMoney').val().replace(/(^0+)/,
+												""));
+								$('.usePoint').val(
+										$('.usePoint').val().replace(/(^0+)/,
+												""));
 								var fund = parseInt($(".fundMoney").val() || 0);
 								var usePoint = parseInt($('.usePoint').val() || 0);
 
@@ -204,7 +214,7 @@ th {
 									$('.usePoint').val('');
 									$('.fundMoney').focus();
 								} else {
-									var myPoint = parseInt("${memberVo.walletPoint + memberVo.walletCash }");
+									var myPoint = parseInt("${member.walletPoint + member.walletCash }");
 
 									console.log('usePoint: ' + usePoint);
 									if (usePoint > myPoint) {
@@ -225,7 +235,7 @@ th {
 			//참가비 입력 안하면 최소참가비 입력
 			$('.fundMoney').on('focusout', function() {
 				var fund = parseInt($(".fundMoney").val() || 0);
-				var minMoney = parseInt("${meetVo.minMoney}");
+				var minMoney = parseInt("${lesson.cPrice}");
 				if (fund < minMoney) {
 					$('.fundMoney').val(minMoney);
 				}
@@ -247,6 +257,21 @@ th {
 		function uncomma(str) {
 			str = String(str);
 			return str.replace(/[^\d]+/g, '');
+		}
+
+		function dateFormat(dat) {
+			var date = new Date(dat);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			if (min < 10) {
+				min = '0' + min;
+			}
+			var newDate = year + "-" + month + "-" + day + " " + hour + ":"
+					+ min;
+			return newDate;
 		}
 	</script>
 </body>

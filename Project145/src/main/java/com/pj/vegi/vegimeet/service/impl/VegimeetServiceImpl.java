@@ -22,8 +22,8 @@ public class VegimeetServiceImpl implements VegimeetService {
 	VegimeetMapper dao;
 	
 	@Override
-	public List<VegimeetVo> vegimeetList() {
-		return dao.vegimeetList();
+	public List<VegimeetVo> vegimeetList(VegimeetVo vo) {
+		return dao.vegimeetList(vo);
 	}
 
 	@Override
@@ -134,5 +134,20 @@ public class VegimeetServiceImpl implements VegimeetService {
 	@Override
 	public int pointUpdate(MeetParticipantVo vo) {
 		return dao.pointUpdate(vo);
+	}
+
+	@Override
+	public int vegimeetInsert(VegimeetVo vo) {
+		return dao.vegimeetInsert(vo);
+	}
+
+	@Override
+	public int calcTotalDay() {
+		return dao.calcTotalDay();
+	}
+
+	@Override
+	public int countMeetList(VegimeetVo vo) {
+		return dao.countMeetList(vo);
 	}
 }

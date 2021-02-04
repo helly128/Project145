@@ -33,7 +33,8 @@
 	</select>
 
 	<select id="lessonSelectOne" resultType="map">
-		SELECT c.c_img "cImg", 
+		SELECT c.c_id "cId",
+				c.c_img "cImg", 
 				c.c_desc "cDesc", 
 				c.vegtype "vegtype", 
 				c.curriculum "curriculum", 
@@ -108,5 +109,22 @@
 		WHERE origin_id = #{originId}
 		AND m_id = #{mId}
 	</delete>
+	
+	<insert id="lessonEnqSubmit">
+		INSERT INTO enquiry (
+    		enq_no, 
+    		origin_id, 
+    		enq_content, 
+    		enq_date, 
+    		m_id
+		)
+		VALUES (
+		  'ENQ'||enq_seq.nextval, 
+		  #{originId}, 
+		  #{enqContent} , 
+		  sysdate, 
+		  #{mId}
+		)
+	</insert>
 	
 </mapper>

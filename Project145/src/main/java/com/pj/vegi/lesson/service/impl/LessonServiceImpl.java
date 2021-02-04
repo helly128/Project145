@@ -11,6 +11,7 @@ import com.pj.vegi.lesson.mapper.LessonMapper;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Service("lessonService")
 public class LessonServiceImpl implements LessonService {
@@ -19,7 +20,7 @@ public class LessonServiceImpl implements LessonService {
 	private LessonMapper dao;
 
 	@Override
-	public List<Map> lessonList(LessonVO vo) throws SQLException {
+	public List<LessonVO> lessonList(LessonVO vo) throws SQLException {
 		return dao.lessonList(vo);
 	}
 
@@ -56,5 +57,10 @@ public class LessonServiceImpl implements LessonService {
 	@Override
 	public List<Map> lessonSelectMember(LessonVO vo) {
 		return dao.lessonSelectMember(vo);
+	}
+
+	@Override
+	public int lessonEnqSubmit(enquiryVO vo) {
+		return dao.lessonEnqSubmit(vo);
 	}
 }
