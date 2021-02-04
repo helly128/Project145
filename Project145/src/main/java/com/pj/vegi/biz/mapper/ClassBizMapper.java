@@ -17,6 +17,7 @@ public interface ClassBizMapper {
 	LecturerVo lecBizSelect(LecturerVo lvo);
 	int myCareerUpdate(MemberVo vo);
 	List<MemberVo> getLecList(String bizNum);
+	int applyCollabo(LessonVO vo);
 	
 
 

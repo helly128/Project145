@@ -24,4 +24,6 @@ public interface ClassBizService {
 
 	List<MemberVo> getLecList(String bizNum);
 
+	int applyCollabo(LessonVO vo);
+
 }
