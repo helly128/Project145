@@ -167,7 +167,6 @@ th {
 						amount : totalPay, //가격
 						buyer_email : '${memberVo.email}', //결제완료에서 뜨는 이메일값
 						buyer_name : buyerName,
-					//m_redirect_url : '/payProcess.do' //이렇게 해놔도 form태그의 action을 따라감
 					}, function(rsp) {
 						console.log(rsp);
 						if (rsp.success) {
@@ -192,6 +191,8 @@ th {
 							'keyup',
 							function() {
 								var cnt = 2;
+								$('.fundMoney').val($('.fundMoney').val().replace(/(^0+)/, ""));
+								$('.usePoint').val($('.usePoint').val().replace(/(^0+)/, ""));
 								var fund = parseInt($(".fundMoney").val() || 0);
 								var usePoint = parseInt($('.usePoint').val() || 0);
 
