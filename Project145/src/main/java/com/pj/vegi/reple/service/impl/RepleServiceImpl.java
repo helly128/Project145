@@ -53,6 +53,12 @@ public class RepleServiceImpl implements RepleService{
 		return dao.getListWithPaging(cri, rId);
 	}
 
+	@Override
+	public int repleInsert(RepleVo vo) {
+		System.out.println("대댓글 입력"+ vo);
+		return dao.repleInsert(vo);
+	}
+
 
 
 
