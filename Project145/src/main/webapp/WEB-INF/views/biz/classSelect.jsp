@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -28,10 +28,11 @@ h4 {
 h6 {
 	font-size: 1.3rem;
 }
+
 </style>
 <title>클래스 상세페이지</title>
 </head>
-<body style="padding: 0;">
+<body style="padding: 0; align:center;">
 
 
 	<div class="container" align="center">
@@ -46,7 +47,7 @@ h6 {
 			<div class="row" id="uploadpic">
 				<!--사진 Card Body -->
 				<div class="image-container p-3" style="width: 100%" align="center">
-					<img id="class-image" src="/images/images-empty.png" height="300px"
+					<img id="class-image" src="/images/${classVo.getCImg() }" height="300px"
 						width="auto">
 				</div>
 			</div>
@@ -126,7 +127,7 @@ h6 {
 								<div class="profile-cover">
 									<div class="profile-avatar">
 										<img style="border-radius: 50px"
-											src="/images/${lecVo.getProfileImage()}"
+											src="/images/${lvo.getProfileImage()}"
 											alt="profile" />
 									</div>
 
@@ -144,11 +145,11 @@ h6 {
 
 
 					</div>
-					<div class="col-half" align="left">
+					<div class="col-half" align="center">
 						<div class="row">
 							<h5>강사아이디</h5>
 							<div class="input-group">
-								<h6>${lecVo.getLecId()}</h6>
+								<h6>${lvo.getMId()}</h6>
 							</div>
 						</div>
 
@@ -157,16 +158,16 @@ h6 {
 							<div class="input-group">
 								<div style="text-align: center;" align="center">
 
-									<h6>${mvo.getMName()}</h6>
+									<h6>${lvo.getMName()}</h6>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 
-							<div class="lecCareer" align="left">
+							<div class="lecCareer" align="center">
 								<h5>강사이력</h5>
 								<div class="input-group">
-									<h6>${lecVo.getLecCareer()}</h6>
+									<h6>${lvo.getCareer()}</h6>
 								</div>
 
 							</div>
@@ -182,7 +183,7 @@ h6 {
 			<!-- 강사부분 끝 -->
 
 
-			<div class="row" style="text-align: left" align="left">
+			<div class="row" style="text-align: left" align="center">
 
 				<h5>클래스 커리큘럼</h5>
 				<div class="input-group">
@@ -190,7 +191,7 @@ h6 {
 				</div>
 			</div>
 
-			<div class="row" style="text-align: left" align="left">
+			<div class="row" style="text-align: left" align="center">
 
 				<h5>클래스 설명</h5>
 				<div class="input-group">
