@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -28,11 +29,10 @@ h4 {
 h6 {
 	font-size: 1.3rem;
 }
-
 </style>
 <title>클래스 상세페이지</title>
 </head>
-<body style="padding: 0; align:center;">
+<body style="padding: 0;">
 <script type="text/javascript">
 
 $(function(){ //아작스
@@ -100,7 +100,7 @@ $(function(){ //아작스
 			<div class="row" id="uploadpic">
 				<!--사진 Card Body -->
 				<div class="image-container p-3" style="width: 100%" align="center">
-					<img id="class-image" src="/images/${classVo.getCImg() }" height="300px"
+					<img id="class-image" src="/images/images-empty.png" height="300px"
 						width="auto">
 				</div>
 			</div>
@@ -242,7 +242,7 @@ $(function(){ //아작스
 			<!-- 강사부분 끝 -->
 
 
-			<div class="row" style="text-align: left" align="center">
+			<div class="row" style="text-align: left" align="left">
 
 				<h5>클래스 커리큘럼</h5>
 				<div class="input-group">
@@ -250,7 +250,7 @@ $(function(){ //아작스
 				</div>
 			</div>
 
-			<div class="row" style="text-align: left" align="center">
+			<div class="row" style="text-align: left" align="left">
 
 				<h5>클래스 설명</h5>
 				<div class="input-group">

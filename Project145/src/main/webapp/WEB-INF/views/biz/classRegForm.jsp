@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet"
@@ -88,10 +88,6 @@ $(function(){
 	 console.log( $("#lecProposal").val());
  });
     
- //
-
-
-    
  // 두번째 아작스, 강사에게 콜라보 신청 보내기 (proposal 메세지만 보내면 됨)
    $("#applyCollabo").click(()=>{
     	console.log($("#lecProposal").val());
@@ -146,7 +142,6 @@ $(function(){
  
  
 //
-
     }) 
 //종료일 설정
 function setendmin(e){
@@ -161,7 +156,7 @@ function changelecId(e) {
 </script>
 
 	<div class="container" align="center">
-		<form id="cfrm" class="cfrm" action="/classBizInsert.do" accept-charset="utf-8">
+		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${cvo.getCId()}'>
 			<input type="hidden" id="mName" value="${mvo.getMName() }">
@@ -258,7 +253,7 @@ function changelecId(e) {
 				<div class="col-half">
 					<h5>종료일</h5>
 					<div class="input-group">
-						<input type="date" name="cEnd" id="cEnd" min="">
+						<input type="date" name="cEnd" id="cEnd">
 					</div>
 				</div>
 			</div>
@@ -610,9 +605,7 @@ function changelecId(e) {
 		var mInsta =  $("#mInsta").val();
 		var lecList = ${lecList2};
 		function changeprofile() {
-			 var lecId =  $("#lecturerId1").val() ;
-			 $("#lecId").val(lecId);
-			var lecturer = $(pro).val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
+			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
 			console.log("정보 검색 시작" + lecturer);
 			//if(lecturer != $("#lecturerId1").val()){
 			for(i = 0; i < lecList.length ; i ++){
