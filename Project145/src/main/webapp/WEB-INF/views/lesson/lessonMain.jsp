@@ -34,11 +34,11 @@
 							<div class="row justify-content-center">
 								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="search-input">
-										<label for="category"> 
-										<i class="lni lni-grid-alt theme-color"></i>
-										</label> 
-										<select name="vegType" id="vegType">
-											<option value="none" selected disabled>TYPE</option>
+										<label for="category"> <i
+											class="lni lni-grid-alt theme-color"></i>
+										</label> <select name="vegType" id="vegType">
+											<option value="" selected
+												<c:if test="${vo.getVegType() == '' }">selected="selected"</c:if>>TYPE</option>
 											<option value="비건"
 												<c:if test="${vo.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
 											<option value="락토"
@@ -52,13 +52,11 @@
 								</div>
 								<div class="col-lg-3 col-sm-5 col-6">
 									<div class="search-input">
-										<label for="keyword">
-											<a href="javascript:form.submit()">
-												<i class="lni lni-search-alt theme-color"></i>
-											</a>
-										</label> 
-										<input
-											type="text" name="keyword" id="keyword"
+										<label for="keyword"> <a
+											href="javascript:form.submit()"> <i
+												class="lni lni-search-alt theme-color"></i>
+										</a>
+										</label> <input type="text" name="keyword" id="keyword"
 											value="${vo.getKeyword() }">
 									</div>
 								</div>
@@ -72,8 +70,9 @@
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="100" height="250" onerror="this.src='/images/loveurth (3).jpg'">
+								<a href="/lessonProduct.do?cId=${lesson.getCId() }">
+								<img src="/images/${lesson.getCImg() }" width="100" height="250"
+									onerror="this.src='/images/loveurth (3).jpg'" alt="클래스이미지">
 								</a>
 								<div class="product-action">
 									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
@@ -86,28 +85,37 @@
 									</h3>
 								</div>
 								<ul class="address">
-									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }
-										- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${lesson.getCStart() }</li>
-									<li><i class="lni lni-map-marker"></i>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCStart() }
+										- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${lesson.getCEnd() }</li>
+									<li><i class="lni lni-map-marker"></i> Type:
 										${lesson.getVegType() }</li>
-									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
+									<li><i class="lni lni-package"></i> 조회수:
+										${lesson.getCHit() }</li>
 								</ul>
 								<div class="product-bottom">
-									<h3 class="price"><fmt:formatNumber value="${lesson.getCPrice() }" pattern="#,###" />
-							원 </h3>
+									<h3 class="price">
+										<fmt:formatNumber value="${lesson.getCPrice() }"
+											pattern="#,###" />
+										원
+									</h3>
 									<div>
 										<button type="button" class="likeAction"
 											data-id="${lesson.getCId() }">
 											<c:if test="${lesson.getLikeFlag() > 0 }">
 												<img class="likeImg" src="/images/filled_like.png"
-													style="width: 30px;">
+													style="width: 30px;" alt="꽉찬하트">
 											</c:if>
 											<c:if test="${lesson.getLikeFlag() == 0 }">
 												<img class="likeImg" src="/images/empty_like.png"
-													style="width: 30px;">
+													style="width: 30px;" alt="빈하트">
 											</c:if>
 										</button>
 									</div>
+								</div>
+								<br>
+								<div class="product_bottom">
+									<button id="status" disabled type="button"
+										class="btn btn-outline-success">${lesson.getStatus() }</button>
 								</div>
 							</div>
 						</div>
@@ -170,6 +178,21 @@
 									}
 								}
 							})
+
+			let now = new Date();
+			let year = now.getFullYear();
+			let month = now.getMonth() + 1;
+			let date = now.getDate();
+			var today = year + '-' + month + '-' + date
+
+			if (("${lesson.getCEnd() }" < today)
+					|| ("${lesson.cJoin }" == "${lesson.cParti }")) {
+				$('#status').text('클래스 마감')
+			} else if ("${lesson.getCStart() }" > today) {
+				$('#status').text('클래스 준비중')
+			} else {
+				$('#status').text('클래스 진행중')
+			}
 
 		})//ready end
 	</script>

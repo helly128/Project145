@@ -16,60 +16,14 @@
 	margin-left: 15%;
 	margin-right: 15%;
 }
-</style>
-<!-- <script type="text/javascript" src="/resources/js/reple.js" />
-<script type="text/javascript">
-$(document).ready(function){
-	var openForm = $("#openForm");
-	$("button[data-oper='update']").on("click",function(e){
-		openForm.attr("action","/recipe/update").submit();
-	});
+<style type="text/css">
+.likeAction {
+	border: none;
+	background: transparent;
 }
-</script> -->
-<!-- Modal -->
-<div class="modal fade" id="repleDesc" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">댓글 상세 보기 모달</h5>
-				<button class="close" type="button" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">x</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div>
-					<table class="table table-hover" border="1">
-						<thead class="text-center">
-							<tr class="content">
+</style>
 
-								<th width="10">번호</th>
-								<th width="90">댓글내용</th>
-								<th width="40">작성일자</th>
-								<th width="10">작성자</th>
-							</tr>
-						</thead>
-						<tbody class="text-center">
-							<tr>
-								<td>${reId}</td>
-								<td>${reContent}</td>
-								<td>${reDate}</td>
-								<td>${MId}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Edit</button>
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Delete</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- /.modal -->
+
 <script>
 	var today = new Date();
 	var year = today.getFullYear();
@@ -83,27 +37,34 @@ $(document).ready(function){
 		$("#repleBtn").click(function() {
 			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
-	
-		$("#repleList").on( 'click','.delBtn',function() {
+
+		$("#repleList").on('click', '.delBtn', function() {
 			/* var delAlert = confirm("정말 삭제 하시겠어요?");delAlert == ture */
 			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
-			if (confirm("정말 삭제 하시겠어요?")){
-				
-				repleDelete();
-			}else{
+			var mid = $(event.target).parent().prev().text()
+			console.log($(event.target).parent().prev().text())
+
+			if (mid == "${sessionScope.mId}") {
+
+				if (confirm("정말 삭제 하시겠어요?")) {
+					repleDelete();
+					alert("삭제되었습니다.");
+
+				}
+			} else {
 				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
 		
+
 	});
 	//댓글 삭제
 	function repleDelete() {
-		id=$(event.target).data("id")
+		id = $(event.target).data("id")
 		$.ajax({
 			type : "delete",
-			url : "/reple/reple.do/"+id,
+			url : "/reple/reple.do/" + id,
 			success : function(result) {
-				alert("댓글이 삭제되었습니다.");
 				repleList();
 
 			}
@@ -117,7 +78,7 @@ $(document).ready(function){
 	var date = year + "년" + month + "월" + day + "일"
 	$('#wDate').text(date);
 
-	 //댓글 입력
+	//댓글 입력
 	function repleWrite() {
 		var reContent = $("#reContent").val();
 		var rId = "${RepleVo.RId}"
@@ -144,40 +105,7 @@ $(document).ready(function){
 			}
 		})
 	}
-	
-	
 
-	/* //댓글 입력
-	function repleWrite() {
-		var reContent = $("#reContent").val();
-		var rId = "${RepleVo.RId}";
-		var mId = "${mId}";
-		var objParams = {
-				rId : rId,
-				reParent : reParent,
-				reDept : reDept,
-				reContent : reContent,
-				reDate : date,
-				mId : mId
-		};
-		
-		$.ajax({
-			type : "post",
-			url : "/reple/reple.do",
-			headers : {
-				"Content-Type" : "application/json"
-			},
-			dataType : "text",
-			data : JSON.stringify(objParams),
-			success : function() {
-				alert("댓글이 등록되었습니다.");
-				$("#repleList").empty();
-				//$("#repleList").append('#repleList');
-				repleList();
-				$("#reContent").val("");
-			}
-		})
-	} */
 	/* 	//댓글 수정
 	 function repleEdit() {
 	 $.ajax({
@@ -195,26 +123,30 @@ $(document).ready(function){
 
 	//댓글 목록 출력
 	function repleList() {
-		$.ajax({
-			type : "get",
-			url : "/reple/reple.do?RId=${recipeVo.RId}",
-			success : function(result) {
-				var output = "<table>";
-				console.log(result);
-				for ( var i in result) {
-					output += "<tr>";
-					output += "<td width='60' class='delBtn'>";
-					output += "<td width='200'>" + result[i].reContent;
-					output += "<td width='100'>" + result[i].reDate;
-					output += "<td width='60' data-mid='"+result[i].mid+"'>" + result[i].mid;
-					output += "<td width='60'>"
-							+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제"
-					output += "<tr>"
-				}
-				output += "</table>";
-				$("#repleList").html(output);
-			}
-		});
+		$
+				.ajax({
+					type : "get",
+					url : "/reple/reple.do?RId=${recipeVo.RId}",
+					success : function(result) {
+						var output = "<table>";
+						console.log(result);
+						for ( var i in result) {
+							output += "<tr>";
+							output += "<td width='60' class='delBtn'>";
+							output += "<td width='200'>" + result[i].reContent;
+							output += "<td width='100'>" + result[i].reDate;
+							output += "<td width='60' data-mid='"+result[i].mid+"'>"
+									+ result[i].mid;
+							output += "<td width='60'>"
+									+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제";
+							output += "<td width='60'>"
+									+ "<button type='button' class='reBtn' id='reBtn'>답글";
+							output += "</tr>"
+						}
+						output += "</table>";
+						$("#repleList").html(output);
+					}
+				});
 	}
 
 	//재료
@@ -243,6 +175,44 @@ $(document).ready(function){
 			}
 
 		});
+		
+		$("#cards")
+		.on(
+				'click',
+				'.likeAction',
+				function() {
+
+					if ('${mId}' == null || '${mId}' == '') {
+						alert("로그인 후 이용가능합니다.")
+					} else {
+						var classId = $(this).data('id')
+
+						if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+							$.ajax({
+								url : 'lessonLike.do/' + classId,
+								type : 'post',
+								contentType : "application/json",
+								success : function(result) {
+
+								}
+							}) // ajax end
+							$(this).children('img').attr('src',
+									'/images/filled_like.png')
+						} else {
+							$.ajax({
+								url : 'lessonUnLike.do/' + classId,
+								type : 'post',
+								contentType : 'application/json',
+								success : function(result) {
+
+								}
+							}) //ajax end
+							$(this).children('img').attr('src',
+									'/images/empty_like.png')
+						}
+					}
+				});
+
 	}
 </script>
 
@@ -275,11 +245,13 @@ $(document).ready(function){
 			<div class="row">
 				<div class="col-lg-10"></div>
 				<div class="col-lg-2">
-					<button type="button" class="btn btn-success"
-						onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
+					<c:if test="${sessionScope.mId==recipeSelect.MId}">
+						<button type="button" class="btn btn-success"
+							onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-danger" data-toggle="modal"
-						data-target="#exampleModal">Delete</button>
+							data-target="#exampleModal">Delete</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -306,7 +278,17 @@ $(document).ready(function){
 				</div>
 			</div>
 		</div>
+		
 		<br />
+		<!-- <script>
+		Handlebars.registerHelper("eqReplyWriter", function (replyWriter, block) {
+		    var accum = "";
+		    if (replyWriter === "${login.userId}") {
+		        accum += block.fn();
+		    }
+		    return accum;
+		});
+		</script> -->
 		<!-- 관련 재료 -->
 		<div>
 			<h3>🍋Ingredient</h3>
@@ -338,7 +320,7 @@ $(document).ready(function){
 		<div>
 			<h3>📖Related Class</h3>
 			<br /> <br />
-			<div class="row">
+			<div class="row" id="cards">
 				<!-- 클래스리스트 시작 -->
 				<input type="hidden" value="${lesson}">
 				<c:forEach var="lesson" items="${lessons }">
@@ -357,22 +339,31 @@ $(document).ready(function){
 							<div class="product-content">
 								<input type="hidden" value="클래스아이디">
 								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
+									<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
 								</h3>
 								<span class="update">${lesson.getCDesc() }</span>
 								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }
+										${lesson.getCStart() }</li>
+									<li><i class="lni lni-map-marker"></i>
+										${lesson.getVegType() }</li>
+									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
 								</ul>
 								<div class="product-bottom">
 									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
+									<div>
+										<button type="button" class="likeAction"
+											data-id="${lesson.getCId() }">
+											<c:if test="${lesson.getLikeFlag() > 0 }">
+												<img class="likeImg" src="/images/filled_like.png"
+													style="width: 30px;">
+											</c:if>
+											<c:if test="${lesson.getLikeFlag() == 0 }">
+												<img class="likeImg" src="/images/empty_like.png"
+													style="width: 30px;">
+											</c:if>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -390,8 +381,7 @@ $(document).ready(function){
 				<br />
 				<div id="reloadReple">
 					<div class="row" align="left">
-						<div class="col-lg-1">번호</div>
-						<div class="col-lg-6">댓글 내용</div>
+						<div class="col-lg-6" align="center">댓글 내용</div>
 						<div class="col-lg-2">작성일자</div>
 						<div class="col-lg-2">작성자</div>
 						<div class="col-lg-1">비고</div>

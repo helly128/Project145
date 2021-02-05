@@ -3,6 +3,8 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
+
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
@@ -11,7 +13,8 @@
 <body id="page-top">
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">내가 만든 MEET를 확인하세요!!👓</h1><br><br>
+		<h1 class="h3 mb-2 text-gray-800">내가 만든 MEET를 확인하세요!!👓</h1>
+		<br> <br>
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
@@ -19,7 +22,7 @@
 			</div>
 			<div class="card-body">
 				<div class="col-sm-12 col-md-6">
-				<!-- 
+					<!-- 
 					<div id="dataTable_filter" class="dataTables_filter">
 						<label><input type="search"
 							class="form-control form-control-sm">
@@ -47,7 +50,8 @@
 											pattern="yyyy-MM-dd" /> - <fmt:formatDate
 											value="${list.meetEnd }" pattern="yyyy-MM-dd" /></td>
 									<td>${list.meetParticipant }</td>
-									<td><fmt:formatNumber value="${list.meetFund }" pattern="#,###" /> 원</td>
+									<td><fmt:formatNumber value="${list.meetFund }"
+											pattern="#,###" /> 원</td>
 									<td><div class="row no-gutters align-items-center">
 											<div class="col-auto">
 												<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${list.allAchiv }%</div>
@@ -55,8 +59,8 @@
 											<div class="col">
 												<div class="progress progress-sm mr-2">
 													<div class="progress-bar bg-info" role="progressbar"
-														style="width: 30%" aria-valuenow="50" aria-valuemin="0"
-														aria-valuemax="100"></div>
+														style="width: ${list.allAchiv }%" aria-valuenow="50"
+														aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 											</div>
 										</div></td>
@@ -74,40 +78,16 @@
 						</tfoot>
 					</table>
 				</div>
-				<div class="dataTables_paginate paging_simple_numbers"
-					id="dataTable_paginate">
-					<ul class="pagination">
-						<li class="paginate_button page-item previous disabled"
-							id="dataTable_previous"><a href="#"
-							aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-							class="page-link">Previous</a></li>
-						<li class="paginate_button page-item active"><a href="#"
-							aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-							class="page-link">1</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-							class="page-link">2</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-							class="page-link">3</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-							class="page-link">4</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="5" tabindex="0"
-							class="page-link">5</a></li>
-						<li class="paginate_button page-item "><a href="#"
-							aria-controls="dataTable" data-dt-idx="6" tabindex="0"
-							class="page-link">6</a></li>
-						<li class="paginate_button page-item next" id="dataTable_next"><a
-							href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0"
-							class="page-link">Next</a></li>
-					</ul>
-				</div>
+				<my:paging paging="${paging }" jsFunc="goList" />
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
+	
+		function goList(p) {
+			location.href = "myMeet.do?page=" + p;
+		}
+
 		function dateFormat(dat) {
 			var date = new Date(dat);
 			var year = date.getFullYear();

@@ -54,7 +54,12 @@
 }
 
 div, h3 {
-	word-break:keep-all;
+	word-break: keep-all;
+}
+
+.partiPic {
+	display: flex;
+	align-items: center;
 }
 </style>
 <script
@@ -68,7 +73,7 @@ div, h3 {
 				<div>
 					<div class="mb-5">
 						<img width="750" src="/images/${meetVo.meetPic }"
-							class="attachment-full size-full wp-post-image" alt=""
+							class="attachment-full size-full wp-post-image" alt="vegimeet image"
 							loading="lazy" sizes="(max-width: 750px) 100vw, 750px">
 					</div>
 					<div>
@@ -78,8 +83,7 @@ div, h3 {
 						</div>
 						<div class="border-top pt-4 pb-5">
 							<h4>주최자</h4>
-							<div class="mt-3 px-2">
-							${meetVo.getMId() }</div>
+							<div class="mt-3 px-2">${meetVo.getMId() }</div>
 						</div>
 						<div class="border-top pt-4 pb-5">
 							<h4>참가자 목록</h4>
@@ -91,13 +95,7 @@ div, h3 {
 						</div>
 						<div class="border-top pt-4 pb-5 border-bottom">
 							<h4>다른 참가자의 사진</h4>
-							<div class="row mt-3 px-2">
-								<c:forEach var="datavo" items="${dataList }">
-									<div class="p-2 col-xl-3 col-lg-3 col-md-4">
-										<img src="/images/${datavo.dataPic }">
-									</div>
-								</c:forEach>
-							</div>
+							<div class="row mt-3 px-2 infiniteScroll"></div>
 						</div>
 					</div>
 				</div>
@@ -123,7 +121,7 @@ div, h3 {
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">현재 모금액</span>
-						<h5>${meetVo.meetFund }원</h5>
+						<h5><fmt:formatNumber value="${meetVo.meetFund }" pattern="#,###" />원</h5>
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">참가자수</span>
@@ -140,9 +138,7 @@ div, h3 {
 					</div>
 					<div class="p-3">
 						<div class="edd_purchase_submit_wrapper" align="center">
-							<button class="btn joinBtn btn-hover">
-								참가하기
-							</button>
+							<button class="btn joinBtn btn-hover">참가하기</button>
 						</div>
 					</div>
 					<c:if test="${mId == null or mId == ''}">
@@ -152,8 +148,9 @@ div, h3 {
 			</div>
 		</div>
 	</section>
-
 	<script>
+	var isEnd = false;
+	var isLoadingData;
 		$(function() {
 			$('.joinBtn').click(function() {
 				var temp = confirm('[${meetVo.meetTitle}]\n해당 챌린지에 참가하시겠습니까?');
@@ -185,9 +182,63 @@ div, h3 {
 			var start = '${meetVo.meetStart}';
 			var dayArr = start.split('-');
 			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
-			console.log((startDay.getTime() - today.getTime())/1000/60/60/24);
 			
-		})
+			
+			//무한 스크롤 사진 로딩
+			//https://victorydntmd.tistory.com/194
+			$(window).scroll(function(){
+				var $window = $(this);
+				var scrollTop = $window.scrollTop();
+	            var windowHeight = $window.height();
+	            var documentHeight = $(document).height();
+	            
+	            //console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight );
+	            
+	            // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+	            if(( scrollTop + windowHeight + 400 > documentHeight ) && !isLoadingData){
+	            	isLoadingData = true;
+	                fetchList();
+	            }
+//	           fetchList(); 
+			});
+		});
+		
+		function fetchList() {
+	        if(isEnd == true){
+	            return;
+	        }
+	        
+	        // data-no 이용해서 불러온 데이터 수 카운트
+	        var no = $(".infiniteScroll div").last().data("no");
+	      	//1~8, 9~16의 데이터를 뿌려야해서 이런 형태로 받아줌
+	        var startNo = (parseInt(no) || 0) + 1;
+	       
+	        $.ajax({
+	            url:"/scrollNewImage.do/${meetVo.meetId}/" + startNo ,
+	            type: "post",
+	            contentType : "application/json",
+	            success: function(result){
+	                isLoadingData = false;	// 두 번 로드되는 것을 막기위해 데이터를 읽어오고 난 후 다시 요청하도록
+	                let length = result.length;
+	                if( length < 8 ){	// 남은 데이터가 8개 이하일 경우 무한 스크롤 종료
+	                    isEnd = true;
+	                }
+	                $.each(result, function(idx, item){
+	                    renderList(idx, item);
+	                });
+	            }
+	        });
+	    }
+		
+		let renderList = function(idx, vo){
+			var num = vo.start + idx;
+	        let html = `<div class='p-2 col-xl-3 col-lg-3 col-md-4 partiPic'
+	        			data-no='\${num}'>
+						<img src='/images/\${vo.dataPic}' alt="user\'s vegimeet image">
+						</div>`;
+	            
+	            $(".infiniteScroll").append(html);
+	    }
 	</script>
 </body>
 </html>

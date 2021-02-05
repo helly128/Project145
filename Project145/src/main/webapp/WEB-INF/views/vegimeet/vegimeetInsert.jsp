@@ -66,7 +66,7 @@ td {
 	color: white;
 }
 
-.exampleImg {
+.sampleImg {
 	height: 180px;
 }
 
@@ -101,21 +101,21 @@ td {
 					<tr class="imageTr">
 						<th rowspan="2">대표 사진</th>
 						<td><input type="radio" name="meetPic" class="radio"
-							value="sample1.jpg" checked> <img class="exampleImg"
-							src="/images/sample1.jpg"></td>
+							value="sample1.jpg" checked> <img class="sampleImg"
+							src="/images/sample1.jpg" alt="sample image"></td>
 						<td><input type="radio" name="meetPic" class="radio"
-							value="sample2.jpg"> <img class="exampleImg"
-							src="/images/sample2.jpg"></td>
+							value="sample2.jpg"> <img class="sampleImg"
+							src="/images/sample2.jpg" alt="sample image"></td>
 						<td><input type="radio" name="meetPic" class="radio"
-							value="sample3.jpg"> <img class="exampleImg"
-							src="/images/sample3.jpg"></td>
+							value="sample3.jpg"> <img class="sampleImg"
+							src="/images/sample3.jpg" alt="sample image"></td>
 					</tr>
 					<tr class="imageTr">
 						<td style="padding-top: 20px;"><label><input
 								type="radio" name="meetPic" class="radio imageSelect"
 								style="width: 30px;" value="">사진 업로드</label>
 							<div class="visibility" style="display: none">
-								<img id="upload-image" width="250px" class="mb-4">
+								<img id="upload-image" width="250px" class="mb-4" alt="show upload image">
 								<div class="div-image">
 									<span class="label">파일 찾기</span> <input type="file"
 										name="uploadfile" class="uploadPic" accept="image/*"

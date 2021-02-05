@@ -62,7 +62,15 @@
 		c_id=#{cId}
 	</select>
 
+<<<<<<< HEAD
 	
+=======
+	<select id="lecBizSelect" resultType="LecturerVo">
+		SELECT * FROM Member
+		WHERE
+		c_id=#{cId}
+	</select>
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 	
 	<update id="myCareerUpdate">
 		UPDATE member

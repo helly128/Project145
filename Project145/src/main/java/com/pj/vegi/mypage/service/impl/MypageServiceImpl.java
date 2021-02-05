@@ -99,6 +99,16 @@ public class MypageServiceImpl implements MypageService {
 		return dao.myCreateMeet(vo);
 	}
 
+	@Override
+	public int countUntact(MeetParticipantVo vo) {
+		return dao.countUntact(vo);
+	}
+
+	@Override
+	public int countCreateMeet(VegimeetVo vo) {
+		return dao.countCreateMeet(vo);
+	}
+
 
 //	@Override
 //	public int recipeHitUpdate(RecipeVo vo) throws SQLException {

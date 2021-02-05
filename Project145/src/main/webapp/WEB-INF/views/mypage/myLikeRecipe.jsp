@@ -24,7 +24,7 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="${list.rImage }" width="100"
-							height="200" onerror="this.src='/images/loveurth (3).jpg'">
+							height="200" onerror="this.src='/images/loveurth2 (1).jpg'" alt="레시피 이미지">
 						<div class="card-body">
 							<h4 class="card-title">${list.rTitle }</h4>
 							<ul class="address" align="left">
@@ -37,7 +37,7 @@
 							<button type="button" class="likeAction"
 								data-id="${list.originId }">
 								<img class="likeImg" src="/images/filled_like.png"
-									style="width: 30px;" onerror="this.src='/images/loveurth (3).jpg'">
+									style="width: 30px;" alt="꽉찬하트">
 							</button>
 						</div>
 					</div>

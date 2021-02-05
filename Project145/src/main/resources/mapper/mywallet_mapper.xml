@@ -118,9 +118,6 @@
 		SELECT *
 		FROM wallet_history
 		<where>
-			<if test=" walletType == null or walletType == '' ">
-				and m_id = #{mId}
-			</if>
 			<if test=" walletType != null and walletType != '' ">
 				and m_id = #{mId}
 				and wallet_type like '%' || #{walletType} || '%'

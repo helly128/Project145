@@ -4,8 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
+import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.enquiryVO;
 
 public interface LessonService {
@@ -26,4 +29,12 @@ public interface LessonService {
 	int likeDelete(LikeListVo vo);
 
 	int lessonEnqSubmit(enquiryVO vo);
+	
+	int lessonReservInsert(LessonReservVO vo);
+	
+	int lessonJoinUpdate(LessonVO vo);
+	
+	int pointHistoryInsert(WalletHistoryVO vo);
+	
+	int pointDeduct(MemberVo vo);
 }

@@ -19,5 +19,7 @@ public interface RepleService {
 	
 	public List<RepleVo>getList(Criteria cri, int r_id);
 
+	public int repleInsert(RepleVo vo);//대댓글
+
 
 }

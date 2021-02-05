@@ -20,7 +20,7 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="${recipe.getRImage() }" width="200"
-							height="200">
+							height="200" onerror="this.src='/images/loveurth2 (4).jpg'" alt="레시피 사진">
 						<div class="card-body">
 							<h3 class="card-title">${recipe.getRTitle() }</h3>
 						</div>

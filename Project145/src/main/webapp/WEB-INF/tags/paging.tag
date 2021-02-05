@@ -3,7 +3,6 @@
 <%@ attribute name="jsFunc" required="false" type="java.lang.String"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-${paging }
 
 <c:if test="${empty jsFunc}">
 	<c:set var="jsFunc" value="goList"></c:set>

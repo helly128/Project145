@@ -12,18 +12,10 @@
 					(SELECT *
 					FROM class
 					<where>
-						<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-							AND vegType in('비건','락토','오보','락토오보')
-						</if>
-						<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-							AND vegType in('비건','락토','오보','락토오보')
-							AND c_title like '%' || #{keyword} || '%'
-						</if>
-						<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+						<if	test=" vegType != null and vegType != '' ">
 							AND vegType = #{vegType}
 						</if>
-						<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-							AND vegType = #{vegType}
+						<if	test=" keyword != null and keyword != '' ">
 							AND c_title like '%' || #{keyword} || '%'
 						</if>
 					</where>
@@ -126,5 +118,29 @@
 		  #{mId}
 		)
 	</insert>
+	
+	<insert id="lessonReservInsert">
+		INSERT INTO class_reserv ( cr_id, m_id, c_id ) 
+     	VALUES ( 'cr'||cr_seq.nextval, #{mId}, #{cId} )
+	</insert>
+	
+	<update id="lessonJoinUpdate">
+		UPDATE class
+		SET c_join = c_join + 1
+		WHERE c_id = #{cId}
+	</update>
+	
+	<insert id="pointHistoryInsert">
+		INSERT INTO wallet_history
+		VALUES ('wallet' ||
+		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, current_date)
+	</insert>
+	
+	<update id="pointDeduct">
+		UPDATE member
+		SET wallet_point = #{walletPoint},
+		wallet_cash = #{walletCash}
+		WHERE m_id = #{mId}
+	</update>
 	
 </mapper>

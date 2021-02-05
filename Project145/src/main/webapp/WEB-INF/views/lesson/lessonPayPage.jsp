@@ -61,7 +61,8 @@ th {
 		<div class="row mb-5">
 			<div class="col-xl-2 col-lg-2"></div>
 			<div class="col-xl-8 col-lg-8 col-md-12 mb-5">
-				<form id="frm" action="#" method="post">
+				<form id="frm" action="/payAfter.do" method="post">
+					<input type="hidden" name="cId" value="${lesson.cId }">
 					<div class="product_info p-2 my-5 border-bottom">
 						<h3>클래스</h3>
 						<table class="tbl my-4">

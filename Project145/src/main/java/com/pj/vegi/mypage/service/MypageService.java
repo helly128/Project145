@@ -38,6 +38,8 @@ public interface MypageService {
 	List<Map> meetLikeList(LikeListVo vo);
 	List<Map> meetSelect(MeetParticipantVo vo);
 	List<Map> myCreateMeet(VegimeetVo vo);
+	int countUntact(MeetParticipantVo vo);
+	int countCreateMeet(VegimeetVo vo);
 	
 	int heartCancel(LikeListVo vo);
 

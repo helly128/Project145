@@ -21,16 +21,19 @@
 				<h6 class="m-0 font-weight-bold text-primary">식당 목록</h6>
 			</div>
 			<div class="card-body">
-				<c:if test="${fn:length(restList) != 0 }">
-					<div class="table-responsive">
-						<div id="dataTable_wrapper"
-							class="dataTables_wrapper dt-bootstrap4" style="width: 98%">
-							<div class="row">
-								<div class="col-sm-12">
+
+				<div class="table-responsive">
+					<div id="dataTable_wrapper"
+						class="dataTables_wrapper dt-bootstrap4" style="width: 98%">
+						<div class="row">
+							<div class="col-sm-12">
+								<c:if test="${auth =='rbiz' }">
 									<div align="right" class="mb-2">
 										<button class="btn btn-outline-primary"
 											onclick="location.href='restBizInsertForm'">식당 추가</button>
 									</div>
+								</c:if>
+								<c:if test="${fn:length(restList) != 0 }">
 									<table class="table table-bordered dataTable" id="dataTable"
 										cellspacing="0" role="grid" aria-describedby="dataTable_info"
 										style="width: 100%; text-align: center;">
@@ -54,13 +57,16 @@
 											</c:forEach>
 										</tbody>
 									</table>
-								</div>
+								</c:if>
 							</div>
 						</div>
 					</div>
-				</c:if>
+				</div>
+
 				<c:if test="${fn:length(restList) == 0 }">
-					<h3>등록된 식당이 없습니다.</h3>
+					<div style="text-align: center;">
+						<h3>등록된 식당이 없습니다.</h3>
+					</div>
 				</c:if>
 			</div>
 		</div>

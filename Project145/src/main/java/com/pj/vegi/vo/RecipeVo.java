@@ -18,8 +18,9 @@ public class RecipeVo {
 	private String rTitle;      
 	private Date rDate;               
 	private String rContent;          
-	private String rImage;     
-	private int rHit;                     
+	private String rImage;
+	private int rHit; 
+	private String keyword;
 	private String mId;         
 	private String cId;              
 	private String[] cIdArr;  
