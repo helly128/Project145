@@ -54,8 +54,6 @@ public class ClassBizController {
 		System.out.println(lecList);
 		ObjectMapper lecturer = new ObjectMapper();
 		
-
-		
 		model.addAttribute("mvo", vo2);
 		model.addAttribute("lecList", lecList);
 		model.addAttribute("lecList2", lecturer.writeValueAsString(lecList));
@@ -73,34 +71,34 @@ public class ClassBizController {
 		LessonVO classVo = classBizService.classBizSelect(cvo);
 		System.out.println(classVo);
 
-		LecturerVo lecVo = classBizService.lecBizSelect(lvo);
-		System.out.println(lecVo);
-		
-		vo.setMId(lecVo.getMId());
+		vo.setMId(classVo.getLecId());
 		MemberVo mvo = memberService.memberSelect(vo);
 		System.out.println(mvo);
 		
 		model.addAttribute("classVo", classVo);
-		model.addAttribute("lecVo", lecVo);
 		model.addAttribute("mvo", mvo);
 		return "biz/classSelect";
 	}
 
 	@RequestMapping("/classBizEdit.do")
-	public String classBizEdit(Model model, LessonVO cvo, LecturerVo lvo, MemberVo vo) throws SQLException {
+	public String classBizEdit(Model model, LessonVO cvo, LecturerVo lvo, MemberVo vo) throws SQLException, JsonProcessingException {
 		LessonVO classVo = classBizService.classBizSelect(cvo);
 		System.out.println(classVo);
-
-		LecturerVo lecVo = classBizService.lecBizSelect(lvo);
-		System.out.println(lecVo);
 		
-		vo.setMId(lecVo.getMId());
+		vo.setMId(classVo.getLecId());
 		MemberVo mvo = memberService.memberSelect(vo);
 		System.out.println(mvo);
 		
+		System.out.println("사업자번호 아래의 모든 강사의 MemberVo List를 찾습니다.");
+		String bizNum = classVo.getBizNum();
+		List<MemberVo> lecList = classBizService.getLecList(bizNum);
+		//비즈넘버 아래의 강사 리스트 가져오기.
+		System.out.println(lecList);
+		ObjectMapper lecturer = new ObjectMapper();
+		
 		model.addAttribute("classVo", classVo);
-		model.addAttribute("lecVo", lecVo);
 		model.addAttribute("mvo", mvo);
+		model.addAttribute("lecList2", lecturer.writeValueAsString(lecList));
 		return "biz/classEdit";
 	}
 
@@ -128,18 +126,32 @@ public class ClassBizController {
 		return n;
 	}
 	
+	@RequestMapping("/classBizDelete.do")
+	public String classBizDelete(Model model, LessonVO vo) {
+		int n = 0;
+		n = classBizService.classBizDelete(vo);
+		System.out.println(n+"건 완료");
+		return "redirect:classBizList.do";
+	}
 	
 	
 	@RequestMapping("/classBizInsert.do")
 	public String classBizInsert(Model model, HttpSession session, LessonVO cvo, MemberVo mvo) {
+		String mId = (String) session.getAttribute("mId");
 		// 클래스 cvo에 담긴 파라메터들 확인
 		System.out.println("클래스를 생성한다.");
-		System.out.println("클래스" + cvo);
-		String lstatus = "개설대기";
-		//System.out.println("엠아이디랑 렉쳐아이디랑 비교" + cvo.getMId());
-		//if (!lecId.equals(lecturerId1) && !lecId.equals(lecturerId2)) {
-		//	lstatus = "강사승인대기";
-		//} // 상태 설정
+		
+		//베지타입 아무것도 안들어오면 비건 처리
+		if(cvo.getVegType()=="") {
+			cvo.setVegType("비건");
+		}
+		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 개설대기임
+		String lstatus = "";
+		if (mvo.getLecId()==mId) {
+			lstatus = "개설완료";
+			}else {
+				lstatus ="강사승인대기";
+			}
 		cvo.setStatus(lstatus);
 		System.out.println("사업자 번호 찾기");
 		// mId로 사업자 번호 찾고 설정
@@ -148,24 +160,11 @@ public class ClassBizController {
 		System.out.println("사업자 번호는 " + bizNum);
 		cvo.setBizNum(bizNum); // cvo에 사업자 번호 담아 주기
 		System.out.println("cvo사업자 번호는 " + cvo.getBizNum());
-
-		
+		System.out.println("클래스정보보기" + cvo);
 		// 클래스 인서트 ! 생성하기
 		int n = 0;
 		n = classBizService.classBizInsert(cvo);
 		System.out.println("클래스" + n + "건 입력 완료");
-
-		// 강사에게 메세지 보내기 
-		
-		
-//		lvo.setBizNum(bizNum);
-//		lvo.setCId(cvo.getCId()); // cID찾아옴
-//		lvo.setProposal(proposal);
-//		n = classBizService.classLecturerInsert(lvo);
-//		System.out.println("강사" + n + "건 입력 완료");
-//
-//		System.out.println("강사정보 " + lvo);
-		// 강사 정보넣기
 
 		return "redirect:classBizList.do";
 	}

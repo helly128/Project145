@@ -61,7 +61,8 @@ $(function(){
     
   
     // 메세지 프리뷰 
-   $("#preview").click(()=>{
+   $(".preview").click(()=>{
+	
 	 console.log($("#cTitle").val());
 	 console.log($("#cStart").val());
 	 console.log($("#cEnd").val());
@@ -69,7 +70,7 @@ $(function(){
 	 console.log($("#cLoc").val());
 	 console.log($("#cParti").val());
 	 console.log($("#cPrice").val());
-	 console.log($("#proposal2").val());
+	 console.log($(".proposal2").val());
 	 
 	 var title = "안녕하세요 강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
 	 var start = $("#cStart").val() + " ~  " ;
@@ -78,11 +79,13 @@ $(function(){
 	 var loc = $("#cLoc").val() +"에서 ";
 	 var parti = "정원 "+$("#cParti").val() + "명 으로 ";
 	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
-	 var msg =  $("#proposal2").val() ;
+	 var msg =  $(".proposal2").val() ;
 	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
-	 var lecId =  $("#lecturerId1").val() ;
-	 $("#lecId").val(lecId);
-	 $("#lecProposal").val(proposal);
+	 
+	if(proposal!="") {
+		 $("#lecProposal").val(proposal);
+	}
+	 console.log( $("#lecProposal").val());
  });
     
  // 두번째 아작스, 강사에게 콜라보 신청 보내기 (proposal 메세지만 보내면 됨)
@@ -99,29 +102,67 @@ $(function(){
                    $("#applyResult").text("메세지를 보냈습니다.");
                    var btnmsg="메세지 다시 보내기";
                    $("#savecareer").text(btnmsg);
-                   
+                   alert("등록되었습니다.");
                 }
                 else{
                    $("#saveResult").text("등록 실패");
-                   
+                   alert("등록실패");
                 }
-             	alert("등록되었습니다.");
+             	
              },
              error:(log)=>{alert("실패+log")
              }
                 
           });
     });
+ //
+ 
+ 
+ // 날짜 미니멈
+   //get today in date yyyy-mm-dd
+   var today = new Date();
+   var dd = today.getDate();
+   var mm = today.getMonth()+1; 
+//January is 0 so need to add 1 to make it 1!
+   var yyyy = today.getFullYear();
+   if(dd<10){
+     dd='0'+dd
+   } 
+   if(mm<10){
+     mm='0'+mm
+   } 
+   today = yyyy+'-'+mm+'-'+dd;
+//set today as min of start date
+   document.getElementById("cStart").setAttribute("min", today);
+     
+
+
+    
+ 
+ 
  
 //
-    })   
-
+    }) 
+//종료일 설정
+function setendmin(e){
+   console.log(e);
+   document.getElementById("cEnd").setAttribute("min", e);
+   }
+//외부강사 아이디 입력시 lecId값 바꾸기 
+function changelecId(e) {
+ 	console.log(e +"lec 클래스서 받아온lecId");
+ 	document.getElementById("lecId").value=e;
+ }
 </script>
 
 	<div class="container" align="center">
 		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${cvo.getCId()}'>
+			<input type="hidden" id="mName" value="${mvo.getMName() }">
+			<input type="hidden" id="mImage" value="${mvo.profileImage }">
+			<input type="hidden" id="mInsta" value="${mvo.insta }">
+
 			<br>
 			<div class="pagetitle" align="center">
 				<h3>새로운 클래스 등록</h3>
@@ -161,29 +202,19 @@ $(function(){
 
 
 
-			<p>
+			
 			<h5>베지테리언타입</h5>
 			<br>
-
 			<div class="labelf" align="center">
-
 				<div class="demo">
-
 					<table class="tbl">
 						<tr>
 							<th>채소</th>
 							<th>유제품</th>
 							<th>달걀</th>
 						</tr>
-
+						<tr><th></th><th></th><th></th></tr>
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-						<tr>
-
-
 							<td>
 								<div class="tbl-data" data-item="🥦" style="">
 									<input type="checkbox" id="vegan" class="type" value="비건"
@@ -196,7 +227,6 @@ $(function(){
 									<label for="locto">&nbsp&nbsp&nbsp&nbsp</label>
 								</div>
 							</td>
-
 							<td>
 								<div class="tbl-data" data-item="🥚 ">
 									<input type="checkbox" id="ovo" class="vtype" value="오보">
@@ -204,21 +234,20 @@ $(function(){
 								</div>
 							</td>
 						</tr>
-
 					</table>
 					<input type="text" id="vegi" readonly value="비건" required
-						name="vegtype"
-						style="text-align: center; display: none; height: 3rem; padding: 10px;">
+						name="vegType"
+						style="text-align: center; height: 3rem; padding: 10px;">
 				</div>
 			</div>
-
 
 
 			<div class="row">
 				<div class="col-half">
 					<h5>시작일</h5>
 					<div class="input-group">
-						<input type="date" name="cStart" id="cStart">
+						<input type="date" name="cStart" id="cStart"
+						onChange="setendmin(this.value)">
 					</div>
 				</div>
 				<div class="col-half">
@@ -256,11 +285,11 @@ $(function(){
 					<h5>모집정원(명)</h5>
 					<div class="input-group">
 						<div class="number-input" style="margin: 10px">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
 							<input class="quantity" min="0" id="cParti" name="cParti"
 								value="1" type="number">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
 								class="plus"></button>
 						</div>
@@ -270,11 +299,11 @@ $(function(){
 					<h5>가격(5000원 단위)</h5>
 					<div class="input-group">
 						<div class="number-input" style="margin: 10px">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown(1000)"></button>
 							<input class="quantity" min="1000" id="cPrice" name="cPrice"
 								value="5000" type="number">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp(5000)"
 								class="plus"></button>
 						</div>
@@ -307,11 +336,10 @@ $(function(){
 						<h5 style="padding-top: 20px;">강사아이디</h5>
 						<div class="input-group">
 							<!-- 같은 비즈 넘버 아래의 강사 아이디 보여주는 부분 -->
-							<select id="lecturerId1"
+							<select id="lecturerId1" required
 								style="width: 80%; padding: 0px; margin-right: 50px;"
-								class="form-control" onclick="changeprofile(this)">
-								<option selected value="${sessionScope.mId}">기본 계정 :
-									${sessionScope.mId}</option>
+								class="form-control" onChange="changeprofile()">
+								<option selected value="-">계정을 선택해주세요.</option>
 								<c:forEach items="${lecList}" var="lec">
 									<option><c:out value="${lec.getMId()}" /></option>
 								</c:forEach>
@@ -326,8 +354,8 @@ $(function(){
 					<div class="col-half">
 						<div class="profile-cover">
 							<div class="profile-avatar">
-								<img style="border-radius: 50%;" width="200px" height="200px;"
-									src="" alt="" id="showlecImage" />
+								<img id="showlecImage" style="border-radius: 50%;" width="200px" height="200px;"
+									src="" alt="" id="더미그림" />
 							</div>
 
 							<div class="profile-details" style="font-size: 1.5rem">
@@ -343,32 +371,32 @@ $(function(){
 
 					<br>
 					<div class="col-half">
+					
+					
 						<div class="msg" align="left">
 							<div>
 								<h5>강사이력</h5>
 								<div id="showlecCareer">
-									<br> 강사의 이력은 이렇슴 애플<br> 삼성<br> 테슬라<br> 예담<br>
+								
 								</div>
 							</div>
 
 						</div>
 						<br>
-						<div class="msg" id="lecprop" align="left">
+						<div class="msg" id="lecprop" align="left" style="display:none;">
 
 
 							<h5>강사에게 메세지</h5>
 
-							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
+							<textarea rows="3" id="proposal2" class="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
 
 							<div>
-								<button type="button" id="preview">Preview</button>
+								<button type="button" class="preview">Preview</button>
 							</div>
 							<div id="result"></div>
 							<br>
-
-
-							<textarea rows="8" name="lecProposal" id="lecProposal"
-								style="width: 90%"></textarea>
+	
+							
 						</div>
 
 					</div>
@@ -394,7 +422,7 @@ $(function(){
 						<div class="input-group">
 							<select name="lecturerId2" onchange="showSection(this)"
 								style="width: 90%; padding: 0px; margin: 0px;">
-								<option value="">강사 추가 옵션</option>
+								<option value="" selected>추가 옵션을 선택하세요</option>
 								<option value="${sessionScope.mId}">내 이력 수정 :
 									${sessionScope.mId}</option>
 								<option>외부 강사 추가</option>
@@ -408,8 +436,8 @@ $(function(){
 						<div class="col-half">
 							<div class="profile-cover">
 								<div class="profile-avatar">
-									<img style="border-radius: 50%;"
-										src="/images/${ mvo.profileImage }" alt="" />
+									<img id="showlecImage2" style="border-radius: 50%;"
+										src="" alt="더미그림" />
 								</div>
 
 								<div class="profile-details" style="font-size: 1.5rem">
@@ -436,23 +464,22 @@ $(function(){
 
 							<div class="msg" id="otherlec" align="left" style="display: none">
 							
-								강사 ID <input type="text" style="width: 90%" id="lecId" name="lecId" value="">
+								강사 ID 입력<input type="text" class="lec" style="width: 90%" onChange="changelecId(this.value)">
 
 
 
 							<h5>강사에게 메세지</h5>
 
-							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
+							<textarea rows="3" id="proposal2"  class="proposal2"  name="proposal2" name="pro" style="width: 90%"></textarea>
 
 							<div>
-								<button type="button" id="preview">Preview</button>
+								미리 보기를 눌러서 메세지를 확인하세요.<button type="button" class="preview">미리보기</button>
 							</div>
 							<div id="result"></div>
 							<br>
 
 
-							<textarea rows="8" name="lecProposal" id="lecProposal"
-								style="width: 90%"></textarea>
+						
 						
 								
 							</div>
@@ -479,7 +506,10 @@ $(function(){
 					</div>
 				</div>
 			</div>
-
+			<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
+				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
+							<textarea rows="8" name="lecProposal" id="lecProposal"
+								style="width: 90%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
 			<!-- 강사부분 끝 -->
 
 
@@ -503,7 +533,7 @@ $(function(){
 						내용에 동의합니다.</label>
 				</div>
 			</div> -->
-			<button class="btn btn-primary" type="button" id="insertclass"
+			<button class="btn btn-primary" type="submit" id="insertclass"
 				style="margin: 10px; padding: 10px;">클래스 개설 신청</button>
 			<button class="btn btn-primary" type="button"
 				onClick="location.href='/classBizList.do'"
@@ -528,6 +558,7 @@ $(function(){
 
 		$(document).ready(function() { //기존 강사 목록에서 선택 || 새로운 강사 추가 
 
+			
 			$("input:radio[name=lectureropt]").click(function() {
 				var lecval = $('input:radio[name=lectureropt]:checked').val();
 
@@ -543,19 +574,16 @@ $(function(){
 				}
 			});
 
-			$("#insertclass").click(function() { 
-				alert("등록");
-				$("#cfrm").submit();
-			})
+			
 
 		});
 		
 		
 		
 		function showSection(lec) { //강사 추가 나를 강사로 추가 || 다른 강사 추가
-
-			if (lec.value == "${sessionScope.mId}") {
-				$("#otherlec").hide();
+ 
+			if (lec.value == "${sessionScope.mId}") { //나랑 아이디 같으면? 
+				$("#otherlec").hide(); 
 				$("#sendmsg").hide();
 				$("#savecareer").show();
 				$("#melec").show();
@@ -570,11 +598,16 @@ $(function(){
 			}
 		}
 		
+		//강사 목록 선택시, 프로필 정보 바꾸기 
+		var mId = $("#mId").val();
+		var	mName= $("#mName").val();
+		var mImage = $("#mImage").val();
+		var mInsta =  $("#mInsta").val();
 		var lecList = ${lecList2};
-		function changeprofile(pro) {
+		function changeprofile() {
 			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
 			console.log("정보 검색 시작" + lecturer);
-			
+			//if(lecturer != $("#lecturerId1").val()){
 			for(i = 0; i < lecList.length ; i ++){
 				if ( lecList[i].mid == lecturer ) {
 					console.log(lecList[i].mid + "가 아이디임");
@@ -582,28 +615,25 @@ $(function(){
 					console.log(lecList[i].career + "가 커리어임");
 					console.log('/images/'+lecList[i].profileImage);
 					console.log(lecList[i].insta +'인스타임');
+					
+					
 					$("#showlecName").text(lecList[i].mname);
 					$("#showlecCareer").text(lecList[i].career);
 					$("#showlecImage").attr('src','/images/'+lecList[i].profileImage);
-					$('#showlecInsta').prop('href',lecList[i].insta)
+					$('#showlecInsta').prop('href',lecList[i].insta);
+					//lecId에 값 넣어주기 
 					
-				
-					
-				}else{ console.log("그런 정보 없음")}
+				}
 				
 			}
+			//}else{console.log('내아이디, 제안서 보낼필요 없음');}
+			$("#lecId").val(lecturer);
+			console.log(lecturer+"로 변경")
 			console.log("정보 검색 끝 ");
 		}
 		
 
-		
-
-	 	
-		
-		
-
 		//채식타입 선택 폼 
-
 		$(".vtype").click(function() {
 			if ($("#vegi").val() != null) {
 				var str = "";
@@ -618,7 +648,6 @@ $(function(){
 				$("#vegi").val(str);
 			}
 		});
-
 		
 		
 		//주소 검색 api

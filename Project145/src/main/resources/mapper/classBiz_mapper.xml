@@ -56,27 +56,13 @@
 
 	</insert>
 
-	<insert id="classLecturerInsert">
-		INSERT INTO LECTURER(
-		LEC_ID,M_ID,C_ID,BIZNUM,LEC_CAREER,PROPOSAL,RESPONSE
-		)
-		VALUES(
-		'lec'||lec_seq.nextval, #{mId},'class'|| #{cId},#{bizNum},
-		#{lecCareer},#{lecProposal},#{lecResponse}
-		)
-	</insert>
-
 	<select id="classBizSelect" resultType="LessonVo">
 		SELECT * FROM class
 		WHERE
 		c_id=#{cId}
 	</select>
 
-	<select id="lecBizSelect" resultType="LecturerVo">
-		SELECT * FROM lecturer
-		WHERE
-		c_id=#{cId}
-	</select>
+	
 	
 	<update id="myCareerUpdate">
 		UPDATE member

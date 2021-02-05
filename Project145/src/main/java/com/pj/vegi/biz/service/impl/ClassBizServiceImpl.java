@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.pj.vegi.biz.mapper.ClassBizMapper;
 import com.pj.vegi.biz.service.ClassBizService;
-import com.pj.vegi.vo.LecturerVo;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
 
@@ -19,7 +18,6 @@ public class ClassBizServiceImpl implements ClassBizService{
 	
 	@Override
 	public List<LessonVO> classBizList(LessonVO vo) {
-		
 		return dao.classBizList(vo);
 	}
 
@@ -36,25 +34,6 @@ public class ClassBizServiceImpl implements ClassBizService{
 	}
 
 	@Override
-	public int classLecturerInsert(LecturerVo lvo) {
-		int n =dao.classLecturerInsert(lvo);
-		return n;
-	}
-
-	@Override
-	public LessonVO classBizSelect(LessonVO cvo) {
-		// TODO Auto-generated method stub
-		return dao.classBizSelect(cvo);
-	}
-
-	@Override
-	public LecturerVo lecBizSelect(LecturerVo lvo) {
-		// TODO Auto-generated method stub
-		return dao.lecBizSelect(lvo);
-	}
-
-
-	@Override
 	public int myCareerUpdate(MemberVo vo) {
 		// TODO Auto-generated method stub
 		return dao.myCareerUpdate(vo);
@@ -67,8 +46,17 @@ public class ClassBizServiceImpl implements ClassBizService{
 
 	@Override
 	public int applyCollabo(LessonVO vo) {
-		
 		return dao.applyCollabo(vo);
+	}
+
+	@Override
+	public int classBizDelete(LessonVO vo) {
+		return dao.classBizDelete(vo);
+	}
+
+	@Override
+	public LessonVO classBizSelect(LessonVO cvo) {
+		return dao.classBizSelect(cvo);
 	}
 
 }

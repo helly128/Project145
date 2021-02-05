@@ -32,11 +32,64 @@ h6 {
 <title>클래스 상세페이지</title>
 </head>
 <body style="padding: 0;">
+<script type="text/javascript">
+
+$(function(){ //아작스
+	
+	//강사 수정 클릭시, 클래스 상태가 진행중이거나 종료 이면 안넘어감
+	$("#changelec").click(()=>{
+	console.log($("#status").val());
+	var status = $("#status").val();
+	if(status == "강사미정" || status=="강사승인대기"){
+		alert ('모달을 띄움니다.');
+	}else {
+		alert("이미 시작된 강의의 강사정보는 수정이 불가합니다.");
+	}
+	});
+	
+	
+//모달에서 ! 수정 아작스 
+/* 	$("#applyCollabo").click(()=>{
+    	console.log($("#lecProposal").val());
+       $.ajax(
+          { 
+             type:"POST",
+             url:"applyCollabo.do",
+             data:{lecProposal: $("#lecProposal").val(), cId : $("#cId").val()}, //사용하는 함수 
+             dataType:"json",
+             success: function(n){
+                if(n!=0){
+                   $("#applyResult").text("메세지를 보냈습니다.");
+                   var btnmsg="메세지 다시 보내기";
+                   $("#savecareer").text(btnmsg);
+                   alert("등록되었습니다.");
+                }
+                else{
+                   $("#saveResult").text("등록 실패");
+                   alert("등록실패");
+                }
+             	
+             },
+             error:(log)=>{alert("실패+log")
+             }
+                
+          });
+    }); */
+ //모달에서 수정 아작스끝 
+	
+	
+});
+
+
+
+</script>
+
 
 
 	<div class="container" align="center">
 		<form id="cfrm" class="cfrm" action="/classBizEdit.do">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
+			<input type="hidden" id="status" value='${cvo.status}'>
 
 			<br>
 			<div class="pagetitle" align="center">
@@ -112,73 +165,79 @@ h6 {
 				</div>
 			</div>
 
-			<div class="row">
-				<h5>강사 정보</h5>
-			</div>
+			
 
-			<!-- 기존 강사 목록에서 선택하는 폼으로   -->
+			<h5>강사 정보</h5>
+			<br>
+					
 			<div class="card shadow mb-4" id="leclistdiv">
 				<br>
 				<div class="row">
-					<div class="col-half" style="padding-left: 10%;">
-						<div class="row" style="text-align: center;" align="center">
-							<div class="input-group">
-								<div class="profile-cover">
-									<div class="profile-avatar">
-										<img style="border-radius: 50px"
-											src="/images/${lecVo.getProfileImage()}"
-											alt="profile" />
-									</div>
-
-									<div class="profile-details" style="font-size: 1.5rem">
-										<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-											target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp<a
-											href="https://www.instagram.com/maxencefvl/?hl=ko"
-											target="blank"><i class="fa fa-instagram"></i></a> &nbsp<a
-											href="https://www.instagram.com/maxencefvl/?hl=ko"
-											target="blank"><i class="fa fa-envelope-o"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
+					<div class="col-half">
+						<h5 style="padding-top: 20px;">강사이름</h5>
+						<h6>${mvo.getMName()}</h6>
 					</div>
 					<div class="col-half" align="left">
-						<div class="row">
-							<h5>강사아이디</h5>
-							<div class="input-group">
-								<h6>${lecVo.getLecId()}</h6>
-							</div>
-						</div>
-
-						<div class="row">
-							<h5>강사이름</h5>
-							<div class="input-group">
-								<div style="text-align: center;" align="center">
-
-									<h6>${mvo.getMName()}</h6>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-
-							<div class="lecCareer" align="left">
-								<h5>강사이력</h5>
-								<div class="input-group">
-									<h6>${lecVo.getLecCareer()}</h6>
-								</div>
-
-							</div>
-						</div>
+						<h5 style="padding-top: 20px;">강사아이디</h5>
+						<div>
+							<h6>${mvo.getMId()}</h6>
 					</div>
 				</div>
 
 
-				<br> <br> <br>
+				<div class="row">
+					<div class="col-half">
+						<div class="profile-cover">
+							<div class="profile-avatar">
+								<img style="border-radius: 50%;" width="200px" height="200px;"
+									src="/images/${mvo.profileImage}" />
+							</div>
+
+							<div class="profile-details" style="font-size: 1.5rem">
+								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
+									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp <a
+									id="showlecInsta" href="naver.com" target="blank"> <i
+									class="fa fa-instagram"></i></a> &nbsp<a
+									href="https://www.instagram.com/maxencefvl/?hl=ko"
+									target="blank"><i class="fa fa-envelope-o"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<br>
+					<div class="col-half">
+						<div class="msg" align="left">
+							<div>
+								<h5>강사이력</h5>
+								<div>
+									<h6>${mvo.career}"</h6>
+								</div>
+							</div>
+
+						</div>
+						<br>
+						
+						<div align="left" style="padding-right:40px">
+						<h5>보낸 제안서</h5>
+							<h6>${classVo.lecProposal}</h6>
+						</div>
+						
+						<div align="left" style="padding-right:40px">
+						<h5>받은 답변</h5>
+							<h6>${classVo.lecResponse}</h6>
+							<br>
+						</div>
+						
+					</div>
+					<br>
+
+					<button class="btn btn-warning" type="button" id ="changelec"
+						style="margin: 20px; width: 100%; padding: 10px;">강사 변경</button>
+ 
+				</div>
 			</div>
-
-
+			
+			</div>
 			<!-- 강사부분 끝 -->
 
 
@@ -198,7 +257,7 @@ h6 {
 				</div>
 			</div>
 
-			<input type="hidden" name="cId" value="${classVo.getCId()}">
+			<input type="hidden" id= "cId" name="cId" value="${classVo.getCId()}">
 
 			<button class="btn btn-primary" type="submit"
 				style="margin: 10px; padding: 10px;"
