@@ -17,59 +17,8 @@
 	margin-right: 15%;
 }
 </style>
-<!-- <script type="text/javascript" src="/resources/js/reple.js" />
-<script type="text/javascript">
-$(document).ready(function){
-	var openForm = $("#openForm");
-	$("button[data-oper='update']").on("click",function(e){
-		openForm.attr("action","/recipe/update").submit();
-	});
-}
-</script> -->
-<!-- Modal -->
-<div class="modal fade" id="repleDesc" tabindex="-1" role="dialog"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">댓글 상세 보기 모달</h5>
-				<button class="close" type="button" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">x</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div>
-					<table class="table table-hover" border="1">
-						<thead class="text-center">
-							<tr class="content">
 
-								<th width="10">번호</th>
-								<th width="90">댓글내용</th>
-								<th width="40">작성일자</th>
-								<th width="10">작성자</th>
-							</tr>
-						</thead>
-						<tbody class="text-center">
-							<tr>
-								<td>${reId}</td>
-								<td>${reContent}</td>
-								<td>${reDate}</td>
-								<td>${MId}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Edit</button>
-				<button class="btn btn-primary" type="button" data-dismiss="modal">Delete</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- /.modal -->
+
 <script>
 	var today = new Date();
 	var year = today.getFullYear();
@@ -89,15 +38,16 @@ $(document).ready(function){
 			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
 			var mid = $(event.target).parent().prev().text()
 			console.log($(event.target).parent().prev().text())
-			if (confirm("정말 삭제 하시겠어요?")) {
 
-				if (mid == "${sessionScope.mId}") {
+			if (mid == "${sessionScope.mId}") {
+
+				if (confirm("정말 삭제 하시겠어요?")) {
 					repleDelete();
 					alert("삭제되었습니다.");
 
-				} else {
-					alert("본인이 작성한 댓글만 삭제 가능합니다.");
 				}
+			} else {
+				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
 
@@ -150,37 +100,6 @@ $(document).ready(function){
 		})
 	}
 
-	/* //댓글 입력
-	function repleWrite() {
-		var reContent = $("#reContent").val();
-		var rId = "${RepleVo.RId}";
-		var mId = "${mId}";
-		var objParams = {
-				rId : rId,
-				reParent : reParent,
-				reDept : reDept,
-				reContent : reContent,
-				reDate : date,
-				mId : mId
-		};
-		
-		$.ajax({
-			type : "post",
-			url : "/reple/reple.do",
-			headers : {
-				"Content-Type" : "application/json"
-			},
-			dataType : "text",
-			data : JSON.stringify(objParams),
-			success : function() {
-				alert("댓글이 등록되었습니다.");
-				$("#repleList").empty();
-				//$("#repleList").append('#repleList');
-				repleList();
-				$("#reContent").val("");
-			}
-		})
-	} */
 	/* 	//댓글 수정
 	 function repleEdit() {
 	 $.ajax({
@@ -282,11 +201,13 @@ $(document).ready(function){
 			<div class="row">
 				<div class="col-lg-10"></div>
 				<div class="col-lg-2">
-					<button type="button" class="btn btn-success"
-						onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
+					<c:if test="${sessionScope.mId==recipeSelect.MId}">
+						<button type="button" class="btn btn-success"
+							onclick="location.href='/recipeUpdate.do?rId=${recipeSelect.getRId()}'">Edit</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn btn-danger" data-toggle="modal"
-						data-target="#exampleModal">Delete</button>
+							data-target="#exampleModal">Delete</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -313,7 +234,17 @@ $(document).ready(function){
 				</div>
 			</div>
 		</div>
+		
 		<br />
+		<!-- <script>
+		Handlebars.registerHelper("eqReplyWriter", function (replyWriter, block) {
+		    var accum = "";
+		    if (replyWriter === "${login.userId}") {
+		        accum += block.fn();
+		    }
+		    return accum;
+		});
+		</script> -->
 		<!-- 관련 재료 -->
 		<div>
 			<h3>🍋Ingredient</h3>
