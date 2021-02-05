@@ -14,16 +14,14 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Autowired
 	RecipeMapper dao;
-	
+
 	@Override
 	public List<RecipeVo> getRecipeList(RecipeVo vo) {
-		// TODO Auto-generated method stub
 		return dao.getRecipeList(vo);
 	}
 
 	@Override
 	public RecipeVo recipeSelect(RecipeVo vo) {
-		// TODO Auto-generated method stub
 		return dao.recipeSelect(vo);
 	}
 
@@ -35,13 +33,11 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public int recipeUpdate(RecipeVo vo) {
-		// TODO Auto-generated method stub
 		return dao.recipeUpdate(vo);
 	}
 
 	@Override
 	public int recipeDelete(RecipeVo vo) {
-		// TODO Auto-generated method stub
 		return dao.recipeDelete(vo);
 	}
 	/*
@@ -56,31 +52,32 @@ public class RecipeServiceImpl implements RecipeService {
 
 	@Override
 	public List<LessonVO> searchlessonList(LessonVO lvo) {
-		
+
 		return dao.searchlessonList(lvo);
 	}
 
-
 	@Override
 	public List<LessonVO> lessonSearch(LessonVO lVo) {
-		// TODO Auto-generated method stub
 		return dao.lessonSearch(lVo);
 	}
 
 	@Override
 	public int likeDelete(LikeListVo vo) {
-		// TODO Auto-generated method stub
 		return dao.likeDelete(vo);
 	}
 
 	@Override
 	public int likeInsert(LikeListVo vo) {
-		// TODO Auto-generated method stub
 		return dao.likeInsert(vo);
 	}
 
 	@Override
 	public int likeFlagSelect(LikeListVo vo) {
 		return dao.likeFlagSelect(vo);
+	}
+
+	@Override
+	public List<LessonVO> recipeLessonSearch(LessonVO lvo) {
+		return dao.recipeLessonSearch(lvo);
 	}
 }

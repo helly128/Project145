@@ -22,6 +22,7 @@ public interface RecipeMapper {
 	
 	List<LessonVO> lessonSearch(LessonVO lVo);//클래스 검색
 
+	List<LessonVO> recipeLessonSearch(LessonVO lvo);//레시피수정클래스검색
 	Object recipeUnlike(LikeListVo vo);
 
 	int likeInsert(LikeListVo vo);

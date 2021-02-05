@@ -16,6 +16,11 @@
 	margin-left: 15%;
 	margin-right: 15%;
 }
+<style type="text/css">
+.likeAction {
+	border: none;
+	background: transparent;
+}
 </style>
 
 
@@ -50,6 +55,7 @@
 				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
+		
 
 	});
 	//댓글 삭제
@@ -169,6 +175,44 @@
 			}
 
 		});
+		
+		$("#cards")
+		.on(
+				'click',
+				'.likeAction',
+				function() {
+
+					if ('${mId}' == null || '${mId}' == '') {
+						alert("로그인 후 이용가능합니다.")
+					} else {
+						var classId = $(this).data('id')
+
+						if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+							$.ajax({
+								url : 'lessonLike.do/' + classId,
+								type : 'post',
+								contentType : "application/json",
+								success : function(result) {
+
+								}
+							}) // ajax end
+							$(this).children('img').attr('src',
+									'/images/filled_like.png')
+						} else {
+							$.ajax({
+								url : 'lessonUnLike.do/' + classId,
+								type : 'post',
+								contentType : 'application/json',
+								success : function(result) {
+
+								}
+							}) //ajax end
+							$(this).children('img').attr('src',
+									'/images/empty_like.png')
+						}
+					}
+				});
+
 	}
 </script>
 
@@ -276,7 +320,7 @@
 		<div>
 			<h3>📖Related Class</h3>
 			<br /> <br />
-			<div class="row">
+			<div class="row" id="cards">
 				<!-- 클래스리스트 시작 -->
 				<input type="hidden" value="${lesson}">
 				<c:forEach var="lesson" items="${lessons }">
@@ -295,22 +339,31 @@
 							<div class="product-content">
 								<input type="hidden" value="클래스아이디">
 								<h3 class="name">
-									<a href="product-details.html">${lesson.CTitle }</a>
+									<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
 								</h3>
 								<span class="update">${lesson.getCDesc() }</span>
 								<ul class="address">
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i> ${lesson.lecName }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> ${lesson.CHit }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i> ${lesson.CEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i> ${lesson.vegType }</a></li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }
+										${lesson.getCStart() }</li>
+									<li><i class="lni lni-map-marker"></i>
+										${lesson.getVegType() }</li>
+									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
 								</ul>
 								<div class="product-bottom">
 									<h3 class="price">${lesson.CPrice }원</h3>
-									<a href="javascript:void(0)" class="link-ad">좋아요</a>
+									<div>
+										<button type="button" class="likeAction"
+											data-id="${lesson.getCId() }">
+											<c:if test="${lesson.getLikeFlag() > 0 }">
+												<img class="likeImg" src="/images/filled_like.png"
+													style="width: 30px;">
+											</c:if>
+											<c:if test="${lesson.getLikeFlag() == 0 }">
+												<img class="likeImg" src="/images/empty_like.png"
+													style="width: 30px;">
+											</c:if>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>

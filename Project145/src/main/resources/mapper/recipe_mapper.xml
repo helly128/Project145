@@ -4,13 +4,23 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pj.vegi.recipe.mapper.RecipeMapper">
 	<select id="getRecipeList" resultType="RecipeVo">
-		select a.* from (select
-		b.*, rownum rn from(
-		select *
-		from recipe
-		order by r_id
-		)b)a where rn
-		between #{start} and #{end}
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM recipe
+		<where>
+			<if test=" RType != null and RType != '' ">
+				AND r_type = #{RType}
+			</if>
+			<if test=" keyword != null and keyword != '' ">
+				AND r_title like '%' || #{keyword} || '%'
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+
 	</select>
 	<select id="recipeSelect" resultType="RecipeVo">
 		select *
@@ -21,6 +31,7 @@
 	<select id="recipeCount" resultType="int">
 		select count(*)
 		from recipe
+
 	</select>
 	<delete id="recipeDelete">
 		delete from recipe
@@ -75,6 +86,27 @@
 	</select>
 
 	<select id="lessonSearch" resultType="LessonVO">
+		select c.c_id "cId",
+		c.c_img "cImg",
+		c.c_desc "cDesc",
+		c.vegtype "vegtype",
+		c.c_title
+		"cTitle",
+		c.c_end "cEnd",
+		c.c_time "cTime",
+		c.c_price "cPrice",
+		c.c_loc
+		"cLoc",
+		c.status "status",
+		m.m_id "mId",
+		m.m_name "mName"
+		from class c
+		,member m
+		where c.m_id = m.m_id
+		and c.vegtype=#{vegType}
+	</select>
+
+	<select id="recipeLessonSearch" resultType="LessonVO">
 		select c.c_id "cId", c.c_title "cTitle",c.c_desc "cDesc" ,m.m_name
 		"lName"
 		from class c join member m
@@ -102,7 +134,6 @@
 			</if>
 		</where>
 	</select>
-
 
 	<insert id="likeInsert">
 		INSERT INTO like_list

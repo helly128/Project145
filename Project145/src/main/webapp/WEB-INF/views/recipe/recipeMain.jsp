@@ -36,47 +36,57 @@
 			<div class="mx-auto">
 				<div class="text-center section-title mb-60">
 					<h1>🥪레시피🥪</h1>
-					<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr sed
-						diam nonumy eirmod tempor invidunt dolore magna.</p>
+					<p>요즘,이거 안 만들어 본 사람 있나?</p>
 				</div>
 			</div>
 		</div>
 		<div class="search-area">
 			<div class="container">
 				<div class="search-wrapper">
-					<form action="#">
+					<form action="RecipeMain.do" name="form" id="form" method="get">
 						<div class="row justify-content-center">
-							<div class="col-lg-3 col-sm-5 col-10">
-								<div class="search-input">
-									<label for="keyword"><i
-										class="lni lni-search-alt theme-color"></i></label> <input type="text"
-										name="keyword" id="keyword" placeholder="Product keyword">
-								</div>
-							</div>
 
 							<div class="col-lg-3 col-sm-5 col-10">
 								<div class="search-input" style="margin-bottom: 5%">
 									<label for="category"><i
-										class="lni lni-grid-alt theme-color"></i></label> <select
-										name="category" onchange="moveurl(this.value);" id="category">
-										<form name=move method=post>
-											<option value="none" selected disabled>Categories</option>
-											<option value="/recipeBegan.do">비건</option>
-											<option value="/recipeRacto.do">락토</option>
-											<option value="/recipeOvo.do">오보</option>
-											<option value="/recipeRactoOvo.do">락토오보</option>
+										class="lni lni-grid-alt theme-color"></i></label> 
+										<select
+										name="RType" id="RType">
+										<option value="none" selected disabled>RecipeType</option>
+										<option value="비건"
+											<c:if test="${vo.getRType() == '비건' }">selected="selected"</c:if>>비건</option>
+										<option value="락토"
+											<c:if test="${vo.getRType() == '락토' }">selected="selected"</c:if>>락토</option>
+										<option value="오보"
+											<c:if test="${vo.getRType() == '오보' }">selected="selected"</c:if>>오보</option>
+										<option value="락토오보"
+											<c:if test="${vo.getRType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
 									</select>
-
 								</div>
 							</div>
-							<div class="col-lg-2 col-sm-3 col-4">
-								<button class="btn btn-success"
-									onclick="location.href='recipeInsert.do'">Write New
-									Now!📝</button>
+							<div class="col-lg-3 col-sm-5 col-10">
+								<div class="search-input">
+									<label for="keyword"> <a
+										href="javascript:form.submit()"> <i
+											class="lni lni-search-alt theme-color"></i>
+									</a>
+									</label> <input type="text" name="keyword" id="keyword"
+										placeholder="keyword" value="${vo.getKeyword() }">
+								</div>
 							</div>
-
+							<div class="col-lg-1 col-sm-1 col-2">
+								<button class="btn btn-success" type="submit">👀</button>
+							</div>
 						</div>
 					</form>
+					<div class="col-lg-2 col-sm-3 col-4">
+						<button class="btn btn-success"
+							onclick="location.href='recipeInsert.do'">Write New
+							Now!📝</button>
+					</div>
+					<br /> <br />
+
+
 				</div>
 			</div>
 		</div>
@@ -106,7 +116,8 @@
 								</ul>
 							</div>
 							<div align="right">
-								<button type="button" class="likeAction" data-id="${vo.getRId() }">
+								<button type="button" class="likeAction"
+									data-id="${vo.getRId() }">
 									<c:if test="${vo.likeFlag > 0 }">
 										<img class="likeImg" src="/images/filled_like.png"
 											style="width: 30px;">

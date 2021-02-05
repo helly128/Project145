@@ -73,10 +73,10 @@ input, textarea {
 						<div class="search-input">
 							<label for="category"></label> <select name="rType" id="rType">
 								<option value="none" selected disabled>비건 레벨</option>
-								<option value="none">비건</option>
-								<option value="none">락토</option>
-								<option value="none">오보</option>
-								<option value="none">락토오보</option>
+								<option value="비건" <c:if test="${vo.getRType() == '비건' }">selected="selected"</c:if>>비건</option>
+								<option value="락토" <c:if test="${vo.getRType() == '락토' }">selected="selected"</c:if>>락토</option>
+								<option value="오보" <c:if test="${vo.getRType() == '오보' }">selected="selected"</c:if>>오보</option>
+								<option value="락토오보" <c:if test="${vo.getRType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
 							</select>
 						</div>
 					</div>
@@ -205,12 +205,12 @@ input, textarea {
 								<table align="center">
 									<tr>
 										<td class="col-md-2" align="center" valign="middle"><select
-											name="rType" id="rType">
+											name="vegType" id="vegType">
 												<option value="none" selected disabled>비건 레벨</option>
-												<option value="비건">비건</option>
-												<option value="락토">락토</option>
-												<option value="오보">오보</option>
-												<option value="락토오보">락토오보</option>
+												<option value="비건" <c:if test="${lessonVO.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
+												<option value="락토" <c:if test="${lessonVO.getVegType() == '락토' }">selected="selected"</c:if>>락토</option>
+												<option value="오보" <c:if test="${lessonVO.getVegType() == '오보' }">selected="selected"</c:if>>오보</option>
+												<option value="락토오보" <c:if test="${lessonVO.getVegType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
 										</select></td>
 
 										<td class="col-md-7"><input type="text"
@@ -241,11 +241,11 @@ input, textarea {
 						/* //alert("검색 버튼 클릭!");
 						var keyword = $("#searchCd").serialize(); */
 						$.ajax({
-							url : 'lessonSearch.do',
+							url : '/recipeLessonSearch.do',
 							type : 'POST',
 							dataType : "json",
 							data : {keyword:$("#keyword").val(),
-									vegType: $("#rType").val()
+									vegType: $("#vegType").val()
 									},
 							success : function(data) {
 								console.log(data);
