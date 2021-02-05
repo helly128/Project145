@@ -245,11 +245,11 @@ public class VegimeetController {
 		return "redirect:vegimeetList.do";
 	}
 	
-	@ResponseBody
-	@RequestMapping("/scrollNewImage.do")
-	public void scrollNewImage() {
-		
-		
-	}
+//	@ResponseBody
+//	@RequestMapping("/scrollNewImage.do")
+//	public void scrollNewImage() {
+//		
+//		
+//	}
 	
 }
