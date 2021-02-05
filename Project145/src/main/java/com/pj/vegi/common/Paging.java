@@ -4,12 +4,12 @@ public class Paging {
 	int pageUnit=10 ; 		//한페이지 출력할 레코드 건수
 	int pageSize=10 ; 		//페이지번호 수 (5) 1~ 5까지
 	int lastPage;     		//마지막 페이지번호
-	int totalRecord = 21;	//전체 레코드건수
+	int totalRecord = 126;	//전체 레코드건수
 	Integer page = 1;			//현재 페이지
 	int startPage;
 	int endPage;
-	int first;				//페이지 번호에 해당하는 시작글번호
-	int last;				//페이지 번호에 해당하는 마지막글번호	
+	int first;
+	int last;
 	
 	public int getFirst() {
 		first = (getPage() - 1) * getPageUnit() + 1;
@@ -20,7 +20,7 @@ public class Paging {
 		return last;
 	}
 
-
+	
 	public int getPageUnit() {
 		return pageUnit;
 	}
@@ -69,11 +69,5 @@ public class Paging {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-	@Override
-	public String toString() {
-		return "Paging [pageUnit=" + pageUnit + ", pageSize=" + pageSize + ", lastPage=" + lastPage + ", totalRecord="
-				+ totalRecord + ", page=" + page + ", startPage=" + startPage + ", endPage=" + endPage + ", first="
-				+ first + ", last=" + last + "]";
-	}
-
+	
 }

@@ -22,7 +22,7 @@
 				</div>
 				<div class="profile-avatar">
 					<a href="#"><img src="/images/${member.getProfileImage() }"
-						width="150" height="150" /></a>
+						width="150" height="150" onerror="this.src='/images/default.png'" alt="내사진"/></a>
 				</div>
 			</div>
 			<h2>${mid }</h2>

@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.pj.vegi.lesson.mapper.LessonMapper;
 import com.pj.vegi.lesson.service.LessonService;
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
+import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.enquiryVO;
 
 @Service("lessonService")
@@ -62,5 +65,25 @@ public class LessonServiceImpl implements LessonService {
 	@Override
 	public int lessonEnqSubmit(enquiryVO vo) {
 		return dao.lessonEnqSubmit(vo);
+	}
+
+	@Override
+	public int lessonReservInsert(LessonReservVO vo) {
+		return dao.lessonReservInsert(vo);
+	}
+
+	@Override
+	public int lessonJoinUpdate(LessonVO vo) {
+		return dao.lessonJoinUpdate(vo);
+	}
+
+	@Override
+	public int pointHistoryInsert(WalletHistoryVO vo) {
+		return dao.pointHistoryInsert(vo);
+	}
+
+	@Override
+	public int pointDeduct(MemberVo vo) {
+		return dao.pointDeduct(vo);
 	}
 }

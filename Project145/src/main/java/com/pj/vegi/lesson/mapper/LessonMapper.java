@@ -3,8 +3,11 @@ package com.pj.vegi.lesson.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
+import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.enquiryVO;
 
 public interface LessonMapper {
@@ -26,4 +29,11 @@ public interface LessonMapper {
 	
 	public int lessonEnqSubmit(enquiryVO vo);
 
+	public int lessonReservInsert(LessonReservVO vo);
+	
+	public int lessonJoinUpdate(LessonVO vo);
+	
+	public int pointHistoryInsert(WalletHistoryVO vo);
+	
+	public int pointDeduct(MemberVo vo);
 }

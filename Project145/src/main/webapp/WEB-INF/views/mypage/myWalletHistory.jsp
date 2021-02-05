@@ -3,6 +3,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fun"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,13 +57,16 @@
 								aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm"
 								onchange="javascript:form.submit()">
-									<option value="none" selected disabled>Type</option>
+									<option value="none"
+									selected disabled>Type</option>
 									<option value="충전"
 										<c:if test="${vo.getWalletType() == '충전' }">selected="selected"</c:if>>충전</option>
 									<option value="인출"
 										<c:if test="${vo.getWalletType() == '인출' }">selected="selected"</c:if>>인출</option>
 									<option value="적립"
 										<c:if test="${vo.getWalletType() == '적립' }">selected="selected"</c:if>>적립</option>
+									<option value="베지밋"
+									<c:if test="${fun:contains(vo.getWalletType(), '베지밋')}">selected="selected"</c:if>>베지밋</option>
 							</select> </label>
 						</form>
 					</div>
@@ -81,7 +85,8 @@
 							<tbody>
 								<tr>
 									<td>${list.getWalletType() }</td>
-									<td>${list.getWalletMoney() }</td>
+									<td><fmt:formatNumber value="${list.getWalletMoney() }"
+											pattern="#,###" /> 원</td>
 									<td><fmt:formatDate value="${list.getWalletDate() }"
 											pattern="yyyy-MM-dd HH:mm" /></td>
 								</tr>

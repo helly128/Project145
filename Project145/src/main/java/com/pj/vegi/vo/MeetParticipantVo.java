@@ -16,4 +16,6 @@ public class MeetParticipantVo {
 	
 	private int payBack;
 	private int reward;
+	private int start;
+	private int end;
 }

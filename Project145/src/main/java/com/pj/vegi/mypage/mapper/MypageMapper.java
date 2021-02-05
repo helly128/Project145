@@ -38,6 +38,8 @@ public interface MypageMapper {
 	public List<Map> meetLikeList(LikeListVo vo);
 	public List<Map> meetSelect(MeetParticipantVo vo);
 	public List<Map> myCreateMeet(VegimeetVo vo);
+	public int countUntact(MeetParticipantVo vo);
+	public int countCreateMeet(VegimeetVo vo);
 
 	public int heartCancel(LikeListVo vo);
 
