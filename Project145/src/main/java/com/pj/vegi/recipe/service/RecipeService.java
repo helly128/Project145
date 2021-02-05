@@ -16,6 +16,7 @@ public interface RecipeService {
 	
 	public List<LessonVO>searchlessonList(LessonVO lvo);
 	public List<LessonVO> lessonSearch(LessonVO lVo);
+	public List<LessonVO> recipeLessonSearch(LessonVO lvo);
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);
 	int likeFlagSelect(LikeListVo vo);

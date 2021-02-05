@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,7 @@ public class RecipeController {
 	RecipeMaterialService rmService;
 
 	@RequestMapping("/recipeMain.do") // 게시글 페이징 처리 추가하기
-	public String recipeMain(Model model, RecipeVo vo, Paging paging, HttpSession session) {
+	public String recipeMain(@ModelAttribute("vo") RecipeVo vo, Model model, Paging paging, HttpSession session) {
 		
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
@@ -61,7 +62,8 @@ public class RecipeController {
 			((RecipeVo) recipe_vo).setLikeFlag(recipeService.likeFlagSelect(like_vo));
 		}
 		model.addAttribute("recipes", recipes);
-
+		model.addAttribute("paging", paging);
+		
 		return "recipe/recipeMain";
 	}
 
@@ -159,7 +161,7 @@ public class RecipeController {
 		for(RecipeMaterialVo rmVo1 : matList) {
 			recipeMaterialService.recipeMaterialUpdate(rmVo1);
 		}
-		recipeService.lessonSearch(lVo);
+		recipeService.recipeLessonSearch(lVo);
 		model.addAttribute("cId", lVo.getCId());
 		model.addAttribute("rId", vo.getRId());
 		
@@ -185,6 +187,15 @@ public class RecipeController {
 //		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
 		
 		return recipeService.lessonSearch(param);  
+
+	}
+	@PostMapping(value="/recipeLessonSearch.do")
+	@ResponseBody
+	public List<LessonVO> recipeLessonSearch(LessonVO param, HttpServletRequest request,LessonVO lvo) {
+		// ModelAndView mav = new ModelAndView();
+//		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
+		
+		return recipeService.recipeLessonSearch(param);  
 
 	}
 	
