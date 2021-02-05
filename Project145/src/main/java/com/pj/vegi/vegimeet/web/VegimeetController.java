@@ -37,10 +37,9 @@ public class VegimeetController {
 
 	// 메인페이지 출력
 	@RequestMapping("/vegimeetList.do")
-	public String vegimeetList(Model model, HttpSession session, Paging paging) {
+	public String vegimeetList(Model model, HttpSession session, Paging paging, VegimeetVo meetVo) {
 		// 전체 베지밋 목록
 		String mId = (String) session.getAttribute("mId");
-		VegimeetVo meetVo = new VegimeetVo();
 		paging.setPageUnit(8);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
@@ -64,9 +63,9 @@ public class VegimeetController {
 
 		// 내가 참여중인 베지밋 목록
 		if(mId != null && mId != "") {
+			List<Map> myList = vegimeetService.myMeetList(mId);
+			model.addAttribute("myList", myList);
 		}
-		List<Map> myList = vegimeetService.myMeetList(mId);
-		model.addAttribute("myList", myList);
 
 		model.addAttribute("list", list);
 
@@ -88,6 +87,7 @@ public class VegimeetController {
 		int cnt = vegimeetService.countMeetList(meetVo);
 		paging.setTotalRecord(cnt);
 		
+		System.out.println(options);
 		meetVo.setOptions(options);
 		List<VegimeetVo> list = vegimeetService.vegimeetList(meetVo);
 		

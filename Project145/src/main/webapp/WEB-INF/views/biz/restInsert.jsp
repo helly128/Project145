@@ -88,7 +88,7 @@
 							</div>
 							<!-- Card Body -->
 							<div class="image-container p-3">
-								<img id="rest-image" src="/images/images-empty.png" width="100%">
+								<img id="rest-image" src="/images/images-empty.png" width="100%" alt="restaurant image">
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"
 										name="uploadfile" class="restPic" accept="image/*"

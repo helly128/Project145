@@ -73,7 +73,7 @@ div, h3 {
 				<div>
 					<div class="mb-5">
 						<img width="750" src="/images/${meetVo.meetPic }"
-							class="attachment-full size-full wp-post-image" alt=""
+							class="attachment-full size-full wp-post-image" alt="vegimeet image"
 							loading="lazy" sizes="(max-width: 750px) 100vw, 750px">
 					</div>
 					<div>
@@ -231,10 +231,11 @@ div, h3 {
 	    }
 		
 		let renderList = function(idx, vo){
-	        let html = "<div class='p-2 col-xl-3 col-lg-3 col-md-4 partiPic'"
-	        			+ "data-no='" + (vo.start + idx) + "'>"
-						+ "<img src='/images/" + vo.dataPic + "'>"
-						+ "</div>";
+			var num = vo.start + idx;
+	        let html = `<div class='p-2 col-xl-3 col-lg-3 col-md-4 partiPic'
+	        			data-no='\${num}'>
+						<img src='/images/\${vo.dataPic}' alt="user\'s vegimeet image">
+						</div>`;
 	            
 	            $(".infiniteScroll").append(html);
 	    }

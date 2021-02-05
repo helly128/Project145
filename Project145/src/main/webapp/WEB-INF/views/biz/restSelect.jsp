@@ -34,10 +34,10 @@
 							<div class="p-2">
 								<c:if test="${restVo.restPic eq null}">
 									<img id="rest-image" src="/images/images-empty.png"
-										width="100%">
+										width="100%" alt="restaurant image">
 								</c:if>
 								<c:if test="${restVo.restPic ne null}">
-									<img src="/images/${restVo.restPic }" width="100%">
+									<img src="/images/${restVo.restPic }" width="100%" alt="restaurant image">
 								</c:if>
 							</div>
 						</div>
@@ -240,6 +240,10 @@
 				}
 			});
 
+			if($('.td-checkbox').length == 0){
+				$('#checkAll').prop('disabled', true);
+			}
+			
 			$('.td-checkbox, #checkAll').click(function() {
 				var tmp = $(this).prop('checked');
 				var length = $('.td-checkbox:checked').length;
@@ -248,7 +252,8 @@
 				} else {
 					$('.submitBtn').prop('disabled', true);
 				}
-			})
+				
+			});
 			
 			reservDone('accept');
 		});

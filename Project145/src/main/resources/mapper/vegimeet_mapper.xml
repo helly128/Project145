@@ -10,17 +10,17 @@
 					(SELECT *
 					FROM meet_un
 					<where>
-						<if	test="options == '모집중'">
+						<if	test="options == 'ongoing'">
 							<![CDATA[ current_date < meet_start ]]>
 						</if>
-						<if	test="options == '마감'">
+						<if	test="options == 'closed'">
 							current_date BETWEEN meet_start AND meet_end
 						</if>
-						<if	test="options == '종료'">
+						<if	test="options == 'finished'">
 							<![CDATA[ current_date > meet_end ]]>
 						</if>
 						<if	test="keyword != null and keyword != '' ">
-							AND meet_title like '%' || #{keyword} || '%'
+							AND UPPER(meet_title) like UPPER('%' || #{keyword} || '%')
 						</if>
 					</where>
 				) b
