@@ -143,13 +143,18 @@ article {
 								<li><a href="/mypage.do"
 									class="main-btn btn-hover d-none d-md-block">마이페이지테스트중</a></li>
 								<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
-									<li><a <c:if test="${auth == 'rbiz'}">href='/restBizList.do'</c:if>
-									<c:if test="${auth =='cbiz'}">href='/classBizList.do'</c:if>
+									<li><a
+										<c:if test="${auth == 'rbiz'}">href='/restBizList.do'</c:if>
+										<c:if test="${auth =='cbiz'}">href='/classBizList.do'</c:if>
 										class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
 								</c:if>
 								<c:if test="${auth eq 'admin'}">
 									<li><a href="/adminMemberSelect.do"
 										class="main-btn btn-hover d-none d-md-block">관리자페이지</a></li>
+								</c:if>
+								<c:if test="${mId ne null && password ne null}">
+									<li><a href="/logout.do"
+										class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 								</c:if>
 							</ul>
 						</nav>

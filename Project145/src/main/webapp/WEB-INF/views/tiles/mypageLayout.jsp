@@ -64,8 +64,8 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">MEET!!‍</h6>
 						<!-- <a class="collapse-item" href="/myBegiContact.do">Contact</a>  -->
-						<a class="collapse-item" href="/myBegiUntact.do">Untact</a> <a
-							class="collapse-item" href="/myMeet.do">My meet</a>
+						<a class="collapse-item" href="/myBegiUntact.do">내가 참여한 MEET</a> <a
+							class="collapse-item" href="/myMeet.do">내가 만든 MEET</a>
 					</div>
 				</div></li>
 

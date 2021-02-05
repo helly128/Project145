@@ -64,7 +64,8 @@
 				<div>
 					<div class="mb-5">
 						<img width="750" src="/images/${lesson.cImg }" width="50"
-							height="600" onerror="this.src='/images/loveurth (3).jpg'" alt="클래스이미지">
+							height="600" onerror="this.src='/images/loveurth (3).jpg'"
+							alt="클래스이미지">
 					</div>
 					<div>
 						<div class="border-top pt-4 pb-5">
@@ -92,7 +93,8 @@
 									<tbody>
 										<tr style="vertical-align: middle;">
 											<td><img src="/images/${lesson.profileImage }" width=100
-												" height="100" onerror="this.src='/images/default.png'"  alt="강사이미지"></td>
+												" height="100" onerror="this.src='/images/default.png'"
+												alt="강사이미지"></td>
 											<th scope="row">${lesson.mId }</th>
 											<td>${lesson.mName }</td>
 											<td>${lesson.career }</td>
@@ -112,9 +114,10 @@
 											<tr style="vertical-align: middle;">
 												<th scope="row">${member.mId }</th>
 												<td>${member.mName }</td>
-												<td align="center">
-												<img src="/images/${member.profileImage }" width=100
-													" height="100" onerror="this.src='/images/default.png'" alt="수강생 이미지"></td>
+												<td align="center"><img
+													src="/images/${member.profileImage }" width=100
+													" height="100" onerror="this.src='/images/default.png'"
+													alt="수강생 이미지"></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -219,17 +222,12 @@
 				}
 			});
 
-						
-			if( "${lesson.cJoin }" == "${lesson.cParti }" ) {
+			if ("${lesson.cJoin }" == "${lesson.cParti }") {
 				$('.joinBtn').text('클래스 마감');
 				$('.joinBtn').prop('disabled', true);
 			}
-			
-			
-			
+
 		}) // ready end
-		
-		
 	<%--			
 			if('${mId}' == null || '${mId}' == ''){
 				$('.submitBtn').prop('disabled', true);
