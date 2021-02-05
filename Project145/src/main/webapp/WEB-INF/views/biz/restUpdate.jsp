@@ -92,10 +92,10 @@
 							<div class="image-container p-3">
 								<c:if test="${restVo.restPic eq null}">
 									<img id="rest-image" src="/images/images-empty.png"
-										width="100%">
+										width="100%" alt="restaurant image">
 								</c:if>
 								<c:if test="${restVo.restPic ne null}">
-									<img id="rest-image" src="/images/${restVo.restPic }" width="100%">
+									<img id="rest-image" src="/images/${restVo.restPic }" width="100%" alt="restaurant image">
 								</c:if>
 								<div class="div-image">
 									<span class="label">사진 업로드</span> <input type="file"

@@ -64,7 +64,9 @@
 				</div>
 
 				<c:if test="${fn:length(restList) == 0 }">
-					<h3>등록된 식당이 없습니다.</h3>
+					<div style="text-align: center;">
+						<h3>등록된 식당이 없습니다.</h3>
+					</div>
 				</c:if>
 			</div>
 		</div>

@@ -31,7 +31,7 @@ public interface VegimeetService {
 	int uploadMeetDataPic(MeetDataVo vo);
 	int meetPartiUpdate(MeetParticipantVo vo);
 	
-	List<MeetDataVo> meetDataList(VegimeetVo vo);
+	List<MeetDataVo> meetDataList(MeetDataVo vo);
 	
 	List<VegimeetVo> ongoingMeetList();
 	int addFailCount(MeetParticipantVo vo);
