@@ -51,30 +51,54 @@ public class MypageController {
 //	}
 
 	@RequestMapping("/myBegiUntact.do")
-	public String myBegiUntact(Model model, HttpSession session, MeetParticipantVo vo) {
+	public String myBegiUntact(Model model, HttpSession session, MeetParticipantVo vo, Paging paging) {
 
 		String mid = (String) session.getAttribute("mId");
 		model.addAttribute("mid", mid);
 		vo.setMId(mid);
-		
+
+		// 페이징 설정
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countUntact(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> list = mypageService.meetSelect(vo);
-		
+
 		model.addAttribute("list", list);
-		
+
 		return "mypage/myBegiUntact";
 	}
 
 	@RequestMapping("/myMeet.do")
-	public String myMeet(Model model, HttpSession session, VegimeetVo vo) {
+	public String myMeet(Model model, HttpSession session, VegimeetVo vo, Paging paging) {
 
 		String mid = (String) session.getAttribute("mId");
 		model.addAttribute("mid", mid);
 		vo.setMId(mid);
-		
+
+		// 페이징 설정
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+
+		int cnt = mypageService.countCreateMeet(vo);
+		paging.setTotalRecord(cnt);
+
 		List<Map> list = mypageService.myCreateMeet(vo);
-		
+
 		model.addAttribute("list", list);
-		
+
 		return "mypage/myMeet";
 	}
 
@@ -109,7 +133,7 @@ public class MypageController {
 
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
+
 		List<Map> likeList = mypageService.lessonLikeList(vo);
 
 		model.addAttribute("list", likeList);
@@ -117,18 +141,18 @@ public class MypageController {
 		return "mypage/myLikeClass";
 
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/HeartCancel.do/{originId}")
 	public void HeartCancel(Model model, LikeListVo vo, @PathVariable String originId, HttpSession session) {
-		
+
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
-		
+
 		vo.setOriginId(originId);
-		
+
 		mypageService.heartCancel(vo);
-		
+
 	}
 
 	@RequestMapping("/myLikeRestaurant.do")
@@ -247,10 +271,10 @@ public class MypageController {
 
 		return "mypage/myRestaurant";
 	}
-	
+
 	@RequestMapping("/myQuestion.do")
 	public String myQuestion() {
-		
+
 		return "mypage/myQuestion";
 	}
 

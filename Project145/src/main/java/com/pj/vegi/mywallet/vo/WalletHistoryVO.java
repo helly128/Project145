@@ -11,6 +11,7 @@ public class WalletHistoryVO {
 	private String walletType;
 	private Date walletDate;
 	private String mId;
+
 	private int startP;
 	private int endP;
 }

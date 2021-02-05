@@ -53,30 +53,88 @@
 	</select>
 	
 	<select id="meetSelect" resultType="map">
-		SELECT m.meet_title "meetTitle", 
-				m.meet_start "meetStart", 
-				m.meet_end "meetEnd", 
-				p.my_fund "myFund", 
-				p.today_flag "todayFlag", 
-				p.achiv "achiv"
-		FROM meet_un m JOIN meet_parti p
-		ON m.meet_id = p.meeT_id
-		WHERE p.m_id = #{mId}
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		         SELECT m.meet_id "meetId",
+		         		m.meet_title "meetTitle", 
+						m.meet_start "meetStart", 
+						m.meet_end "meetEnd", 
+						p.my_fund "myFund", 
+						p.today_flag "todayFlag", 
+						p.achiv "achiv"
+				FROM meet_un m JOIN meet_parti p
+				ON m.meet_id = p.meeT_id
+				WHERE p.m_id = #{mId}
+		          ) b 
+		      ) a 
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+	
+	<select id="countUntact" resultType="Integer">
+		SELECT count(*) FROM(
+			SELECT a.*
+			FROM (
+			    SELECT b.*, ROWNUM rn 
+			    FROM (
+			         SELECT m.meet_title "meetTitle", 
+							m.meet_start "meetStart", 
+							m.meet_end "meetEnd", 
+							p.my_fund "myFund", 
+							p.today_flag "todayFlag", 
+							p.achiv "achiv"
+					FROM meet_un m JOIN meet_parti p
+					ON m.meet_id = p.meeT_id
+					WHERE p.m_id = #{mId}
+			          ) b 
+			      ) a 
+			WHERE rn BETWEEN #{start } AND #{end } )
 	</select>	
 	
 	<select id="myCreateMeet" resultType="map">
-		SELECT m.meet_title "meetTitle", 
-				m.meet_start "meetStart", 
-				m.meet_end "meetEnd", 
-				m.meet_participant "meetParticipant", 
-				m.meet_fund "meetFund", 
-				p.meet_id "meetId", 
-				sum(achiv) "achiv", 
-				sum(achiv)/m.meet_participant "allAchiv"  
-		FROM meet_un m JOIN meet_parti p
-		ON m.meet_id = p.meet_id
-		WHERE m.m_id = #{mId}
-		GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		        SELECT m.meet_title "meetTitle", 
+						m.meet_start "meetStart", 
+						m.meet_end "meetEnd", 
+						m.meet_participant "meetParticipant", 
+						m.meet_fund "meetFund", 
+						p.meet_id "meetId", 
+						sum(achiv) "achiv", 
+						sum(achiv)/m.meet_participant "allAchiv"  
+				FROM meet_un m JOIN meet_parti p
+				ON m.meet_id = p.meet_id
+				WHERE m.m_id = #{mId}
+				GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund
+	          ) b 
+	      ) a 
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+	
+	<select id="countCreateMeet" resultType="Integer">
+		SELECT count(*) FROM(
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		        SELECT m.meet_title "meetTitle", 
+						m.meet_start "meetStart", 
+						m.meet_end "meetEnd", 
+						m.meet_participant "meetParticipant", 
+						m.meet_fund "meetFund", 
+						p.meet_id "meetId", 
+						sum(achiv) "achiv", 
+						sum(achiv)/m.meet_participant "allAchiv"  
+				FROM meet_un m JOIN meet_parti p
+				ON m.meet_id = p.meet_id
+				WHERE m.m_id = #{mId}
+				GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund
+	          ) b 
+	      ) a 
+		WHERE rn BETWEEN #{start } AND #{end })
 	</select>
 	
 	<select id="lessonSelect" resultType="map">
@@ -131,7 +189,7 @@
 				m.meet_start "meetStart", 
 				m.meet_end "meetEnd", 
 				m.m_id "mId",
-				m.meet_fund "meetFund"
+				m.meet_fund "meetFund",
 				li.like_date
 		from like_list li join meet_un m
 		on li.origin_id = m.meet_id
@@ -167,7 +225,7 @@
 				r.r_type "rType", 
 				r.r_image "rImage", 
 				r.r_hit "rHit", 
-				r.m_id "mId"
+				r.m_id "mId",
 				li.like_date
 		FROM like_list li JOIN recipe r
 		ON li.origin_id = r.r_id
@@ -181,7 +239,7 @@
 				r.rest_address "restAddress", 
 				r.rest_pic "restPic", 
 				r.rest_tel "restTel", 
-				r.rest_review_count "restReviewCount"
+				r.rest_review_count "restReviewCount",
 				li.like_date
 		FROM like_list li JOIN restaurant r
 		ON li.origin_id = r.rest_id

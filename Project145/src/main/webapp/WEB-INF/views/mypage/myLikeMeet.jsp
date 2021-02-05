@@ -32,7 +32,7 @@
 									<button type="button" class="likeAction"
 										data-id="${list.originId }" align="center">
 										<img class="likeImg" src="/images/filled_like.png"
-											style="width: 30px;" onerror="this.src='/images/loveurth (3).jpg'">
+											style="width: 30px;" alt="꽉찬 하트">
 									</button>
 									<br>
 									<br>
@@ -45,8 +45,8 @@
 									</div>
 									<div class="h5 mb-0 font-weight-bold text-gray-800">${list.meetTitle }
 									</div>
-									<br> <span style="font-size: 10">펀드금액 :
-										${list.meetFund }</span>
+									<br> <span style="font-size: 10">펀드금액 : <fmt:formatNumber value="${list.meetFund }"
+											pattern="#,###" /> 원 </span>
 								</div>
 							</div>
 

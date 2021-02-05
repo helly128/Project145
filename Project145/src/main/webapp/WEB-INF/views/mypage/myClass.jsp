@@ -21,7 +21,7 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="/images/${list.cImg }" width="200"
-							height="200" alt="">
+							height="200" onerror="this.src='/images/loveurth (3).jpg'" alt="클래스 이미지">
 						<div class="card-body">
 							<h3 class="card-title">${list.cTitle }</h3>
 							<p class="card-text">${list.cDesc }</p>

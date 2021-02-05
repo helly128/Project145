@@ -99,6 +99,7 @@
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="./selectScript.js"></script> -->
 </head>
 <body>
 	<section class="latest-product-area pt-130 pb-110">
@@ -112,15 +113,17 @@
 				</div>
 			</div>
 
-			<div class="row justify-content-center">
+			<div class="row justify-content-center border-bottom pb-4 mb-5">
 				<div class="col-lg-1 col-sm-1"></div>
 				<div class="col-lg-7 col-sm-5 col-10">
-					<div class="search-input">
-						<label for="keyword"><i
-							class="lni lni-search-alt theme-color"></i></label> <input type="text"
-							name="keyword" id="keyword" placeholder="Product keyword"
-							style="width: 95%;">
-					</div>
+					<form action="vegimeetList.do">
+						<div class="search-input">
+							<label for="keyword"><i
+								class="lni lni-search-alt theme-color"></i></label> <input type="text"
+								name="keyword" id="keyword" placeholder="Product keyword"
+								style="width: 95%;">
+						</div>
+					</form>
 				</div>
 				<div class="col-lg-3 col-sm-5 col-10">
 					<div class="search-btn">
@@ -132,8 +135,9 @@
 				<div class="col-lg-1 col-sm-1"></div>
 			</div>
 
+
 			<c:if test="${fn:length(myList) != 0}">
-				<div class="addPic mb-5 p-2">
+				<div class="addPic mb-5 p-2 pb-5 border-bottom">
 					<h5>📷 챌린지 인증샷 등록</h5>
 					<div class="row">
 						<c:forEach var="myMeet" items="${myList }">
@@ -143,7 +147,8 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-6 col-lg-6 col-md-6 ps-1">
-										<img src="images/${myMeet.meetPic }" style="width: 300px;">
+										<img src="images/${myMeet.meetPic }" style="width: 300px;"
+											alt="vegimeet image">
 									</div>
 									<div class="col-xl-6 col-lg-6 col-md-6"
 										style="align: right; vertical-align: bottom;">
@@ -153,7 +158,7 @@
 												method="post" enctype="multipart/form-data">
 												<div class="image-container pe-1">
 													<img id="upload-image" src="/images/images-empty.png"
-														width="95%">
+														width="95%" alt="show upload image">
 													<div class="div-image mb-4">
 														<span class="label">사진 업로드</span> <input type="file"
 															name="uploadfile" class="uploadPic" accept="image/*"
@@ -183,23 +188,23 @@
 				</div>
 			</c:if>
 
-
-			<div class="row border-top pt-5" id="cards">
-				<h4 class="mb-3">챌린지 목록 모집중/마감/종료 나눠서 조회되게</h4>
-				<div>
-					<select name="options" id="options" style="width: 100px;">
-						<option value="전체" selected>전체</option>
-						<option value="모집중">모집중</option>
-						<option value="마감">마감</option>
-						<option value="종료">종료</option>
-					</select>
-				</div>
+			<h4 class="mb-3 pt-2">챌린지 둘러보기</h4>
+			<div class="mb-2" align="right">
+				<select name="options" id="options" style="width: 100px;">
+					<option value="all" selected>전체</option>
+					<option value="ongoing">모집중</option>
+					<option value="closed">마감</option>
+					<option value="finished">종료</option>
+				</select>
+			</div>
+			<div class="row" id="cards">
 				<c:forEach var="vo" items="${list }">
 					<div class="col-xl-3 col-lg-6 col-md-6 mb-3">
 						<div class="single-product">
 							<div class="product-img">
 								<a href="/vegimeetSelect.do?meetId=${vo.meetId }"> <img
-									src="/images/${vo.meetPic }" style="height: 180px;">
+									src="/images/${vo.meetPic }" style="height: 180px;"
+									alt="vegimeet image">
 								</a>
 							</div>
 							<div class="product-content">
@@ -215,17 +220,20 @@
 									</li>
 								</ul>
 								<div class="product-bottom border-bottom">
-									<h4 class="price"><fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />원</h4>
+									<h4 class="price">
+										<fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />
+										원
+									</h4>
 									<div>
 										<button type="button" class="likeAction"
 											data-id="${vo.meetId }">
 											<c:if test="${vo.likeFlag > 0 }">
 												<img class="likeImg" src="/images/filled_like.png"
-													style="width: 30px;">
+													style="width: 30px;" alt="filled heart image">
 											</c:if>
 											<c:if test="${vo.likeFlag == 0 }">
 												<img class="likeImg" src="/images/empty_like.png"
-													style="width: 30px;">
+													style="width: 30px;" alt="empy heart image">
 											</c:if>
 										</button>
 									</div>
@@ -254,7 +262,7 @@
 	</section>
 
 	<script>
-		//사진 미리보기 설정
+		 //사진 미리보기 설정
 		function setImage(event) {
 			var reader = new FileReader();
 			reader.onload = function(event) {
@@ -350,18 +358,99 @@
 				if ($('#keyword').val() == null || $('#keyword').val() == '') {
 					alert('검색어를 입력하세요');
 				} else {
-
+					
 				}
 			});
 
+			//목록 옵션 변경 시 리스트 불러오기
 			$('#options').on('change', function() {
+				var option = $('#options option:selected').val();
 				$('#cards').empty();
-				/* $.ajax({
-					type: post,
-					url: 
-				}); */
-			})
-		});
+				console.log('option : '+option);
+				$.ajax({
+					type: 'post',
+					url: 'changeSearchOption.do/' + option,
+					contentType : "application/json",
+					success: function(result) {
+						
+						$.each(result, function(idx, vo){
+							var startDay = dateFormat(vo.meetStart);
+							var endDay = dateFormat(vo.meetEnd);
+							
+							var html = `<div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+								<div class="single-product">
+								<div class="product-img">
+									<a href="/vegimeetSelect.do?meetId=\${vo.meetId }"> <img
+										src="/images/\${vo.meetPic }" style="height: 180px;" alt="vegimeet image">
+									</a>
+								</div>
+								<div class="product-content">
+									<div class="namediv">
+										<h4 class="name"
+											onclick="location.href='/vegimeetSelect.do?meetId=\${vo.meetId }'">\${vo.meetTitle }</h4>
+									</div>
+									<ul class="address">
+										<li><i class="lni lni-user"></i> \${vo.mid }</li>
+										<li><i class="lni lni-package"></i> \${vo.meetParticipant }</li>
+										<li><i class="lni lni-calendar"></i> \${startDay }</li>
+										<li>~ <i class="lni lni-calendar"></i> \${endDay }
+										</li>
+									</ul>
+									<div class="product-bottom border-bottom">
+										<h4 class="price"><fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />원</h4>
+										<div>
+											<button type="button" class="likeAction"
+												data-id="\${vo.meetId }">
+												<c:if test="\${vo.likeFlag > 0 }">
+													<img class="likeImg" src="/images/filled_like.png"
+														style="width: 30px;" alt="filled heart image">
+												</c:if>
+												<c:if test="\${vo.likeFlag == 0 }">
+													<img class="likeImg" src="/images/empty_like.png"
+														style="width: 30px;" alt="empty heart image">
+												</c:if>
+											</button>
+										</div>
+									</div>
+									<br>
+									<div align="right">
+										<c:if test="\${vo.dday > 0 }">
+											<h4 style="color: #6C9852;">마감 ${vo.dday }일 전!</h4>
+										</c:if>
+										<c:if test="\${vo.dday <= 0}">
+											<h4>마감</h4>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</div>`;
+						
+						
+						$('#cards').append(html);
+						$('#options').val(option).prop('selected', true);
+						});
+						
+						
+						
+					}
+				});
+			});
+		}); 
+		
+		//날짜포맷
+		function dateFormat(calc) { //today는 date타입
+			var today = new Date(calc);
+			var day = today.getDate();
+			if (day < 10) {
+				day = '0' + day;
+			}
+			var month = today.getMonth() + 1;
+			if (month < 10) {
+				month = '0' + month;
+			}
+			today = today.getFullYear() + '-' + month + '-' + day;
+			return today; //리턴은 string
+		}
 	</script>
 </body>
 </html>
