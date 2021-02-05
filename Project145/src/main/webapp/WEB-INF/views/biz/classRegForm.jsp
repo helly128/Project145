@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet"
@@ -80,10 +80,13 @@ $(function(){
 	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
 	 var msg =  $("#proposal2").val() ;
 	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
-	 var lecId =  $("#lecturerId1").val() ;
-	 $("#lecId").val(lecId);
+
 	 $("#lecProposal").val(proposal);
  });
+    
+ //
+
+
     
  // 두번째 아작스, 강사에게 콜라보 신청 보내기 (proposal 메세지만 보내면 됨)
    $("#applyCollabo").click(()=>{
@@ -113,13 +116,34 @@ $(function(){
           });
     });
  
-//
-    })   
+//날짜 최소 
+   var today = new Date();
+   var dd = today.getDate();
+   var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+   var yyyy = today.getFullYear();
+   if(dd<10){
+     dd='0'+dd
+   } 
+   if(mm<10){
+     mm='0'+mm
+   } 
 
+   today = yyyy+'-'+mm+'-'+dd;
+   document.getElementById("cStart").setAttribute("min", today);
+   
+   
+   
+//
+
+    })   
+function setendmin(e){
+	  console.log(e);
+	  document.getElementById("cEnd").setAttribute("min", e);
+   }
 </script>
 
 	<div class="container" align="center">
-		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
+		<form id="cfrm" class="cfrm" action="/classBizInsert.do" accept-charset="utf-8">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${cvo.getCId()}'>
 			<br>
@@ -206,9 +230,9 @@ $(function(){
 						</tr>
 
 					</table>
-					<input type="text" id="vegi" readonly value="비건" required
-						name="vegtype"
-						style="text-align: center; display: none; height: 3rem; padding: 10px;">
+					<input type="hidden" id="vegi" readonly value="비건" required
+						name="vegType"
+						style="text-align: center; height: 3rem; padding: 10px;">
 				</div>
 			</div>
 
@@ -218,13 +242,13 @@ $(function(){
 				<div class="col-half">
 					<h5>시작일</h5>
 					<div class="input-group">
-						<input type="date" name="cStart" id="cStart">
+						<input type="date" onchange="setendmin(this.value)" name="cStart" min="" id="cStart">
 					</div>
 				</div>
 				<div class="col-half">
 					<h5>종료일</h5>
 					<div class="input-group">
-						<input type="date" name="cEnd" id="cEnd">
+						<input type="date" name="cEnd" id="cEnd" min="">
 					</div>
 				</div>
 			</div>
@@ -256,11 +280,11 @@ $(function(){
 					<h5>모집정원(명)</h5>
 					<div class="input-group">
 						<div class="number-input" style="margin: 10px">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
 							<input class="quantity" min="0" id="cParti" name="cParti"
 								value="1" type="number">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
 								class="plus"></button>
 						</div>
@@ -270,11 +294,11 @@ $(function(){
 					<h5>가격(5000원 단위)</h5>
 					<div class="input-group">
 						<div class="number-input" style="margin: 10px">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown(1000)"></button>
 							<input class="quantity" min="1000" id="cPrice" name="cPrice"
 								value="5000" type="number">
-							<button
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp(5000)"
 								class="plus"></button>
 						</div>
@@ -309,7 +333,7 @@ $(function(){
 							<!-- 같은 비즈 넘버 아래의 강사 아이디 보여주는 부분 -->
 							<select id="lecturerId1"
 								style="width: 80%; padding: 0px; margin-right: 50px;"
-								class="form-control" onclick="changeprofile(this)">
+								class="form-control" onchange="changeprofile(this)">
 								<option selected value="${sessionScope.mId}">기본 계정 :
 									${sessionScope.mId}</option>
 								<c:forEach items="${lecList}" var="lec">
@@ -436,7 +460,7 @@ $(function(){
 
 							<div class="msg" id="otherlec" align="left" style="display: none">
 							
-								강사 ID <input type="text" style="width: 90%" id="lecId" name="lecId" value="">
+							강사 ID <input type="text" style="width: 90%" id="lecId" name="lecId" value="">
 
 
 
@@ -572,7 +596,9 @@ $(function(){
 		
 		var lecList = ${lecList2};
 		function changeprofile(pro) {
-			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
+			 var lecId =  $("#lecturerId1").val() ;
+			 $("#lecId").val(lecId);
+			var lecturer = $(pro).val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
 			console.log("정보 검색 시작" + lecturer);
 			
 			for(i = 0; i < lecList.length ; i ++){
@@ -582,11 +608,13 @@ $(function(){
 					console.log(lecList[i].career + "가 커리어임");
 					console.log('/images/'+lecList[i].profileImage);
 					console.log(lecList[i].insta +'인스타임');
+					
 					$("#showlecName").text(lecList[i].mname);
 					$("#showlecCareer").text(lecList[i].career);
 					$("#showlecImage").attr('src','/images/'+lecList[i].profileImage);
 					$('#showlecInsta').prop('href',lecList[i].insta)
 					
+				 	
 				
 					
 				}else{ console.log("그런 정보 없음")}

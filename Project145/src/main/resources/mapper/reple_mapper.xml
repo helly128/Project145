@@ -6,25 +6,28 @@
 
 	<select id="read" resultType="com.pj.vegi.vo.RepleVo">
 		select * from reple
-		where r_id = #{rId}
+		where r_id =
+		#{rId}
 		order by re_id desc
 	</select>
 
 	<select id="readAll" resultType="com.pj.vegi.vo.RepleVo">
 		select * from reple
-		where r_id = #{rId}
+		where r_id =
+		#{rId}
 		order by re_date,re_id
 	</select>
-	
-	
+
+
 	<insert id="insert">
-		insert into reple (re_id,re_content,re_date, m_id,r_id)
+		insert into reple (re_id,re_content,re_date,
+		m_id,r_id)
 		values('re'||re_seq.nextval,#{reContent},current_date,#{mId},#{rId} )
-		
+
 	</insert>
 
 	<update id="update">
-		update reple set 
+		update reple set
 		re_content = #{reContent}
 		where re_id = #{reId}
 	</update>
@@ -33,8 +36,17 @@
 		delete from reple where re_id = #{reId}
 	</delete>
 
-	 <select id = "getListWithPaging" resultType="com.pj.vegi.vo.RepleVo"> 
-		select re_id, re_content,re_date, m_id from reple where r_id = #{rId} order 
-		by r_id asc </select> 
+	<select id="getListWithPaging"
+		resultType="com.pj.vegi.vo.RepleVo">
+		select re_id, re_content,re_date, m_id from reple where r_id = #{rId} order
+		by r_id asc
+	</select>
+
+	<insert id="repleInsert">
+		insert into reple (re_id,re_content,re_date,
+		m_id,r_id)
+		values('re'||re_seq.nextval,#{reContent},current_date,#{mId},#{rId} )
+
+	</insert>
 
 </mapper>

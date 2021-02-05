@@ -68,21 +68,21 @@ public class ClassBizController {
 	MemberService memberService;
 	
 	@RequestMapping("/classBizSelect.do")
-	public String classBizSelect(Model model, LessonVO cvo, LecturerVo lvo, MemberVo vo) throws SQLException {
+	public String classBizSelect(Model model, LessonVO cvo, MemberVo vo) throws SQLException {
 
 		LessonVO classVo = classBizService.classBizSelect(cvo);
 		System.out.println(classVo);
-
-		LecturerVo lecVo = classBizService.lecBizSelect(lvo);
-		System.out.println(lecVo);
 		
-		vo.setMId(lecVo.getMId());
+		vo.setMId(classVo.getMId());
 		MemberVo mvo = memberService.memberSelect(vo);
 		System.out.println(mvo);
 		
+		vo.setMId(classVo.getLecId());
+		MemberVo lvo = memberService.memberSelect(mvo);
+		System.out.println(lvo);
 		model.addAttribute("classVo", classVo);
-		model.addAttribute("lecVo", lecVo);
 		model.addAttribute("mvo", mvo);
+		model.addAttribute("lvo", lvo);
 		return "biz/classSelect";
 	}
 

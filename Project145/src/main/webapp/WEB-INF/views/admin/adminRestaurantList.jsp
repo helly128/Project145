@@ -93,7 +93,6 @@
 								<tr>
 									<td id="restid">${vo.getRestId() }</td>
 									<td id="restname">${vo.getRestName() }</td>
-									<td id="adminConfirm">${vo.getAdminConfirm() }</td>
 									<td>
 										<label> 
 											<select name="dataTable_length" id="adminConfirmSelect" data-mid="${vo.getRestId()}"
@@ -105,6 +104,7 @@
 											</select>
 										</label>
 									</td>
+									<td id="confirmReason">${vo.getConfirmReason() }</td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -125,20 +125,21 @@
 
 	<script type="text/javascript">
 		function goList(p) {
-			var restaurant = document.getElementById("restaurant").value;
+			var adminConfirm = document.getElementById("adminConfirm").value;
 			var keyword = document.getElementById("keyword").value;
 
-			if (available == "none" || keyword == '') {
-				location.href = "#" + p
+			if (adminConfirm == "none" || keyword == '') {
+				location.href = "adminRestaurant.do?page=" + p
 			} else {
-				location.href = "#" + p + "&restaurant=" + restaurant + "&keyword=" + keyword;
+				location.href = "adminRestaurant.do?page=" + p
+				+ "&restaurant=" + restaurant + "&keyword=" + keyword;
 			}
 
 		}
 		
 		
-/* 		/* 회원이용현황 변경 */
-		function changeAvailable(c) {
+ 		/* 회원이용현황 변경 */
+/*		function changeAvailable(c) {
 			 var returnValue = confirm('회원의 이용현황을 바꾸시겠습니까?');
 			 //alert(returnValue);
 			 if ( returnValue == true ) {

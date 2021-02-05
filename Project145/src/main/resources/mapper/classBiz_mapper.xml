@@ -73,7 +73,7 @@
 	</select>
 
 	<select id="lecBizSelect" resultType="LecturerVo">
-		SELECT * FROM lecturer
+		SELECT * FROM Member
 		WHERE
 		c_id=#{cId}
 	</select>
