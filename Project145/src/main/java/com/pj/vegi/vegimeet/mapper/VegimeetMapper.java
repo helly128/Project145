@@ -35,7 +35,7 @@ public interface VegimeetMapper {
 	int meetPartiUpdate(MeetParticipantVo vo);
 	
 	//다른 참가자의 사진 목록
-	List<MeetDataVo> meetDataList(VegimeetVo vo);
+	List<MeetDataVo> meetDataList(MeetDataVo vo);
 	
 	//자정 후 인증샷 미업로드시 fail+1 
 	List<VegimeetVo> ongoingMeetList();

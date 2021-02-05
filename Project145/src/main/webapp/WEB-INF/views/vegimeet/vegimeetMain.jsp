@@ -186,7 +186,7 @@
 
 			<div class="row border-top pt-5" id="cards">
 				<h4 class="mb-3">챌린지 목록 모집중/마감/종료 나눠서 조회되게</h4>
-				<div>
+				<div class="mb-2" align="right">
 					<select name="options" id="options" style="width: 100px;">
 						<option value="전체" selected>전체</option>
 						<option value="모집중">모집중</option>
@@ -356,10 +356,66 @@
 
 			$('#options').on('change', function() {
 				$('#cards').empty();
-				/* $.ajax({
+				var option = $('#options:checked').val();
+				$.ajax({
 					type: post,
-					url: 
-				}); */
+					url: 'changeSearchOption.do/' + option,
+					contentType : "application/json",
+					success: function(result) {
+						$.each(result, function(idx, vo){
+							var html = `<div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+								<div class="single-product">
+								<div class="product-img">
+									<a href="/vegimeetSelect.do?meetId=${vo.meetId }"> <img
+										src="/images/${vo.meetPic }" style="height: 180px;">
+									</a>
+								</div>
+								<div class="product-content">
+									<div class="namediv">
+										<h4 class="name"
+											onclick="location.href='/vegimeetSelect.do?meetId=${vo.meetId }'">${vo.meetTitle }</h4>
+									</div>
+									<ul class="address">
+										<li><i class="lni lni-user"></i> ${vo.getMId() }</li>
+										<li><i class="lni lni-package"></i> ${vo.meetParticipant }</li>
+										<li><i class="lni lni-calendar"></i> ${vo.meetStart }</li>
+										<li>~ <i class="lni lni-calendar"></i> ${vo.meetEnd }
+										</li>
+									</ul>
+									<div class="product-bottom border-bottom">
+										<h4 class="price"><fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />원</h4>
+										<div>
+											<button type="button" class="likeAction"
+												data-id="${vo.meetId }">
+												<c:if test="${vo.likeFlag > 0 }">
+													<img class="likeImg" src="/images/filled_like.png"
+														style="width: 30px;">
+												</c:if>
+												<c:if test="${vo.likeFlag == 0 }">
+													<img class="likeImg" src="/images/empty_like.png"
+														style="width: 30px;">
+												</c:if>
+											</button>
+										</div>
+									</div>
+									<br>
+									<div align="right">
+										<c:if test="${vo.dday > 0 }">
+											<h4 style="color: #6C9852;">마감 ${vo.dday }일 전!</h4>
+										</c:if>
+										<c:if test="${vo.dday <= 0}">
+											<h4>마감</h4>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</div>`
+						});
+						
+						
+						
+					}
+				});
 			})
 		});
 	</script>

@@ -102,7 +102,7 @@ public class VegimeetServiceImpl implements VegimeetService {
 	}
 
 	@Override
-	public List<MeetDataVo> meetDataList(VegimeetVo vo) {
+	public List<MeetDataVo> meetDataList(MeetDataVo vo) {
 		return dao.meetDataList(vo);
 	}
 

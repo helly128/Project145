@@ -63,12 +63,35 @@ public class VegimeetController {
 		}
 
 		// 내가 참여중인 베지밋 목록
+		if(mId != null && mId != "") {
+		}
 		List<Map> myList = vegimeetService.myMeetList(mId);
 		model.addAttribute("myList", myList);
 
 		model.addAttribute("list", list);
 
 		return "vegimeet/vegimeetMain";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/changeSearchOption.do/{options}")
+	public List<VegimeetVo> changeSearchOption(@PathVariable String options, Paging paging) {
+		VegimeetVo meetVo = new VegimeetVo();
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		meetVo.setStart(paging.getFirst());
+		meetVo.setEnd(paging.getLast());
+
+		int cnt = vegimeetService.countMeetList(meetVo);
+		paging.setTotalRecord(cnt);
+		
+		meetVo.setOptions(options);
+		List<VegimeetVo> list = vegimeetService.vegimeetList(meetVo);
+		
+		return list;
 	}
 
 	// 상세페이지 출력
@@ -88,9 +111,6 @@ public class VegimeetController {
 		model.addAttribute("partiList", partiList);
 		model.addAttribute("joinFlag", joinFlag);
 
-		// 다른 참가자의 사진 목록
-		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo);
-		model.addAttribute("dataList", dataList);
 		return "vegimeet/vegimeetSelect";
 	}
 
@@ -245,11 +265,19 @@ public class VegimeetController {
 		return "redirect:vegimeetList.do";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping("/scrollNewImage.do")
-//	public void scrollNewImage() {
-//		
-//		
-//	}
+	// 다른 참가자의 사진 목록
+	@ResponseBody
+	@RequestMapping("/scrollNewImage.do/{meetId}/{num}")
+	public List<MeetDataVo> scrollNewImage(@PathVariable String meetId, @PathVariable int num) {
+		MeetDataVo vo = new MeetDataVo();
+		vo.setMeetId(meetId);
+		vo.setStart(num);
+		vo.setEnd(num+7);
+		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo);	//베지밋 vo
+		for(MeetDataVo dVo : dataList) {
+			dVo.setStart(num);	// start, end가 db의 값이 아니라서 jsp에서 쓰기 위해 다시 set해줌
+		}
+		return dataList;
+	}
 	
 }

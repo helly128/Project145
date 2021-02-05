@@ -145,8 +145,15 @@
 	</update>
 
 	<select id="meetDataList" resultType="MeetDataVo">
-		SELECT * FROM meet_data
-		WHERE meet_id=#{meetId}
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+				FROM
+					(SELECT *
+					FROM meet_data
+					WHERE meet_id=#{meetId}
+				) b
+			) a
+		WHERE rn BETWEEN #{start} AND #{end}
 	</select>
 
 	<select id="ongoingMeetList" resultType="VegimeetVo">
