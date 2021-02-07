@@ -150,4 +150,9 @@ public class VegimeetServiceImpl implements VegimeetService {
 	public int countMeetList(VegimeetVo vo) {
 		return dao.countMeetList(vo);
 	}
+
+	@Override
+	public int vegimeetDelete(VegimeetVo vo) {
+		return dao.vegimeetDelete(vo);
+	}
 }

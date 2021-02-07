@@ -21,7 +21,7 @@ public class VegimeetVo {
 	private int dday;
 	private int likeFlag;
 	
-	private String options = "전체";	//드롭다운메뉴 선택값
+	private String options;	//드롭다운메뉴 선택값
 	private String keyword;	//검색어
 	private int start;
 	private int end;
