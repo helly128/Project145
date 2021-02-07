@@ -39,14 +39,14 @@
 									<div class="search-input">
 										<label for="category"> <i
 											class="lni lni-grid-alt theme-color"></i>
-										</label> <select name="category" onchange="moveurl(this.value);"
-											id="category">
+										</label> 
+										<select name="menuVegeType" id="menuVegeType">
 											<form name=move method=post>
-												<option value="none" selected disabled>Categories</option>
-												<option value="/restaurantBegan.do">비건</option>
-												<option value="/restaurantRacto.do">락토</option>
-												<option value="/restaurantOvo.do">오보</option>
-												<option value="/restaurantRactoOvo.do">락토오보</option>
+												<option value="" selected>채식타입</option>
+												<option value="began">비건</option>
+												<option value="racto">락토</option>
+												<option value="ovo">오보</option>
+												<option value="ractoOvo">락토오보</option>
 											</form>
 										</select>
 									</div>
@@ -54,8 +54,8 @@
 								<div class="col-lg-3 col-sm-5 col-6">
 									<div class="search-input">
 										<label for="keyword"><i
-											class="lni lni-search-alt theme-color"></i></label> <input
-											type="text" name="keyword" id="keyword"
+											class="lni lni-search-alt theme-color"></i></label> 
+											<input type="text" name="keyword" id="keyword"
 											placeholder="Product keyword">
 									</div>
 								</div>
@@ -80,19 +80,23 @@
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> <img
-									src="images/salad.jpg" alt="" height="300px" width="300px">
+								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> 
+								<img src="images/salad.jpg" alt="" height="300px" width="300px">
 								</a>
 							</div>
 
 							<div class="product-content">
-								<div class="namediv" style="float: left;">
+								<div class="namediv col-lg-12" style="float: left;">
 									<h3 class="name">
 										<a href="/restaurantDetail.do?restId=${vo.getRestId() }">${vo.getRestName() }</a>
 									</h3>
-									<i class="lni lni-star"></i> ${vo.getRestStarAvg() }
 								</div>
-								<br>
+								<br/>
+								<div>
+									<i class="lni lni-star">${vo.getRestStarAvg() }</i>
+									<br>
+									<i class="lni lni-map-marker">${vo.getRestAddress() }</i>
+								</div>
 								<br>
 								<!-- 좋아요 -->
 									<div class="likehear" align="right" >

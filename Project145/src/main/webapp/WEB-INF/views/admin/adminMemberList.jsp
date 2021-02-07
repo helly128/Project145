@@ -47,13 +47,13 @@
 			<div class="card-body">
 			<form action="adminMemberSelect.do" method="get" id="frm">
 				<div>
-					<div class="col-sm-5 col-md-4 col-lg-1"
+					<div class="col-sm-5 col-md-4 col-lg-2"
 						style="margin-right: 0px; float: left;">
 						<div class="dataTables_length" id="dataTable_length">
 							<label> <select name="available" id="available"
 								aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm">
-									<option value="none" selected disabled>이용현황</option>
+									<option value="" selected>전 체</option>
 									<option value="able"
 										<c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
 									<option value="unable"

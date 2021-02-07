@@ -47,14 +47,14 @@
 			<div class="card-body">
 			<form action="adminRestaurant.do" method="get" id="frm">
 				<div>
-					<div class="col-sm-5 col-md-4 col-lg-1"
+					<div class="col-sm-5 col-md-4 col-lg-2"
 						style="margin-right: 0px; float: left;">
 						<div class="dataTables_length" id="dataTable_length">
 							<label> 
 								<select name="adminConfirm" id="adminConfirm"
 										aria-controls="dataTable"
 										class="custom-select custom-select-sm form-control form-control-sm">
-									<option value="none" selected disabled>등록현황</option>
+									<option value="" selected>전 체</option>
 									<option value="true"
 										<c:if test="${vo.adminConfirm == 'true' }">selected="selected"</c:if>>등록허가
 									</option>
@@ -70,7 +70,7 @@
 					</div>
 					<div class="" style="margin-right: 0px; float: left;">
 						<div id="" class="dataTables_filter">
-							<input type="search" id="keyword" name="keyword"
+							<input type="search" id="keyword" name="keyword" placeholder="식당ID/이름"
 								class="form-control form-control-sm col-sm-4 col-md-6 col-lg-9"
 								style="float: left;" value="${vo.getKeyword() }">
 							<button style="border: 1px; background: none; float: right;" onclick = "location.href = 'javascript:frm.submit()'">검색</button>
@@ -92,12 +92,14 @@
 							<c:forEach var="vo" items="${adminRestaurant }">
 								<tr>
 									<td id="restid">${vo.getRestId() }</td>
-									<td id="restname">${vo.getRestName() }</td>
+									<td id="restname"  onclick="location.href='/restAdminConfirm.do?rest=${vo.getRestId() }'" style="cursor:pointer;">
+											${vo.getRestName() }</td>
 									<td>
 										<label> 
 											<select name="dataTable_length" id="adminConfirmSelect" data-mid="${vo.getRestId()}"
 											aria-controls="dataTable" onchange="changConfirm(this)"
-											class="custom-select custom-select-sm form-control form-control-sm">
+											class="custom-select custom-select-sm form-control form-control-sm"
+											onclick="location.href='/restAdminConfirm.do?rest=${vo.getRestId() }'" style="cursor:pointer;">
 												<option value="true"  <c:if test="${vo.adminConfirm == 'true' }">selected="selected"</c:if>>등록허가</option>
 												<option value="false" <c:if test="${vo.adminConfirm == 'false' }">selected="selected"</c:if>>등록대기</option>
 												<option value="canceled" <c:if test="${vo.adminConfirm == 'canceled' }">selected="selected"</c:if>>등록거부</option>

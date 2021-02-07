@@ -71,8 +71,33 @@
 
 	<select id="getRestaurantList" resultType="RestaurantVo">
 		<!-- 식당 전체목록 -->
-		SELECT * FROM RESTAURANT
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM RESTAURANT r
+			<if test="keyword != null and keyword != '' ">
+				<where>
+					AND r.ADMIN_CONFIRM = 'true'
+					AND LOWER(r.rest_name) like
+					LOWER('%' || #{keyword} || '%')
+				</where>
+			</if>
+			<if test=" menuVegeType != null and menuVegeType != '' ">
+				FULL OUTER JOIN rest_menu m
+				on r.rest_id = m.rest_id
+				<where>
+					AND r.ADMIN_CONFIRM = 'true'
+					AND LOWER(m.menu_vege_type) = LOWER(#{menuVegeType} )
+				</where>
+			</if>
+			
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
+	
+	
 
 
 	<select id="getRestaurantDetail" resultType="RestaurantVo">
