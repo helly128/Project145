@@ -50,4 +50,7 @@ public interface VegimeetMapper {
 	//새 베지밋 생성
 	int vegimeetInsert(VegimeetVo vo);
 	int calcTotalDay();
+	
+	//베지밋 삭제
+	int vegimeetDelete(VegimeetVo vo);
 }

@@ -43,4 +43,6 @@ public interface VegimeetService {
 
 	int vegimeetInsert(VegimeetVo vo);
 	int calcTotalDay();
+
+	int vegimeetDelete(VegimeetVo vo);
 }

@@ -47,10 +47,15 @@ public class VegimeetController {
 		}
 		meetVo.setStart(paging.getFirst());
 		meetVo.setEnd(paging.getLast());
+		String options = meetVo.getOptions();
+		String keyword = meetVo.getKeyword();
+		System.out.println("options: " + options);
+		model.addAttribute("options", options);
+		model.addAttribute("keyword", keyword);
 
 		int cnt = vegimeetService.countMeetList(meetVo);
 		paging.setTotalRecord(cnt);
-		
+
 		List<VegimeetVo> list = vegimeetService.vegimeetList(meetVo);
 		for (VegimeetVo vo : list) {
 			vo.setDday(vegimeetService.getDday(vo));
@@ -62,7 +67,7 @@ public class VegimeetController {
 		}
 
 		// 내가 참여중인 베지밋 목록
-		if(mId != null && mId != "") {
+		if (mId != null && mId != "") {
 			List<Map> myList = vegimeetService.myMeetList(mId);
 			model.addAttribute("myList", myList);
 		}
@@ -71,11 +76,10 @@ public class VegimeetController {
 
 		return "vegimeet/vegimeetMain";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("/changeSearchOption.do/{options}")
-	public List<VegimeetVo> changeSearchOption(@PathVariable String options, Paging paging) {
-		VegimeetVo meetVo = new VegimeetVo();
+	@RequestMapping("/changeSearchOption.do")
+	public List<VegimeetVo> changeSearchOption(VegimeetVo meetVo, Paging paging) {
 		paging.setPageUnit(8);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
@@ -86,11 +90,10 @@ public class VegimeetController {
 
 		int cnt = vegimeetService.countMeetList(meetVo);
 		paging.setTotalRecord(cnt);
-		
-		System.out.println(options);
-		meetVo.setOptions(options);
+
+		System.out.println(meetVo.getOptions());
 		List<VegimeetVo> list = vegimeetService.vegimeetList(meetVo);
-		
+
 		return list;
 	}
 
@@ -250,7 +253,7 @@ public class VegimeetController {
 		return "vegimeet/vegimeetInsert";
 	}
 
-	//베지밋 개설
+	// 베지밋 개설
 	@RequestMapping("/vegimeetInsert.do")
 	public String vegimeetInsert(HttpSession session, VegimeetVo vo, @RequestParam MultipartFile uploadfile,
 			HttpServletRequest request) throws IllegalStateException, IOException {
@@ -261,10 +264,10 @@ public class VegimeetController {
 			vo.setMeetPic(name);
 		}
 		vegimeetService.vegimeetInsert(vo);
-		
-		return "redirect:vegimeetList.do";
+
+		return "redirect:/vegimeetList.do";
 	}
-	
+
 	// 다른 참가자의 사진 목록
 	@ResponseBody
 	@RequestMapping("/scrollNewImage.do/{meetId}/{num}")
@@ -272,12 +275,19 @@ public class VegimeetController {
 		MeetDataVo vo = new MeetDataVo();
 		vo.setMeetId(meetId);
 		vo.setStart(num);
-		vo.setEnd(num+7);
-		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo);	//베지밋 vo
-		for(MeetDataVo dVo : dataList) {
-			dVo.setStart(num);	// start, end가 db의 값이 아니라서 jsp에서 쓰기 위해 다시 set해줌
+		vo.setEnd(num + 7);
+		List<MeetDataVo> dataList = vegimeetService.meetDataList(vo); // 베지밋 vo
+		for (MeetDataVo dVo : dataList) {
+			dVo.setStart(num); // start, end가 db의 값이 아니라서 jsp에서 쓰기 위해 다시 set해줌
 		}
 		return dataList;
 	}
-	
+
+	//참여자 0명일 때 베지밋 삭제
+	@RequestMapping("/vegimeetDelete.do")
+	public String vegimeetDelete(VegimeetVo vo) {
+		vegimeetService.vegimeetDelete(vo);
+		
+		return "redirect:/vegimeetList.do";
+	}
 }

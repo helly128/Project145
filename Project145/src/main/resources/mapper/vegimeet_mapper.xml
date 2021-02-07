@@ -209,4 +209,9 @@
 				</if>
 			</where>
 	</select>
+	
+	<delete id="vegimeetDelete">
+		DELETE FROM meet_un
+		WHERE meet_id = #{meetId}
+	</delete>
 </mapper>
