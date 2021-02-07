@@ -70,8 +70,8 @@
 					<div class="col-xl-3 col-lg-6 col-md-6">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }">
-								<img src="/images/${lesson.getCImg() }" width="100" height="250"
+								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
+									src="/images/${lesson.getCImg() }" width="100" height="250"
 									onerror="this.src='/images/loveurth (3).jpg'" alt="클래스이미지">
 								</a>
 								<div class="product-action">
@@ -85,8 +85,8 @@
 									</h3>
 								</div>
 								<ul class="address">
-									<li><i class="lni lni-calendar"></i> ${lesson.getCStart() }
-										- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${lesson.getCEnd() }</li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCStart() }  ~</li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }</li>
 									<li><i class="lni lni-map-marker"></i> Type:
 										${lesson.getVegType() }</li>
 									<li><i class="lni lni-package"></i> 조회수:
