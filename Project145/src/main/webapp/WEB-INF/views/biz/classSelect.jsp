@@ -189,7 +189,7 @@ $(function(){ //아작스
 				<div class="row">
 					<div class="col-half">
 						<div class="profile-cover">
-							<div class="profile-avatar">
+							<div class="profile-avatar" style="margin:10px 70px;">
 								<img style="border-radius: 50%;" width="200px" height="200px;"
 									src="/images/${mvo.profileImage}" />
 							</div>
