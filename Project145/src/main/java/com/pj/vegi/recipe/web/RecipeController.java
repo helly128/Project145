@@ -67,34 +67,7 @@ public class RecipeController {
 		return "recipe/recipeMain";
 	}
 
-	@RequestMapping("/recipeBegan.do")
-	public String recipeBegan(Model model, RecipeVo vo) {
-		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
-		model.addAttribute("recipes", recipes);
-		return "recipe/recipeBegan";
-	}
-
-	@RequestMapping("/recipeRacto.do")
-	public String recipeRacto(Model model, RecipeVo vo) {
-		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
-		model.addAttribute("recipes", recipes);
-		return "recipe/recipeRacto";
-	}
-
-	@RequestMapping("/recipeOvo.do")
-	public String recipeOvo(Model model, RecipeVo vo) {
-		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
-		model.addAttribute("recipes", recipes);
-		return "recipe/recipeOvo";
-	}
-
-	@RequestMapping("/recipeRactoOvo.do")
-	public String recipeRactoOvo(Model model, RecipeVo vo) {
-		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
-		model.addAttribute("recipes", recipes);
-		return "recipe/recipeRactoOvo";
-	}
-
+	
 	/*
 	 * @Autowired LessonService lessonService;
 	 */

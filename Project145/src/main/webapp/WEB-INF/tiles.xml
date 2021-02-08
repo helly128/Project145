@@ -16,6 +16,10 @@ Configuration 2.1//EN"
 		<put-attribute name="content" value="/WEB-INF/views/mypage/{1}.jsp" />
 	</definition>
 	
+	<definition name="login/*"	template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/login/{1}.jsp" />
+	</definition>
+	
 	<definition name="biz/*"	template="/WEB-INF/views/tiles/bizRestLayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/views/biz/{1}.jsp" />
 	</definition>

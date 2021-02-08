@@ -130,11 +130,7 @@
 					<div class="text-center hero-content">
 						<h1 class="mb-30 wow fadeInUp" data-wow-delay=".2s"
 							style="color: black">다함께 건강하게, 채식 한 끼.</h1>
-						<p class="wow fadeInUp" data-wow-delay=".4s" style="color: black">메인화면을
-							잘 맹글어볼게유 흑흑</p>
-						<a href="https://rebrand.ly/gg-classilist/" rel="nofollow"
-							class="main-btn btn-hover">Purchase Now</a>
-
+						<p class="wow fadeInUp" data-wow-delay=".4s" style="color: black">채식당</p>
 					</div>
 				</div>
 			</div>
@@ -142,67 +138,10 @@
 	</section>
 	<!--======메인배너부분 END ======-->
 
-	<!--====== SEARCH PART START ======-->
-	<div class="search-area">
-		<div class="container">
-			<div class="search-wrapper">
-				<form action="#">
-					<div class="row justify-content-center">
-						<div class="col-lg-4 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="keyword"><i
-									class="lni lni-search-alt theme-color"></i></label> <input type="text"
-									name="keyword" id="keyword" placeholder="Product keyword">
-							</div>
-						</div>
-						<div class="col-lg-3 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="category"><i
-									class="lni lni-grid-alt theme-color"></i></label> <select
-									name="category" id="category">
-									<option value="none" selected disabled>비건 레벨</option>
-									<option value="none">비건</option>
-									<option value="none">락토</option>
-									<option value="none">오보</option>
-									<option value="none">락토오보</option>
-								</select>
-
-							</div>
-						</div>
-						<div class="col-lg-3 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="location"><i
-									class="lni lni-map-marker theme-color"></i></label> <select
-									name="location" id="location">
-									<option value="none" selected disabled>Locations</option>
-									<option value="none">수도권</option>
-									<option value="none">강원</option>
-									<option value="none">충남</option>
-									<option value="none">충북</option>
-									<option value="none">경북</option>
-									<option value="none">경남</option>
-									<option value="none">전북</option>
-									<option value="none">전남</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-2 col-sm-5 col-10">
-							<div class="search-btn">
-								<button class="main-btn btn-hover">
-									Search <i class="lni lni-search-alt"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!--====== SEARCH PART END ======-->
-
+	
 
 	<!--====== 식당 섹션 ======-->
-	<section class="latest-product-area pt-130 pb-80">
+	<section class="latest-product-area pb-80">
 		<div class="container">
 			<div class="row">
 				<div class="mx-auto">

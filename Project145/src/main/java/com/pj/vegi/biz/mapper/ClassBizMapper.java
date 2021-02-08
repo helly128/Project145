@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.enquiryVO;
 
 
 
@@ -19,6 +20,8 @@ public interface ClassBizMapper {
 	List<MemberVo> getLecList(String bizNum);
 	
 	int applyCollabo(LessonVO vo);
+	List<enquiryVO> classEnquiryList(enquiryVO vo);
+	List<enquiryVO> myEnquiryList(enquiryVO vo);
 	
 	
 

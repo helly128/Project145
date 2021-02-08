@@ -15,6 +15,7 @@
 			</if>
 			<if test=" keyword != null and keyword != '' ">
 				AND r_title like '%' || #{keyword} || '%'
+				AND r_content like '%' || #{keyword} || '%'
 			</if>
 		</where>
 		) b

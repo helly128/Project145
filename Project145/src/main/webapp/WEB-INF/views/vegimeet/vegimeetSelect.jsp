@@ -134,7 +134,7 @@ div, h3 {
 
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">진행기간</span>
-						<h5>📆 ${meetVo.meetStart } ~ ${meetVo.meetEnd }</h5>
+						<h5><i class="lni lni-calendar"></i> ${meetVo.meetStart } ~ ${meetVo.meetEnd }</h5>
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">참가액</span>
@@ -282,12 +282,39 @@ div, h3 {
 	        			data-no='\${num}'>
 						<img src='/images/\${vo.dataPic}' alt="user\'s vegimeet image" class="userImage">
 						<c:if test="${mId != null and mId != ''}"><div class="ban-action">
-	        			<a href="javascript:void(0)"><i class="lni lni-ban banTag"></i></a>
+	        			<a href="javascript:void(0)" onclick="sendReport(this);" data-id="\${vo.meetdataId}"><i class="lni lni-ban banTag"></i></a>
 	        			</div></c:if>
 						</div>`;
 	            
 	            $(".infiniteScroll").append(html);
 	    }
+		
+		function sendReport(obj) {
+			var message = prompt("신고사유를 입력하세요");
+			var dataId = $(obj).data('id');
+			var data = {
+					reportContent: message,
+					mId: '${mId}',
+					originId: dataId
+			};
+			if(message){
+				$.ajax({
+					url: "/reportImage.do",
+					type: "post",
+					data: data,
+					dataType : "json",
+					success: function(result) {
+						alert("신고되었습니다.");
+					},
+					error: function(err){
+						console.log(err);
+						alert('통신오류');
+					}
+				});
+			} else{
+				alert('신고가 취소되었습니다.');
+			}
+		}
 	</script>
 </body>
 </html>
