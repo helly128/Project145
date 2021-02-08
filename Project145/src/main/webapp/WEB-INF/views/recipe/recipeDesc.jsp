@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +17,15 @@
 	margin-left: 15%;
 	margin-right: 15%;
 }
-<style type="text/css">
-.likeAction {
+
+<
+style type ="text /css ">.likeAction {
 	border: none;
 	background: transparent;
+}
+
+.noresize {
+	resize: none; /* 사용자 임의 변경 불가 */
 }
 </style>
 
@@ -55,7 +61,12 @@
 				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
-		
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var day = today.getDate();
+		var date = year + "-" + month + "-" + day
+		$('#wDate').text(date);
 
 	});
 	//댓글 삭제
@@ -70,13 +81,6 @@
 			}
 		});
 	}
-
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = today.getMonth() + 1;
-	var day = today.getDate();
-	var date = year + "년" + month + "월" + day + "일"
-	$('#wDate').text(date);
 
 	//댓글 입력
 	function repleWrite() {
@@ -131,16 +135,14 @@
 						var output = "<table>";
 						console.log(result);
 						for ( var i in result) {
-							output += "<tr>";
-							output += "<td width='60' class='delBtn'>";
-							output += "<td width='200'>" + result[i].reContent;
-							output += "<td width='100'>" + result[i].reDate;
+							output += "<tr align='center'>";
 							output += "<td width='60' data-mid='"+result[i].mid+"'>"
 									+ result[i].mid;
+							output += "<td width='180'>" + result[i].reContent;
+							output += "<td width='60'>" + result[i].reDate;
 							output += "<td width='60'>"
-									+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn' id='delBtn'>삭제";
-							output += "<td width='60'>"
-									+ "<button type='button' class='reBtn' id='reBtn'>답글";
+									+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn btn-sm btn-warning' id='delBtn'>삭제";
+
 							output += "</tr>"
 						}
 						output += "</table>";
@@ -169,49 +171,52 @@
 					put += "</ul>";
 				});
 				$("#rMat").html(put);
+				if (result.length == 0) {
+					alert("검색 가능한 값이 없습니다.😂");
+				}
 			},
 			error : function() {
 				console.log("실패ㅜㅜ");
 			}
 
 		});
-		
+
 		$("#cards")
-		.on(
-				'click',
-				'.likeAction',
-				function() {
+				.on(
+						'click',
+						'.likeAction',
+						function() {
 
-					if ('${mId}' == null || '${mId}' == '') {
-						alert("로그인 후 이용가능합니다.")
-					} else {
-						var classId = $(this).data('id')
+							if ('${mId}' == null || '${mId}' == '') {
+								alert("로그인 후 이용가능합니다.")
+							} else {
+								var classId = $(this).data('id')
 
-						if ($(this).children('img').attr('src') == '/images/empty_like.png') {
-							$.ajax({
-								url : 'lessonLike.do/' + classId,
-								type : 'post',
-								contentType : "application/json",
-								success : function(result) {
+								if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+									$.ajax({
+										url : 'lessonLike.do/' + classId,
+										type : 'post',
+										contentType : "application/json",
+										success : function(result) {
 
+										}
+									}) // ajax end
+									$(this).children('img').attr('src',
+											'/images/filled_like.png')
+								} else {
+									$.ajax({
+										url : 'lessonUnLike.do/' + classId,
+										type : 'post',
+										contentType : 'application/json',
+										success : function(result) {
+
+										}
+									}) //ajax end
+									$(this).children('img').attr('src',
+											'/images/empty_like.png')
 								}
-							}) // ajax end
-							$(this).children('img').attr('src',
-									'/images/filled_like.png')
-						} else {
-							$.ajax({
-								url : 'lessonUnLike.do/' + classId,
-								type : 'post',
-								contentType : 'application/json',
-								success : function(result) {
-
-								}
-							}) //ajax end
-							$(this).children('img').attr('src',
-									'/images/empty_like.png')
-						}
-					}
-				});
+							}
+						});
 
 	}
 </script>
@@ -234,12 +239,20 @@
 							class="lni lni-book">${recipeSelect.getRHit()}</i>
 					</div>
 					<div class="recipecontent">
-						<textarea rows="5" cols="60">${recipeSelect.getRContent() }</textarea>
+						<textarea class="noresize" rows="18" cols="60">${recipeSelect.getRContent() }</textarea>
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<img src="/images/${recipeSelect.getRImage()}" height="200px"
-						width="200px">
+					<%-- <c:choose>
+						<c:when test="${fn:contains(${recipeSelect.getRImage()}, 'http')}">
+							<img src="${recipeSelect.getRImage()}" height="200px"
+								width="200px">
+						</c:when>
+						<c:otherwise>
+							<img src="/images/${recipeSelect.getRImage()}" height="200px"
+								width="200px">
+						</c:otherwise>
+					</c:choose> --%>
 				</div>
 			</div>
 			<div class="row">
@@ -278,7 +291,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<br />
 		<!-- <script>
 		Handlebars.registerHelper("eqReplyWriter", function (replyWriter, block) {
@@ -296,16 +309,23 @@
 			<div class="row">
 				<div class="col-lg-4">
 					Used Ingredient<br /> <br />
+				</div>
+				<div class="col-lg-8">
+					Go to Cheapest Mall<br /> <br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-4">
 					<ol style="margin-left: 10%">
 						<c:forEach var="recipeMaterial" items="${recipeMaterial}">
-							<li><a onclick="matName('${recipeMaterial.getMatName()}')">${recipeMaterial.getMatName()}</a>&nbsp;${recipeMaterial.getMatVol()}</li>
+							<li style="cursor: pointer"><a
+								onclick="matName('${recipeMaterial.getMatName()}')">${recipeMaterial.getMatName()}&nbsp;&nbsp;&nbsp;${recipeMaterial.getMatVol()}</a></li>
 						</c:forEach>
 
 					</ol>
 
 				</div>
 				<div class="col-lg-8" id="rMat">
-					Go to Cheapest Mall<br /> <br />
 					<ol>
 						<li>값이 없으면 검색되지 않습니다.😂</li>
 
@@ -381,10 +401,10 @@
 				<br />
 				<div id="reloadReple">
 					<div class="row" align="left">
+						<div class="col-lg-2" align="center">작성자</div>
 						<div class="col-lg-6" align="center">댓글 내용</div>
-						<div class="col-lg-2">작성일자</div>
-						<div class="col-lg-2">작성자</div>
-						<div class="col-lg-1">비고</div>
+						<div class="col-lg-2" align="center">작성일자</div>
+						<div class="col-lg-2" align="center">비고</div>
 						<hr />
 					</div>
 					<input type="hidden" value="${reple}">

@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 	public boolean memberLoginCheck(MemberVo vo) throws SQLException {
 
 		MemberVo resultVO = dao.memberSelect(vo);
-		if (vo != null && vo.getPassword().equals(resultVO.getPassword())) {
+		if (resultVO != null && vo.getPassword().equals(resultVO.getPassword())) {
 			return true;
 		} else {
 			return false;

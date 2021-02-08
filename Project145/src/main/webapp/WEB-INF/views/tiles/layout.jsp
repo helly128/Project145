@@ -121,7 +121,7 @@ article {
 										<li><a href="/memberRegister.do"
 											class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
 									</c:if>
-									<c:if test="${mId ne null && password ne null}">
+									<c:if test="${mId ne null}">
 										<li><a href="/logout.do"
 											class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
 									</c:if>
