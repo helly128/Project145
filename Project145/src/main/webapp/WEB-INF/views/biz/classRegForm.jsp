@@ -70,16 +70,16 @@ $(function(){
 	 console.log($("#cLoc").val());
 	 console.log($("#cParti").val());
 	 console.log($("#cPrice").val());
-	 console.log($(".proposal2").val());
+	 console.log($("#proposal2").val());
 	 
-	 var title = "안녕하세요 강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
+	 var title = "안녕하세요"+ $("#lecId").val() +"강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
 	 var start = $("#cStart").val() + " ~  " ;
 	 var end = $("#cEnd").val() + "까지 ";
 	 var time = $("#cTime").val() +"에 ";
 	 var loc = $("#cLoc").val() +"에서 ";
 	 var parti = "정원 "+$("#cParti").val() + "명 으로 ";
 	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
-	 var msg =  $(".proposal2").val() ;
+	 var msg =  $("#proposal2").val() ;
 	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
 	 
 	if(proposal!="") {

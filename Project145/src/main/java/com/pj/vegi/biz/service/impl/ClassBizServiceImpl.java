@@ -9,6 +9,7 @@ import com.pj.vegi.biz.mapper.ClassBizMapper;
 import com.pj.vegi.biz.service.ClassBizService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Service("classBizService")
 public class ClassBizServiceImpl implements ClassBizService{
@@ -57,6 +58,16 @@ public class ClassBizServiceImpl implements ClassBizService{
 	@Override
 	public LessonVO classBizSelect(LessonVO cvo) {
 		return dao.classBizSelect(cvo);
+	}
+
+	@Override
+	public List<enquiryVO> classEnquiryList(enquiryVO vo) {
+		return dao.classEnquiryList(vo);
+	}
+	
+	@Override
+	public List<enquiryVO> myEnquiryList(enquiryVO vo) {
+		return dao.myEnquiryList(vo);
 	}
 
 }
