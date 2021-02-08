@@ -235,6 +235,12 @@
 					<option value="finished">종료</option>
 				</select>
 			</div> -->
+
+			<div align="left" class="newChallenge mb-4">
+				<button class="btn insertBtn"
+					onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
+			</div>
+
 			<div class="row" id="cards">
 				<c:forEach var="vo" items="${list }">
 					<div class="col-xl-3 col-lg-6 col-md-6 mb-3">
@@ -293,10 +299,7 @@
 			<!-- 페이징 -->
 			<my:paging paging="${paging }" jsFunc="goList" />
 		</div>
-		<div align="right" class="newChallenge">
-			<button class="btn insertBtn"
-				onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
-		</div>
+
 	</section>
 
 	<script>

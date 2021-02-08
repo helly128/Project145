@@ -1,6 +1,9 @@
 package com.pj.vegi.mypage.web;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.vegi.common.Paging;
+import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.mypage.service.MypageService;
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
@@ -29,7 +34,9 @@ import com.pj.vegi.vo.VegimeetVo;
 public class MypageController {
 
 	@Autowired
-	MypageService mypageService;
+	private MypageService mypageService;
+	@Autowired
+	private MemberService memberService;
 
 	@RequestMapping("/mypage.do")
 	public String mypage(MemberVo vo, Model model, HttpSession session) throws SQLException {
@@ -70,6 +77,16 @@ public class MypageController {
 		paging.setTotalRecord(cnt);
 
 		List<Map> list = mypageService.meetSelect(vo);
+
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String time = format.format(date);
+		try {
+			date = format.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("today", date);
 
 		model.addAttribute("list", list);
 
@@ -213,14 +230,52 @@ public class MypageController {
 		List<Map> classList = mypageService.lessonSelect(vo);
 		model.addAttribute("list", classList);
 		model.addAttribute("paging", paging);
+		
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String time = format.format(date);
+		try {
+			date = format.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("today", date);
 
 		return "mypage/myClass";
 	}
 
+	@RequestMapping("/myPageEditCheck.do")
+	public String myPageEditCheck(MemberVo vo, Model model, HttpSession session) {
+
+		return "mypage/myPageEditCheck";
+	}
+
+	@ResponseBody
+	@RequestMapping("/EditCheck.do")
+	public String EditCheck(Model model, HttpSession session, MemberVo vo) throws SQLException {
+
+		String mid = (String) session.getAttribute("mId");
+		vo.setMId(mid);
+
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check == true) {
+			result = "true";
+		} else {
+			result = "false";
+		}
+
+		System.out.println("result값" + result);
+
+		return result;
+	}
+
 	// 회원정보수정
 	@RequestMapping("/myPageEdit.do")
-	public String myPageEdit(MemberVo vo, Model model) throws SQLException {
+	public String myPageEdit(MemberVo vo, Model model, HttpSession session) throws SQLException {
 
+		vo.setMId((String) session.getAttribute("mId"));
 		MemberVo member = mypageService.myPageSelect(vo);
 		model.addAttribute("member", member);
 
@@ -234,6 +289,12 @@ public class MypageController {
 		mypageService.myPageUpdate(vo);
 
 		return "redirect:mypage.do";
+	}
+
+	@RequestMapping("/myWalletCheck.do")
+	public String myWalletCheck(MemberVo vo, Model model, HttpSession session) {
+
+		return "mypage/myWalletCheck";
 	}
 
 	@RequestMapping("/myWallet.do")

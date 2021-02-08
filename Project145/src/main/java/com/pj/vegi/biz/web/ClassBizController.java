@@ -19,6 +19,7 @@ import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.LecturerVo;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Controller
 public class ClassBizController {
@@ -145,12 +146,15 @@ public class ClassBizController {
 		if(cvo.getVegType()=="") {
 			cvo.setVegType("비건");
 		}
-		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 개설대기임
+		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
 		String lstatus = "";
 		if (mvo.getLecId()==mId) {
 			lstatus = "개설완료";
 			}else {
 				lstatus ="강사승인대기";
+				//문의테이블에 등록 !
+				
+
 			}
 		cvo.setStatus(lstatus);
 		System.out.println("사업자 번호 찾기");
@@ -165,8 +169,25 @@ public class ClassBizController {
 		int n = 0;
 		n = classBizService.classBizInsert(cvo);
 		System.out.println("클래스" + n + "건 입력 완료");
+		
+		
 
 		return "redirect:classBizList.do";
+	}
+	
+	@RequestMapping("/enquiryList.do")
+	public String enquiryList(Model model, HttpSession session, enquiryVO vo) {
+		
+		String mId = (String) session.getAttribute("mId");
+		System.out.println("받은 목록 리스트 찾아오기");
+		vo.setMId(mId);
+		List<enquiryVO> cEnqList = classBizService.classEnquiryList(vo);
+		model.addAttribute("cEnqList", cEnqList);
+		
+		List<enquiryVO> myEnqList = classBizService.myEnquiryList(vo);
+		model.addAttribute("myEnqList", myEnqList);
+
+		return "biz/enquiryList";
 	}
 	
 	

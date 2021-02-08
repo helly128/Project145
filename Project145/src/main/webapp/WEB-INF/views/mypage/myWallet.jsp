@@ -64,7 +64,7 @@
 
 			if (wPay != "") {
 				if (wPay > 0 && wPay < 2000000) {
-					alert("${mId}" + "님의 계좌에서 " + wPay + "원을 충전을 하시겠습니까? 비밀번호입력후 옳으면 실행해보기")
+					alert("${mId}" + "님의 계좌에서 " + wPay + "원을 충전을 하시겠습니까?")
 					alert("${mId}" + "님의 지갑에 " + wPay + " 원이 충전되었습니다.")
 					$("#form1").submit()
 				} else {
@@ -85,7 +85,7 @@
 
 			if (dPay != "") {
 				if ( dPay > 0 && dPay < cash ) {
-					alert("${mId}" + "님의 계좌로 " + dPay + "원을 인출 하시겠습니까? 비밀번호입력후 옳으면 실행해보기")
+					alert("${mId}" + "님의 계좌로 " + dPay + "원을 인출 하시겠습니까?")
 					alert("${mId}" + "님의 지갑에서 " + dPay + " 원이 인출되었습니다.")
 					$("#form2").submit()					
 				} else {

@@ -21,22 +21,23 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="/images/${list.cImg }" width="200"
-							height="200" onerror="this.src='/images/loveurth (3).jpg'" alt="클래스 이미지">
+							height="200" onerror="this.src='/images/loveurth (3).jpg'"
+							alt="클래스 이미지" style="cursor: pointer;"
+							onclick="location.href='lessonProduct.do?cId=${list.cId}'">
 						<div class="card-body">
-							<h3 class="card-title">${list.cTitle }</h3>
+							<h3 class="card-title" style="cursor: pointer;"
+								onclick="location.href='lessonProduct.do?cId=${list.cId}'">${list.cTitle }</h3>
 							<p class="card-text">${list.cDesc }</p>
 							<p style="font: bold;">
 								시작일 <i class="lni lni-calendar"></i>
-								<fmt:formatDate value="${list.cStart }"
-									pattern="yyyy-MM-dd HH:mm" />
+								<fmt:formatDate value="${list.cStart }" pattern="yyyy-MM-dd" />
 							</p>
 							<p>
 								종료일 <i class="lni lni-calendar"></i>
-								<fmt:formatDate value="${list.cEnd }" pattern="yyyy-MM-dd HH:mm" />
+								<fmt:formatDate value="${list.cEnd }" pattern="yyyy-MM-dd" />
 							</p>
 						</div>
 						<div class="card-footer">
-							<a href="#" class="btn btn-primary">${list.cStatus }</a>
 						</div>
 					</div>
 				</div>
@@ -45,24 +46,26 @@
 		<my:paging paging="${paging }" jsFunc="goList" />
 	</div>
 	<script>
-		function goList(p) {
-			location.href = "myClass.do?page=" + p;
-		}
 
-		function dateFormat(dat) {
-			var date = new Date(dat);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDate();
-			var hour = date.getHours();
-			var min = date.getMinutes();
-			if (min < 10) {
-				min = '0' + min;
+			function goList(p) {
+				location.href = "myClass.do?page=" + p;
 			}
-			var newDate = year + "-" + month + "-" + day + " " + hour + ":"
-					+ min;
-			return newDate;
-		}
+
+			function dateFormat(dat) {
+				var date = new Date(dat);
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				var hour = date.getHours();
+				var min = date.getMinutes();
+				if (min < 10) {
+					min = '0' + min;
+				}
+				var newDate = year + "-" + month + "-" + day;
+				return newDate;
+			}
+
+		
 	</script>
 </body>
 </html>

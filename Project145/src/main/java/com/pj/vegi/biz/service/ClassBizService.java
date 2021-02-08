@@ -3,6 +3,7 @@ package com.pj.vegi.biz.service;
 import java.util.List;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface ClassBizService {
 
@@ -21,5 +22,9 @@ public interface ClassBizService {
 	int classBizDelete(LessonVO vo);
 
 	LessonVO classBizSelect(LessonVO cvo);
+
+	List<enquiryVO> classEnquiryList(enquiryVO vo);
+	
+	List<enquiryVO> myEnquiryList(enquiryVO vo);
 
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MeetDataVo {
-	private String meetDataId;
+	private String meetdataId;
 	private String meetpId;
 	private String dataPic;
 	private String meetId;

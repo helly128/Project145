@@ -8,6 +8,7 @@ import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MeetDataVo;
 import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 public interface VegimeetService {
@@ -45,4 +46,6 @@ public interface VegimeetService {
 	int calcTotalDay();
 
 	int vegimeetDelete(VegimeetVo vo);
+
+	int reportImage(ReportVo vo);
 }

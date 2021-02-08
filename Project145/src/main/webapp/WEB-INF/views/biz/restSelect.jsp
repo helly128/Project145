@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+	<c:set var="waitListLength"
+		value="${fn:length(reservVo.reservVoList ) }" />
 	<div class="row">
 
 		<div class="col-lg-1"></div>
@@ -37,7 +40,8 @@
 										width="100%" alt="restaurant image">
 								</c:if>
 								<c:if test="${restVo.restPic ne null}">
-									<img src="/images/${restVo.restPic }" width="100%" alt="restaurant image">
+									<img src="/images/${restVo.restPic }" width="100%"
+										alt="restaurant image">
 								</c:if>
 							</div>
 						</div>
@@ -196,8 +200,11 @@
 									aria-labelledby="dropdownMenuLink" style="">
 									<div class="dropdown-header">예약상태</div>
 									<a class="dropdown-item" href="javascript:void(0);"
-										onclick="reservDone('accept')">예약완료</a> <a class="dropdown-item"
-										href="javascript:void(0);" onclick="reservDone('refuse')">예약거절</a>
+										onclick="reservDone('accept')">예약완료</a> <a
+										class="dropdown-item" href="javascript:void(0);"
+										onclick="reservDone('refuse')">예약거절</a> <a
+										class="dropdown-item" href="javascript:void(0);"
+										onclick="reservDone('end')">지난 예약</a>
 								</div>
 							</div>
 						</div>
@@ -228,8 +235,6 @@
 	</div>
 
 	<script>
-	
-
 		$(function() {
 			//체크박스 전체선택/해제
 			$('#checkAll').click(function() {
@@ -240,10 +245,10 @@
 				}
 			});
 
-			if($('.td-checkbox').length == 0){
+			if ($('.td-checkbox').length == 0) {
 				$('#checkAll').prop('disabled', true);
 			}
-			
+
 			$('.td-checkbox, #checkAll').click(function() {
 				var tmp = $(this).prop('checked');
 				var length = $('.td-checkbox:checked').length;
@@ -252,19 +257,24 @@
 				} else {
 					$('.submitBtn').prop('disabled', true);
 				}
-				
+
 			});
-			
+
 			reservDone('accept');
 		});
 
 		function deleteConfirm() {
-			var result = confirm("식당을 삭제하시겠습니까? 삭제 후에는 취소가 불가능합니다.");
-			if (result) {
-				alert("삭제되었습니다.");
-				location.href = "restBizDelete.do?restId=${restVo.restId}";
+			var waitListLength = '<c:out value="${waitListLength}" />';
+			if (waitListLength == 0) {
+				var result = confirm("식당을 삭제하시겠습니까? 삭제 후에는 취소가 불가능합니다.");
+				if (result) {
+					alert("삭제되었습니다.");
+					location.href = "restBizDelete.do?restId=${restVo.restId}";
+				} else {
+					alert("취소되었습니다.")
+				}
 			} else {
-				alert("취소되었습니다.")
+				alert('처리되지 않은 예약건이 있습니다. 처리 후 다시 시도하세요.');
 			}
 		}
 
@@ -277,48 +287,84 @@
 			$('.hiddenFlag').val('refuse');
 			$('#frm').submit();
 		}
-		
-		function reservDone(msg){
+
+		function reservDone(msg) {
 			$('#completeReserv tbody').empty();
 			var restId = "${restVo.restId}";
-			if(msg == 'accept'){
+			if (msg == 'accept') {
 				var url = 'restBizReservAccept.do/';
-			} else{
+			} else if(msg == 'refuse') {
 				var url = 'restBizReservRefuse.do/';
+			} else {
+				var url = 'restBizReservEnd.do/';
 			}
-			$.ajax({
-				url: url+restId,
-				type: 'post',
-				contentType: "application/json",
-				success: function(result){
-					$.each(result, function(idx, item){
-						var date = dateFormat(item.restReservDate);
-						var tbody = $('#completeReserv tbody');
-						tbody.append($('<tr>').append($('<td>').html(item.mid))
-								.append($('<td>').html(item.restReservName))
-								.append($('<td>').html(date))
-								.append($('<td>').html(item.restReservPeople))
-								.append($('<td>').html(item.restReservStatus)));
+			$
+					.ajax({
+						url : url + restId,
+						type : 'post',
+						contentType : "application/json",
+						success : function(result) {
+							$
+									.each(
+											result,
+											function(idx, item) {
+												var date = dateFormat(item.restReservDate);
+												var tbody = $('#completeReserv tbody');
+												tbody
+														.append($('<tr>')
+																.append(
+																		$(
+																				'<td>')
+																				.html(
+																						item.mid))
+																.append(
+																		$(
+																				'<td>')
+																				.html(
+																						item.restReservName))
+																.append(
+																		$(
+																				'<td>')
+																				.html(
+																						date))
+																.append(
+																		$(
+																				'<td>')
+																				.html(
+																						item.restReservPeople))
+																.append(
+																		$(
+																				'<td>')
+																				.html(
+																						item.restReservStatus)));
+											});
+						}
 					});
-				}
-			});
 		}
-		
-		function dateFormat(dat){
+
+		function dateFormat(dat) {
 			var date = new Date(dat);
 			var year = date.getFullYear();
-		    var month = date.getMonth() + 1;
-		    var day = date.getDate();
-		    var hour = date.getHours();
-		    var min = date.getMinutes();
-		    if(min < 10){
-		    	min = '0'+min;
-		    }
-		    var newDate = year + "-" + month + "-" + day + " " + hour + ":" + min;
-		    return newDate;
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			if (hour < 10) {
+				hour = '0' + hour;
+			}
+			if (min < 10) {
+				min = '0' + min;
+			}
+			if (month < 10) {
+				month = '0' + month;
+			}
+			if (day < 10) {
+				day = '0' + day;
+			}
+			var newDate = year + "-" + month + "-" + day + " " + hour + ":"
+					+ min;
+			return newDate;
 		}
-		
-		
 	</script>
 </body>
 </html>
