@@ -22,8 +22,7 @@
 		WHERE rest_id=#{restId}
 	</select>
 
-	<select id="restReservList"
-		resultType="RestReservVo">
+	<select id="restReservList" resultType="RestReservVo">
 		SELECT * FROM rest_reserv
 		WHERE rest_id = #{restId}
 		AND rest_reserv_status = #{restReservStatus}
@@ -39,10 +38,13 @@
 		rest_id=#{restId}
 	</update>
 
-	<delete id="restBizDelete">
-		DELETE FROM restaurant
+	<update id="restBizDelete">
+		UPDATE restaurant
+		SET m_id=null,
+		biznum = null,
+		admin_confirm='reject'
 		WHERE rest_id=#{restId}
-	</delete>
+	</update>
 
 	<update id="restMenuUpdate">
 		UPDATE rest_menu
@@ -75,30 +77,35 @@
 		(rest_id, rest_name,
 		rest_address, rest_pic,
 		rest_time, m_id, rest_tel, biznum, admin_confirm)
-		VALUES('rest' || rest_seq.nextval,
+		VALUES('rest' ||
+		rest_seq.nextval,
 		#{restName}, #{restAddress},
-		#{restPic}, #{restTime}, #{mId},
+		#{restPic}, #{restTime},
+		#{mId},
 		#{restTel},
 		(SELECT biznum FROM member
-		WHERE m_id=#{mId}), 'true')
+		WHERE m_id=#{mId}),
+		'true')
 
 		<selectKey keyProperty="seq" resultType="int" order="AFTER">
-			SELECT rest_seq.currval
+			SELECT
+			rest_seq.currval
 			FROM DUAL
 		</selectKey>
 	</insert>
-	
+
 	<delete id="restAllMenuDelete">
 		DELETE FROM rest_menu
 		WHERE rest_id=#{restId}
 	</delete>
-	
+
 	<update id="restBizReservUpdate">
 		UPDATE rest_reserv
-		SET rest_reserv_status = #{restReservStatus}
+		SET rest_reserv_status =
+		#{restReservStatus}
 		WHERE rest_reserv_num = #{restReservNum}
 	</update>
-	
+
 	<update id="reservRestUpdate">
 		UPDATE restaurant
 		SET rest_reserv_wait = rest_reserv_wait - 1
@@ -106,5 +113,24 @@
 			, rest_reserv_accept = rest_reserv_accept + 1
 		</if>
 		WHERE rest_id = #{restId}
+	</update>
+	
+	<select id="reservEndList" resultType="RestReservVo">
+		SELECT * 
+		FROM rest_reserv 
+		WHERE current_date > rest_reserv_date 
+		AND rest_reserv_status = '예약완료'
+	</select>
+	
+	<update id="reservEndUpdate">
+		UPDATE rest_reserv
+		SET rest_reserv_status = '지난예약'
+		WHERE rest_reserv_num = #{restReservNum}
+	</update>
+	
+	<update id="reservEndMinus">
+		UPDATE restaurant
+		SET rest_reserv_accept = rest_reserv_accept - 1
+		WHERE rest_id=#{restId}
 	</update>
 </mapper>

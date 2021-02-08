@@ -108,7 +108,7 @@ article {
 										<li class="nav-item"><a class="page-scroll"
 											href="/restaurant.do">식당</a></li>
 										<li class="nav-item"><a class="page-scroll"
-											href="/vegimeetList.do">베지Meet</a></li>
+											href="/vegimeetList.do">챌린지</a></li>
 									</ul>
 								</div>
 								<ul class="header-btn d-sm-flex">
@@ -207,7 +207,7 @@ article {
 								<li><a href="javascript:void(0)">클래스</a></li>
 								<li><a href="/recipeMain.do">레시피</a></li>
 								<li><a href="javascript:void(0)">식당</a></li>
-								<li><a href="/vegimeetList.do">베지Meet</a></li>
+								<li><a href="/vegimeetList.do">챌린지</a></li>
 								<li><a href="javascript:void(0)">Contact</a></li>
 							</ul>
 						</div>
