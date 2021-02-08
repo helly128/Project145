@@ -78,6 +78,8 @@
 		c_id=#{cId}
 	</update>
 	
+	
+	
 	<select id="getLecList" resultType="MemberVo">
 		
 		SELECT M_ID, M_NAME,PROFILE_IMAGE,INSTA,CAREER
@@ -86,4 +88,18 @@
 		(SELECT LEC_ID FROM ClASS WHERE BIZNUM = #{bizNum})
 
 	</select>
+	
+	
+	<select id="classEnquiryList" resultType="enquiryVo">
+	select * from enquiry
+	where origin_Id = #{mId}
+	</select>
+	
+	<select id="myEnquiryList" resultType="enquiryVo">
+	select * from enquiry
+	where m_id = #{mId}
+	</select>
+	
+	
+	
 </mapper>

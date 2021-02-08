@@ -13,6 +13,7 @@ import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MeetDataVo;
 import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 @Service("vegimeetService")
@@ -154,5 +155,10 @@ public class VegimeetServiceImpl implements VegimeetService {
 	@Override
 	public int vegimeetDelete(VegimeetVo vo) {
 		return dao.vegimeetDelete(vo);
+	}
+
+	@Override
+	public int reportImage(ReportVo vo) {
+		return dao.reportImage(vo);
 	}
 }

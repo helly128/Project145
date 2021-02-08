@@ -85,4 +85,19 @@ public class RestaurantBizServiceImpl implements RestaurantBizService {
 	public int reservRestUpdate(RestReservVo vo) {
 		return dao.reservRestUpdate(vo);
 	}
+
+	@Override
+	public int reservEndUpdate(RestReservVo vo) {
+		return dao.reservEndUpdate(vo);
+	}
+
+	@Override
+	public List<RestReservVo> reservEndList() {
+		return dao.reservEndList();
+	}
+
+	@Override
+	public int reservEndMinus(RestReservVo vo) {
+		return dao.reservEndMinus(vo);
+	}
 }

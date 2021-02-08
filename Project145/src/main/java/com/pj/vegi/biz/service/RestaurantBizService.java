@@ -24,4 +24,8 @@ public interface RestaurantBizService {
 	
 	int restBizReservUpdate(RestReservVo vo);
 	int reservRestUpdate(RestReservVo vo);
+
+	List<RestReservVo> reservEndList();
+	int reservEndUpdate(RestReservVo vo);
+	int reservEndMinus(RestReservVo vo);
 }

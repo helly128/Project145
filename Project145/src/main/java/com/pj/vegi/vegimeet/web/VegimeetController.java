@@ -26,6 +26,7 @@ import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MeetDataVo;
 import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 @Controller
@@ -290,4 +291,13 @@ public class VegimeetController {
 		
 		return "redirect:/vegimeetList.do";
 	}
+	
+	//사진 신고
+	@ResponseBody
+	@RequestMapping("/reportImage.do")
+	public String reportImage(ReportVo vo) {
+		vegimeetService.reportImage(vo);
+		return "true";
+	}
+	
 }

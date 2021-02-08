@@ -11,6 +11,7 @@
 <style>
 .tr-hover:hover {
 	background: #f8f9fc;
+	cursor: pointer;
 }
 </style>
 </head>
