@@ -13,7 +13,7 @@
 <body id="page-top">
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">내가 만든 MEET를 확인하세요!!👓</h1>
+		<h1 class="h3 mb-2 text-gray-800">내가 만든 챌린지를 확인하세요!!👓</h1>
 		<br> <br>
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
@@ -39,13 +39,15 @@
 								<th>참여기간</th>
 								<th>참여자수</th>
 								<th>펀드총액</th>
-								<th>참여자 평균 달성율</th>
+								<th>달성률</th>
 							</tr>
 						</thead>
 						<c:forEach items="${list }" var="list">
 							<tbody>
-								<tr>
-									<td>${list.meetTitle}</td>
+								<tr style="vertical-align: middle;">
+									<td
+										onClick="location.href='/vegimeetSelect.do?meetId=${list.meetId }'"
+										style="cursor: pointer;">${list.meetTitle}</td>
 									<td><fmt:formatDate value="${list.meetStart }"
 											pattern="yyyy-MM-dd" /> - <fmt:formatDate
 											value="${list.meetEnd }" pattern="yyyy-MM-dd" /></td>
@@ -53,29 +55,32 @@
 									<td><fmt:formatNumber value="${list.meetFund }"
 											pattern="#,###" /> 원</td>
 									<td><div class="row no-gutters align-items-center">
-											<div class="col-auto">
-												<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${list.allAchiv }%</div>
-											</div>
 											<div class="col">
-												<div class="progress progress-sm mr-2">
-													<div class="progress-bar bg-info" role="progressbar"
-														style="width: ${list.allAchiv }%" aria-valuenow="50"
-														aria-valuemin="0" aria-valuemax="100"></div>
+												<div>
+													<h4 class="small font-weight-bold">
+														목표기간 (${list.totalDay }일) <span class="float-right">${list.dayAchiv }%</span>
+													</h4>
+													<div class="progress mb-4">
+														<div class="progress-bar bg-danger" role="progressbar"
+															style="width: ${list.dayAchiv }%" aria-valuenow="20"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<div>
+													<h4 class="small font-weight-bold">
+														참여자 총 달성률 <span class="float-right">${list.allAchiv }%</span>
+													</h4>
+													<div class="progress mb-4">
+														<div class="progress-bar bg-success" role="progressbar"
+															style="width: ${list.allAchiv }%" aria-valuenow="20"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
 												</div>
 											</div>
 										</div></td>
 								</tr>
 							</tbody>
 						</c:forEach>
-						<tfoot>
-							<tr>
-								<th>제목</th>
-								<th>참여기간</th>
-								<th>참여자수</th>
-								<th>펀드총액</th>
-								<th>참여자 평균 달성율</th>
-							</tr>
-						</tfoot>
 					</table>
 				</div>
 				<my:paging paging="${paging }" jsFunc="goList" />
@@ -83,7 +88,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	
 		function goList(p) {
 			location.href = "myMeet.do?page=" + p;
 		}

@@ -13,7 +13,7 @@
 <body id="page-top">
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">내가 참여한 Untact Meet을 확인하세요!!👓</h1>
+		<h1 class="h3 mb-2 text-gray-800">내가 참여한 챌린지를 확인하세요!!👓</h1>
 		<br> <br>
 
 		<!-- DataTales Example -->
@@ -55,47 +55,58 @@
 								<th>펀드액</th>
 								<th>오늘 참여여부</th>
 								<th>총 달성률(success)</th>
+								<th>결과</th>
 							</tr>
 						</thead>
 						<c:forEach items="${list }" var="list">
 							<tbody>
 								<tr>
-									<td>${list.meetTitle }</td>
+									<td style="cursor: pointer;"
+										onClick="location.href='/vegimeetSelect.do?meetId=${list.meetId }'">${list.meetTitle }</td>
 									<td><fmt:formatDate value="${list.meetStart }"
-											pattern="yyyy-MM-dd" /> - <fmt:formatDate
+											pattern="yyyy-MM-dd" /> ~ <fmt:formatDate
 											value="${list.meetEnd }" pattern="yyyy-MM-dd" /></td>
 									<td><fmt:formatNumber value="${list.myFund }"
 											pattern="#,###" /> 원</td>
-									<c:if test="${list.todayFlag == 'true' }">
-										<td>⭕</td>
-									</c:if>
-									<c:if test="${list.todayFlag == 'false' }">
-										<td>❌</td>
-									</c:if>
+									<td><c:choose>
+											<c:when test="${today <= list.meetEnd }">
+												<c:if test="${list.todayFlag == true }">⭕</c:if>
+												<c:if test="${list.todayFlag == false }">❌</c:if>
+											</c:when>
+											<c:when test="${today > list.meetEnd }">
+											완료</c:when>
+										</c:choose></td>
 									<td><div class="row no-gutters align-items-center">
-											<div class="col-auto">
-												<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${list.achiv }%</div>
-											</div>
 											<div class="col">
-												<div class="progress progress-sm mr-2">
-													<div class="progress-bar bg-info" role="progressbar"
-														style="width: ${list.achiv }%" aria-valuenow="50"
-														aria-valuemin="0" aria-valuemax="100"></div>
+												<div>
+													<h4 class="small font-weight-bold">
+														목표기간 (${list.totalDay }일) <span class="float-right">${list.dayAchiv }%</span>
+													</h4>
+													<div class="progress mb-4">
+														<div class="progress-bar bg-danger" role="progressbar"
+															style="width: ${list.dayAchiv }%" aria-valuenow="20"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
+												</div>
+												<div>
+													<h4 class="small font-weight-bold">
+														나의 달성률 <span class="float-right">${list.achiv }%</span>
+													</h4>
+													<div class="progress mb-4">
+														<div class="progress-bar bg-success" role="progressbar"
+															style="width: ${list.achiv }%" aria-valuenow="20"
+															aria-valuemin="0" aria-valuemax="100"></div>
+													</div>
 												</div>
 											</div>
 										</div></td>
+									<td><c:choose>
+											<c:when test="${today <= list.meetEnd }">참여중</c:when>
+											<c:when test="${today > list.meetEnd }">완료<br>페이백:</c:when>
+										</c:choose></td>
 								</tr>
 							</tbody>
 						</c:forEach>
-						<tfoot>
-							<tr>
-								<th>제목</th>
-								<th>참여기간</th>
-								<th>펀드액</th>
-								<th>오늘 참여여부</th>
-								<th>총 달성률(success)</th>
-							</tr>
-						</tfoot>
 					</table>
 				</div>
 				<my:paging paging="${paging }" jsFunc="goList" />
@@ -103,9 +114,8 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	
-		function goList(p) {			
-				location.href = "myBegiUntact.do?page=" + p
+		function goList(p) {
+			location.href = "myBegiUntact.do?page=" + p
 		}
 
 		function dateFormat(dat) {

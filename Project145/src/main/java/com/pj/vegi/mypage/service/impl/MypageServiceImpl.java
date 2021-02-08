@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.mypage.mapper.MypageMapper;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
@@ -23,6 +24,9 @@ public class MypageServiceImpl implements MypageService {
 
 	@Autowired
 	MypageMapper dao;
+
+	@Autowired
+	private MemberMapper mem_dao;
 
 	@Override
 	public MemberVo myPageSelect(MemberVo vo) throws SQLException {
@@ -88,7 +92,7 @@ public class MypageServiceImpl implements MypageService {
 	public int heartCancel(LikeListVo vo) {
 		return dao.heartCancel(vo);
 	}
-	
+
 	@Override
 	public List<Map> meetSelect(MeetParticipantVo vo) {
 		return dao.meetSelect(vo);

@@ -24,7 +24,10 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="${list.rImage }" width="100"
-							height="200" onerror="this.src='/images/loveurth2 (1).jpg'" alt="레시피 이미지">
+							height="200" onerror="this.src='/images/loveurth2 (1).jpg'"
+							alt="레시피 이미지"
+							onclick="location.href='recipeDesc.do?rId=${list.rId}'"
+							style="cursor: pointer;">
 						<div class="card-body">
 							<h4 class="card-title">${list.rTitle }</h4>
 							<ul class="address" align="left">

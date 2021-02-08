@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -13,6 +14,32 @@
 .likeAction {
 	border: none;
 	background: transparent;
+}
+
+.namediv {
+	height: 60px;
+}
+
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
+	border-radius: 5px;
 }
 </style>
 </head>
@@ -72,23 +99,20 @@
 							<div class="product-img">
 								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
 									src="/images/${lesson.getCImg() }" width="100" height="250"
-									onerror="this.src='/images/loveurth (3).jpg'" alt="클래스이미지">
+									onerror="this.src='/images/loveurth (3).jpg'" alt="클래스이미지"
+									style="cursor: pointer;">
 								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-								</div>
 							</div>
 							<div class="product-content">
 								<div class="namediv">
-									<h3 class="name">
+									<h4 class="name">
 										<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
-									</h3>
+									</h4>
 								</div>
 								<ul class="address">
-									<li><i class="lni lni-calendar"></i> ${lesson.getCStart() }  ~</li>
-									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }</li>
-									<li><i class="lni lni-map-marker"></i> Type:
-										${lesson.getVegType() }</li>
+									<li><i class="lni lni-calendar"></i> ${lesson.getCStart() }</li>
+									<li>~ ${lesson.getCEnd() }</li>
+									<li><i class="lni lni-map-marker"></i>${lesson.getVegType() }</li>
 									<li><i class="lni lni-package"></i> 조회수:
 										${lesson.getCHit() }</li>
 								</ul>
@@ -114,8 +138,26 @@
 								</div>
 								<br>
 								<div class="product_bottom">
-									<button id="status" disabled type="button"
-										class="btn btn-outline-success">${lesson.getStatus() }</button>
+									<c:if test="${lesson.CJoin != lesson.CParti }">
+										<c:choose>
+											<c:when test="${today < lesson.getCStart()}">
+												<button id="status" disabled type="button"
+													class="btn btn-outline-success">클래스 준비중</button>
+											</c:when>
+											<c:when test="${today <= lesson.getCEnd()}">
+												<button id="status" disabled type="button"
+													class="btn btn-outline-success">클래스 진행중</button>
+											</c:when>
+											<c:when test="${today > lesson.getCEnd()}">
+												<button id="status" disabled type="button"
+													class="btn btn-outline-success">클래스 마감</button>
+											</c:when>
+										</c:choose>
+									</c:if>
+									<c:if test="${lesson.CJoin == lesson.CParti }">
+										<button id="status" disabled type="button"
+											class="btn btn-outline-success">모집 마감</button>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -178,21 +220,6 @@
 									}
 								}
 							})
-
-			let now = new Date();
-			let year = now.getFullYear();
-			let month = now.getMonth() + 1;
-			let date = now.getDate();
-			var today = year + '-' + month + '-' + date
-
-			if (("${lesson.getCEnd() }" < today)
-					|| ("${lesson.cJoin }" == "${lesson.cParti }")) {
-				$('#status').text('클래스 마감')
-			} else if ("${lesson.getCStart() }" > today) {
-				$('#status').text('클래스 준비중')
-			} else {
-				$('#status').text('클래스 진행중')
-			}
 
 		})//ready end
 	</script>
