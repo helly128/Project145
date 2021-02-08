@@ -1,6 +1,7 @@
 package com.pj.vegi.restaurant.mapper;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.pj.vegi.vo.LikeListVo;
@@ -21,7 +22,8 @@ public interface RestaurantMapper {
 	public List<RestaurantVo> bizCheckList(String restName);
 	int bizInfoUpdate(RestaurantVo vo);
 	
-	List<RestaurantVo>getRestaurantList(); //식당메인에 목록 불러오기
+	List<RestaurantVo>getRestaurantList(RestaurantVo vo) throws SQLException; //식당메인에 목록 불러오기
+	int countRestaurantList(RestaurantVo vo); //식당 메인 페이징
 	List<RestaurantVo>restNameSerchList(String restName); //식당등록페이지에서 식당이름 검색 
 	
 	RestaurantVo getRestaurantDetail(RestaurantVo vo); //식당 상세 페이지
