@@ -18,6 +18,36 @@
 </style>
 </head>
 <body>
+
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog"
+		style="padding-top: 200px;" aria-labelledby="basicModal"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">아이디 검색 결과</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="searchResult" class="modal-body" align="center">
+
+					<h5>
+						<a id="idResult"></a>
+					</h5>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="toLogin" style="display: none"
+						class="btn btn-primary" style="background:#1ab188; border:none;">로그인
+						화면</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<div class="container">
 		<div align="right" class="mb-2">
 
@@ -177,6 +207,28 @@
 	</div>
 
 
+
+
+$(function(){ 
+
+function classcollabo(c){
+
+		   $('#idsearch').click(function() {
+		    $('#background_modal').show();
+		   });
+		   // 2. 모달창 닫기 버튼
+		   $('.close').on('click', function() {
+		    $('#background_modal').hide();
+		   });
+		   // 3. 모달창 위도우 클릭 시 닫기
+		   $(window).on('click', function() {
+		    if (event.target == $('#background_modal').get(0)) {
+		              $('#background_modal').hide();
+		           }
+		   }); 
+}
+
+})
 
 
 

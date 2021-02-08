@@ -23,6 +23,7 @@
 							AND UPPER(meet_title) like UPPER('%' || #{keyword} || '%')
 						</if>
 					</where>
+					ORDER BY meet_start
 				) b
 			) a
 		WHERE rn BETWEEN #{start } AND #{end } 
@@ -106,6 +107,7 @@
 		FROM meet_un u JOIN meet_parti p
 		ON (u.meet_id = p.meet_id)
 		WHERE p.m_id=#{mId}
+		AND current_date BETWEEN u.meet_start AND u.meet_end
 	</select>
 	
 	<select id="myMeetOne" resultType="map">
@@ -121,6 +123,7 @@
 		ON (u.meet_id = p.meet_id)
 		WHERE p.m_id=#{mId}
 		AND p.meet_id=#{meetId}
+		
 	</select>
 
 	<select id="meetpSelect" resultType="MeetParticipantVo">
@@ -209,4 +212,14 @@
 				</if>
 			</where>
 	</select>
+	
+	<delete id="vegimeetDelete">
+		DELETE FROM meet_un
+		WHERE meet_id = #{meetId}
+	</delete>
+	
+	<insert id="reportImage">
+		INSERT INTO report(report_no, report_content, report_date, m_id, origin_id)
+		VALUES('report' || rep_seq.nextval, #{reportContent}, current_date, #{mId}, #{originId})
+	</insert>
 </mapper>

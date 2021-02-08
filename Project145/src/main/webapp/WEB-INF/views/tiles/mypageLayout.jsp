@@ -22,8 +22,13 @@
 
 <!-- Custom styles for this template-->
 <link href="/resources/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
+<style type="text/css">
+#accordionSidebar {
+	background-color: #6C9852
+}
+</style>
 </head>
+
 <body id="page-top">
 
 	<!-- Page Wrapper -->
@@ -57,15 +62,15 @@
 			<li class="nav-item"><a class="nav-link collapsed"
 				href="/begiMain.do" data-toggle="collapse"
 				data-target="#collapseTwo" aria-expanded="true"
-				aria-controls="collapseTwo"> 🏃‍♂ <span>My Meet</span>
+				aria-controls="collapseTwo"> 🏃‍♂ <span>My Challenge</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">MEET!!‍</h6>
+						<h6 class="collapse-header">Challenge!!‍</h6>
 						<!-- <a class="collapse-item" href="/myBegiContact.do">Contact</a>  -->
-						<a class="collapse-item" href="/myBegiUntact.do">내가 참여한 MEET</a> <a
-							class="collapse-item" href="/myMeet.do">내가 만든 MEET</a>
+						<a class="collapse-item" href="/myBegiUntact.do">내가 참여한 챌린지</a> <a
+							class="collapse-item" href="/myMeet.do">내가 만든 챌린지</a>
 					</div>
 				</div></li>
 
@@ -100,8 +105,11 @@
 
 			<hr class="sidebar-divider">
 
-			<li class="nav-item"><a class="nav-link" href="/myWallet.do">
-					👜 <span>My Wallet</span>
+			<li class="nav-item"><a class="nav-link"
+				href="/myWalletCheck.do"> 👜 <span>My Wallet</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/myWalletCheck.do"> 👜 <span>My Wallet History</span>
 			</a></li>
 
 			<hr class="sidebar-divider d-none d-md-block">
@@ -345,7 +353,7 @@
 				</div>
 
 
-				<article style="padding-top: 100px">
+				<article style="padding-top: 30px">
 					<tiles:insertAttribute name="content" />
 				</article>
 

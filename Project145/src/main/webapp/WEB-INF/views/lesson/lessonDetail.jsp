@@ -169,8 +169,14 @@
 						<form action="lessonEnq.do" method="get" id="form">
 							<input id="originId" name="originId" type="hidden"
 								value="${lesson.cId }">
-							<textarea class="textarea" rows="3" id="enqContent"
-								name="enqContent" required="required"></textarea>
+							<c:if test="${mId == null or mId == ''}">
+								<textarea class="textarea" rows="3" id="enqContent"
+									name="enqContent" required="required" disabled="disabled"></textarea>
+							</c:if>
+							<c:if test="${mId != null and mId != ''}">
+								<textarea class="textarea" rows="3" id="enqContent"
+									name="enqContent" required="required"></textarea>
+							</c:if>
 							<div align="right">
 								<c:if test="${mId == null or mId == ''}">
 									<button class="btn submitBtn btn-hover" disabled="disabled">등록</button>

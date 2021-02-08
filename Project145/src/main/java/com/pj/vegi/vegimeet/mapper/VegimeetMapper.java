@@ -8,6 +8,7 @@ import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MeetDataVo;
 import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 public interface VegimeetMapper {
@@ -50,4 +51,10 @@ public interface VegimeetMapper {
 	//새 베지밋 생성
 	int vegimeetInsert(VegimeetVo vo);
 	int calcTotalDay();
+	
+	//베지밋 삭제
+	int vegimeetDelete(VegimeetVo vo);
+	
+	//참가자 사진 신고
+	int reportImage(ReportVo vo);
 }

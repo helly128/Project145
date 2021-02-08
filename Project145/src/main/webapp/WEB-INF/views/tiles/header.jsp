@@ -107,7 +107,7 @@ article {
 									<li class="nav-item"><a class="page-scroll"
 										href="/restaurant.do">식당</a></li>
 									<li class="nav-item"><a class="page-scroll"
-										href="/vegimeetList.do">베지Meet</a></li>
+										href="/vegimeetList.do">챌린지</a></li>
 								</ul>
 							</div>
 							<ul class="header-btn d-sm-flex">

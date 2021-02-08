@@ -32,5 +32,7 @@ public class RestaurantVo {
 	private int seq;
 	
 	private String keyword;
+	
+	private String menuVegeType;
 
 }

@@ -12,27 +12,12 @@
 		(SELECT *
 		FROM member
 		<where>
-			<if
-				test="( available == null or available == '') and keyword == null or keyword == '' ">
-				AND available in('able','unable')
+			<if test="keyword != null and keyword != '' ">
+				AND LOWER(m_name) like LOWER('%' || #{keyword} || '%')
+				OR LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
-			<if
-				test="( available == null or available == '') and keyword != null and keyword != '' ">
-				AND m_name like '%' || #{keyword} || '%'
-				OR m_id like '%' ||
-				#{keyword} || '%'
-				AND available in('able','unable')
-			</if>
-			<if
-				test=" available != null and available != '' and (keyword == null or keyword == '') ">
-				AND available = #{available}
-			</if>
-			<if
-				test=" available != null and available != '' and keyword != null and keyword != '' ">
-				AND ( m_name like '%' || #{keyword} || '%'
-				or m_id like '%' ||
-				#{keyword} || '%')
-				AND available = #{available}
+			<if test=" available != null and available != '' ">
+				AND LOWER(available) = LOWER(#{available} )
 			</if>
 		</where>
 		) b
@@ -45,27 +30,12 @@
 		SELECT count(*)
 		FROM member
 		<where>
-			<if
-				test="( available == null or available == '') and keyword == null or keyword == '' ">
-				AND available in('able','unable')
+				<if test="keyword != null and keyword != '' ">
+				AND LOWER(m_name) like LOWER('%' || #{keyword} || '%')
+				OR LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
-			<if
-				test="( available == null or available == '') and keyword != null and keyword != '' ">
-				AND m_name like '%' || #{keyword} || '%'
-				OR m_id like '%' ||
-				#{keyword} || '%'
-				AND available in('able','unable')
-			</if>
-			<if
-				test=" available != null and available != '' and (keyword == null or keyword == '') ">
-				AND available = #{available}
-			</if>
-			<if
-				test=" available != null and available != '' and keyword != null and keyword != '' ">
-				AND ( m_name like '%' || #{keyword} || '%'
-				or m_id like '%' ||
-				#{keyword} || '%')
-				AND available = #{available}
+			<if test=" available != null and available != '' ">
+				AND LOWER(available) = LOWER(#{available} )
 			</if>
 		</where>
 	</select>
@@ -84,14 +54,12 @@
 		(SELECT *
 		FROM restaurant
 		<where>
-			<if
-				test="keyword != null and keyword != '' ">
-				AND rest_name like '%' || #{keyword} || '%'
-				OR rest_id like '%' || #{keyword} || '%'
+			<if test="keyword != null and keyword != '' ">
+				AND LOWER(rest_name) like LOWER('%' || #{keyword} || '%')
+				OR LOWER(rest_id) like LOWER('%' || #{keyword} || '%')
 			</if>
-			<if
-				test=" adminConfirm != null and adminConfirm != '' ">
-				AND admin_confirm = #{adminConfirm}
+			<if test=" adminConfirm != null and adminConfirm != '' ">
+				AND LOWER(admin_confirm) = LOWER( #{adminConfirm} )
 			</if>
 		</where>
 		) b
@@ -101,18 +69,16 @@
 
 
 	<select id="countAdminRestaurant" resultType="Integer">
-	<!-- 회원 목록 페이징에 카운트하는 부분 -->
+	<!-- 식당 목록 페이징에 카운트하는 부분 -->
 		SELECT count(*)
 		FROM restaurant 
 		<where>
-			<if
-				test="keyword != null and keyword != '' ">
-				AND rest_name like '%' || #{keyword} || '%'
-				OR rest_id like '%' || #{keyword} || '%'
+			<if test="keyword != null and keyword != '' ">
+				AND LOWER(rest_name) like LOWER('%' || #{keyword} || '%')
+				OR LOWER(rest_id) like LOWER('%' || #{keyword} || '%')
 			</if>
-			<if
-				test=" adminConfirm != null and adminConfirm != '' ">
-				AND admin_confirm = #{adminConfirm}
+			<if test=" adminConfirm != null and adminConfirm != '' ">
+				AND LOWER(admin_confirm) = LOWER( #{adminConfirm} )
 			</if>
 		</where>
 	</select>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.pj.vegi.common.Paging;
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RestMenuVo;
@@ -29,16 +31,32 @@ public class RestaurantController {
 
 	// 식당 메인 페이지
 	@RequestMapping("/restaurant.do")
-	public String restaurantMain(Model model, HttpSession session) {
+	public String restaurantMain(RestaurantVo vo, Model model, Paging paging, HttpSession session) throws SQLException {
 		String mId = (String) session.getAttribute("mId");		
-		List<RestaurantVo> restaurants = restaurantService.getRestaurantList();
-		model.addAttribute("restaurants", restaurants);
+		vo.setMId(mId);
 		
-		for (RestaurantVo vo : restaurants) {
+		paging.setPageUnit(8);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+		
+		int cnt = restaurantService.countRestaurantList(vo);
+		paging.setTotalRecord(cnt);
+		
+		List<RestaurantVo> restaurants = restaurantService.getRestaurantList(vo);
+		
+		model.addAttribute("restaurants", restaurants);
+		model.addAttribute("vo", vo);
+		model.addAttribute("paging", paging);
+		
+		for (RestaurantVo Rvo : restaurants) {
 			LikeListVo likeVo = new LikeListVo();
 			likeVo.setMId(mId);
-			likeVo.setOriginId(vo.getRestId());
-			vo.setLikeFlag(restaurantService.restLikeFlagSelect(likeVo));
+			likeVo.setOriginId(Rvo.getRestId());
+			Rvo.setLikeFlag(restaurantService.restLikeFlagSelect(likeVo));
 		}
 		
 		return "restaurant/restaurantList";
@@ -96,7 +114,7 @@ public class RestaurantController {
 
 		return "restaurant/restaurantImformation";
 	}
-
+	//식당 예약
 	@RequestMapping("/reservInsert.do")
 	public String reservInsert(RestReservVo vo, Model model, HttpServletResponse response) throws IOException {
 		int n = restaurantService.reservInsert(vo);

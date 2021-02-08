@@ -15,7 +15,7 @@ import com.pj.vegi.vo.VegimeetVo;
 public class MeetCron {
 	/*
 	 * 매일 자정 인증샷을 업로드하지 않은 참가자의 fail 카운트 증가
-	 * 매일 자정 직전 종료된 베지밋의 보상금 처리
+	 * 매일 자정 직전 종료된 챌린지의 보상금 처리
 	 */
 
 	@Autowired
@@ -69,7 +69,7 @@ public class MeetCron {
 				WalletHistoryVO hisVo = new WalletHistoryVO();
 				hisVo.setMId(partiVo.getMId());
 				hisVo.setWalletMoney(cash);
-				hisVo.setWalletType("베지밋 페이백");
+				hisVo.setWalletType("챌린지 페이백");
 				vegimeetService.pointHistoryInsert(hisVo);
 			}
 			
@@ -81,7 +81,7 @@ public class MeetCron {
 					WalletHistoryVO hisVo = new WalletHistoryVO();
 					hisVo.setMId(partiVo.getMId());
 					hisVo.setWalletMoney(point);
-					hisVo.setWalletType("베지밋 리워드");
+					hisVo.setWalletType("챌린지 리워드");
 					vegimeetService.pointHistoryInsert(hisVo);
 				}
 			}

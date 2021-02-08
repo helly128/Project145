@@ -45,11 +45,17 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public int restInsertNull(RestaurantVo vo) throws SQLException {
 		return dao.restInsertNull(vo);
 	}
-
+	
 	@Override
-	public List<RestaurantVo> getRestaurantList() {
-		// 식당 목록페이지
-		return dao.getRestaurantList();
+	public List<RestaurantVo> getRestaurantList(RestaurantVo vo) throws SQLException {
+		//식당 목록페이지
+		return dao.getRestaurantList(vo);
+	}
+	
+	@Override
+	public int countRestaurantList(RestaurantVo vo) {
+		// 식당 상세 페이징 카운트 
+		return dao.countRestaurantList(vo);
 	}
 
 	@Override
@@ -99,7 +105,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 		//좋아요 여부 확인
 		return dao.restLikeFlagSelect(vo);
 	}
-	
+
+
+
+
 	
 
 

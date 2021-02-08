@@ -1,20 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>RestaurantMain.jsp</title>
 <style>
-	.likeAction {
+.likeAction {
 	border: none;
 	background: transparent;
-	}
-	
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	
 </script>
 </head>
 
@@ -39,35 +40,47 @@
 									<div class="search-input">
 										<label for="category"> <i
 											class="lni lni-grid-alt theme-color"></i>
-										</label> <select name="category" onchange="moveurl(this.value);"
-											id="category">
+										</label> 
+										<select name="menuVegeType" id="menuVegeType">
 											<form name=move method=post>
-												<option value="none" selected disabled>Categories</option>
-												<option value="/restaurantBegan.do">비건</option>
-												<option value="/restaurantRacto.do">락토</option>
-												<option value="/restaurantOvo.do">오보</option>
-												<option value="/restaurantRactoOvo.do">락토오보</option>
+												<option value="" selected>채식타입</option>
+												<option value="began"
+												 	<c:if test="${vo.menuVegeType == 'began' }">selected="selected"</c:if>>비건</option>
+												<option value="racto"
+													<c:if test="${vo.menuVegeType == 'racto' }">selected="selected"</c:if>>락토</option>
+												<option value="ovo"
+													<c:if test="${vo.menuVegeType == 'ovo' }">selected="selected"</c:if>>오보</option>
+												<option value="ractoOvo"
+													<c:if test="${vo.menuVegeType == 'ractoOvo' }">selected="selected"</c:if>>락토오보</option>
 											</form>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-3 col-sm-5 col-6">
 									<div class="search-input">
-										<label for="keyword"><i
-											class="lni lni-search-alt theme-color"></i></label> <input
-											type="text" name="keyword" id="keyword"
-											placeholder="Product keyword">
+										<label for="keyword">
+											<i class="lni lni-search-alt theme-color"></i>
+										</label> 
+											<input type="text" name="keyword" id="keyword" placeholder="식당이름/메뉴"
+												value="${vo.getKeyword() }">
 									</div>
 								</div>
-								<div class="col-lg-2 col-sm-4 col-6">
-									<div class="restaurantInsertButton" style="margin-bottom: 5%">
-										<input class="aaa" type="button" name="restInsert"
-											id="restInsert" onclick="location.href='restaurantForm.do'"
-											style="border-radius: 50px; text-align: center;"
-											value="식당 제보하기">
-									</div>
-								</div>
+								<div>
+									<button></button>
+								</div>	
 							</div>
+							
+						</form>
+						
+						<form>
+						<div class="col-lg-2 col-sm-4 col-6">
+							<div class="restaurantInsertButton" style="margin-bottom: 5%">
+								<input class="aaa" type="button" name="restInsert"
+									id="restInsert" onclick="location.href='restaurantForm.do'"
+									style="border-radius: 50px; text-align: center;"
+									value="식당 제보하기">
+							</div>
+						</div>
 						</form>
 					</div>
 				</div>
@@ -86,73 +99,96 @@
 							</div>
 
 							<div class="product-content">
-								<div class="namediv" style="float: left;">
+								<div class="namediv col-lg-12" style="float: left;">
 									<h3 class="name">
 										<a href="/restaurantDetail.do?restId=${vo.getRestId() }">${vo.getRestName() }</a>
 									</h3>
-									<i class="lni lni-star"></i> ${vo.getRestStarAvg() }
+								</div>
+								<br />
+								<div>
+									<i class="lni lni-star">${vo.getRestStarAvg() }</i> <br> 
+									<i class="lni lni-map-marker">${vo.getRestAddress() }</i>
 								</div>
 								<br>
-								<br>
 								<!-- 좋아요 -->
-									<div class="likehear" align="right" >
-										<button type="button" class="likeAction"
-											data-id="${vo.restId }">
-											<c:if test="${vo.likeFlag > 0 }">
-												<img class="likeImg" src="/images/filled_like.png"
-													style="width: 30px;">
-											</c:if>
-											<c:if test="${vo.likeFlag == 0 }">
-												<img class="likeImg" src="/images/empty_like.png"
-													style="width: 30px;">
-											</c:if>
-										</button>
-									</div>
-				
+								<div class="likehear" align="right">
+									<button type="button" class="likeAction"
+										data-id="${vo.restId }">
+										<c:if test="${vo.likeFlag > 0 }">
+											<img class="likeImg" src="/images/filled_like.png"
+												style="width: 30px;">
+										</c:if>
+										<c:if test="${vo.likeFlag == 0 }">
+											<img class="likeImg" src="/images/empty_like.png"
+												style="width: 30px;">
+										</c:if>
+									</button>
+								</div>
+
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
+			<my:paging paging="${paging }" jsFunc="goList" />
 		</div>
 	</section>
-	
+
 	<script>
-	$(function() {
-		$('#cards')
-				.on(
-						'click',
-						'.likeAction',
-						function() {
-							if ('${mId}' == null || '${mId}' == '') {
-								alert('로그인 후 이용가능합니다.');
-							} else {
-								/* 로그인 된 상태 */
-								var restId = $(this).data('id');
-								if ($(this).children('img').attr('src') == '/images/empty_like.png') {
-									$.ajax({
-										url : 'restaurantLike.do/' + restId,
-										type : 'post',
-										contentType : "application/json",
-										success : function(result) {
-										}
-									});
-									$(this).children('img').attr('src', '/images/filled_like.png');
+		$(function() {
+			$('#cards')
+					.on(
+							'click',
+							'.likeAction',
+							function() {
+								if ('${mId}' == null || '${mId}' == '') {
+									alert('로그인 후 이용가능합니다.');
 								} else {
-									$(this).children('img').attr('src','/images/empty_like.png');
-									$.ajax({
-												url : 'restaurantUnlike.do/'+ restId,
-												type : 'post',
-												contentType : "application/json",
-												success : function(result) {
+									/* 로그인 된 상태 */
+									var restId = $(this).data('id');
+									if ($(this).children('img').attr('src') == '/images/empty_like.png') {
+										$
+												.ajax({
+													url : 'restaurantLike.do/'
+															+ restId,
+													type : 'post',
+													contentType : "application/json",
+													success : function(result) {
+													}
+												});
+										$(this).children('img').attr('src',
+												'/images/filled_like.png');
+									} else {
+										$(this).children('img').attr('src',
+												'/images/empty_like.png');
+										$.ajax({
+											url : 'restaurantUnlike.do/'
+													+ restId,
+											type : 'post',
+											contentType : "application/json",
+											success : function(result) {
 												console.log(result);
-												}
-											});
-									$(this).children('img').attr('src','/images/empty_like.png');
+											}
+										});
+										$(this).children('img').attr('src',
+												'/images/empty_like.png');
+									}
 								}
-							}
-						})
-					});
+							})
+		});
+
+		function goList(p) {
+			var menuVegeType = document.getElementById("menuVegeType").value;
+			var keyword = document.getElementById("keyword").value;
+
+			if (menuVegeType == "none" || keyword == '') {
+				location.href = "restaurant.do?page=" + p
+			} else {
+				location.href = "restaurant.do?page=" + p
+						+ "&menuVegeType=" + menuVegeType + "&keyword=" + keyword;
+			}
+
+		}
 	</script>
 </body>
 </html>

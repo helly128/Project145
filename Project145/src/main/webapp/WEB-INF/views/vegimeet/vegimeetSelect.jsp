@@ -58,8 +58,31 @@ div, h3 {
 }
 
 .partiPic {
-	display: flex;
+	position: relative;
 	align-items: center;
+}
+
+.userImg {
+	display: block;
+}
+
+.ban-action {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+
+.ban-action a {
+	width: 20px;
+	height: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	margin-bottom: 10px;
+	background: white;
+	color: #6C9852;
+	font-size: 14px;
 }
 </style>
 <script
@@ -73,8 +96,9 @@ div, h3 {
 				<div>
 					<div class="mb-5">
 						<img width="750" src="/images/${meetVo.meetPic }"
-							class="attachment-full size-full wp-post-image" alt="vegimeet image"
-							loading="lazy" sizes="(max-width: 750px) 100vw, 750px">
+							class="attachment-full size-full wp-post-image"
+							alt="vegimeet image" loading="lazy"
+							sizes="(max-width: 750px) 100vw, 750px">
 					</div>
 					<div>
 						<div class="border-top pt-4 pb-5">
@@ -110,7 +134,7 @@ div, h3 {
 
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">진행기간</span>
-						<h5>📆 ${meetVo.meetStart } ~ ${meetVo.meetEnd }</h5>
+						<h5><i class="lni lni-calendar"></i> ${meetVo.meetStart } ~ ${meetVo.meetEnd }</h5>
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">참가액</span>
@@ -121,7 +145,10 @@ div, h3 {
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">현재 모금액</span>
-						<h5><fmt:formatNumber value="${meetVo.meetFund }" pattern="#,###" />원</h5>
+						<h5>
+							<fmt:formatNumber value="${meetVo.meetFund }" pattern="#,###" />
+							원
+						</h5>
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">참가자수</span>
@@ -136,13 +163,22 @@ div, h3 {
 							</div>
 						</form>
 					</div>
-					<div class="p-3">
+					<div class="p-3 mt-2">
 						<div class="edd_purchase_submit_wrapper" align="center">
 							<button class="btn joinBtn btn-hover">참가하기</button>
 						</div>
 					</div>
 					<c:if test="${mId == null or mId == ''}">
 						<span>로그인 후 참가가능합니다.</span>
+					</c:if>
+					<c:if
+						test="${mId != null and meetVo.getMId() == mId and meetVo.meetParticipant == 0 }">
+						<div>
+							<div class="edd_purchase_submit_wrapper" align="right">
+								<button class="btn btn-sm btn-light deleteBtn btn-hover">챌린지
+									삭제</button>
+							</div>
+						</div>
 					</c:if>
 				</div>
 			</div>
@@ -151,6 +187,7 @@ div, h3 {
 	<script>
 	var isEnd = false;
 	var isLoadingData;
+	
 		$(function() {
 			$('.joinBtn').click(function() {
 				var temp = confirm('[${meetVo.meetTitle}]\n해당 챌린지에 참가하시겠습니까?');
@@ -183,6 +220,13 @@ div, h3 {
 			var dayArr = start.split('-');
 			var startDay = new Date(dayArr[0], dayArr[1]-1, dayArr[2]);
 			
+			//내가 개설한 챌린지 & 참여자 0명일 때 삭제
+			$('.deleteBtn').on('click', function(){
+				var temp = confirm('[${meetVo.meetTitle}]\n정말 삭제하시겠습니까? 삭제 후에는 취소가 불가능합니다.');
+				if (temp) {
+					location.href = "vegimeetDelete.do/?meetId=${meetVo.meetId}";
+				}
+			});
 			
 			//무한 스크롤 사진 로딩
 			//https://victorydntmd.tistory.com/194
@@ -201,6 +245,8 @@ div, h3 {
 	            }
 //	           fetchList(); 
 			});
+			
+			
 		});
 		
 		function fetchList() {
@@ -234,11 +280,41 @@ div, h3 {
 			var num = vo.start + idx;
 	        let html = `<div class='p-2 col-xl-3 col-lg-3 col-md-4 partiPic'
 	        			data-no='\${num}'>
-						<img src='/images/\${vo.dataPic}' alt="user\'s vegimeet image">
+						<img src='/images/\${vo.dataPic}' alt="user\'s vegimeet image" class="userImage">
+						<c:if test="${mId != null and mId != ''}"><div class="ban-action">
+	        			<a href="javascript:void(0)" onclick="sendReport(this);" data-id="\${vo.meetdataId}"><i class="lni lni-ban banTag"></i></a>
+	        			</div></c:if>
 						</div>`;
 	            
 	            $(".infiniteScroll").append(html);
 	    }
+		
+		function sendReport(obj) {
+			var message = prompt("신고사유를 입력하세요");
+			var dataId = $(obj).data('id');
+			var data = {
+					reportContent: message,
+					mId: '${mId}',
+					originId: dataId
+			};
+			if(message){
+				$.ajax({
+					url: "/reportImage.do",
+					type: "post",
+					data: data,
+					dataType : "json",
+					success: function(result) {
+						alert("신고되었습니다.");
+					},
+					error: function(err){
+						console.log(err);
+						alert('통신오류');
+					}
+				});
+			} else{
+				alert('신고가 취소되었습니다.');
+			}
+		}
 	</script>
 </body>
 </html>

@@ -19,7 +19,7 @@
 
 		<!-- Page Heading -->
 		<div class="d-sm-flex align-items-center justify-content-between mb-4">
-			<h1 class="h3 mb-0 text-gray-800">내가 좋아하는 MEET 💜</h1>
+			<h1 class="h3 mb-0 text-gray-800">내가 좋아하는 챌린지 💜</h1>
 		</div>
 
 		<div class="row">
@@ -34,8 +34,7 @@
 										<img class="likeImg" src="/images/filled_like.png"
 											style="width: 30px;" alt="꽉찬 하트">
 									</button>
-									<br>
-									<br>
+									<br> <br>
 									<div
 										class="text-xs font-weight-bold text-success text-uppercase mb-1">
 										<fmt:formatDate value="${list.meetStart }"
@@ -43,10 +42,12 @@
 										-
 										<fmt:formatDate value="${list.meetEnd }" pattern="yyyy-MM-dd" />
 									</div>
-									<div class="h5 mb-0 font-weight-bold text-gray-800">${list.meetTitle }
-									</div>
-									<br> <span style="font-size: 10">펀드금액 : <fmt:formatNumber value="${list.meetFund }"
-											pattern="#,###" /> 원 </span>
+									<div class="h5 mb-0 font-weight-bold text-gray-800"
+										onClick="location.href='/vegimeetSelect.do?meetId=${list.meetId }'"
+										style="cursor: pointer;">${list.meetTitle }</div>
+									<br> <span style="font-size: 10">펀드금액 : <fmt:formatNumber
+											value="${list.meetFund }" pattern="#,###" /> 원
+									</span>
 								</div>
 							</div>
 
@@ -68,7 +69,6 @@
 				return newDate;
 			}
 
-			
 			$(function() {
 				$(".likeAction").on('click', function() {
 					var originId = $(this).data('id')
@@ -84,7 +84,6 @@
 
 				}) // click end 
 			}) // ready end
-		
 		</script>
 </body>
 </html>

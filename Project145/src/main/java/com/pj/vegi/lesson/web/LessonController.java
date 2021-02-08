@@ -1,6 +1,9 @@
 package com.pj.vegi.lesson.web;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +44,7 @@ public class LessonController {
 		vo.setMId(mid);
 
 		// 페이징 설정
-		paging.setPageUnit(8);
+		paging.setPageUnit(4);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
 			paging.setPage(1);
@@ -63,6 +66,16 @@ public class LessonController {
 			((LessonVO) lesson_vo).setLikeFlag(lessonService.likeFlagCount(like_vo));
 
 		}
+
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String time = format.format(date);
+		try {
+			date = format.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("today", date);
 
 		model.addAttribute("lessons", lessons);
 		model.addAttribute("paging", paging);

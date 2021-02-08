@@ -16,7 +16,8 @@ public interface RestaurantService {
 	int restInsertNull(RestaurantVo vo) throws SQLException;//사업자 회원가입에서 등록
 	int bizInfoUpdate(RestaurantVo vo);//사업자 회원가입에서 수정  
 	
-	public List<RestaurantVo>getRestaurantList(); //식당메인에서 리스트
+	List<RestaurantVo>getRestaurantList(RestaurantVo vo) throws SQLException; //식당메인에 목록 불러오기
+	int countRestaurantList(RestaurantVo vo); //식당 메인 페이징
 	int restInsert(RestaurantVo vo) throws SQLException; //식당메인에서 식당등록
 	int menuInsert(RestMenuVo vo) throws SQLException; //식당메인에서 식당등록(하면서 메뉴등록)
 	public List<RestaurantVo> restNameSerchList(String restName); //식당등록페이지에서 식당이름 검색 

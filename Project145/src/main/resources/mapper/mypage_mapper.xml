@@ -13,7 +13,8 @@
 	<update id="myPageUpdate">
 		UPDATE member
 		SET password = #{ password,	jdbcType=VARCHAR},
-		vegtype = #{ vegtype, jdbcType=VARCHAR}
+		vegtype = #{ vegtype, jdbcType=VARCHAR},
+		profile_image = #{profileImage, jdbcType=VARCHAR}
 		WHERE m_id=#{ mId}
 	</update>
 	
@@ -40,7 +41,8 @@
 		FROM
 		( SELECT b.*, ROWNUM rn 
 			FROM
-				(SELECT r.REST_NAME "restName", 
+				(SELECT r.rest_id "rId",
+				r.REST_NAME "restName", 
 				rr.m_id "mId", 
 				rr.REST_RESERV_DATE "restReservDate", 
 				rr.REST_RESERV_NAME "restReservName", 
@@ -63,7 +65,9 @@
 						m.meet_end "meetEnd", 
 						p.my_fund "myFund", 
 						p.today_flag "todayFlag", 
-						p.achiv "achiv"
+						p.achiv "achiv",
+						m.total_day "totalDay",
+						trunc ( trunc( ((sysdate ) - m.meet_start)) / m.total_day *100 ) "dayAchiv"
 				FROM meet_un m JOIN meet_parti p
 				ON m.meet_id = p.meeT_id
 				WHERE p.m_id = #{mId}
@@ -103,12 +107,14 @@
 						m.meet_participant "meetParticipant", 
 						m.meet_fund "meetFund", 
 						p.meet_id "meetId", 
+						m.total_day "totalDay",
 						sum(achiv) "achiv", 
-						sum(achiv)/m.meet_participant "allAchiv"  
-				FROM meet_un m JOIN meet_parti p
+						NVL(sum(achiv)/m.meet_participant,0) "allAchiv",
+            			trunc ( trunc( ((sysdate + 1) - m.meet_start)) / m.total_day *100 ) "dayAchiv"  
+				FROM meet_un m LEFT OUTER JOIN meet_parti p
 				ON m.meet_id = p.meet_id
 				WHERE m.m_id = #{mId}
-				GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund
+				GROUP BY p.meet_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_fund, m.total_day
 	          ) b 
 	      ) a 
 		WHERE rn BETWEEN #{start } AND #{end }
@@ -142,7 +148,10 @@
 		FROM
 		( SELECT b.*, ROWNUM rn 
 			FROM
-				(SELECT c.c_title "cTitle", 
+				(SELECT c.c_join "cJoin",
+             		 c.c_parti "cParti",
+					c.c_id "cId",
+					c.c_title "cTitle", 
 			 		c.c_start "cStart", 
 			 		c.c_end "cEnd",
 					c.c_img "cImg", 
@@ -183,7 +192,8 @@
 	</select>
 	
 	<select id="meetLikeList" resultType="map">
-		select m.meet_title "meetTitle", 
+		select m.meet_id "meetId",
+				m.meet_title "meetTitle", 
 				m.meet_pic "meetPic", 
 				li.origin_id "originId", 
 				m.meet_start "meetStart", 
@@ -198,7 +208,8 @@
 	</select>
 	
 	<select id="lessonLikeList" resultType="map">
-		SELECT c.c_title "cTitle", 
+		SELECT c.c_id "cId",
+				c.c_title "cTitle", 
 				c.c_img "cImg", 
 				c.vegtype "vegType", 
 				c.c_start "cStart", 
@@ -220,7 +231,8 @@
 	</delete>
 	
 	<select id="recipeLikeList" resultType="map">
-		SELECT li.origin_id "originId", 
+		SELECT r.r_id "rId",
+				li.origin_id "originId", 
 				r.r_title "rTitle", 
 				r.r_type "rType", 
 				r.r_image "rImage", 
@@ -234,7 +246,8 @@
 	</select>
 	
 	<select id="restLikeList" resultType="map">
-		SELECT li.origin_id "originId", 
+		SELECT r.rest_id "rId",
+				li.origin_id "originId", 
 				r.rest_name "restName", 
 				r.rest_address "restAddress", 
 				r.rest_pic "restPic", 

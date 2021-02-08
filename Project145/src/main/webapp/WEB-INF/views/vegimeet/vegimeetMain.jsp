@@ -104,7 +104,60 @@
 <body>
 	<section class="latest-product-area pt-130 pb-110">
 		<div class="container">
-			<div class="row">
+			<c:if test="${fn:length(myList) != 0}">
+				<div class="addPic mb-5 p-2">
+					<h5>📷 챌린지 인증샷 등록</h5>
+					<div class="row mb-5 mt-2">
+						<c:forEach var="myMeet" items="${myList }" varStatus="status">
+							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-3 my-2">
+								<div class="row mb-2">
+									<h5>${myMeet.meetTitle }</h5>
+								</div>
+								<div class="row">
+									<div class="col-xl-6 col-lg-6 col-md-6 ps-1">
+										<img src="images/${myMeet.meetPic }" style="width: 300px;">
+									</div>
+									<div class="col-xl-6 col-lg-6 col-md-6"
+										style="align: right; vertical-align: bottom;">
+										<c:if test="${myMeet.todayFlag eq 'false' }">
+											<form id="frm"
+												action="/vegimeetPicInsert.do/${myMeet.meetId}"
+												method="post" enctype="multipart/form-data">
+												<div class="image-container pe-1">
+													<img id="upload-image${status.index }"
+														src="/images/images-empty.png" width="95%">
+													<div class="div-image mb-2">
+														<span class="label">사진 업로드</span> <input type="file"
+															name="uploadfile" class="uploadPic" accept="image/*"
+															data-id="upload-image${status.index }">
+													</div>
+													<div align="center">
+														<button type="button"
+															class="btn btn-outline-dark submitBtn"
+															data-id="${myMeet.meetId }" disabled>등록</button>
+													</div>
+												</div>
+											</form>
+										</c:if>
+										<c:if test="${myMeet.todayFlag eq 'true' }">
+											<div style="text-align: center;">
+												<br>
+												<h6>오늘의 인증샷</h6>
+												<h6>등록 완료!</h6>
+											</div>
+										</c:if>
+									</div>
+								</div>
+								<div class="mt-2 achiv" id="${myMeet.meetId }" align="right"
+									style="vertical-align: bottom;">달성률 ${myMeet.achiv }%
+									(${myMeet.success }/${myMeet.totalDay })</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+
+			<div class="row mb-5">
 				<div class="mx-auto col-xl-8 col-lg-9 col-md-10">
 					<div class="text-center section-title mb-60">
 						<h1>당신의 챌린지에 참여하세요 📢</h1>
@@ -113,7 +166,43 @@
 				</div>
 			</div>
 
-			<div class="row justify-content-center border-bottom pb-4 mb-5">
+
+			<!-- =================================== -->
+			<div class="search-area">
+				<div class="search-wrapper">
+					<form action="vegimeetList.do" id="form" method="post">
+						<div class="row justify-content-center pb-4 mb-5">
+							<div class="col-lg-2 col-sm-4 col-6">
+								<div class="search-input">
+									<label for="category"> <i
+										class="lni lni-grid-alt theme-color"></i>
+									</label> <select name="options" id="options">
+										<option value="all" selected>전체</option>
+										<option value="ongoing">모집중</option>
+										<option value="closed">마감</option>
+										<option value="finished">종료</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-lg-3 col-sm-5 col-6">
+								<div class="search-input">
+									<label for="keyword"> <a
+										href="javascript:form.submit()"> <i
+											class="lni lni-search-alt theme-color"></i>
+									</a>
+									</label> <input type="text" name="keyword" id="keyword">
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- =================================== -->
+
+
+
+
+			<!-- <div class="row justify-content-center border-bottom pb-4 mb-5">
 				<div class="col-lg-1 col-sm-1"></div>
 				<div class="col-lg-7 col-sm-5 col-10">
 					<form action="vegimeetList.do">
@@ -136,57 +225,6 @@
 			</div>
 
 
-			<c:if test="${fn:length(myList) != 0}">
-				<div class="addPic mb-5 p-2 pb-5 border-bottom">
-					<h5>📷 챌린지 인증샷 등록</h5>
-					<div class="row">
-						<c:forEach var="myMeet" items="${myList }">
-							<div class="col-xl-4 col-lg-6 col-md-6 myCard mx-2 p-3 my-2">
-								<div class="row mb-2">
-									<h5>${myMeet.meetTitle }</h5>
-								</div>
-								<div class="row">
-									<div class="col-xl-6 col-lg-6 col-md-6 ps-1">
-										<img src="images/${myMeet.meetPic }" style="width: 300px;"
-											alt="vegimeet image">
-									</div>
-									<div class="col-xl-6 col-lg-6 col-md-6"
-										style="align: right; vertical-align: bottom;">
-										<c:if test="${myMeet.todayFlag eq 'false' }">
-											<form id="frm"
-												action="/vegimeetPicInsert.do/${myMeet.meetId}"
-												method="post" enctype="multipart/form-data">
-												<div class="image-container pe-1">
-													<img id="upload-image" src="/images/images-empty.png"
-														width="95%" alt="show upload image">
-													<div class="div-image mb-4">
-														<span class="label">사진 업로드</span> <input type="file"
-															name="uploadfile" class="uploadPic" accept="image/*"
-															onchange="setImage(event);">
-													</div>
-													<button type="button"
-														class="btn btn-outline-dark submitBtn"
-														data-id="${myMeet.meetId }" disabled>등록</button>
-												</div>
-											</form>
-										</c:if>
-										<c:if test="${myMeet.todayFlag eq 'true' }">
-											<div style="text-align: center;">
-												<br>
-												<h6>오늘의 인증샷</h6>
-												<h6>등록 완료!</h6>
-											</div>
-										</c:if>
-									</div>
-								</div>
-								<div class="mt-2 achiv" id="${myMeet.meetId }" align="right"
-									style="vertical-align: bottom;">달성률 ${myMeet.achiv }%
-									(${myMeet.success }/${myMeet.totalDay })</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
-			</c:if>
 
 			<h4 class="mb-3 pt-2">챌린지 둘러보기</h4>
 			<div class="mb-2" align="right">
@@ -196,7 +234,13 @@
 					<option value="closed">마감</option>
 					<option value="finished">종료</option>
 				</select>
+			</div> -->
+
+			<div align="left" class="newChallenge mb-4">
+				<button class="btn insertBtn"
+					onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
 			</div>
+
 			<div class="row" id="cards">
 				<c:forEach var="vo" items="${list }">
 					<div class="col-xl-3 col-lg-6 col-md-6 mb-3">
@@ -255,28 +299,29 @@
 			<!-- 페이징 -->
 			<my:paging paging="${paging }" jsFunc="goList" />
 		</div>
-		<div align="right" class="newChallenge">
-			<button class="btn insertBtn"
-				onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
-		</div>
+
 	</section>
 
 	<script>
-		 //사진 미리보기 설정
-		function setImage(event) {
-			var reader = new FileReader();
-			reader.onload = function(event) {
-				var img = document.getElementById("upload-image");
-				img.setAttribute("src", event.target.result);
-
-			}
-
-			reader.readAsDataURL(event.target.files[0]);
-
-			$('.submitBtn').prop('disabled', false);
-		}
-
 		$(function() {
+			//사진 미리보기 설정
+			$('.uploadPic').on(
+					'change',
+					function(event) {
+						var reader = new FileReader();
+						var imgNum = $(this).data('id');
+						console.log('imgNum : ' + imgNum);
+						reader.onload = function(event) {
+							var img = document.getElementById(imgNum);
+							img.setAttribute("src", event.target.result);
+						}
+
+						reader.readAsDataURL(event.target.files[0]);
+
+						$(this).parents('.image-container').find('.submitBtn').prop('disabled', false);
+					});
+
+			
 			$('#cards')
 					.on(
 							'click',
@@ -354,23 +399,18 @@
 								'로그인 후 이용가능합니다.'));
 			}
 
-			$('.searchBtn').on('click', function() {
-				if ($('#keyword').val() == null || $('#keyword').val() == '') {
-					alert('검색어를 입력하세요');
-				} else {
-					
-				}
-			});
-
 			//목록 옵션 변경 시 리스트 불러오기
 			$('#options').on('change', function() {
 				var option = $('#options option:selected').val();
+				var keyword = $('#keyword').val() || "";
+				var formData = new FormData($("#form")[0]);
 				$('#cards').empty();
-				console.log('option : '+option);
 				$.ajax({
 					type: 'post',
-					url: 'changeSearchOption.do/' + option,
-					contentType : "application/json",
+					url: '/changeSearchOption.do',
+					processData : false,
+					contentType : false,
+					data: formData,
 					success: function(result) {
 						
 						$.each(result, function(idx, vo){
@@ -381,7 +421,8 @@
 								<div class="single-product">
 								<div class="product-img">
 									<a href="/vegimeetSelect.do?meetId=\${vo.meetId }"> <img
-										src="/images/\${vo.meetPic }" style="height: 180px;" alt="vegimeet image">
+										src="/images/\${vo.meetPic }" style="height: 180px;"
+										alt="vegimeet image">
 									</a>
 								</div>
 								<div class="product-content">
@@ -397,7 +438,10 @@
 										</li>
 									</ul>
 									<div class="product-bottom border-bottom">
-										<h4 class="price"><fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />원</h4>
+										<h4 class="price">
+											<fmt:formatNumber value="${vo.meetFund }" pattern="#,###" />
+											원
+										</h4>
 										<div>
 											<button type="button" class="likeAction"
 												data-id="\${vo.meetId }">
@@ -407,7 +451,7 @@
 												</c:if>
 												<c:if test="\${vo.likeFlag == 0 }">
 													<img class="likeImg" src="/images/empty_like.png"
-														style="width: 30px;" alt="empty heart image">
+														style="width: 30px;" alt="empy heart image">
 												</c:if>
 											</button>
 										</div>
@@ -415,7 +459,7 @@
 									<br>
 									<div align="right">
 										<c:if test="\${vo.dday > 0 }">
-											<h4 style="color: #6C9852;">마감 ${vo.dday }일 전!</h4>
+											<h4 style="color: #6C9852;">마감 \${vo.dday }일 전!</h4>
 										</c:if>
 										<c:if test="\${vo.dday <= 0}">
 											<h4>마감</h4>
@@ -430,12 +474,40 @@
 						$('#options').val(option).prop('selected', true);
 						});
 						
-						
+						//새로고침하면 검색어는 고정되고 옵션은 전체로 바뀜... 해결 못함..
 						
 					}
 				});
 			});
+			
+			
+			var options = "${options}";
+			var keyword = "${keyword}";
+			if(options == null || options == ''){
+				$('#options').val('all').prop('selected', true);
+				console.log(options);
+			} else {
+				$('#options').val(options).prop('selected', true);
+				console.log(options);
+			}
+			if(keyword != null && keyword != ''){
+				$('#keyword').val(keyword);
+			}
 		}); 
+		
+		function goList(p) {
+			var options = $('#options').val();
+			var keyword = $('#keyword').val();
+
+			if (options == 'all' || options == '') {
+				location.href = "lessonMain.do?page=" + p
+			} else {
+				location.href = "lessonMain.do?page=" + p + "&options="
+						+ options + "&keyword=" + keyword;
+
+			}
+
+		}
 		
 		//날짜포맷
 		function dateFormat(calc) { //today는 date타입

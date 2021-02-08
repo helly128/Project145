@@ -24,4 +24,9 @@ public interface RestaurantBizMapper {
 	
 	int restBizReservUpdate(RestReservVo vo);
 	int reservRestUpdate(RestReservVo vo);
+	
+	//매 정각에 예약완료 건 중 예약시간을 지난 건을 지난예약으로 변경
+	List<RestReservVo> reservEndList();
+	int reservEndUpdate(RestReservVo vo);
+	int reservEndMinus(RestReservVo vo);
 }
