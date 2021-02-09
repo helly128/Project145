@@ -79,8 +79,13 @@ public class MemberController {
 
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws SQLException, IOException {
+		String old_url = "/main.do";
+		String ref = (String) session.getAttribute("referer");
+		if (ref != null) {
+			old_url = ref;
+		}
 		session.invalidate();
-		return "redirect:/main.do";
+		return "redirect:"+old_url;
 	}
 
 	@RequestMapping("/naverResult.do")
