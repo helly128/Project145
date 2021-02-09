@@ -16,7 +16,7 @@
 							AND vegType = #{vegType}
 						</if>
 						<if	test=" keyword != null and keyword != '' ">
-							AND c_title like '%' || #{keyword} || '%'
+							AND UPPER(c_title) LIKE UPPER('%' || #{keyword} || '%')
 						</if>
 					</where>
 				) b
