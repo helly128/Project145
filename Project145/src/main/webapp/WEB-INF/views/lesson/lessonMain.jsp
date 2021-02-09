@@ -63,7 +63,8 @@
 									<div class="search-input">
 										<label for="category"> <i
 											class="lni lni-grid-alt theme-color"></i>
-										</label> <select name="vegType" id="vegType">
+										</label> 
+										<select name="vegType" id="vegType" onchange="javascript:form.submit()">
 											<option value="" selected
 												<c:if test="${vo.getVegType() == '' }">selected="selected"</c:if>>TYPE</option>
 											<option value="비건"

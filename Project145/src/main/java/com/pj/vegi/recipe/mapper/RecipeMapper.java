@@ -12,7 +12,7 @@ public interface RecipeMapper {
 	int recipeCount(RecipeVo vo);// 갯수 카운트
 
 	RecipeVo recipeSelect(RecipeVo vo);// 한 건 조회
-	// int recipeInsert(RecipeVo vo);//추가
+	int recipeInsert(RecipeVo vo);//추가
 
 	int recipeUpdate(RecipeVo vo);// 수정
 

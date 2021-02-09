@@ -23,18 +23,12 @@ h3 {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-    $(document).ready(function() {
-        var name = ${result}.response.name;
-        var email = ${result}.response.email;
-        $("#name").html("환영합니다. "+name+"님");
-        $("#email").html(email);
-      });
-</script>
+
 </head>
 <body>
 	<div style="background-color: #6bb33b; width: 100%; height: 100px; text-align: center; color: white;">
 		<h3>Naver Login Success</h3>
+		<h4>${name}님 환영합니다. </h4>
 	</div>
 	<br>
 	<h2 style="text-align: center" id="name"></h2>

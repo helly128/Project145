@@ -253,7 +253,7 @@
 							</div>
 							<div class="product-content">
 								<div class="namediv">
-									<h4 class="name"
+									<h4 class="name" title="${vo.meetTitle }"
 										onclick="location.href='/vegimeetSelect.do?meetId=${vo.meetId }'">${vo.meetTitle }</h4>
 								</div>
 								<ul class="address">
