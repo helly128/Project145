@@ -243,8 +243,8 @@ style type ="text /css ">.likeAction {
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<%-- <c:choose>
-						<c:when test="${fn:contains(${recipeSelect.getRImage()}, 'http')}">
+					<c:choose>
+						<c:when test="${recipeSelect.getRImage()}.startsWith('http')">
 							<img src="${recipeSelect.getRImage()}" height="200px"
 								width="200px">
 						</c:when>
@@ -252,7 +252,7 @@ style type ="text /css ">.likeAction {
 							<img src="/images/${recipeSelect.getRImage()}" height="200px"
 								width="200px">
 						</c:otherwise>
-					</c:choose> --%>
+					</c:choose>
 				</div>
 			</div>
 			<div class="row">
