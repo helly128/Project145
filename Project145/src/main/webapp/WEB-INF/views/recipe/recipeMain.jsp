@@ -53,8 +53,7 @@
 											class="lni lni-grid-alt theme-color"></i></label> <select
 											name="RType" id="RType">
 											<option value="none" selected disabled>RecipeType</option>
-											<option value="전체"
-												<c:if test="${vo.getRType() == '비건' || vo.getRType() == '락토'|| vo.getRType() == '오보' ||vo.getRType() == '락토오보' }">selected="selected"</c:if>>전체</option>
+											<option value="">전체</option>
 											<option value="비건"
 												<c:if test="${vo.getRType() == '비건' }">selected="selected"</c:if>>비건</option>
 											<option value="락토"

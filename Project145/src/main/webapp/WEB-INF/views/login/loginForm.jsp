@@ -13,8 +13,6 @@
 
 <title>Insert title here</title>
 <!--====== Bootstrap CSS ======-->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/assets/css/bootstrap-5.0.5-alpha.min.css">
 <style>
 .login {
 	margin-left: 30%;
