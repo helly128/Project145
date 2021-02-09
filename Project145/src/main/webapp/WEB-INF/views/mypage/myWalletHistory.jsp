@@ -27,12 +27,12 @@
 			<div class="card-body">
 				<div class="col-sm-12 col-md-6">
 					<div class="dataTables_length" id="dataTable_length">
-						<form action="" method="get" id="form">
+						<form method="post" id="form">
 							<label><select name="walletType" id="walletType"
 								aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm"
 								onchange="javascript:form.submit()">
-									<option value="none" selected disabled>Type</option>
+									<option value="all" selected>Type</option>
 									<option value="충전"
 										<c:if test="${vo.getWalletType() == '충전' }">selected="selected"</c:if>>충전</option>
 									<option value="인출"

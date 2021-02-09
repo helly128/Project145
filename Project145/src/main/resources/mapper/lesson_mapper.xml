@@ -8,139 +8,138 @@
 	<select id="lessonList" resultType="LessonVO">
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
-				FROM
-					(SELECT *
-					FROM class
-					<where>
-						<if	test=" vegType != null and vegType != '' ">
-							AND vegType = #{vegType}
-						</if>
-						<if	test=" keyword != null and keyword != '' ">
-							AND UPPER(c_title) LIKE UPPER('%' || #{keyword} || '%')
-						</if>
-					</where>
-				) b
-			) a
+		FROM
+		(SELECT *
+		FROM class
+		<where>
+			<if
+				test=" vegType != null and vegType != '' and vegType != 'all' ">
+				AND vegType = #{vegType}
+			</if>
+			<if test=" keyword != null and keyword != '' ">
+				AND UPPER(c_title) LIKE UPPER('%' || #{keyword} || '%')
+			</if>
+		</where>
+		) b
+		) a
 		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 
 	<select id="lessonSelectOne" resultType="map">
 		SELECT c.c_id "cId",
-				c.c_img "cImg", 
-				c.c_desc "cDesc", 
-				c.vegtype "vegtype", 
-				c.curriculum "curriculum", 
-				c.c_title "cTitle", 
-				c.c_start "cStart", 
-				c.c_end "cEnd",
-				c.c_time "cTime", 
-				c.c_price "cPrice", 
-				c.c_loc "cLoc", 
-				c.c_join "cJoin", 
-				c.c_parti "cParti",	
-				c.status "status", 
-				m.m_id "mId", 
-				m.m_name "mName", 
-				m.profile_image "profileImage", 
-				m.career "career"
+		c.c_img "cImg",
+		c.c_desc "cDesc",
+		c.vegtype "vegtype",
+		c.curriculum "curriculum",
+		c.c_title "cTitle",
+		c.c_start "cStart",
+		c.c_end "cEnd",
+		c.c_time "cTime",
+		c.c_price "cPrice",
+		c.c_loc "cLoc",
+		c.c_join "cJoin",
+		c.c_parti "cParti",
+		c.status "status",
+		m.m_id "mId",
+		m.m_name "mName",
+		m.profile_image "profileImage",
+		m.career "career"
 		FROM class c, member m
 		WHERE c.lec_id = m.m_id
-		AND c.c_id = #{cId}
+		AND c.c_id =
+		#{cId}
 	</select>
-	
+
 	<select id="lessonSelectMember" resultType="map">
-		SELECT r.m_id "mId", 
-				m.m_name "mName", 
-				m.profile_image "profileImage"
+		SELECT r.m_id "mId",
+		m.m_name "mName",
+		m.profile_image "profileImage"
 		FROM class_reserv r, member m
 		WHERE r.m_id = m.m_id
-		AND r.c_id = #{cId}
+		AND
+		r.c_id = #{cId}
 	</select>
 
 	<update id="lessonHitUpdate" parameterType="LessonVO">
 		UPDATE class
-		SET c_hit = c_hit + 1
+		SET c_hit
+		= c_hit + 1
 		WHERE c_id = #{cId}
 	</update>
 
 	<select id="countLessonMain" resultType="Integer">
 		SELECT count(*)
 		FROM class
-			<where>
-				<if	test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-					AND vegType in('비건','락토','오보','락토오보')
-				</if>
-				<if	test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-					AND vegType in('비건','락토','오보','락토오보')
-					AND c_title like '%' || #{keyword} || '%'
-				</if>
-				<if	test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
-					AND vegType = #{vegType}
-				</if>
-				<if	test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-					AND vegType = #{vegType}
-					AND c_title like '%' || #{keyword} || '%'
-				</if>
-			</where>
+		<where>
+			<if	test=" vegType != null and vegType != '' and vegType != 'all' ">
+				AND vegType = #{vegType}
+			</if>
+			<if test=" keyword != null and keyword != '' ">
+				AND UPPER(c_title) LIKE UPPER('%' || #{keyword} || '%')
+			</if>
+		</where>
 	</select>
-	
+
 	<select id="likeFlagCount" resultType="Integer">
 		SELECT count(*)
-		FROM like_list
+		FROM
+		like_list
 		WHERE m_id = #{mId}
-		AND origin_id = #{originId} 
+		AND origin_id = #{originId}
 	</select>
-	
+
 	<insert id="likeInsert">
 		INSERT INTO like_list
 		VALUES('like'||like_seq.nextval, #{originId}, sysdate, #{mId})
 	</insert>
-	
+
 	<delete id="likeDelete">
 		DELETE FROM like_list
 		WHERE origin_id = #{originId}
 		AND m_id = #{mId}
 	</delete>
-	
+
 	<insert id="lessonEnqSubmit">
 		INSERT INTO enquiry (
-    		enq_no, 
-    		origin_id, 
-    		enq_content, 
-    		enq_date, 
-    		m_id
+		enq_no,
+		origin_id,
+		enq_content,
+		enq_date,
+		m_id
 		)
 		VALUES (
-		  'ENQ'||enq_seq.nextval, 
-		  #{originId}, 
-		  #{enqContent} , 
-		  sysdate, 
-		  #{mId}
+		'ENQ'||enq_seq.nextval,
+		#{originId},
+		#{enqContent} ,
+		sysdate,
+		#{mId}
 		)
 	</insert>
-	
+
 	<insert id="lessonReservInsert">
-		INSERT INTO class_reserv ( cr_id, m_id, c_id ) 
-     	VALUES ( 'cr'||cr_seq.nextval, #{mId}, #{cId} )
+		INSERT INTO class_reserv ( cr_id, m_id, c_id )
+		VALUES ( 'cr'||cr_seq.nextval, #{mId}, #{cId} )
 	</insert>
-	
+
 	<update id="lessonJoinUpdate">
 		UPDATE class
 		SET c_join = c_join + 1
-		WHERE c_id = #{cId}
+		WHERE c_id =
+		#{cId}
 	</update>
-	
+
 	<insert id="pointHistoryInsert">
 		INSERT INTO wallet_history
 		VALUES ('wallet' ||
-		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType}, current_date)
+		wallet_seq.nextval, #{mId}, #{walletMoney}, #{walletType},
+		current_date)
 	</insert>
-	
+
 	<update id="pointDeduct">
 		UPDATE member
 		SET wallet_point = #{walletPoint},
 		wallet_cash = #{walletCash}
 		WHERE m_id = #{mId}
 	</update>
-	
+
 </mapper>

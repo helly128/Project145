@@ -257,7 +257,7 @@ public class WalletController {
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);				
 		
-		paging.setPageUnit(5);
+		paging.setPageUnit(10);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
 			paging.setPage(1);
