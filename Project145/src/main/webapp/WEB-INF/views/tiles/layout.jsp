@@ -301,9 +301,7 @@ article {
 	<script
 		src="<%=request.getContextPath()%>/resources/assets/js/nouislider.js"></script>
 
-	<!--====== Main js ======-->
-	<script src="<%=request.getContextPath()%>/resources/assets/js/main.js"></script>
-
+	
 	<script>
 		//========= glightbox
 		const myGallery = GLightbox({

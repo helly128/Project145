@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 
 
 	<!--====== 메인배너부분 ======-->
@@ -672,6 +668,4 @@
 		</div>
 	</section>
 	<!--====== 베지밋 섹션 끝 ======-->
-
-
 
