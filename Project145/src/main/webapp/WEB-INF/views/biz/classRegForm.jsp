@@ -70,7 +70,7 @@ $(function(){
 	 console.log($("#cLoc").val());
 	 console.log($("#cParti").val());
 	 console.log($("#cPrice").val());
-	 console.log($("#proposal2").val());
+	 console.log($(".proposal2").val());
 	 
 	 var title = "안녕하세요"+ $("#lecId").val() +"강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
 	 var start = $("#cStart").val() + " ~  " ;
@@ -79,7 +79,7 @@ $(function(){
 	 var loc = $("#cLoc").val() +"에서 ";
 	 var parti = "정원 "+$("#cParti").val() + "명 으로 ";
 	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
-	 var msg =  $("#proposal2").val() ;
+	 var msg =  $(".proposal2").val() ;
 	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
 	 
 	if(proposal!="") {
@@ -156,7 +156,7 @@ function changelecId(e) {
 </script>
 
 	<div class="container" align="center">
-		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
+		<form id="cfrm" class="cfrm" action="/classBizInsert.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${cvo.getCId()}'>
 			<input type="hidden" id="mName" value="${mvo.getMName() }">
@@ -174,7 +174,7 @@ function changelecId(e) {
 				<h5>대표사진</h5>
 
 				<div class="div-image" style="float: right;">
-					<input type="file" name="cImg" class="classPic" accept="image/*"
+					<input type="file" name="uploadfile" class="classPic" accept="image/*"
 						onchange="setImage(event);"
 						style="background-color: white; border: none; margin-left: 10px; padding: 0; border-radius: 2px;">
 				</div>
@@ -216,22 +216,22 @@ function changelecId(e) {
 						<tr><th></th><th></th><th></th></tr>
 						<tr>
 							<td>
-								<div class="tbl-data" data-item="🥦" style="">
+								
 									<input type="checkbox" id="vegan" class="type" value="비건"
-										checked disabled> <label for="vegan">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
+										checked disabled> <label for="vegan"><div class="tbl-data" data-item="🥦" style=""></div></label>
+								
 							</td>
 							<td>
-								<div class="tbl-data" data-item="🧀">
+								
 									<input type="checkbox" class="vtype" id="locto" value="락토">
-									<label for="locto">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
+									<label for="locto"><div class="tbl-data" data-item="🧀"></div></label>
+								
 							</td>
 							<td>
-								<div class="tbl-data" data-item="🥚 ">
+								
 									<input type="checkbox" id="ovo" class="vtype" value="오보">
-									<label for="ovo">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
+									<label for="ovo"><div class="tbl-data" data-item="🥚 "></div></label>
+								
 							</td>
 						</tr>
 					</table>
@@ -383,7 +383,7 @@ function changelecId(e) {
 
 						</div>
 						<br>
-						<div class="msg" id="lecprop" align="left" style="display:none;">
+						<div class="msg" id="lecprop" align="left" >
 
 
 							<h5>강사에게 메세지</h5>

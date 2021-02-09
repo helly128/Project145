@@ -27,4 +27,6 @@ public interface ClassBizService {
 	
 	List<enquiryVO> myEnquiryList(enquiryVO vo);
 
+	int classBizUpdate(LessonVO cvo);
+
 }

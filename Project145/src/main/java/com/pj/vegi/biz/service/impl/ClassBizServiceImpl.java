@@ -70,4 +70,10 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.myEnquiryList(vo);
 	}
 
+	@Override
+	public int classBizUpdate(LessonVO cvo) {
+		// TODO Auto-generated method stub
+		return dao.classBizUpdate(cvo);
+	}
+
 }

@@ -100,7 +100,7 @@ $(function(){ //아작스
 			<div class="row" id="uploadpic">
 				<!--사진 Card Body -->
 				<div class="image-container p-3" style="width: 100%" align="center">
-					<img id="class-image" src="/images/images-empty.png" height="300px"
+					<img id="class-image" src="/images/${classVo.getCImg()}" height="300px"
 						width="auto">
 				</div>
 			</div>
