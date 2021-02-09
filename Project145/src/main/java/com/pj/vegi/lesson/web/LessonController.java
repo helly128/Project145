@@ -55,6 +55,7 @@ public class LessonController {
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
 
+		vo.setVegType((String)session.getAttribute("vType"));
 		List<LessonVO> lessons = lessonService.lessonList(vo); // 페이징 설정 끝
 
 		for (LessonVO lesson_vo : lessons) {

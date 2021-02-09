@@ -70,6 +70,7 @@ public class MemberController {
 			session.setAttribute("mId", vo.getMId());
 			vo = memberService.memberSelect(vo);
 			session.setAttribute("auth", vo.getAuth());
+			session.setAttribute("vType", vo.getVegtype());
 
 			String ref = (String) session.getAttribute("referer");
 			if (ref != null) {
