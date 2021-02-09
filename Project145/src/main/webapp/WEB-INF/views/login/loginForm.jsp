@@ -27,7 +27,8 @@
 	<div class="login">
 		<div align="center" style="padding-top: 5%">
 			<h2>로그인</h2>
-			<br/><br/>
+			<br />
+			<br />
 			<form action="/loginResult.do">
 				<%-- <input type="hidden" name = "uri" value="${param.uri }"/> --%>
 				<!-- Email input -->
@@ -63,10 +64,11 @@
 					<p>or sign up with:</p>
 					<br />
 					<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-					<div id="naverIdLogin"></div>
+					<div id="naverIdLogin">
 
-					<a href="${url}"> <img height="50"
-						src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
+						<a href="${url}"> <img height="50"
+							src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
+					</div>
 					<%
 					String clientId = "1P0F_fye7hGWfHa0ztCe";//애플리케이션 클라이언트 아이디값";
 					String redirectURI = URLEncoder.encode("http://localhost:8088/callback", "UTF-8");

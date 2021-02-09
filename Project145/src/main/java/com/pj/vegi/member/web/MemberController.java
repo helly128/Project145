@@ -2,25 +2,17 @@ package com.pj.vegi.member.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.pj.vegi.member.service.MemberService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
 import com.pj.vegi.vo.MemberVo;
@@ -76,9 +68,7 @@ public class MemberController {
 				old_url = ref;
 			}
 		}else {
-			
 			 old_url="redirect:/loginForm.do";
-			 
 		}
 
 		System.out.println(" 처리이전페이지 ======> " + old_url);
@@ -100,7 +90,7 @@ public class MemberController {
 	
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
+	public String callback(Model model,MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		System.out.println("여기는 callback");
 		OAuth2AccessToken oauthToken;
@@ -109,14 +99,18 @@ public class MemberController {
 		apiResult = naverLoginBo.getUserProfile(oauthToken);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jnode = mapper.readTree(apiResult);
-		String email = (String)(jnode.get("response").get("email").textValue());
-		session.setAttribute("mId", email);
+		String naverId = (String)jnode.get("response").get("id").textValue();
+		String naverEmail = (String)(jnode.get("response").get("email").textValue());
+		String naverName = (String)(jnode.get("response").get("name").textValue());
+		  
+		session.setAttribute("name", naverName);
+		session.setAttribute("mId", naverId);
 		session.setAttribute("auth", "user");
+		
 		/* 네이버 로그인 성공 페이지 View 호출 */
 		return "redirect:naverResult.do";
 	}
 
-//	
 
 	private static final String mydomain = "http%3A%2F%2Flocalhost%3A8088%2Fcallback.do";
 
