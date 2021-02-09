@@ -118,10 +118,11 @@
 		SELECT *
 		FROM wallet_history
 		<where>
-			<if test=" walletType != null and walletType != '' ">
+			<if test=" walletType != null and walletType != '' and walletType != 'all' ">
 				and m_id = #{mId}
 				and wallet_type like '%' || #{walletType} || '%'
 			</if>
+			and m_id = #{mId}
 		</where>
 		ORDER BY wallet_date DESC
 		) b
@@ -132,13 +133,11 @@
 		select count(*)
 		from wallet_history
 		<where>
-			<if test=" walletType == null or walletType == '' ">
-				and m_id = #{mId}
-			</if>
-			<if test=" walletType != null and walletType != '' ">
+			<if test=" walletType != null and walletType != '' and walletType != 'all' ">
 				and m_id = #{mId}
 				and wallet_type like '%' || #{walletType} || '%'
 			</if>
+			and m_id = #{mId}
 		</where>
 	</select>
 </mapper>

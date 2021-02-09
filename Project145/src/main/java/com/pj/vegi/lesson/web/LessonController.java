@@ -52,11 +52,16 @@ public class LessonController {
 		vo.setStart(paging.getFirst());
 		vo.setEnd(paging.getLast());
 
+		if (vo.getVegType() == null || vo.getVegType() == "") {
+			vo.setVegType((String) session.getAttribute("vType"));
+			List<LessonVO> lessons = lessonService.lessonList(vo);
+			model.addAttribute("lessons", lessons);
+		}
+
+		List<LessonVO> lessons = lessonService.lessonList(vo);
+
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
-
-		vo.setVegType((String)session.getAttribute("vType"));
-		List<LessonVO> lessons = lessonService.lessonList(vo); // 페이징 설정 끝
 
 		for (LessonVO lesson_vo : lessons) {
 
@@ -78,8 +83,9 @@ public class LessonController {
 		}
 		model.addAttribute("today", date);
 
-		model.addAttribute("lessons", lessons);
 		model.addAttribute("paging", paging);
+
+		model.addAttribute("lessons", lessons);
 
 		return "lesson/lessonMain";
 	}

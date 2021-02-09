@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pj.vegi.biz.service.ClassBizService;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.mypage.service.MypageService;
@@ -29,6 +30,7 @@ import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.VegimeetVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Controller
 public class MypageController {
@@ -37,7 +39,9 @@ public class MypageController {
 	private MypageService mypageService;
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private ClassBizService classBizService;
+	
 	@RequestMapping("/mypage.do")
 	public String mypage(MemberVo vo, Model model, HttpSession session) throws SQLException {
 
@@ -230,7 +234,7 @@ public class MypageController {
 		List<Map> classList = mypageService.lessonSelect(vo);
 		model.addAttribute("list", classList);
 		model.addAttribute("paging", paging);
-		
+
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String time = format.format(date);
@@ -334,9 +338,18 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myQuestion.do")
-	public String myQuestion() {
+	public String myQuestion(Model model, HttpSession session, enquiryVO vo) {
 
-		return "mypage/myQuestion";
+		String mId = (String) session.getAttribute("mId");
+		System.out.println("받은 목록 리스트 찾아오기");
+		vo.setMId(mId);
+		List<enquiryVO> cEnqList = classBizService.classEnquiryList(vo);
+		model.addAttribute("cEnqList", cEnqList);
+
+		List<enquiryVO> myEnqList = classBizService.myEnquiryList(vo);
+		model.addAttribute("myEnqList", myEnqList);
+
+		return "mypage/myQuestionList";
 	}
 
 }

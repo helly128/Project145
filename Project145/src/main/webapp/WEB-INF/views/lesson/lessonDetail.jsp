@@ -166,7 +166,7 @@
 					</div>
 					<div class="border-bottom p-3">
 						<span class="widget-title mb-2">문의하기</span>
-						<form action="lessonEnq.do" method="get" id="form">
+						<form action="lessonEnq.do" method="post" id="form">
 							<input id="originId" name="originId" type="hidden"
 								value="${lesson.cId }">
 							<c:if test="${mId == null or mId == ''}">

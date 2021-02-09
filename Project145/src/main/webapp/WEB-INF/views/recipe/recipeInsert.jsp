@@ -46,11 +46,15 @@ row.plus {
 				<divclass">
 				<h3>Ingredient🍋</h3>
 				<br />
-				<div class="row">
+				<div class="material">
 					Used Ingredient<br /> <br />
-					<div class="material">
-						<input type="text" id="" name="matName" placeholder="재료명 (예: 두부)">
-						<input type="text" id="" name="matVol" placeholder="분량 (예: 한 모)">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" id="" name="matName" placeholder="재료명 (예: 두부)">
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" id="" name="matVol" placeholder="분량 (예: 한 모)">
+						</div>
 					</div>
 				</div>
 				<button type="button" class="addMat">
@@ -90,9 +94,7 @@ row.plus {
 									</div>
 								</div>
 
-								<%-- 	<c:forEach> --%>
 								<input type="text" id="" name="" placeholder="관련 클래스 등록">
-								<%-- 	</c:forEach> --%>
 							</div>
 						</div>
 						<button type="button">
@@ -106,10 +108,10 @@ row.plus {
 
 	<script>
 		var ckeditor_config = {
-			resize_enaleb : false,
+			resize_enable : false,
 			enterMode : CKEDITOR.ENTER_BR,
 			shiftEnterMode : CKEDITOR.ENTER_P,
-			filebrowserUploadUrl : "/images"
+			filebrowserUploadUrl : "/ckEditorUpload.do"
 		};
 
 		CKEDITOR.replace('rContent', ckeditor_config);
