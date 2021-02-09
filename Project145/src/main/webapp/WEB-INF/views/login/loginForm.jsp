@@ -12,7 +12,6 @@
 	charset="utf-8"></script>
 
 <title>Insert title here</title>
-<!--====== Bootstrap CSS ======-->
 
 <style>
 .login {

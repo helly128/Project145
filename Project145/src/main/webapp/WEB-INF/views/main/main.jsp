@@ -1,6 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 
-
-	<!--====== 메인배너부분 ======-->
+</head>
+<body>
+<!--====== 메인배너부분 ======-->
 	<section id="home" class="hero-area bg_cover">
 		<div class="container">
 			<div class="row">
@@ -16,7 +23,6 @@
 	</section>
 	<!--======메인배너부분 END ======-->
 
-	
 
 	<!--====== 식당 섹션 ======-->
 	<section class="latest-product-area pb-80">
@@ -668,4 +674,5 @@
 		</div>
 	</section>
 	<!--====== 베지밋 섹션 끝 ======-->
-
+</body>
+</html>

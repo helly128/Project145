@@ -5,7 +5,7 @@ Configuration 2.1//EN"
 <tiles-definitions>
 
 <!-- <definition name="home" template="/WEB-INF/views/home.jsp" /> -->
-<definition name="home" template="/WEB-INF/views/main/main.jsp" />
+<!-- <definition name="home" template="/WEB-INF/views/main/main.jsp" /> -->
 
 	<definition name="userTemplate"	template="/WEB-INF/views/tiles/layout.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
@@ -44,8 +44,8 @@ Configuration 2.1//EN"
 		<put-attribute name="content" value="/WEB-INF/views/vegimeet/{1}.jsp" />
 	</definition>
 	
-	<definition name="main/*"	template="/WEB-INF/views/tiles/layout.jsp">
-		<put-attribute name="content" value="/WEB-INF/views/main/{1}.jsp" />
+	<definition name="home"	template="/WEB-INF/views/tiles/layout.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/main/main.jsp" />
 	</definition>
 	
 	<!-- 사용자 -->
