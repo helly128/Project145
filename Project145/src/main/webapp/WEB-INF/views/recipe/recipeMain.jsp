@@ -95,9 +95,11 @@
 							</div>
 						</form>
 						<div class="col-lg-2 col-sm-3 col-4">
-							<button class="btn btn-success"
-								onclick="location.href='recipeInsert.do'">Write New
-								Now!📝</button>
+							<c:if test="${sessionScope.mId !=null}">
+								<button class="btn btn-success"
+									onclick="location.href='recipeInsert.do'">Write New
+									Now!📝</button>
+							</c:if>
 						</div>
 						<br /> <br />
 
