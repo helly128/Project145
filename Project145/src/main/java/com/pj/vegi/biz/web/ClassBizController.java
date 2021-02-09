@@ -1,8 +1,10 @@
 package com.pj.vegi.biz.web;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.vegi.biz.service.ClassBizService;
+import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.LecturerVo;
 import com.pj.vegi.vo.LessonVO;
@@ -102,6 +106,55 @@ public class ClassBizController {
 		model.addAttribute("lecList2", lecturer.writeValueAsString(lecList));
 		return "biz/classEdit";
 	}
+	
+	
+	
+	@RequestMapping("/classBizUpdate.do") //클래스 등록
+	public String classBizUpdate(Model model, HttpSession session, LessonVO cvo, MemberVo mvo, @RequestParam MultipartFile uploadfile, HttpServletRequest request) throws IllegalStateException, IOException {
+		String mId = (String) session.getAttribute("mId");
+		// 클래스 cvo에 담긴 파라메터들 확인
+		System.out.println("클래스를 생성한다.");
+		
+		//베지타입 아무것도 안들어오면 비건 처리
+		if(cvo.getVegType()=="") {
+			cvo.setVegType("비건");
+		}
+		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
+		String lstatus = "";
+		if (mvo.getLecId()==mId) {
+			lstatus = "개설완료";
+			}else {
+				lstatus ="강사승인대기";
+				//문의테이블에 등록 !
+			}
+		cvo.setStatus(lstatus);
+		System.out.println("사업자 번호 찾기");
+		// mId로 사업자 번호 찾고 설정
+		MemberVo bizNumVo = classBizService.classBizNum(mvo);
+		String bizNum = bizNumVo.getBizNum();
+		System.out.println("사업자 번호는 " + bizNum);
+		cvo.setBizNum(bizNum); // cvo에 사업자 번호 담아 주기
+		System.out.println("cvo사업자 번호는 " + cvo.getBizNum());
+		System.out.println("클래스정보보기" + cvo);
+		
+		//업로드 처리
+			if (uploadfile != null && uploadfile.getSize() > 0) {
+				String name = ImageIO.imageUpload(request, uploadfile);
+
+				cvo.setCImg(name);
+			}
+		
+		// 클래스 인서트 ! 생성하기
+		int n = 0;
+		n = classBizService.classBizUpdate(cvo);
+		System.out.println("클래스" + n + "건 입력 완료");
+		
+		
+
+		return "redirect:classBizList.do";
+	}
+	
+	
 
 	@ResponseBody
 	@RequestMapping("/myCareerUpdate.do")
@@ -130,14 +183,26 @@ public class ClassBizController {
 	@RequestMapping("/classBizDelete.do")
 	public String classBizDelete(Model model, LessonVO vo) {
 		int n = 0;
-		n = classBizService.classBizDelete(vo);
-		System.out.println(n+"건 완료");
+//		LessonVO classVo = classBizService.classBizSelect(vo);
+//		String status = classVo.getStatus();
+//		int join = classVo.getCJoin();
+//		if(status.equals("강사승인대기") && status.equals("강사미정")) {
+//			n = classBizService.classBizDelete(vo);
+//			System.out.println(n+"건 삭제 완료");
+//		}else if (join == 0) {
+//			n = classBizService.classBizDelete(vo);
+//			System.out.println(n+"건 삭제 완료");
+//		}else {
+//			System.out.println("삭제불가");
+//		}
+//		n = classBizService.classBizDelete(vo);
+		System.out.println(n+"건 삭제 완료");
 		return "redirect:classBizList.do";
 	}
 	
 	
-	@RequestMapping("/classBizInsert.do")
-	public String classBizInsert(Model model, HttpSession session, LessonVO cvo, MemberVo mvo) {
+	@RequestMapping("/classBizInsert.do") //클래스 등록
+	public String classBizInsert(Model model, HttpSession session, LessonVO cvo, MemberVo mvo, @RequestParam MultipartFile uploadfile, HttpServletRequest request) throws IllegalStateException, IOException {
 		String mId = (String) session.getAttribute("mId");
 		// 클래스 cvo에 담긴 파라메터들 확인
 		System.out.println("클래스를 생성한다.");
@@ -153,8 +218,6 @@ public class ClassBizController {
 			}else {
 				lstatus ="강사승인대기";
 				//문의테이블에 등록 !
-				
-
 			}
 		cvo.setStatus(lstatus);
 		System.out.println("사업자 번호 찾기");
@@ -165,6 +228,14 @@ public class ClassBizController {
 		cvo.setBizNum(bizNum); // cvo에 사업자 번호 담아 주기
 		System.out.println("cvo사업자 번호는 " + cvo.getBizNum());
 		System.out.println("클래스정보보기" + cvo);
+		
+		//업로드 처리
+			if (uploadfile != null && uploadfile.getSize() > 0) {
+				String name = ImageIO.imageUpload(request, uploadfile);
+
+				cvo.setCImg(name);
+			}
+		
 		// 클래스 인서트 ! 생성하기
 		int n = 0;
 		n = classBizService.classBizInsert(cvo);

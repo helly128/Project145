@@ -1,18 +1,19 @@
 package com.pj.vegi.member.web;
 
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -133,15 +134,13 @@ public class MemberControllerCJ {
 
 	@RequestMapping("/pwSearch.do") //비밀번호 찾기
 	@ResponseBody
-	public String pwSearch( 
+	public Map pwSearch( 
 				@RequestParam(value="email") String email,
 				@RequestParam(value="mId") String mId,
-				MemberVo vo ) {
+				MemberVo vo ) throws UnsupportedEncodingException {
 		System.out.println(email + mId +"받아옴");
 		vo.setEmail(email);
-		vo.setMId(mId);
-		memberService.pwSearch(vo); //빼도 되나?
-		memberService.pwSearch(vo); 
+		vo.setMId(mId);		
 		String result = null;
 		if(memberService.pwSearch(vo)!=null) {
 			try {				
@@ -158,7 +157,7 @@ public class MemberControllerCJ {
 				System.out.println(vo +"비밀번호 변경된 vo");
 				memberService.naverMailSend(vo);
 				System.out.println("메일보내기 성공");
-				result ="이메일 보냄";
+				result ="임시 비밀번호가 이메일로 발송되었습니다. 로그인 후 비밀번호를 변경해주세요.";
 				
 			} catch (Exception e) {
 				result ="이메일 보내기 실패";
@@ -166,7 +165,7 @@ public class MemberControllerCJ {
 		}else {
 			result="등록되지 않은 정보입니다. 다시 확인해주세요.";
 		}
-		return result;
+		return  Collections.singletonMap("result", result)	;// URLDecoder.decode(result,"UTF-8");
 	}
 	
 

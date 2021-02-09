@@ -10,6 +10,7 @@
 <style>
 .single-product {
 	height: 400px;
+	width: 320px;
 }
 
 .product-content {
@@ -19,6 +20,19 @@
 .likeAction {
 	border: none;
 	background: transparent;
+}
+
+.name {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.name:hover {
+	color: #6C9852;
+	cursor: pointer;
 }
 </style>
 <script>
@@ -102,14 +116,14 @@
 							<div class="single-product">
 								<div class="product-img">
 									<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-										src="${vo.getRImage()}" alt="" height="300px" width="300px">
+										src="${vo.getRImage()}" alt="recipe images" height="300px"
+										width="300px">
 									</a>
 								</div>
 								<div class="product-content">
 									<div class="namediv">
-										<h5 class="name">
-											<a href="/recipeDesc.do?rId=${vo.getRId()} ">${vo.getRTitle()}</a>
-										</h5>
+										<h5 class="name" title="${vo.getRTitle()}"
+											onclick="/recipeDesc.do?rId=${vo.getRId()}">${vo.getRTitle()}</h5>
 									</div>
 									<ul class="address">
 										<li><i class="lni lni-calendar"></i>&nbsp;&nbsp;${vo.getRDate() }</li>
@@ -191,33 +205,10 @@
 												}
 											}
 										})
-
 					});
 				</script>
-
 			</div>
-			<%-- <!-- 페이징 2 -->
-	<div style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a href="/recipeMain.do?page=${paging.startPage - 1 }&pageUnit=${paging.pageUnit}">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.page }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.page }">
-					<a href="/recipeMain.do?page=${p }&pageUnit=${paging.pageUnit}">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/recipeMain.do?page=${paging.endPage+1 }&pageUnit=${paging.pageUnit}">&gt;</a>
-		</c:if>
-	</div> --%>
 		</div>
-
-		<!--====== LATEST PRODUCT PART ENDS ======-->
 	</section>
 </body>
 </html>

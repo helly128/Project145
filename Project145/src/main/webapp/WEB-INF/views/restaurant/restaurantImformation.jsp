@@ -23,36 +23,34 @@
 #my_modal {
 	display: none;
 	width: 400px;
-	padding: 20px 60px;
+	padding: 10px 10px;
 	background-color: #fefefe;
 	border: 1px solid #888;
 	border-radius: 3px;
 }
 
 button {
-  display: inline-block;
-  padding: 12px 24px;
-  background: rgb(220,220,220);
-  font-weight: bold;
-  color: rgb(120,120,120);
-  border: none;
-  outline: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: ease .3s;
+	display: inline-block;
+	padding: 12px 24px;
+	background: rgb(220, 220, 220);
+	font-weight: bold;
+	color: rgb(120, 120, 120);
+	border: none;
+	outline: none;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: ease .3s;
 }
 
 button:hover {
-  background: #8BC34A;
-  color: #ffffff;
+	background: #8BC34A;
+	color: #ffffff;
 }
 
 input {
 	margin: 2px 5px;
-	width: 200px;
+	width: 300px;
 }
-
-
 </style>
 
 </head>
@@ -79,7 +77,7 @@ input {
 					<a class="main-btn btn-hover d-none d-md-block" id="restResvButton">
 						예약하기</a>
 				</div>
-			
+
 
 				<script>
 					function modal(id) {
@@ -139,54 +137,58 @@ input {
 								modal('my_modal');
 							});
 				</script>
-			
-	
-			<div>
-			<c:if test="${sessionScope.mId != null }">		
-			<form id="frm" action="reservInsert.do">
-				<div id="my_modal">
-					<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
-					<a style="font-size: 1rem">식당명</a>
-					<h6>${rVo.getRestName() }</h6>
-					<br>
-					<a>날짜</a>
-					<input type="date" class="input" id="resvDate" name="restReservDate" value="" min="" max="" required>
-					<br>
-					<a>예약자명</a>
-					<input type="text" class="input" name="restReservName" required>
-					<br>
-					<a>예약인원</a>
-					<input type="number" class="input" name="restReservPeople" min="1" max="100" required>
-					<br>
-					<br>
-					<input type="hidden" name="mId" value="${sessionScope.mId }">
-					<input type="hidden" name="restId" value="${rVo.getRestId()}">
-					<button style="font-size: 1rem;" class="modal_close_btn" >취소</button>
-					<button style="font-size: 1rem;" type="submit" id="push" >예약</button>
-				</div>
-			</form>
-				<!-- 달력 기본 설정 -->
-				<script>
+
+
+				<div>
+					<c:if test="${sessionScope.mId != null }">
+						<form id="frm" action="reservInsert.do">
+							<div id="my_modal">
+								<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
+								<a style="font-size: 1rem">식당명</a>
+								<h6>${rVo.getRestName() }</h6>
+								<br> 
+								<a>예약날짜/시간</a> 
+								<input type="datetime-local"
+									class="input" id="resvDate" name="restReservDate"
+									onChange="setendmin(this.value)" width="50" required> 
+								<br> 
+								<a>예약자명</a>
+								<input type="text" class="input" name="restReservName" required>
+								<br> 
+								<a>예약인원</a> 
+								<input type="number" class="input"
+									name="restReservPeople" min="1" max="100" required> 
+								<br>
+								<br> 
+								<input type="hidden" name="mId" value="${sessionScope.mId }"> 
+							    <input type="hidden" name="restId" value="${rVo.getRestId()}">
+								<button style="font-size: 1rem;" class="modal_close_btn">취소</button>
+								<button style="font-size: 1rem;" type="submit" id="push">예약</button>
+							</div>
+						</form>
+						<!-- 달력 기본 설정 -->
+						<script>
 				 document.getElementById('resvDate').value = new Date().toISOString().substring(0, 10);
 				</script>
-			</c:if>
-			<c:if test="${sessionScope.mId == null }">
-					<div id="my_modal">
-					<h6>로그인 후 이용가능합니다</h6>
-					<br>
-					<button style="font-size: 1rem;" type="submit" class="modal_close_btn" id="push"
-					onclick="location.href='loginForm.do'">로그인하기</button>
+					</c:if>
+					<c:if test="${sessionScope.mId == null }">
+						<div id="my_modal">
+							<h6>로그인 후 이용가능합니다</h6>
+							<br>
+							<button style="font-size: 1rem;" type="submit"
+								class="modal_close_btn" id="push"
+								onclick="location.href='loginForm.do'">로그인하기</button>
+						</div>
+
+					</c:if>
 				</div>
-				
-			</c:if>
-			</div>	
 
 			</div>
 
 			<br>
 			<hr />
 			<br />
-			
+
 			<!-- 식당 사진 -->
 			<div class="col-lg-12" align="center">
 				<img src="" height="350px" width="600px">
@@ -375,4 +377,10 @@ input {
 	</div>
 	<br>
 </body>
+
+<script type="text/javascript">
+
+	$( "#resvDate" ).datepicker({ minDate: 0});
+
+</script>
 </html>

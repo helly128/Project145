@@ -14,7 +14,7 @@ href="<%=request.getContextPath()%>/resources/assets/css/memberRegister.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-$(document).ready(function() { alert(${bizNum}+"등록 완료"); });
+
 
 
 
@@ -88,12 +88,6 @@ $("#submitbtn").click(()=>{
 
 
 });
-
-
-
-
-
-
 
 
 </script>
@@ -204,7 +198,7 @@ $("#submitbtn").click(()=>{
     </div>
    <br>
     <br>
-  <input id="bizNum" style="display:none" name="bizNum" value='${bizNum}'>  
+  	사업자번호(자동으로 입력됩니다.)<input id="bizNumVal" style="height:1rem;" readonly name="bizNum" value=''>  
   <button type="button" id="submitbtn">가입</button>
   <button type="button" id="cancel"  onclick="location.href='memberRegister.do'">취소</button>
 </form>
@@ -236,6 +230,8 @@ $("#submitbtn").click(()=>{
 				$("#vegi").val(str);
 			}
 		});
+		
+	
 
 </script>
 </body>

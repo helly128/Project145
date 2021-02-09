@@ -28,6 +28,7 @@ $("#searchbtn").click(()=>{
 			dataType:"json",
 			success: function(map){
 				if(map.bizname == null){
+					
 					$("#result").text("사업자번호 오류: 다시 검색해주세요.");
 					
 				}
@@ -46,7 +47,7 @@ $("#searchbtn").click(()=>{
 				$("#searchbtn").css("border","none");
 				$("#searchbtn").css("color","green");
 				$("#searchbtn").css("font-size","1.2rem");
-				$("#submit").show();
+				$("#submitBizNum").show();
 				
 				$("#restAddress").val(map.bizaddress);
 				$("#restAddress").css("font-size","1.2rem");
@@ -94,16 +95,16 @@ $("#restsearch").click(()=>{
 						'<td>'+map[i].bizNum +'</td>' +
 						
 						'<td>'+
-						'<input name="restId" type="radio" id="'+map[i].restId +'" required value="' +map[i].restId + '">'+'</td>';
+						'<input name="restId" type="radio" class="'+map[i].restId +'" id="'+map[i].restId +'" required value="' +map[i].restId + '">'+'</td>';
 			
-						str +='</tr>';
+						str +='<td>식당사업자 변경 신청</td><td><td/><td><td/></tr>';
 	
 					});
 					$("#bizSearchList").show();
 					$("#bizSearchList").append(str);
-					//남의 사업자번호에는 등록하지 못하도록 막기  질문 : id가 2개 이상이면?
-					$('#not').attr("onClick","return false");
-					$('#not').attr("disabled", true); 
+					//남의 사업자번호에는 등록하지 못하도록 막기  질문 : id가 2개 이상이면?클래스로 바꿔봄
+					$('.not').attr("onClick","return false");
+					$('.not').attr("disabled", true); 
 					//$(".restId:input[value='not']").attr("onClick","return false");
 					//$(".restId:input[value='not']").attr("disabled", true);
 					
@@ -112,10 +113,10 @@ $("#restsearch").click(()=>{
 					$('#frm').attr("action", "bizInfoUpdate.do");
 					
 					$("#restsearch").hide();
-					$("#submit").text('내식당등록');
+					$("#submitBizNum").text('내식당등록');
 										
-					$("#submit").css("background-color","lightgreen");
-					$("#submitbtn").show();
+					$("#submitBizNum").css("background-color","lightgreen");
+					$("#submitBizNum").show();
 						
 				}else{ 
 					var str = "새로운 채식 식당의 발견! 새 식당으로 등록해주세요."
@@ -124,10 +125,10 @@ $("#restsearch").click(()=>{
 				$("#result").text("새로운 식당의 발견! 새로운 식당으로 등록합니다.");
 				$("#restsearch").hide();
 				$('#frm').attr("action", "bizRegister.do");
-				$("#submit").text('내식당등록');
-
-				$("#submit").css("background-color","lightgreen");
-				$("#submit").show();
+				$("#submitBizNum").text('내식당등록');
+			
+				$("#submitBizNum").css("background-color","lightgreen");
+				$("#submitBizNum").show();
 			}},
 			error:(log)=>{alert("실패임")
 			}
@@ -136,6 +137,18 @@ $("#restsearch").click(()=>{
 });
 
 
+//submitBizNum누를 때 위의폼은 hidden되면서 아래 폼의 bizNumVal에 bizNumid의 밸류값 넣어주기
+$("#submitBizNum").click(()=>{
+//클래스던 식당이던 둘다 넘겨줌 / 나중에 rest & 사업자 동시등록 하는 컨트롤러
+	alert('입력하신 사업자 번호 [' + $("#bizNum").val() +']로 회원 등록 합니다.');
+	var bizval =  $("#bizNum").val();
+	$("#bizNumVal").val(bizval);
+	$("#firstfrm").hide();
+	
+	//같은 biznum으로 등록해놓은 같은 식당에 내식당이라고 주장하는 여러 사업자가 있으면 ? 
+	
+});
+//끝
 
 });
 
@@ -148,12 +161,12 @@ $("#restsearch").click(()=>{
 	<br>
 	<br>
 	<br>
-	<div align="center">
-		<h2>사업자 확인</h2>
+	<div align="center" >
+		
 
-		<div class="search-wrapper">
-
-			<form id="frm" action="classRegister.do">
+		<div class="search-wrapper" id="firstfrm">
+<h2>사업자 확인</h2>
+			<form id="frm" action="classRegister.do"><!-- 여기수정하기 -->
 
 				<div id="result" style="font-size: 1.5rem; color: green;">등록된
 					사업체명과 사업자등록 번호를 입력한 후 검색해주세요.</div>
@@ -169,7 +182,7 @@ $("#restsearch").click(()=>{
 
 				<div class="labelf">
 					<h3 class="label-txt">사업자 등록번호</h3>
-					<input type="text" class="input" name="bizNum"
+					<input type="text" class="input"
 						placeholder="10자리번호" id="bizNum" required>
 
 					<div class="line-box">
@@ -208,7 +221,7 @@ $("#restsearch").click(()=>{
 
 					<br>
 					<button type="button" id="restsearch" style="display: none">식당사업자 등록</button>
-					<button type="submit" id="submit" style="display: none">클래스사업자 등록</button>
+					<button type="button" id="submitBizNum" style="display: none">클래스사업자 등록</button>
 					
 					<button type="button" id="cancel"
 						onclick="location.href='memberRegister.do'">취소</button>
@@ -217,6 +230,8 @@ $("#restsearch").click(()=>{
 			</form>
 		</div>
 		
+		<jsp:include page="/WEB-INF/views/login/bizRegister.jsp"/>
+
 		
 		<br> <br> <br>
 	</div>
