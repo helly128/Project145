@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -68,6 +70,7 @@ public class MemberController {
 			session.setAttribute("mId", vo.getMId());
 			vo = memberService.memberSelect(vo);
 			session.setAttribute("auth", vo.getAuth());
+			session.setAttribute("vType", vo.getVegtype());
 
 			String ref = (String) session.getAttribute("referer");
 			if (ref != null) {
@@ -90,6 +93,12 @@ public class MemberController {
 		return "redirect:/main.do";
 	}
 
+	@RequestMapping("/naverResult.do")
+	public String naverResult()  {
+
+		return "login/naverSuccess";
+	}
+	
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
@@ -99,10 +108,13 @@ public class MemberController {
 		oauthToken = naverLoginBo.getAccessToken(session, code, state);
 		// 로그인 사용자 정보를 읽어온다.
 		apiResult = naverLoginBo.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
-
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jnode = mapper.readTree(apiResult);
+		String email = (String)(jnode.get("response").get("email").textValue());
+		session.setAttribute("mId", email);
+		session.setAttribute("auth", "user");
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "login/naverSuccess";
+		return "redirect:naverResult.do";
 	}
 
 //	
