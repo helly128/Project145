@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -76,7 +78,27 @@ public class MemberController {
 		response.sendRedirect(old_url);
 
 	}
+	@ResponseBody
+	@RequestMapping("/LoginCheck.do")
+	public String LoginCheck(Model model, HttpSession session, MemberVo vo) throws SQLException {
 
+//		String mid = (String) session.getAttribute("mId");
+//		vo.setMId(mid);
+
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check == true) {
+			result = "true";
+		} else {
+			result = "false";
+		}
+
+		System.out.println("result값" + result);
+
+		return result;
+	}
+	
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws SQLException, IOException {
 		String old_url = "/main.do";
