@@ -1,10 +1,18 @@
 package com.pj.vegi.recipe.web;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.recipe.service.RecipeService;
@@ -36,7 +45,7 @@ public class RecipeController {
 
 	@RequestMapping("/recipeMain.do") // 게시글 페이징 처리 추가하기
 	public String recipeMain(@ModelAttribute("vo") RecipeVo vo, Model model, Paging paging, HttpSession session) {
-		
+
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);
 		// paging
@@ -55,7 +64,7 @@ public class RecipeController {
 		model.addAttribute("paging", paging);
 		// data 불러오기
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
-		for(RecipeVo recipe_vo : recipes) {
+		for (RecipeVo recipe_vo : recipes) {
 			LikeListVo like_vo = new LikeListVo();
 			like_vo.setMId(mid);
 			like_vo.setOriginId(((RecipeVo) recipe_vo).getRId());
@@ -63,11 +72,10 @@ public class RecipeController {
 		}
 		model.addAttribute("recipes", recipes);
 		model.addAttribute("paging", paging);
-		
+
 		return "recipe/recipeMain";
 	}
 
-	
 	/*
 	 * @Autowired LessonService lessonService;
 	 */
@@ -94,19 +102,40 @@ public class RecipeController {
 
 		return "recipe/recipeInsert";
 	}
-	
-	
-//	@RequestMapping("/recipeInsertResult.do")
-//	public String recipeInsertResult(RecipeVo vo, Model model) {
-//		String viewPath = null;
-//		int n = recipeService.recipeInsert(vo);
-//		if (n != 0)
-//			viewPath = "redirect:recipeMain.do";
-//		else
-//			viewPath = "recipe/recipeInsertFail";
-//
-//		return viewPath;
-//	}
+
+	@RequestMapping("/ckEditorUpload.do")
+	public void ckEditorUpload(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam MultipartFile upload) throws IllegalStateException, IOException {
+		PrintWriter printWriter = null;
+		
+		if (upload != null && upload.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, upload);
+
+			String callback = request.getParameter("CKEditorFuncNum");
+			printWriter = response.getWriter();
+			String fileUrl = "/images/" + name; // 작성화면
+
+			// 업로드시 메시지 출력
+			printWriter.println("<script type='text/javascript'>" + "window.parent.CKEDITOR.tools.callFunction("
+					+ callback + ",'" + fileUrl + "','이미지를 업로드하였습니다.')" + "</script>");
+
+			printWriter.flush();
+
+		}
+	}
+
+
+	@RequestMapping("/recipeInsertResult.do")
+	public String recipeInsertResult(RecipeVo vo, Model model) {
+		String viewPath = null;
+		int n = recipeService.recipeInsert(vo);
+		if (n != 0)
+			viewPath = "redirect:recipeMain.do";
+		else
+			viewPath = "recipe/recipeInsertFail";
+
+		return viewPath;
+	}
 
 	@RequestMapping("/recipeUpdate.do") // 수정 폼
 	public String recipeUpdate(RecipeVo vo, RecipeMaterialVo rmVo, Model model, HttpServletRequest request)
@@ -120,24 +149,25 @@ public class RecipeController {
 		return "recipe/recipeUpdate";
 	}
 
-	@RequestMapping(value="/recipeUpdateResult.do",method=RequestMethod.POST) // 수정 처리
-	public String recipeUpdateResult(RecipeMaterialVo rmVo,LessonVO lVo, RecipeVo vo, Model model, HttpServletRequest request,
-			@RequestParam(name = "rImageFile") MultipartFile rImage) throws IllegalStateException, IOException, SQLException {
+	@RequestMapping(value = "/recipeUpdateResult.do", method = RequestMethod.POST) // 수정 처리
+	public String recipeUpdateResult(RecipeMaterialVo rmVo, LessonVO lVo, RecipeVo vo, Model model,
+			HttpServletRequest request, @RequestParam(name = "rImageFile") MultipartFile rImage)
+			throws IllegalStateException, IOException, SQLException {
 		// 사진 업로드 처리
 		if (rImage != null && rImage.getSize() > 0) {
 			String name = ImageIO.imageUpload(request, rImage);
 			vo.setRImage(name);
 		}
-		vo.setCId(vo.getCIdArr().toString()); 
+		vo.setCId(vo.getCIdArr().toString());
 		recipeService.recipeUpdate(vo);
 		List<RecipeMaterialVo> matList = rmVo.getRecipeMatVoList();
-		for(RecipeMaterialVo rmVo1 : matList) {
+		for (RecipeMaterialVo rmVo1 : matList) {
 			recipeMaterialService.recipeMaterialUpdate(rmVo1);
 		}
 		recipeService.recipeLessonSearch(lVo);
 		model.addAttribute("cId", lVo.getCId());
 		model.addAttribute("rId", vo.getRId());
-		
+
 		return "redirect:recipeDesc.do";
 
 	}
@@ -153,44 +183,45 @@ public class RecipeController {
 		return viewPath;
 	}
 
-	@PostMapping(value="/lessonSearch.do")
+	@PostMapping(value = "/lessonSearch.do")
 	@ResponseBody
-	public List<LessonVO> lessonSearch(LessonVO param, HttpServletRequest request,LessonVO lvo) {
+	public List<LessonVO> lessonSearch(LessonVO param, HttpServletRequest request, LessonVO lvo) {
 		// ModelAndView mav = new ModelAndView();
 //		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
-		
-		return recipeService.lessonSearch(param);  
+
+		return recipeService.lessonSearch(param);
 
 	}
-	@PostMapping(value="/recipeLessonSearch.do")
+
+	@PostMapping(value = "/recipeLessonSearch.do")
 	@ResponseBody
-	public List<LessonVO> recipeLessonSearch(LessonVO param, HttpServletRequest request,LessonVO lvo) {
+	public List<LessonVO> recipeLessonSearch(LessonVO param, HttpServletRequest request, LessonVO lvo) {
 		// ModelAndView mav = new ModelAndView();
 //		 System.out.println("컨트롤러에서 넘기는 값 : "+keyword);
-		
-		return recipeService.recipeLessonSearch(param);  
+
+		return recipeService.recipeLessonSearch(param);
 
 	}
-	
+
 	// 좋아요
-		@ResponseBody
-		@RequestMapping("/recipeLike.do/{rId}")
-		public void vegimeetLike(@PathVariable String rId, HttpSession session) {
-			LikeListVo vo = new LikeListVo();
-			vo.setMId((String) session.getAttribute("mId"));
-			vo.setOriginId(rId);
-			recipeService.likeInsert(vo);
-		}
+	@ResponseBody
+	@RequestMapping("/recipeLike.do/{rId}")
+	public void vegimeetLike(@PathVariable String rId, HttpSession session) {
+		LikeListVo vo = new LikeListVo();
+		vo.setMId((String) session.getAttribute("mId"));
+		vo.setOriginId(rId);
+		recipeService.likeInsert(vo);
+	}
 
-		// 좋아요 취소
-		@ResponseBody
-		@RequestMapping("/recipeUnlike.do/{rId}")
-		public void vegimeetUnlike(@PathVariable String rId, HttpSession session) {
-			LikeListVo vo = new LikeListVo();
-			vo.setMId((String) session.getAttribute("mId"));
-			vo.setOriginId(rId);
-			recipeService.likeDelete(vo);
-		}
+	// 좋아요 취소
+	@ResponseBody
+	@RequestMapping("/recipeUnlike.do/{rId}")
+	public void vegimeetUnlike(@PathVariable String rId, HttpSession session) {
+		LikeListVo vo = new LikeListVo();
+		vo.setMId((String) session.getAttribute("mId"));
+		vo.setOriginId(rId);
+		recipeService.likeDelete(vo);
+	}
 
 //	// 검색
 //	@RequestMapping(value = "/recipeLesson.do", method = RequestMethod.GET)
@@ -199,16 +230,6 @@ public class RecipeController {
 //		List<LessonVO> list = recipeService.lessonSearch(lvo);
 //		return list;
 //	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 //
 //	@RequestMapping("/recipeUpdateResult.do")
