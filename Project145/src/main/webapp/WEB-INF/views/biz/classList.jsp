@@ -92,7 +92,20 @@
 													
 													<td onclick="location.href='classBizSelect.do?cId=${vo.getCId()}'">${vo.status }</td>
 													<td onclick="location.href='classBizSelect.do?cId=${vo.getCId()}'">${vo.getCJoin() }/ ${vo.getCParti() }</td>
-													<td><button class="btn btn-outline-primary" 
+													<td>
+													<!-- 강사승인대기/강사미정(거절된상태)-강사없음, 수정 삭제 버튼만 -->
+													<c:if test ="${vo.status eq '강사승인대기' || vo.status eq '강사미정'}" >
+													<button class="btn btn-outline-primary" 
+													onclick="location.href='classBizEdit.do?cId=${vo.getCId()}'"
+													style="font-size:20px; z-index:99;"><i class="fa fa-pencil"></i></button>
+													<button class="btn btn-outline-primary" value="${vo.getCId()}"
+													onclick="classdel(this)"
+													style="font-size:20px;z-index:99;"><i class="fa fa-trash-o"></i>
+													</button>
+													</c:if>
+													<!-- 개설완료 -수정 삭제 결제 버튼 -->
+													<c:if test ="${vo.status eq '개설완료'}" >
+													<button class="btn btn-outline-primary" 
 													onclick="location.href='classBizEdit.do?cId=${vo.getCId()}'"
 													style="font-size:20px; z-index:99;"><i class="fa fa-pencil"></i></button>
 													<button class="btn btn-outline-primary" value="${vo.getCId()}"
@@ -103,6 +116,45 @@
 													onclick="classcollabo(this)"
 													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
 													</button>
+													</c:if>
+													
+													<!-- 진행중인데 조인멤버=0이면 -수정 삭제 결제 버튼 -->
+													<c:if test ="${vo.status eq '진행중' && vo.getCJoin() eq 0}" >
+													<button class="btn btn-outline-primary" 
+													onclick="location.href='classBizEdit.do?cId=${vo.getCId()}'"
+													style="font-size:20px; z-index:99;"><i class="fa fa-pencil"></i></button>
+													<button class="btn btn-outline-primary" value="${vo.getCId()}"
+													onclick="classdel(this)"
+													style="font-size:20px;z-index:99;"><i class="fa fa-trash-o"></i>
+													</button>
+													<button class="btn btn-outline-primary" 
+													onclick="classcollabo(this)"
+													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
+													</button>
+													</c:if>
+													<!-- 진행중인데 조인멤버 > 0 이면 수정과 결제 버튼만 -->
+													<c:if test ="${vo.status eq '진행중' && vo.getCJoin() > 0}" >
+													<button class="btn btn-outline-primary" 
+													onclick="location.href='classBizEdit.do?cId=${vo.getCId()}'"
+													style="font-size:20px; z-index:99;"><i class="fa fa-pencil"></i></button>
+													<button class="btn btn-outline-primary" 
+													onclick="classcollabo(this)"
+													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
+													</button>
+													</c:if>
+													
+													<!-- 종료된 이벤트, 삭제와 결제 버튼만 -->
+													<c:if test ="${vo.status eq '종료'}" >
+													<button class="btn btn-outline-primary" value="${vo.getCId()}"
+													onclick="classdel(this)"
+													style="font-size:20px;z-index:99;"><i class="fa fa-trash-o"></i>
+													</button>
+													<button class="btn btn-outline-primary" 
+													onclick="classcollabo(this)"
+													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
+													</button>
+													</c:if>
+													
 													</td>
 												</tr>
 											</c:forEach>

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberVo {
+	
 	private String mId;
 	private String password;
 	private String email;

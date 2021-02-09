@@ -25,11 +25,10 @@ public class RecipeServiceImpl implements RecipeService {
 		return dao.recipeSelect(vo);
 	}
 
-//	@Override
-//	public int recipeInsert(RecipeVo vo) {
-//		// TODO Auto-generated method stub
-//		return dao.recipeInsert(vo);
-//	}
+	@Override
+	public int recipeInsert(RecipeVo vo) {
+		return dao.recipeInsert(vo);
+	}
 
 	@Override
 	public int recipeUpdate(RecipeVo vo) {

@@ -113,7 +113,6 @@ $(function(){
           });
     });
  
-//
    // 날짜 미니멈
    //get today in date yyyy-mm-dd
    var today = new Date();
@@ -141,7 +140,7 @@ $(function(){
 </script>
 
 	<div class="container" align="center">
-		<form id="cfrm" class="cfrm" action="/classBizInsert.do">
+		<form id="cfrm" class="cfrm" action="/classBizUpdate.do" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${classVo.getCId()}'>
 			<br>
@@ -153,7 +152,7 @@ $(function(){
 				<h5>대표사진</h5>
 
 				<div class="div-image" style="float: right;">
-					<input type="file" name="cImg" class="classPic" accept="image/* "
+					<input type="file" name="uploadfile" class="classPic" accept="image/* "
 						onchange="setImage(event);"  
 						style="background-color: white; border: none; margin-left: 10px; padding: 0; border-radius: 2px;">
 				</div>
@@ -267,7 +266,7 @@ $(function(){
 							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
 							<input class="quantity" min="0" id="cParti" name="cParti"
-								value="${classVo.getCPrice()}" type="number">
+								value="${classVo.getCParti()}" type="number">
 							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
 								class="plus"></button>
@@ -281,7 +280,7 @@ $(function(){
 							<button  type="button" 
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown(1000)"></button>
 							<input class="quantity" min="1000" id="cPrice" name="cPrice"
-								 value="5000" type="number">
+								 value="${classVo.getCPrice()}"type="number">
 							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp(5000)"
 								class="plus"></button>
@@ -311,7 +310,7 @@ $(function(){
 				<div class="row">
 					<div class="col-half">
 						<div class="profile-cover">
-							<div class="profile-avatar">
+							<div class="profile-avatar" style=" padding:10px 100px">
 								<img style="border-radius: 50%;" width="200px" height="200px;"
 									src="/images/${mvo.profileImage}" />
 							</div>
@@ -584,8 +583,8 @@ $(function(){
 						내용에 동의합니다.</label>
 				</div>
 			</div> -->
-			<button class="btn btn-primary" type="button" id="insertclass"
-				style="margin: 10px; padding: 10px;">클래스 개설 신청</button>
+			<button class="btn btn-primary" type="button" id="updateclass"
+				style="margin: 10px; padding: 10px;">클래스 수정</button>
 			<button class="btn btn-primary" type="button"
 				onClick="location.href='/classBizList.do'"
 				style="margin: 10px; padding: 10px;">클래스 목록으로</button>
@@ -624,8 +623,8 @@ $(function(){
 				}
 			});
 
-			$("#insertclass").click(function() { 
-				alert("등록");
+			$("#updateclass").click(function() { 
+				alert("수정완료");
 				$("#cfrm").submit();
 			})
 

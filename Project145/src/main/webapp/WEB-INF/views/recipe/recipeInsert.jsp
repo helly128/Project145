@@ -7,20 +7,24 @@
 <meta charset="UTF-8">
 <title>Recipe Insert</title>
 <style>
-.container {
-	margin-left: 20%;
-	margin-right: 20%;
-}
-
 input, textarea {
 	border: 1px solid #6C9852;
+	width: 100%;
 }
 
 row.plus {
 	margin-left: 20%;
 	margin-right: 20%;
 }
+
+.addMat {
+	background: transparent;
+	border: none;
+	font-size: 35px;
+	color: #6C9852;
+}
 </style>
+<script src="/resources/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -30,92 +34,87 @@ row.plus {
 		<div class="category-list-item">
 			<form action="/recipeInsertResult.do">
 				<h3>recipe title🍏</h3>
-				<br /> <input type="text" id="" name="" style="border: '1'"
-					placeholder="제목을 입력하세요"> <br />
+				<br /> <input type="text" name="rTitle" placeholder="제목을 입력하세요">
+				<br />
 
-				<div class="row">
-					<div class="col-lg-10">
-						<textarea rows="5" cols="120"> </textarea>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-lg-3">
-						<i class="lni lni-users">작성자</i><input type="text" id="" name=""
-							placeholder="작성자를 입력하세요">
-					</div>
-					<div class="col-lg-3">
-						<i class="lni lni-calendar">작성일자</i><input type="text" id=""
-							name="" placeholder="작성일자를 입력하세요">
-					</div>
-					<div class="col-lg-3">
-						<p>이미지 수정</p>
-						<img src="#" height="200px" width="200px">
-						<button>사진 등록</button>
-					</div>
-				</div>
-		</div>
-		<hr>
-		<br />
-		<!-- 관련 재료 -->
-		<divclass">
-		<h3>Ingredient🍋</h3>
-		<br />
-		<div class="row">
-			Used Ingredient<br /> <br />
-			<div class="plus">
-				<%-- 	<c:forEach> --%>
-				<input type="text" id="" name="" placeholder="재료를 입력하세요"> <input
-					type="text" id="" name="" placeholder="재료를 입력하세요"> <input
-					type="text" id="" name="" placeholder="재료를 입력하세요"> <input
-					type="text" id="" name="" placeholder="재료를 입력하세요">
-				<%-- 	</c:forEach> --%>
-			</div>
-		</div>
-		<button type="button">➕</button>
-
-
-		<hr />
-		<br />
-		<!-- 관련 클래스 -->
-		<div>
-			<div class="row">
-				<h3>Related Class📖</h3>
 				<div>
-					<div class="plus">
-						<div class="col-lg-3 col-sm-4 col-5">
-							<div class="search-input">
-								<label for="category"><i
-									class="lni lni-grid-alt theme-color"></i></label> <select
-									name="category" id="category">
-									<option value="none" selected disabled>비건 레벨</option>
-									<option value="none">비건</option>
-									<option value="none">락토</option>
-									<option value="none">오보</option>
-									<option value="none">락토오보</option>
-								</select>
-
-							</div>
+					<textarea row="10" id="rContent" name="rContent"></textarea>
+				</div>
+				<hr>
+				<br />
+				<!-- 관련 재료 -->
+				<divclass">
+				<h3>Ingredient🍋</h3>
+				<br />
+				<div class="material">
+					Used Ingredient<br /> <br />
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" id="" name="matName" placeholder="재료명 (예: 두부)">
 						</div>
-
-						<div class="col-lg-4 col-sm-5 col-10">
-							<div class="search-input">
-								<label for="keyword"><i
-									class="lni lni-search-alt theme-color"></i></label> <input type="text"
-									name="keyword" id="keyword" placeholder="Product keyword">
-							</div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+							<input type="text" id="" name="matVol" placeholder="분량 (예: 한 모)">
 						</div>
-
-						<%-- 	<c:forEach> --%>
-						<input type="text" id="" name="" placeholder="관련 클래스 등록">
-						<%-- 	</c:forEach> --%>
 					</div>
 				</div>
-				<button type="button">➕</button>
-			</div>
-			<br />
+				<button type="button" class="addMat">
+					<i class="lni lni-circle-plus"></i>
+				</button>
+
+
+				<hr />
+				<br />
+				<!-- 관련 클래스 -->
+				<div>
+					<div class="row">
+						<h3>Related Class📖</h3>
+						<div>
+							<div class="plus">
+								<div class="col-lg-3 col-sm-4 col-5">
+									<div class="search-input">
+										<label for="category"><i
+											class="lni lni-grid-alt theme-color"></i></label> <select
+											name="category" id="category">
+											<option value="none" selected disabled>비건 레벨</option>
+											<option value="none">비건</option>
+											<option value="none">락토</option>
+											<option value="none">오보</option>
+											<option value="none">락토오보</option>
+										</select>
+
+									</div>
+								</div>
+
+								<div class="col-lg-4 col-sm-5 col-10">
+									<div class="search-input">
+										<label for="keyword"><i
+											class="lni lni-search-alt theme-color"></i></label> <input
+											type="text" name="keyword" id="keyword"
+											placeholder="Product keyword">
+									</div>
+								</div>
+
+								<input type="text" id="" name="" placeholder="관련 클래스 등록">
+							</div>
+						</div>
+						<button type="button">
+							<i class="lni lni-circle-plus"></i>
+						</button>
+					</div>
+					<br />
 			</form>
 		</div>
 	</div>
+
+	<script>
+		var ckeditor_config = {
+			resize_enable : false,
+			enterMode : CKEDITOR.ENTER_BR,
+			shiftEnterMode : CKEDITOR.ENTER_P,
+			filebrowserUploadUrl : "/ckEditorUpload.do"
+		};
+
+		CKEDITOR.replace('rContent', ckeditor_config);
+	</script>
 </body>
 </html>
