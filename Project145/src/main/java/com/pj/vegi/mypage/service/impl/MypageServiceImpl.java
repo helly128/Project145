@@ -3,11 +3,8 @@ package com.pj.vegi.mypage.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.mypage.mapper.MypageMapper;
 import com.pj.vegi.mypage.service.MypageService;
 import com.pj.vegi.vo.LessonReservVO;
@@ -16,7 +13,6 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
-import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 @Service("mypageService")
@@ -25,8 +21,6 @@ public class MypageServiceImpl implements MypageService {
 	@Autowired
 	MypageMapper dao;
 
-	@Autowired
-	private MemberMapper mem_dao;
 
 	@Override
 	public MemberVo myPageSelect(MemberVo vo) throws SQLException {

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.SnsInfoVo;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -95,8 +96,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updatePw(MemberVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.updatePw(vo);
+	}
+
+	
+	@Override
+	public int naverInsert(SnsInfoVo svo) {
+		return dao.naverInsert(svo);
 	}
 
 

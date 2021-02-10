@@ -23,7 +23,7 @@ input, textarea {
 
 	<div class="container">
 		<div>
-			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
+			<h2><a href="/recipeMain.do" style="margin-top: 5%">⬅</a></h2>
 		</div>
 		<form id="frm" name="frm" method="post"
 			action="/recipeUpdateResult.do" encType="multipart/form-data">
@@ -58,7 +58,7 @@ input, textarea {
 					</div>
 					<div class="col-lg-3">
 						<i class="lni lni-calendar">작성일자</i>
-						<p id="rDate" name="rDate"></p>
+						<p id="rDate" ></p>
 
 					</div>
 					<div class="col-lg-3">
@@ -98,10 +98,10 @@ input, textarea {
 						<%-- <c:forEach var="rm" items="${rm}">
 							
 						</c:forEach> --%> 
-						<table border="0" class="col-lg-12 " id="dataTable"
-							name="dataTable">
+						<table class="col-lg-12 " id="dataTable"
+							>
 							<tbody>
-								<tr name="trMat">
+								<tr id="trMat">
 									<td class="col-md-5"><input type="text"
 										placeholder="재료명을 추가하여 입력하세요" readonly="readonly"></td>
 									<td class="col-md-5"><input type="text"
@@ -202,7 +202,7 @@ input, textarea {
 							<br />
 
 							<div class="col-lg-12" align="center">
-								<table align="center">
+								<table>
 									<tr>
 										<td class="col-md-2" align="center" valign="middle"><select
 											name="vegType" id="vegType">

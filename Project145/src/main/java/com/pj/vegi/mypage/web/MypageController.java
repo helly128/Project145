@@ -15,12 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.pj.vegi.biz.service.ClassBizService;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.mypage.service.MypageService;
-import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vo.LessonReservVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
@@ -28,7 +26,6 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
-import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.VegimeetVo;
 import com.pj.vegi.vo.enquiryVO;
 

@@ -1,9 +1,7 @@
 package com.pj.vegi.crawling.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +9,6 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.pj.vegi.crawling.mapper.CrawlingMapper;
 import com.pj.vegi.vo.RecipeMaterialVo;
 import com.pj.vegi.vo.RecipeVo;

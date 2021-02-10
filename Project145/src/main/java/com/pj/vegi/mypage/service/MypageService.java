@@ -10,7 +10,6 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestReservVo;
-import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.VegimeetVo;
 
 public interface MypageService {

@@ -49,4 +49,7 @@
 
 <!--네이버 이용자 추가-->
 
+	<select id="naverInsert" resultType="SnsInfoVo">
+	
+	</select>
 </mapper>

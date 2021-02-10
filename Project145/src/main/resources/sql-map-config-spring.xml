@@ -20,6 +20,7 @@
 		<typeAlias type="com.pj.vegi.mywallet.vo.DepositReqListVO" alias="DepositReqListVO"/>
 		<typeAlias type="com.pj.vegi.vo.RecipeMaterialVo" alias="MaterialVo"/>
 		<typeAlias type="com.pj.vegi.mywallet.vo.WalletHistoryVO" alias="WalletHistoryVO"/>
+		<typeAlias type="com.pj.vegi.vo.SnsInfoVo" alias="SnsInfoVo"/>
 		<package name="com.pj.vegi.vo"/>
 	</typeAliases>
 
