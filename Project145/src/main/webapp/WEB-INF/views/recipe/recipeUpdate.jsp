@@ -97,7 +97,7 @@ input, textarea {
 					<div class="col-lg-12 ">
 						<%-- <c:forEach var="rm" items="${rm}">
 							
-						</c:forEach> --%>
+						</c:forEach> --%> 
 						<table border="0" class="col-lg-12 " id="dataTable"
 							name="dataTable">
 							<tbody>

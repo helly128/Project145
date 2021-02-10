@@ -128,10 +128,10 @@ public class MemberController {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jnode = mapper.readTree(apiResult);
 		String naverId = (String)jnode.get("response").get("id").textValue();
-		String naverEmail = (String)(jnode.get("response").get("email").textValue());
-		String naverName = (String)(jnode.get("response").get("name").textValue());
+//		String naverEmail = (String)(jnode.get("response").get("email").textValue());
+//		String naverName = (String)(jnode.get("response").get("name").textValue());
 		  
-		session.setAttribute("name", naverName);
+//		session.setAttribute("name", naverName);
 		session.setAttribute("mId", naverId);
 		session.setAttribute("auth", "user");
 		

@@ -7,7 +7,7 @@
 	<select id="memberSelect" resultType="com.pj.vegi.vo.MemberVo">
 		SELECT
 		*
-		FROM member
+		FROM member 
 		WHERE
 		m_id = #{mId}
 	</select>
@@ -47,6 +47,6 @@
 		update member set password = #{password} where m_id = #{mId}
 	</update>
 
-
+<!--네이버 이용자 추가-->
 
 </mapper>
