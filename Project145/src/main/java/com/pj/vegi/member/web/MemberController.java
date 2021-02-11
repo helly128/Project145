@@ -68,14 +68,15 @@ public class MemberController {
 			if (ref != null) {
 				old_url = ref;
 			}
-		}else {
-			 old_url="redirect:/loginForm.do";
+		} else {
+			old_url = "redirect:/loginForm.do";
 		}
 
 		System.out.println(" 처리이전페이지 ======> " + old_url);
 		response.sendRedirect(old_url);
 
 	}
+
 	@ResponseBody
 	@RequestMapping("/LoginCheck.do")
 	public String LoginCheck(Model model, HttpSession session, MemberVo vo) throws SQLException {
@@ -96,7 +97,7 @@ public class MemberController {
 
 		return result;
 	}
-	
+
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws SQLException, IOException {
 		String old_url = "/main.do";
@@ -105,49 +106,78 @@ public class MemberController {
 			old_url = ref;
 		}
 		session.invalidate();
-		return "redirect:"+old_url;
+		return "redirect:" + old_url;
 	}
 
 	@RequestMapping("/naverResult.do")
-	public String naverResult()  {
+	public String naverResult() {
 
 		return "login/naverSuccess";
 	}
-	
+
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model,MemberVo vo,@RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
+	public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException, SQLException {
 		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBo.getAccessToken(session, code, state);
-		// 로그인 사용자 정보를 읽어온다.
-		apiResult = naverLoginBo.getUserProfile(oauthToken);
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode jnode = mapper.readTree(apiResult);
-		String mId = (String)jnode.get("response").get("id").textValue();
-		String email = (String)(jnode.get("response").get("email").textValue());
-		String mName = (String)(jnode.get("response").get("name").textValue());
-		vo.setMId("mId");
-		vo.setEmail("email");
-		vo.setMName("mName");
-//		model.addAttribute(mId);
-//		model.addAttribute(mName);
-//		model.addAttribute(email);
-		int n = memberService.naverInsert(vo);
-		String viewPath = "";
-		if (n != 0)
-			viewPath = "redirect:naverResult.do";
-		else
-			viewPath = "redirect:/loginForm.do";
-		session.setAttribute("mName", mName);
-		session.setAttribute("mId", mId);
-		session.setAttribute("auth", "user");
-		
-		
-		/* 네이버 로그인 성공 페이지 View 호출 */
-		return viewPath;
-	}
 
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check != true) {// 새로운 네이버 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setEmail(email);
+			vo.setMName(mName);
+
+			int n = memberService.naverInsert(vo);
+
+			if (n != 0) {
+				session.setAttribute("mName", mName);
+				session.setAttribute(email, email);
+				session.setAttribute("mId", mId);
+				session.setAttribute("auth", "user");
+				result = "redirect:naverResult.do";
+			} else {
+				result = "redirect:/loginForm.do";
+			}
+		} else {// 이미저장된네이버로 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setMName(jnode.get("response").get("name").textValue());
+			vo.setEmail(jnode.get("response").get("email").textValue());
+			vo.setMId(jnode.get("response").get("id").textValue());
+			session.setAttribute("mName", mName);
+			session.setAttribute(email, email);
+			session.setAttribute("mId", mId);
+			session.setAttribute("auth", "user");
+			result = "redirect:naverResult.do";
+		}
+
+//		String viewPath = "";
+//		if (n != 0)
+//			viewPath = "redirect:naverResult.do";
+//		else
+//			viewPath = "redirect:/loginForm.do";
+
+		/* 네이버 로그인 성공 페이지 View 호출 */
+		return result;
+	}
 
 }
