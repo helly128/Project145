@@ -101,8 +101,8 @@ public class MemberServiceImpl implements MemberService {
 
 	
 	@Override
-	public int naverInsert(SnsInfoVo svo) {
-		return dao.naverInsert(svo);
+	public int naverInsert(MemberVo vo) {
+		return dao.naverInsert(vo);
 	}
 
 

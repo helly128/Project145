@@ -28,7 +28,7 @@ h3 {
 <body>
 	<div style="background-color: #6bb33b; width: 100%; height: 100px; text-align: center; color: white;">
 		<h3>Naver Login Success</h3>
-		<h4>${name}님 환영합니다. </h4>
+		<h4>${mName}님 환영합니다. </h4>
 	</div>
 	<br>
 	<h2 style="text-align: center" id="name"></h2>

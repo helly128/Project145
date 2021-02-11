@@ -34,6 +34,13 @@
 	color: #6C9852;
 	cursor: pointer;
 }
+#writeBtn{
+    width: 130px;
+    background: #6C9852;
+    border-radius: 10px;
+    color: white;
+    height: 40px;
+}
 </style>
 <script>
 	function moveurl(category) {
@@ -89,16 +96,15 @@
 											placeholder="keyword" value="${vo.getKeyword() }">
 									</div>
 								</div>
-								<div class="col-lg-1 col-sm-1 col-2">
-									<button class="btn btn-success" type="submit">👀</button>
+								<div class="col-lg-1" align="center">
+									<button class="btn btn-success" type="submit" >Search</button>
 								</div>
 							</div>
 						</form>
 						<div class="col-lg-2 col-sm-3 col-4">
 							<c:if test="${sessionScope.mId !=null}">
-								<button class="btn btn-success"
-									onclick="location.href='recipeInsert.do'">Write New
-									Now!📝</button>
+								<button class="btn btn-success" id="writeBtn"
+									onclick="location.href='recipeInsert.do'">Write New</button>
 							</c:if>
 						</div>
 						<br /> <br />

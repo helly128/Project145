@@ -116,7 +116,7 @@ public class MemberController {
 	
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model,MemberVo vo,SnsInfoVo svo, @RequestParam String code, @RequestParam String state, HttpSession session)
+	public String callback(Model model,MemberVo vo,@RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		System.out.println("여기는 callback");
 		OAuth2AccessToken oauthToken;
@@ -125,17 +125,28 @@ public class MemberController {
 		apiResult = naverLoginBo.getUserProfile(oauthToken);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jnode = mapper.readTree(apiResult);
-		String naverId = (String)jnode.get("response").get("id").textValue();
-		String naverEmail = (String)(jnode.get("response").get("email").textValue());
-		String naverName = (String)(jnode.get("response").get("name").textValue());
-		  
-		session.setAttribute("name", naverName);
-		session.setAttribute("mId", naverId);
+		String mId = (String)jnode.get("response").get("id").textValue();
+		String email = (String)(jnode.get("response").get("email").textValue());
+		String mName = (String)(jnode.get("response").get("name").textValue());
+		vo.setMId("mId");
+		vo.setEmail("email");
+		vo.setMName("mName");
+//		model.addAttribute(mId);
+//		model.addAttribute(mName);
+//		model.addAttribute(email);
+		int n = memberService.naverInsert(vo);
+		String viewPath = "";
+		if (n != 0)
+			viewPath = "redirect:naverResult.do";
+		else
+			viewPath = "redirect:/loginForm.do";
+		session.setAttribute("mName", mName);
+		session.setAttribute("mId", mId);
 		session.setAttribute("auth", "user");
 		
 		
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "redirect:naverResult.do";
+		return viewPath;
 	}
 
 
