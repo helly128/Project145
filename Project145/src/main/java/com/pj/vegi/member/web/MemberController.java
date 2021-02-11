@@ -18,6 +18,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.SnsInfoVo;
 
 @Controller
 public class MemberController {
@@ -45,9 +46,6 @@ public class MemberController {
 		session.setAttribute("referer", old_url);
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginBo.getAuthorizationUrl(session);
-
-		// https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
-		// redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
 
 		// 네이버
@@ -118,7 +116,7 @@ public class MemberController {
 	
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model,MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
+	public String callback(Model model,MemberVo vo,SnsInfoVo svo, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException {
 		System.out.println("여기는 callback");
 		OAuth2AccessToken oauthToken;
@@ -128,24 +126,17 @@ public class MemberController {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode jnode = mapper.readTree(apiResult);
 		String naverId = (String)jnode.get("response").get("id").textValue();
-//		String naverEmail = (String)(jnode.get("response").get("email").textValue());
-//		String naverName = (String)(jnode.get("response").get("name").textValue());
+		String naverEmail = (String)(jnode.get("response").get("email").textValue());
+		String naverName = (String)(jnode.get("response").get("name").textValue());
 		  
-//		session.setAttribute("name", naverName);
+		session.setAttribute("name", naverName);
 		session.setAttribute("mId", naverId);
 		session.setAttribute("auth", "user");
+		
 		
 		/* 네이버 로그인 성공 페이지 View 호출 */
 		return "redirect:naverResult.do";
 	}
 
 
-	private static final String mydomain = "http%3A%2F%2Flocalhost%3A8088%2Fcallback.do";
-
-	private static final String clientId = "1P0F_fye7hGWfHa0ztCe";
-
-	private static final String clientSecret = "Psh1g_HCW9";
-
-	private static final String requestUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId
-			+ "&response_type=code&redirect_uri=" + mydomain + "&state=";
 }

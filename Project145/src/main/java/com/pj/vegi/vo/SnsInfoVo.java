@@ -18,7 +18,6 @@ public class SnsInfoVo {
 	private String snsType;
 	private String snsName;
 	private String snsProfile;
-	private String snsConnectDate;
 	
 	
 
