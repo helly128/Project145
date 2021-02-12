@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
-import com.pj.vegi.mywallet.vo.WithDrawReqVO;
 import com.pj.vegi.vo.MemberVo;
 
 public interface MyWalletMapper {

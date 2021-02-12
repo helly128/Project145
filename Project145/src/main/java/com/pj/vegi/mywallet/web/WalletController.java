@@ -25,7 +25,6 @@ import com.pj.vegi.mywallet.vo.DepositReqVO;
 import com.pj.vegi.mywallet.vo.DepositResListVO;
 import com.pj.vegi.mywallet.vo.DepositResponseVO;
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
-import com.pj.vegi.mywallet.vo.WithDrawReqVO;
 import com.pj.vegi.mywallet.vo.WithDrawResVO;
 import com.pj.vegi.vo.MemberVo;
 

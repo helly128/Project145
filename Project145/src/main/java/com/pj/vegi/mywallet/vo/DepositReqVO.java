@@ -1,8 +1,6 @@
 package com.pj.vegi.mywallet.vo;
 
 import java.util.ArrayList;
-import java.util.Map;
-
 import lombok.Data;
 
 @Data

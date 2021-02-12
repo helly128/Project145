@@ -18,6 +18,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.SnsInfoVo;
 
 @Controller
 public class MemberController {
@@ -45,9 +46,6 @@ public class MemberController {
 		session.setAttribute("referer", old_url);
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginBo.getAuthorizationUrl(session);
-
-		// https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
-		// redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
 
 		// 네이버
@@ -70,14 +68,15 @@ public class MemberController {
 			if (ref != null) {
 				old_url = ref;
 			}
-		}else {
-			 old_url="redirect:/loginForm.do";
+		} else {
+			old_url = "redirect:/loginForm.do";
 		}
 
 		System.out.println(" 처리이전페이지 ======> " + old_url);
 		response.sendRedirect(old_url);
 
 	}
+
 	@ResponseBody
 	@RequestMapping("/LoginCheck.do")
 	public String LoginCheck(Model model, HttpSession session, MemberVo vo) throws SQLException {
@@ -98,7 +97,7 @@ public class MemberController {
 
 		return result;
 	}
-	
+
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws SQLException, IOException {
 		String old_url = "/main.do";
@@ -107,45 +106,78 @@ public class MemberController {
 			old_url = ref;
 		}
 		session.invalidate();
-		return "redirect:"+old_url;
+		return "redirect:" + old_url;
 	}
 
 	@RequestMapping("/naverResult.do")
-	public String naverResult()  {
+	public String naverResult() {
 
 		return "login/naverSuccess";
 	}
-	
+
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model,MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
+	public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException, SQLException {
 		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBo.getAccessToken(session, code, state);
-		// 로그인 사용자 정보를 읽어온다.
-		apiResult = naverLoginBo.getUserProfile(oauthToken);
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode jnode = mapper.readTree(apiResult);
-		String naverId = (String)jnode.get("response").get("id").textValue();
-		String naverEmail = (String)(jnode.get("response").get("email").textValue());
-		String naverName = (String)(jnode.get("response").get("name").textValue());
-		  
-		session.setAttribute("name", naverName);
-		session.setAttribute("mId", naverId);
-		session.setAttribute("auth", "user");
-		
+
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check != true) {// 새로운 네이버 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setEmail(email);
+			vo.setMName(mName);
+
+			int n = memberService.naverInsert(vo);
+
+			if (n != 0) {
+				session.setAttribute("mName", mName);
+				session.setAttribute(email, email);
+				session.setAttribute("mId", mId);
+				session.setAttribute("auth", "user");
+				result = "redirect:naverResult.do";
+			} else {
+				result = "redirect:/loginForm.do";
+			}
+		} else {// 이미저장된네이버로 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setMName(jnode.get("response").get("name").textValue());
+			vo.setEmail(jnode.get("response").get("email").textValue());
+			vo.setMId(jnode.get("response").get("id").textValue());
+			session.setAttribute("mName", mName);
+			session.setAttribute(email, email);
+			session.setAttribute("mId", mId);
+			session.setAttribute("auth", "user");
+			result = "redirect:naverResult.do";
+		}
+
+//		String viewPath = "";
+//		if (n != 0)
+//			viewPath = "redirect:naverResult.do";
+//		else
+//			viewPath = "redirect:/loginForm.do";
+
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "redirect:naverResult.do";
+		return result;
 	}
 
-
-	private static final String mydomain = "http%3A%2F%2Flocalhost%3A8088%2Fcallback.do";
-
-	private static final String clientId = "1P0F_fye7hGWfHa0ztCe";
-
-	private static final String clientSecret = "Psh1g_HCW9";
-
-	private static final String requestUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId
-			+ "&response_type=code&redirect_uri=" + mydomain + "&state=";
 }

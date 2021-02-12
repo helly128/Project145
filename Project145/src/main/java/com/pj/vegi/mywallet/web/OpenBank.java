@@ -10,16 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import com.google.gson.Gson;
 import com.pj.vegi.mywallet.vo.DepositReqVO;
-import com.pj.vegi.mywallet.vo.WithDrawReqVO;
-import com.sun.mail.util.BASE64EncoderStream;
 
 
 public class OpenBank {

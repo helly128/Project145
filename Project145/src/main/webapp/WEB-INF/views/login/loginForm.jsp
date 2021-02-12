@@ -21,6 +21,76 @@
 	margin-top: 5%;
 }
 </style>
+<script type="text/javascript">
+	
+	/* $(function() {
+
+		$("#check").on('click', function() {
+			var password = $("#password").val()
+			var mId = $("#mId").val()
+
+			$.ajax({
+				type : "post",
+				url : "/LoginCheck.do",
+				data : {
+					password : password,
+					mId : mId
+				},
+				dataType : "json",
+				success : function(result) {
+					//console.log(result)
+					//console.log(typeof (result))
+					if (result == true) {
+						$("#frm").submit();
+					} else {
+						$("#p").css("color", "red");
+						$("#p").text("아이디와 비밀번호를 확인해주세요.");
+					}
+
+				},
+				error : function() {
+					console.log("error받아오기 실패")
+				}
+
+			}) // ajax end
+		})
+
+	}) // ready end */
+
+	function onEnterLogin() {
+		var result = "";
+		var password = $("#password").val()
+		var mId = $("#mId").val()
+
+		$.ajax({
+			type : "post",
+			url : "/LoginCheck.do",
+			data : {
+				password : password,
+				mId : mId
+			},
+			dataType : "json",
+			async: false,
+			success : function(result) {
+				//console.log(result)
+				//console.log(typeof (result))
+				if (result == true) {
+					$("#frm").submit();
+				} else {
+					$("#p").css("color", "red");
+					$("#p").text("아이디와 비밀번호를 확인해주세요.");
+				}
+
+			},
+			error : function() {
+				console.log("error받아오기 실패")
+			}
+
+		}) // ajax end
+
+	} //onEnterLogin()
+</script>
+
 
 </head>
 <body>
@@ -28,7 +98,7 @@
 		<div align="center" style="padding-top: 5%">
 			<h2>로그인</h2>
 			<br /> <br />
-			<form id="frm" name="frm" action="/loginResult.do">
+			<form id="frm" name="frm" action="/loginResult.do" onsubmit="onEnterLogin()">
 				<%-- <input type="hidden" name = "uri" value="${param.uri }"/> --%>
 				<!-- Email input -->
 				<div class="form-outline mb-4">
@@ -50,11 +120,12 @@
 					</div>
 					<div class="col justify-content-center">
 						<!-- Submit button -->
-						<button type="button"   id="check" class="middle-btn">Sign in</button>
+						<button type="submit" id="check" class="middle-btn">Sign
+							in</button>
 					</div>
 				</div>
 			</form>
-		<!-- 	<a class="btn btn-warning btn-user btn-block" id="check"
+			<!-- 	<a class="btn btn-warning btn-user btn-block" id="check"
 				style="color: white;">로그인 실패 테스트 </a> -->
 
 
@@ -87,40 +158,6 @@
 
 		</div>
 	</div>
-	<script>
-		$(function() {
 
-			$("#check").on('click', function() {
-				var password = $("#password").val()
-				var mId =  $("#mId").val()
-
-				$.ajax({
-					type : "post",
-					url : "/LoginCheck.do",
-					data : {
-						password : password,
-						mId : mId
-					},
-					dataType : "json",
-					success : function(result) {
-						//console.log(result)
-						//console.log(typeof (result))
-						if (result == true) {
-							$("#frm").submit();
-						} else {
-							$("#p").css("color", "red");
-							$("#p").text("아이디와 비밀번호를 확인해주세요.");
-						}
-
-					},
-					error : function() {
-						console.log("error받아오기 실패")
-					}
-
-				}) // ajax end
-			})
-
-		}) // ready end
-	</script>
 </body>
 </html>
