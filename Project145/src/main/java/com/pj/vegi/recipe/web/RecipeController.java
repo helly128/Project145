@@ -108,6 +108,10 @@ public class RecipeController {
 			@RequestParam MultipartFile upload) throws IllegalStateException, IOException {
 		PrintWriter printWriter = null;
 		
+		response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+
+
 		if (upload != null && upload.getSize() > 0) {
 			String name = ImageIO.imageUpload(request, upload);
 
@@ -115,10 +119,12 @@ public class RecipeController {
 			printWriter = response.getWriter();
 			String fileUrl = "/images/" + name; // 작성화면
 
-			// 업로드시 메시지 출력
-			printWriter.println("<script type='text/javascript'>" + "window.parent.CKEDITOR.tools.callFunction("
-					+ callback + ",'" + fileUrl + "','이미지를 업로드하였습니다.')" + "</script>");
+			// 업로드시 메시지 출력 => json타입으로 리턴해야함
+//			printWriter.println("<script type='text/javascript'>" + "window.parent.CKEDITOR.tools.callFunction("
+//					+ callback + ",'" + fileUrl + "','이미지를 업로드하였습니다.')" + "</script>");
 
+			printWriter.println("{\"filename\" : \"" + name 
+									+"\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
 			printWriter.flush();
 
 		}

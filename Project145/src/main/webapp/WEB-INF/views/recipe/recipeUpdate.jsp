@@ -233,8 +233,8 @@ input, textarea {
 				<button type="submit" class="btn btn-primary" value="updateFrm">수정하기</button>
 			</div>
 
-			<script>
 			<c:set var="clistLength" value="${fn:length(lessonVO.classVoList) }" />
+			<script>
 			var clength = '<c:out value="${clistLength}"/>';
 				//클래스 검색 버튼 클릭 검색할 코드를 넘겨서 값을 가져온다. 
 					$("#searchC").click(function() {

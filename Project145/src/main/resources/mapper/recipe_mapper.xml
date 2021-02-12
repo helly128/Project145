@@ -19,14 +19,16 @@
 		r.r_report
 		FROM recipe r
 		join recipe_material rm
-		on r.r_id = rm.r_id
+		on r.r_id =
+		rm.r_id
 		<where>
 			<if test=" RType != null and RType != '' ">
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
 				r.r_title like '%' || #{keyword} || '%'
-				OR rm.mat_name like '%' || #{keyword}
+				OR rm.mat_name
+				like '%' || #{keyword}
 				|| '%'
 			</if>
 		</where>
@@ -51,9 +53,12 @@
 		where r_id = #{rId}
 	</delete>
 
-	<!-- <insert id="recipeInsert"> insert into recipe (r_id, r_type, r_title, 
-		r_content, r_image, m_id, c_id) values ( #{rId), #{rType}, #{rTitle}, #{rContent}, 
-		#{rImage}, #{mId}, #{cId} ) </insert> -->
+	<!-- <insert id="recipeInsert">
+		insert into recipe (r_id, r_type, r_title,
+		r_content, r_image, m_id, c_id) values ( #{rId), #{rType}, #{rTitle},
+		#{rContent},
+		#{rImage}, #{mId}, #{cId} )
+	</insert> -->
 	<update id="recipeUpdate">
 		update recipe set
 		r_type = #{rType},
