@@ -25,7 +25,6 @@ import com.pj.vegi.mywallet.vo.DepositReqVO;
 import com.pj.vegi.mywallet.vo.DepositResListVO;
 import com.pj.vegi.mywallet.vo.DepositResponseVO;
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
-import com.pj.vegi.mywallet.vo.WithDrawReqVO;
 import com.pj.vegi.mywallet.vo.WithDrawResVO;
 import com.pj.vegi.vo.MemberVo;
 
@@ -257,7 +256,7 @@ public class WalletController {
 		String mid = (String) session.getAttribute("mId");
 		vo.setMId(mid);				
 		
-		paging.setPageUnit(5);
+		paging.setPageUnit(10);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
 			paging.setPage(1);

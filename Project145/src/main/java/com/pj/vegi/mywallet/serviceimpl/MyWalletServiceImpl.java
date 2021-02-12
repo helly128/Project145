@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.mywallet.mapper.MyWalletMapper;
 import com.pj.vegi.mywallet.service.MyWalletService;
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
-import com.pj.vegi.mywallet.vo.WithDrawReqVO;
 import com.pj.vegi.vo.MemberVo;
 
 @Service("myWalletService")

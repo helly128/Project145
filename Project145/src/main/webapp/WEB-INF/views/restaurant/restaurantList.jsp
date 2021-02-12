@@ -34,54 +34,53 @@
 			<div class="search-area">
 				<div class="container">
 					<div class="search-wrapper">
-						<form action="#">
+						<form action="restaurant.do" method="get" id="frm">
 							<div class="row justify-content-center">
 								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="search-input">
 										<label for="category"> <i
 											class="lni lni-grid-alt theme-color"></i>
-										</label> 
-										<select name="menuVegeType" id="menuVegeType">
+										</label> <select name="menuVegeType" id="menuVegeType">
 											<form name=move method=post>
 												<option value="" selected>채식타입</option>
-												<option value="began"
-												 	<c:if test="${vo.menuVegeType == 'began' }">selected="selected"</c:if>>비건</option>
-												<option value="racto"
-													<c:if test="${vo.menuVegeType == 'racto' }">selected="selected"</c:if>>락토</option>
-												<option value="ovo"
-													<c:if test="${vo.menuVegeType == 'ovo' }">selected="selected"</c:if>>오보</option>
-												<option value="ractoOvo"
-													<c:if test="${vo.menuVegeType == 'ractoOvo' }">selected="selected"</c:if>>락토오보</option>
+												<option value="비건"
+													<c:if test="${vo.menuVegeType == '비건' }">selected="selected"</c:if>>비건</option>
+												<option value="락토"
+													<c:if test="${vo.menuVegeType == '락토' }">selected="selected"</c:if>>락토</option>
+												<option value="오보"
+													<c:if test="${vo.menuVegeType == '오보' }">selected="selected"</c:if>>오보</option>
+												<option value="락토오보"
+													<c:if test="${vo.menuVegeType == '락토오보' }">selected="selected"</c:if>>락토오보</option>
 											</form>
 										</select>
 									</div>
 								</div>
 								<div class="col-lg-3 col-sm-5 col-6">
 									<div class="search-input">
-										<label for="keyword">
-											<i class="lni lni-search-alt theme-color"></i>
-										</label> 
-											<input type="text" name="keyword" id="keyword" placeholder="식당이름/메뉴"
-												value="${vo.getKeyword() }">
+										<label for="keyword"> <a
+											href="javascript:frm.submit()"> <i
+												class="lni lni-search-alt theme-color"></i>
+										</a>
+										</label> <input type="text" name="keyword" id="keyword"
+											placeholder="식당이름으로 검색해보세요" value="${vo.getKeyword() }">
 									</div>
 								</div>
-								<div>
-									<button></button>
-								</div>	
+								<div class="col-lg-2 col-sm-4 col-6">
+									<div class="restaurantInsertButton" style="margin-bottom: 5%">
+										<input class="aaa" type="button" name="restInsert"
+											id="restInsert" onclick="location.href='restaurantForm.do'"
+											style="border-radius: 50px; text-align: center;"
+											value="식당 제보하기">
+									</div>
+								</div>
 							</div>
-							
+
+
 						</form>
-						
-						<form>
-						<div class="col-lg-2 col-sm-4 col-6">
-							<div class="restaurantInsertButton" style="margin-bottom: 5%">
-								<input class="aaa" type="button" name="restInsert"
-									id="restInsert" onclick="location.href='restaurantForm.do'"
-									style="border-radius: 50px; text-align: center;"
-									value="식당 제보하기">
-							</div>
-						</div>
-						</form>
+
+
+
+
 					</div>
 				</div>
 			</div>
@@ -106,8 +105,8 @@
 								</div>
 								<br />
 								<div>
-									<i class="lni lni-star">${vo.getRestStarAvg() }</i> <br> 
-									<i class="lni lni-map-marker">${vo.getRestAddress() }</i>
+									<i class="lni lni-star">${vo.getRestStarAvg() }</i> <br> <i
+										class="lni lni-map-marker">${vo.getRestAddress() }</i>
 								</div>
 								<br>
 								<!-- 좋아요 -->
@@ -184,8 +183,8 @@
 			if (menuVegeType == "none" || keyword == '') {
 				location.href = "restaurant.do?page=" + p
 			} else {
-				location.href = "restaurant.do?page=" + p
-						+ "&menuVegeType=" + menuVegeType + "&keyword=" + keyword;
+				location.href = "restaurant.do?page=" + p + "&menuVegeType="
+						+ menuVegeType + "&keyword=" + keyword;
 			}
 
 		}

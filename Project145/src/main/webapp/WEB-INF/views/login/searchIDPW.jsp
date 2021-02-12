@@ -103,7 +103,7 @@ $(function(){
 			data : allData,
 			datatype: "json",
 			success : function(result) {
-				alert(result);
+				alert(result.result);
 			},
 			error:(log)=>{alert("실패")}
 		})

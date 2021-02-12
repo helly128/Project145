@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.lesson.service.LessonService;
 import com.pj.vegi.member.service.MemberService;
@@ -52,10 +49,16 @@ public class LessonController {
 		vo.setStart(paging.getFirst());
 		vo.setEnd(paging.getLast());
 
+		if (vo.getVegType() == null || vo.getVegType() == "") {
+			vo.setVegType((String) session.getAttribute("vType"));
+			List<LessonVO> lessons = lessonService.lessonList(vo);
+			model.addAttribute("lessons", lessons);
+		}
+
+		List<LessonVO> lessons = lessonService.lessonList(vo);
+
 		int cnt = lessonService.countLessonMain(vo);
 		paging.setTotalRecord(cnt);
-
-		List<LessonVO> lessons = lessonService.lessonList(vo); // 페이징 설정 끝
 
 		for (LessonVO lesson_vo : lessons) {
 
@@ -77,8 +80,9 @@ public class LessonController {
 		}
 		model.addAttribute("today", date);
 
-		model.addAttribute("lessons", lessons);
 		model.addAttribute("paging", paging);
+
+		model.addAttribute("lessons", lessons);
 
 		return "lesson/lessonMain";
 	}

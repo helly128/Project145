@@ -22,6 +22,7 @@ public interface ClassBizMapper {
 	int applyCollabo(LessonVO vo);
 	List<enquiryVO> classEnquiryList(enquiryVO vo);
 	List<enquiryVO> myEnquiryList(enquiryVO vo);
+	int classBizUpdate(LessonVO cvo);
 	
 	
 

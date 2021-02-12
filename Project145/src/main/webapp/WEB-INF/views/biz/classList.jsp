@@ -9,8 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .tr-hover:hover {
 	background: #f8f9fc;
@@ -49,41 +48,9 @@
 
 
 	<div class="container">
-		<div align="right" class="mb-2">
-
-			
-			
-			<button class="btn btn-primary" style="margin-right: 20px;"
-				onclick="location.href=location.href='classRegForm.do'"><i class="fas fa fa-plus"></i></button>
-		</div>
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<a class="m-0 font-weight-bold text-primary">내 클래스 목록</a>
-				<form
-						class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-						<div class="input-group">
-							<input type="text" class="form-control bg-light border-0 small"
-								placeholder="Search for..." aria-label="Search"
-								aria-describedby="basic-addon2">
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="button">
-									<i class="fas fa-search fa-sm"></i>
-								</button>
-							</div>
-						</div>
-					</form>
-					
-					
-
-				<div style="float:right">
-
-					<button class="btn btn-outline-primary">강사미정</button>
-					<button class="btn btn-outline-primary">강사승인대기</button>
-					<button class="btn btn-outline-primary">개설완료</button>
-					<button class="btn btn-outline-primary">진행중</button>
-					<button class="btn btn-outline-primary">종료</button>
-				</div>
-				
+				<h6 class="m-0 font-weight-bold text-primary">내 클래스 목록</h6>
 			</div>
 			<div class="card-body">
 				<c:if test="${fn:length(classList) != 0 }">

@@ -8,6 +8,7 @@
 		SELECT * FROM class
 		WHERE
 		m_id=#{mId}
+		order by c_start desc
 
 	</select>
 
@@ -20,13 +21,11 @@
 
 
 	<update id="classBizUpdate">
-		UPDATE class
-		SET rest_address = #{restAddress},
-		rest_time=#{restTime},
-		rest_tel=#{restTel},
-		rest_pic=#{restPic}
-		WHERE
-		rest_id=#{restId}
+		UPDATE class 
+		set C_TITLE = #{cTitle},C_IMG = #{cImg},C_DESC= #{cDesc},VEGTYPE= #{vegType},C_PRICE = #{cPrice},
+		C_START = #{cStart},C_END = #{cEnd},STATUS = #{status},CURRICULUM = #{curriCulum},C_PARTI = #{cParti},
+		C_LOC = #{cLoc},C_TIME = #{cTime}
+		where c_id = #{cId}
 	</update>
 
 	<select id="classBizNum" resultType="MemberVo">
@@ -62,44 +61,44 @@
 		c_id=#{cId}
 	</select>
 
-	
-	
+
+
 	<update id="myCareerUpdate">
 		UPDATE member
 		set career = #{career}
 		WHERE
 		m_id=#{mId}
 	</update>
-	
+
 	<update id="applyCollabo">
 		UPDATE class
 		set lec_proposal = #{lecProposal}
 		WHERE
 		c_id=#{cId}
 	</update>
-	
-	
-	
+
+
+
 	<select id="getLecList" resultType="MemberVo">
-		
+
 		SELECT M_ID, M_NAME,PROFILE_IMAGE,INSTA,CAREER
 		FROM member
-		WHERE M_ID in 
+		WHERE M_ID in
 		(SELECT LEC_ID FROM ClASS WHERE BIZNUM = #{bizNum})
 
 	</select>
-	
-	
+
+
 	<select id="classEnquiryList" resultType="enquiryVo">
-	select * from enquiry
-	where origin_Id = #{mId}
+		select * from enquiry
+		where origin_Id = #{mId}
 	</select>
-	
+
 	<select id="myEnquiryList" resultType="enquiryVo">
-	select * from enquiry
-	where m_id = #{mId}
+		select * from enquiry
+		where m_id = #{mId}
 	</select>
-	
-	
-	
+
+
+
 </mapper>

@@ -28,4 +28,8 @@ public class NaverLoginApi extends DefaultApi20 {
 		return "https://nid.naver.com/oauth2.0/authorize";
 	}
 
+	public String getRetryAccessToken() {
+		
+		return "https://openapi.naver.com/v1/nid/me";
+	}
 }

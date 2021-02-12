@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.SnsInfoVo;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -84,9 +85,9 @@ public class MemberServiceImpl implements MemberService {
 	message.setFrom(new InternetAddress(user)); 
 	message.addRecipient(Message.RecipientType.TO, new InternetAddress(vo.getEmail())); 
 	// 메일 제목
-	message.setSubject("채식당 테스트요 ");
+	message.setSubject("채식당 임시비밀번호");
 	// 메일 내용 
-	message.setText("성공성공 하루종일 일한 게 .... 고작 요고 "); // send the message 
+	message.setText("임시 비밀번호는 " + vo.getPassword()+" 입니다. " ); // send the message 
 	Transport.send(message); 
 	System.out.println("Success Message Send"); 
 	} catch (MessagingException e) { e.printStackTrace(); } 
@@ -95,8 +96,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updatePw(MemberVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.updatePw(vo);
+	}
+
+	
+	@Override
+	public int naverInsert(MemberVo vo) {
+		return dao.naverInsert(vo);
 	}
 
 

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myPageEditCheck.jsp</title>
+<title>myWalletCheck.jsp</title>
 </head>
 <body>
 	<div align="center">
@@ -14,54 +14,54 @@
 					<h1 class="h4 text-gray-900 mb-2">내정보 수정을 위해 비밀번호를 확인해주세요.</h1>
 					<br>
 				</div>
-				<form class="user" action="myPageEdit.do" id="frm">
+				<form class="user" action="myWallet.do" id="frm"
+					onsubmit="return editFunc();" method="post">
 					<div class="form-group">
 						<input id="password" name="password" type="password"
 							class="form-control form-control-user"
 							placeholder="Enter Your Password...">
 						<p id="p"></p>
 					</div>
+					<button type="submit" class="btn btn-primary btn-user btn-block"
+						id="edit" style="color: white;">내 정보 수정</button>
 				</form>
-				<a class="btn btn-primary btn-user btn-block" id="edit" style="color: white;"> 내 정보 수정
-				</a>
 				<hr>
 			</div>
 		</div>
 	</div>
 	<script>
-		$(function() {
+		function editFunc() {
+			var password = $("#password").val();
+			var mId = "${mId}";
+			var isSubmit = false;
 
-			$("#edit").on('click', function() {
-				var password = $("#password").val()
-				var mId = "${mId}"
-
-				$.ajax({
-					type : "post",
-					url : "EditCheck.do",
-					data : {
-						password : password,
-						mId : mId
-					},
-					dataType : "json",
-					success : function(result) {
-						//console.log(result)
-						//console.log(typeof (result))
-						if (result == true) {
-							$("#frm").submit();
-						} else {
-							$("#p").css("color", "red");
-							$("#p").text("비밀번호가 일치하지 않습니다.");
-						}
-
-					},
-					error : function() {
-						console.log("error받아오기 실패")
+			$.ajax({
+				type : "post",
+				url : "EditCheck.do",
+				data : {
+					password : password,
+					mId : mId
+				},
+				dataType : "json",
+				async : false,
+				success : function(result) {
+					if (result == true) {
+						isSubmit = true;
+					} else {
+						$("#p").css("color", "red");
+						$("#p").text("비밀번호가 일치하지 않습니다.");
+						isSubmit = false;
 					}
 
-				}) // ajax end
-			})
+				},
+				error : function() {
+					console.log("error받아오기 실패");
+					isSubmit = false;
+				}
 
-		}) // ready end
+			}); // ajax end
+			return isSubmit;
+		}
 	</script>
 </body>
 </html>

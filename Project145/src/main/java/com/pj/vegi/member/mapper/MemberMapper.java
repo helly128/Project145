@@ -1,6 +1,7 @@
 package com.pj.vegi.member.mapper;
 
 
+
 import com.pj.vegi.vo.MemberVo;
 
 
@@ -13,7 +14,7 @@ public interface MemberMapper {
 	MemberVo pwSearch(MemberVo vo);
 	int updatePw(MemberVo vo);
 	
-	
+	int naverInsert(MemberVo vo);
 	
 
 }

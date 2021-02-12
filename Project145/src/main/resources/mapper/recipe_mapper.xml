@@ -7,15 +7,27 @@
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
 		FROM
-		(SELECT *
-		FROM recipe
+		(SELECT distinct(r.r_id),
+		r.r_type,
+		r.r_title,
+		r.r_date,
+		r.r_content,
+		r.r_image,
+		r.r_hit,
+		r.m_id,
+		r.c_id,
+		r.r_report
+		FROM recipe r
+		join recipe_material rm
+		on r.r_id = rm.r_id
 		<where>
 			<if test=" RType != null and RType != '' ">
-				AND r_type = #{RType}
+				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
-				AND r_title like '%' || #{keyword} || '%'
-				AND r_content like '%' || #{keyword} || '%'
+				r.r_title like '%' || #{keyword} || '%'
+				OR rm.mat_name like '%' || #{keyword}
+				|| '%'
 			</if>
 		</where>
 		) b

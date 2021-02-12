@@ -2,26 +2,23 @@ package com.pj.vegi.member.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.pj.vegi.member.service.MemberService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.SnsInfoVo;
 
 @Controller
 public class MemberController {
@@ -49,9 +46,6 @@ public class MemberController {
 		session.setAttribute("referer", old_url);
 		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
 		String naverAuthUrl = naverLoginBo.getAuthorizationUrl(session);
-
-		// https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
-		// redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
 		System.out.println("네이버:" + naverAuthUrl);
 
 		// 네이버
@@ -68,15 +62,14 @@ public class MemberController {
 			session.setAttribute("mId", vo.getMId());
 			vo = memberService.memberSelect(vo);
 			session.setAttribute("auth", vo.getAuth());
+			session.setAttribute("vType", vo.getVegtype());
 
 			String ref = (String) session.getAttribute("referer");
 			if (ref != null) {
 				old_url = ref;
 			}
-		}else {
-			
-			 old_url="redirect:/loginForm.do";
-			 
+		} else {
+			old_url = "redirect:/loginForm.do";
 		}
 
 		System.out.println(" 처리이전페이지 ======> " + old_url);
@@ -84,35 +77,107 @@ public class MemberController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping("/LoginCheck.do")
+	public String LoginCheck(Model model, HttpSession session, MemberVo vo) throws SQLException {
+
+//		String mid = (String) session.getAttribute("mId");
+//		vo.setMId(mid);
+
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check == true) {
+			result = "true";
+		} else {
+			result = "false";
+		}
+
+		System.out.println("result값" + result);
+
+		return result;
+	}
+
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) throws SQLException, IOException {
+		String old_url = "/main.do";
+		String ref = (String) session.getAttribute("referer");
+		if (ref != null) {
+			old_url = ref;
+		}
 		session.invalidate();
-		return "redirect:/main.do";
+		return "redirect:" + old_url;
+	}
+
+	@RequestMapping("/naverResult.do")
+	public String naverResult() {
+
+		return "login/naverSuccess";
 	}
 
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback")
-	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException {
+	public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
+			throws IOException, SQLException {
 		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBo.getAccessToken(session, code, state);
-		// 로그인 사용자 정보를 읽어온다.
-		apiResult = naverLoginBo.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
+
+		boolean check = memberService.memberLoginCheck(vo);
+		String result = null;
+
+		if (check != true) {// 새로운 네이버 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setEmail(email);
+			vo.setMName(mName);
+
+			int n = memberService.naverInsert(vo);
+
+			if (n != 0) {
+				session.setAttribute("mName", mName);
+				session.setAttribute(email, email);
+				session.setAttribute("mId", mId);
+				session.setAttribute("auth", "user");
+				result = "redirect:naverResult.do";
+			} else {
+				result = "redirect:/loginForm.do";
+			}
+		} else {// 이미저장된네이버로 로그인
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
+			vo.setMId(mId);
+			vo.setMName(jnode.get("response").get("name").textValue());
+			vo.setEmail(jnode.get("response").get("email").textValue());
+			vo.setMId(jnode.get("response").get("id").textValue());
+			session.setAttribute("mName", mName);
+			session.setAttribute(email, email);
+			session.setAttribute("mId", mId);
+			session.setAttribute("auth", "user");
+			result = "redirect:naverResult.do";
+		}
+
+//		String viewPath = "";
+//		if (n != 0)
+//			viewPath = "redirect:naverResult.do";
+//		else
+//			viewPath = "redirect:/loginForm.do";
 
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "login/naverSuccess";
+		return result;
 	}
 
-//	
-
-	private static final String mydomain = "http%3A%2F%2Flocalhost%3A8088%2Fcallback.do";
-
-	private static final String clientId = "1P0F_fye7hGWfHa0ztCe";
-
-	private static final String clientSecret = "Psh1g_HCW9";
-
-	private static final String requestUrl = "https://nid.naver.com/oauth2.0/authorize?client_id=" + clientId
-			+ "&response_type=code&redirect_uri=" + mydomain + "&state=";
 }

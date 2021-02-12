@@ -10,6 +10,7 @@
 <style>
 .single-product {
 	height: 400px;
+	width: 320px;
 }
 
 .product-content {
@@ -19,6 +20,26 @@
 .likeAction {
 	border: none;
 	background: transparent;
+}
+
+.name {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.name:hover {
+	color: #6C9852;
+	cursor: pointer;
+}
+#writeBtn{
+    width: 130px;
+    background: #6C9852;
+    border-radius: 10px;
+    color: white;
+    height: 40px;
 }
 </style>
 <script>
@@ -53,8 +74,7 @@
 											class="lni lni-grid-alt theme-color"></i></label> <select
 											name="RType" id="RType">
 											<option value="none" selected disabled>RecipeType</option>
-											<option value="전체"
-												<c:if test="${vo.getRType() == '비건' || vo.getRType() == '락토'|| vo.getRType() == '오보' ||vo.getRType() == '락토오보' }">selected="selected"</c:if>>전체</option>
+											<option value="">전체</option>
 											<option value="비건"
 												<c:if test="${vo.getRType() == '비건' }">selected="selected"</c:if>>비건</option>
 											<option value="락토"
@@ -76,15 +96,16 @@
 											placeholder="keyword" value="${vo.getKeyword() }">
 									</div>
 								</div>
-								<div class="col-lg-1 col-sm-1 col-2">
-									<button class="btn btn-success" type="submit">👀</button>
+								<div class="col-lg-1" align="center">
+									<button class="btn btn-success" type="submit" >Search</button>
 								</div>
 							</div>
 						</form>
 						<div class="col-lg-2 col-sm-3 col-4">
-							<button class="btn btn-success"
-								onclick="location.href='recipeInsert.do'">Write New
-								Now!📝</button>
+							<c:if test="${sessionScope.mId !=null}">
+								<button class="btn btn-success" id="writeBtn"
+									onclick="location.href='recipeInsert.do'">Write New</button>
+							</c:if>
 						</div>
 						<br /> <br />
 
@@ -103,14 +124,14 @@
 							<div class="single-product">
 								<div class="product-img">
 									<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-										src="${vo.getRImage()}" alt="" height="300px" width="300px">
+										src="${vo.getRImage()}" alt="recipe images" height="300px"
+										width="300px">
 									</a>
 								</div>
 								<div class="product-content">
 									<div class="namediv">
-										<h5 class="name">
-											<a href="/recipeDesc.do?rId=${vo.getRId()} ">${vo.getRTitle()}</a>
-										</h5>
+										<h5 class="name" title="${vo.getRTitle()}"
+											onclick="/recipeDesc.do?rId=${vo.getRId()}">${vo.getRTitle()}</h5>
 									</div>
 									<ul class="address">
 										<li><i class="lni lni-calendar"></i>&nbsp;&nbsp;${vo.getRDate() }</li>
@@ -192,33 +213,10 @@
 												}
 											}
 										})
-
 					});
 				</script>
-
 			</div>
-			<%-- <!-- 페이징 2 -->
-	<div style="display: block; text-align: center;">		
-		<c:if test="${paging.startPage != 1 }">
-			<a href="/recipeMain.do?page=${paging.startPage - 1 }&pageUnit=${paging.pageUnit}">&lt;</a>
-		</c:if>
-		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
-			<c:choose>
-				<c:when test="${p == paging.page }">
-					<b>${p }</b>
-				</c:when>
-				<c:when test="${p != paging.page }">
-					<a href="/recipeMain.do?page=${p }&pageUnit=${paging.pageUnit}">${p }</a>
-				</c:when>
-			</c:choose>
-		</c:forEach>
-		<c:if test="${paging.endPage != paging.lastPage}">
-			<a href="/recipeMain.do?page=${paging.endPage+1 }&pageUnit=${paging.pageUnit}">&gt;</a>
-		</c:if>
-	</div> --%>
 		</div>
-
-		<!--====== LATEST PRODUCT PART ENDS ======-->
 	</section>
 </body>
 </html>

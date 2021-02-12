@@ -19,28 +19,6 @@
 .namediv {
 	height: 60px;
 }
-
-.pagination {
-	display: inline-block;
-}
-
-.pagination a {
-	color: black;
-	float: left;
-	padding: 8px 16px;
-	text-decoration: none;
-}
-
-.pagination a.active {
-	background-color: #4CAF50;
-	color: white;
-	border-radius: 5px;
-}
-
-.pagination a:hover:not(.active) {
-	background-color: #ddd;
-	border-radius: 5px;
-}
 </style>
 </head>
 <body>
@@ -57,14 +35,15 @@
 			<div class="search-area">
 				<div class="container">
 					<div class="search-wrapper">
-						<form action="lessonMain.do" method="get" id="form">
+						<form action="lessonMain.do" method="post" id="form">
 							<div class="row justify-content-center">
 								<div class="col-lg-2 col-sm-4 col-6">
 									<div class="search-input">
 										<label for="category"> <i
 											class="lni lni-grid-alt theme-color"></i>
-										</label> <select name="vegType" id="vegType">
-											<option value="" selected
+										</label> <select name="vegType" id="vegType"
+											onchange="javascript:form.submit()">
+											<option value="all" selected
 												<c:if test="${vo.getVegType() == '' }">selected="selected"</c:if>>TYPE</option>
 											<option value="비건"
 												<c:if test="${vo.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
@@ -172,13 +151,8 @@
 			var vegType = document.getElementById("vegType").value;
 			var keyword = document.getElementById("keyword").value;
 
-			if (vegType == "none" || keyword == '') {
-				location.href = "lessonMain.do?page=" + p
-			} else {
-				location.href = "lessonMain.do?page=" + p + "&vegType="
-						+ vegType + "&keyword=" + keyword;
-
-			}
+			location.href = "lessonMain.do?page=" + p + "&vegType=" + vegType
+					+ "&keyword=" + keyword;
 
 		}
 
@@ -220,6 +194,11 @@
 									}
 								}
 							})
+
+			// 나의 타입으로 출력
+			//if ($("#vegType").val() == null && $("#vegType").val() == "") {
+			//	$("#vegType").val("${vType}").prop("selected", true)
+			//}
 
 		})//ready end
 	</script>

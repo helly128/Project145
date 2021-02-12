@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -168,8 +169,8 @@ style type ="text /css ">.likeAction {
 					put += "<li>" + "<a href='"+item.link+"'>" + item.link
 							+ "</a>";
 					put += "<hr/>";
-					put += "</ul>";
 				});
+					put += "</ul>";
 				$("#rMat").html(put);
 				if (result.length == 0) {
 					alert("검색 가능한 값이 없습니다.😂");
@@ -243,8 +244,8 @@ style type ="text /css ">.likeAction {
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<%-- <c:choose>
-						<c:when test="${fn:contains(${recipeSelect.getRImage()}, 'http')}">
+					<c:choose>
+						<c:when test="${recipeSelect.getRImage()}.startsWith('http')">
 							<img src="${recipeSelect.getRImage()}" height="200px"
 								width="200px">
 						</c:when>
@@ -252,7 +253,7 @@ style type ="text /css ">.likeAction {
 							<img src="/images/${recipeSelect.getRImage()}" height="200px"
 								width="200px">
 						</c:otherwise>
-					</c:choose> --%>
+					</c:choose>
 				</div>
 			</div>
 			<div class="row">

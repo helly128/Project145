@@ -23,18 +23,34 @@ h3 {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-    $(document).ready(function() {
-        var name = ${result}.response.name;
-        var email = ${result}.response.email;
-        $("#name").html("환영합니다. "+name+"님");
-        $("#email").html(email);
-      });
-</script>
+
 </head>
 <body>
 	<div style="background-color: #6bb33b; width: 100%; height: 100px; text-align: center; color: white;">
 		<h3>Naver Login Success</h3>
+		<h4>${mName}님 환영합니다. </h4>
+		
+		<div align="center">
+		<div class="profile-card" align="center">
+			<div class="profile-cover">
+				<div class="menu-container">
+				</div>
+				<div class="profile-avatar">
+					<a href="#"><img src="/images/${member.getProfileImage() }"
+						width="150" height="150" onerror="this.src='/images/default.png'"
+						alt="내사진" /></a>
+				</div>
+			</div>
+			<h2>${mid }</h2>
+			<h2>${email}</h2>
+			<h5>${member.getVegtype() }</h5>
+			<br> <a href="/changePersonalInfo.do?mId=${mid }"
+				class="btn btn-success btn-icon-split" style="background-color: #6c9852;"> <span
+				class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
+			</span> <span class="text">내 정보 수정</span>
+			</a>
+		</div><br>
+	</div>
 	</div>
 	<br>
 	<h2 style="text-align: center" id="name"></h2>

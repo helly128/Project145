@@ -12,9 +12,7 @@
 	charset="utf-8"></script>
 
 <title>Insert title here</title>
-<!--====== Bootstrap CSS ======-->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/assets/css/bootstrap-5.0.5-alpha.min.css">
+
 <style>
 .login {
 	margin-left: 30%;
@@ -23,14 +21,84 @@
 	margin-top: 5%;
 }
 </style>
+<script type="text/javascript">
+	
+	/* $(function() {
+
+		$("#check").on('click', function() {
+			var password = $("#password").val()
+			var mId = $("#mId").val()
+
+			$.ajax({
+				type : "post",
+				url : "/LoginCheck.do",
+				data : {
+					password : password,
+					mId : mId
+				},
+				dataType : "json",
+				success : function(result) {
+					//console.log(result)
+					//console.log(typeof (result))
+					if (result == true) {
+						$("#frm").submit();
+					} else {
+						$("#p").css("color", "red");
+						$("#p").text("아이디와 비밀번호를 확인해주세요.");
+					}
+
+				},
+				error : function() {
+					console.log("error받아오기 실패")
+				}
+
+			}) // ajax end
+		})
+
+	}) // ready end */
+
+	function onEnterLogin() {
+		var result = "";
+		var password = $("#password").val()
+		var mId = $("#mId").val()
+
+		$.ajax({
+			type : "post",
+			url : "/LoginCheck.do",
+			data : {
+				password : password,
+				mId : mId
+			},
+			dataType : "json",
+			async: false,
+			success : function(result) {
+				//console.log(result)
+				//console.log(typeof (result))
+				if (result == true) {
+					$("#frm").submit();
+				} else {
+					$("#p").css("color", "red");
+					$("#p").text("아이디와 비밀번호를 확인해주세요.");
+				}
+
+			},
+			error : function() {
+				console.log("error받아오기 실패")
+			}
+
+		}) // ajax end
+
+	} //onEnterLogin()
+</script>
+
 
 </head>
 <body>
 	<div class="login">
 		<div align="center" style="padding-top: 5%">
 			<h2>로그인</h2>
-			<br/><br/>
-			<form action="/loginResult.do">
+			<br /> <br />
+			<form id="frm" name="frm" action="/loginResult.do" onsubmit="onEnterLogin()">
 				<%-- <input type="hidden" name = "uri" value="${param.uri }"/> --%>
 				<!-- Email input -->
 				<div class="form-outline mb-4">
@@ -42,6 +110,7 @@
 				<div class="form-outline mb-4">
 					<input type="password" id="password" name="password"
 						class="form-control" required="required" placeholder="password" />
+					<p id="p"></p>
 				</div>
 
 				<!-- 2 column grid layout for inline styling -->
@@ -51,39 +120,44 @@
 					</div>
 					<div class="col justify-content-center">
 						<!-- Submit button -->
-						<button type="submit" class="middle-btn">Sign in</button>
+						<button type="submit" id="check" class="middle-btn">Sign
+							in</button>
 					</div>
 				</div>
+			</form>
+			<!-- 	<a class="btn btn-warning btn-user btn-block" id="check"
+				style="color: white;">로그인 실패 테스트 </a> -->
 
 
-
-				<!-- Register buttons -->
-				<div class="row mb-4 text-center">
-					<p>
-						Not a member? <a href="#!">Register</a>
-					</p>
-					<p>or sign up with:</p>
-					<br />
-					<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-					<div id="naverIdLogin"></div>
+			<!-- Register buttons -->
+			<div class="row mb-4 text-center">
+				<p>
+					Not a member? <a href="#!">Register</a>
+				</p>
+				<p>or sign up with:</p>
+				<br />
+				<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+				<div id="naverIdLogin">
 
 					<a href="${url}"> <img height="50"
 						src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
-					<%
-					String clientId = "1P0F_fye7hGWfHa0ztCe";//애플리케이션 클라이언트 아이디값";
-					String redirectURI = URLEncoder.encode("http://localhost:8088/callback", "UTF-8");
-					SecureRandom random = new SecureRandom();
-					String state = new BigInteger(130, random).toString();
-					String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-					apiURL += "&client_id=" + clientId;
-					apiURL += "&redirect_uri=" + redirectURI;
-					apiURL += "&state=" + state;
-					session.setAttribute("state", state);
-					%>
-					<br>
 				</div>
-			</form>
+				<%
+				String clientId = "1P0F_fye7hGWfHa0ztCe";//애플리케이션 클라이언트 아이디값";
+				String redirectURI = URLEncoder.encode("http://localhost:8088/callback", "UTF-8");
+				SecureRandom random = new SecureRandom();
+				String state = new BigInteger(130, random).toString();
+				String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+				apiURL += "&client_id=" + clientId;
+				apiURL += "&redirect_uri=" + redirectURI;
+				apiURL += "&state=" + state;
+				session.setAttribute("state", state);
+				%>
+				<br>
+			</div>
+
 		</div>
 	</div>
+
 </body>
 </html>

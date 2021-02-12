@@ -108,9 +108,6 @@
 			<li class="nav-item"><a class="nav-link"
 				href="/myWalletCheck.do"> 👜 <span>My Wallet</span>
 			</a></li>
-			<li class="nav-item"><a class="nav-link"
-				href="/myWalletCheck.do"> 👜 <span>My Wallet History</span>
-			</a></li>
 
 			<hr class="sidebar-divider d-none d-md-block">
 
