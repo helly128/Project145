@@ -18,15 +18,18 @@
 		r.c_id,
 		r.r_report
 		FROM recipe r
-		join recipe_material rm
-		on r.r_id = rm.r_id
+		LEFT OUTER JOIN recipe_material rm
+		on
+		r.r_id =
+		rm.r_id
 		<where>
 			<if test=" RType != null and RType != '' ">
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
 				r.r_title like '%' || #{keyword} || '%'
-				OR rm.mat_name like '%' || #{keyword}
+				OR rm.mat_name
+				like '%' || #{keyword}
 				|| '%'
 			</if>
 		</where>
@@ -51,9 +54,19 @@
 		where r_id = #{rId}
 	</delete>
 
-	<!-- <insert id="recipeInsert"> insert into recipe (r_id, r_type, r_title, 
-		r_content, r_image, m_id, c_id) values ( #{rId), #{rType}, #{rTitle}, #{rContent}, 
-		#{rImage}, #{mId}, #{cId} ) </insert> -->
+	<insert id="recipeInsert">
+		insert into recipe (r_id, r_type, r_title, r_date,
+		r_content, r_image,
+		m_id, c_id) values ( 'rec' || rec_seq.nextval, #{rType}, #{rTitle},
+		current_date,
+		#{rContent}, #{rImage}, #{mId}, #{cId} )
+
+		<selectKey keyProperty="seq" resultType="int" order="AFTER">
+			SELECT
+			rec_seq.currval
+			FROM DUAL
+		</selectKey>
+	</insert>
 	<update id="recipeUpdate">
 		update recipe set
 		r_type = #{rType},
@@ -120,30 +133,16 @@
 	</select>
 
 	<select id="recipeLessonSearch" resultType="LessonVO">
-		select c.c_id "cId", c.c_title "cTitle",c.c_desc "cDesc" ,m.m_name
+		SELECT c.c_id "cId", c.c_title "cTitle", c.c_desc "cDesc", m.m_name
 		"lName"
-		from class c join member m
-		on c.m_id = m.m_id
+		FROM class c join member m
+		ON c.m_id = m.m_id
 		<where>
-			<if
-				test="( vegType == null or vegType == '') and keyword == null and keyword == '' ">
-				and c.vegType in('비건','락토','오보','락토오보')
-			</if>
-			<if
-				test=" (vegType == null or vegType == '') and keyword != null and keyword != '' ">
-				and c.vegType in('비건','락토','오보','락토오보')
-				and c.c_title like '%'
-				|| #{keyword} || '%'
-			</if>
-			<if
-				test=" vegType != null and vegType != '' and (keyword == null or keyword == '') ">
+			<if test=" vegType != null and vegType != ''">
 				and c.vegType = #{vegType}
 			</if>
-			<if
-				test=" vegType != null and vegType != '' and keyword != null and keyword != '' ">
-				and c.vegType = #{vegType}
-				and c.c_title like '%' || #{keyword}
-				|| '%'
+			<if test="keyword != null and keyword != '' ">
+				and c.c_title like '%' || #{keyword} || '%'
 			</if>
 		</where>
 	</select>
@@ -169,4 +168,32 @@
 		AND origin_id=#{originId}
 	</select>
 
+	<select id="relatedClass" resultType="LessonVO">
+		SELECT c.*, m.m_name
+		"lName"
+		FROM class c join member m
+		ON c.m_id = m.m_id
+		WHERE c_id = #{cId}
+	</select>
+
+	<update id="recipePointUpdate">
+		UPDATE member
+		SET wallet_point = wallet_point + 50
+		WHERE m_id = #{mId}
+	</update>
+
+	<insert id="recipeWalletHistory">
+		INSERT INTO wallet_history(wallet_id, m_id,
+		wallet_money, wallet_type, wallet_date)
+		VALUES('wallet' ||
+		wallet_seq.nextval, #{mId}, 50, '레시피 작성', current_date)
+	</insert>
+
+	<select id="recipeInsertCount" resultType="int">
+		SELECT COUNT(wallet_id)
+		FROM wallet_history
+		WHERE m_id = #{mId}
+		AND wallet_type = '레시피 작성'
+		AND wallet_date BETWEEN TRUNC(current_date, 'dd') AND TRUNC(current_date, 'dd')+1;
+	</select>
 </mapper>

@@ -11,190 +11,92 @@
 input, textarea {
 	border: 1px solid #6C9852;
 }
+
+.addMat, .deleteMat {
+	background: transparent;
+	border: none;
+	font-size: 35px;
+	color: #6C9852;
+}
+
+.matInput {
+	margin: 0px;
+}
 </style>
 <!-- ckeditor 4 -->
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/ckeditor/contents.css">
-<script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/ckeditor/ckeditor.js"></script>
+<script src="/resources/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 
 	<div class="container">
 		<div>
-			<h2><a href="/recipeMain.do" style="margin-top: 5%">⬅</a></h2>
+			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
 		</div>
-		<form id="frm" name="frm" method="post"
-			action="/recipeUpdateResult.do" encType="multipart/form-data">
-			<input type="hidden" name="RId" value="${select.RId }">
-			<div class="category-list-item">
-				<div class="row">
-
-					<div class="col-lg-12">
-						<h3>recipe title🍏</h3>
-						<br /> <input type="text" id="rTitle" name="rTitle"
-							style="border: '1'" value="${select.RTitle }"
-							placeholder="제목을 입력하세요"> <br />
-					</div>
-
+		<div class="category-list-item">
+			<form id="frm" action="/recipeUpdateResult.do" method="post"
+				onsubmit="return checkForm();">
+				<input type="hidden" name="rId" value="${select.getRId() }">
+				<h3>recipe title🍏</h3>
+				<div class="my-3">
+					<select name="rType" id="rType">
+						<option value="비건">비건</option>
+						<option value="락토">락토</option>
+						<option value="오보">오보</option>
+						<option value="락토오보">락토오보</option>
+					</select>
 				</div>
-			</div>
-			<div>
-				<div class="row">
-					<%-- <div class="col-lg-12">
-						<textarea rows="5" cols="120" id="rContent" name="rContent">${select.RContent } </textarea>
-					</div> --%>
-					<div class="col-lg-12">
-						﻿
-						<textarea id="ckeditor" id="rContent" name="rContent" rows=10>${select.RContent }</textarea>
-					</div>
+				<input type="text" name="rTitle" value="${select.getRTitle() }"
+					required> <br />
+				<p style="color: red">
+					<strong>*업로드한 사진 중 첫번째 사진이 대표사진으로 등록됩니다. 한 개 이상의 사진을
+						등록해주세요.</strong>
+				</p>
+				<div>
+					<textarea id="ckeditor" required>${select.getRContent() }</textarea>
 				</div>
-				<br /> <br />
-				<div class="row">
-					<div class="col-lg-3">
-						<i class="lni lni-users">작성자</i> <input type="text" id="mId"
-							name="mId" value="${select.MId }" readonly>
-					</div>
-					<div class="col-lg-3">
-						<i class="lni lni-calendar">작성일자</i>
-						<p id="rDate" ></p>
-
-					</div>
-					<div class="col-lg-3">
-						<p>이미지 수정</p>
-						<input type="file" name="rImageFile" id="rImageFile"
-							multiple="multiple">
-					</div>
-					<div class="col-lg-2 col-sm-4 col-5">
-						<p>
-							<i class="lni lni-grid-alt theme-color">비건타입 </i>
-						</p>
-						<div class="search-input">
-							<label for="category"></label> <select name="rType" id="rType">
-								<option value="none" selected disabled>비건 레벨</option>
-								<option value="비건" <c:if test="${vo.getRType() == '비건' }">selected="selected"</c:if>>비건</option>
-								<option value="락토" <c:if test="${vo.getRType() == '락토' }">selected="selected"</c:if>>락토</option>
-								<option value="오보" <c:if test="${vo.getRType() == '오보' }">selected="selected"</c:if>>오보</option>
-								<option value="락토오보" <c:if test="${vo.getRType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
-							</select>
-						</div>
-					</div>
-					<!-- <div class="col-lg-3">
-					<img src="#" height="200px" width="200px">
-				</div> -->
-				</div>
-			</div>
-			<hr>
-			<br />
-			<!-- 관련 재료 -->
-
-			<div>
+				<input type="hidden" name="rContent" id="rContent"> <input
+					type="hidden" name="rImage" id="rImage">
+				<hr>
+				<br />
+				<!-- 관련 재료 -->
 				<h3>Ingredient🍋</h3>
 				<br />
-				<div class="row">
+				<div class="material">
 					Used Ingredient<br /> <br />
-					<div class="col-lg-12 ">
-						<%-- <c:forEach var="rm" items="${rm}">
-							
-						</c:forEach> --%> 
-						<table class="col-lg-12 " id="dataTable"
-							>
-							<tbody>
-								<tr id="trMat">
-									<td class="col-md-5"><input type="text"
-										placeholder="재료명을 추가하여 입력하세요" readonly="readonly"></td>
-									<td class="col-md-5"><input type="text"
-										placeholder="재료 양을 추가하여 입력하세요" readonly="readonly"></td>
-									<td class="col-md-1"></td>
-									<td class="col-md-1">
-										<button type="button" name="addMat" id="addMat"
-											class="btn btn-primary">➕</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<c:forEach var="mat" items="${rm.recipeMatVoList}"
+						varStatus="status">
+						<div class="row mb-3">
+							<div class="col-lg-5 col-md-5 col-sm-12">
+								<input type="hidden"
+									name="recipeMatVoList[${status.index }].matId"
+									value="${mat.matId }">
+								<input type="text" class="matInput"
+									name="recipeMatVoList[${status.index }].matName"
+									value="${mat.matName }">
+							</div>
+							<div class="col-lg-5 col-md-5 col-sm-12">
+								<input type="text" class="matInput"
+									name="recipeMatVoList[${status.index }].matVol"
+									value="${mat.matVol }">
+							</div>
+							<div class="col-lg-2 col-md-2 col-sm-12"
+								style="display: flex; align-items: center;">
+								<button type="button" class="deleteMat" data-id="${mat.matId }">
+									<i class="lni lni-circle-minus"></i>
+								</button>
+							</div>
+						</div>
+					</c:forEach>
+					<input type="hidden" name="delMat" class="delMat">
 				</div>
+				<button type="button" class="addMat mt-3">
+					<i class="lni lni-circle-plus"></i>
+				</button>
 
-			</div>
-			<hr />
-			<br />
-			<script>
-			/* 	//재료 추가 버튼
-				$(document)
-						.on(
-								"click",
-								"button[name=addMat]",
-								function() {
 
-									var addMatText = '<tr name="trMat">'
-											+ '    <td class="col-md-5">'
-											+ '        <input type="text" class="form-control" name="matName" placeholder="재료명">'
-											+ '</td>'
-											+ '<td class="col-md-5">'
-											+ '        <input type="text" class="form-control" name="matVol" placeholder="재료 양">'
-											+ '</td>'
-											+ '<td class="col-md-1">'
-											+ '        <button class="btn btn-default" name="delMat">삭제</button>'
-											+ '    </td>' + '</tr>';
-
-									var trHtml = $("tr[name=trMat]:last"); //last를 사용하여 trMat라는 명을 가진 마지막 태그 호출
-
-									trHtml.after(addMatText); //마지막 trMat명 뒤에 붙인다.
-
-								}); 
-			
-				//재료 삭제 버튼
-				$(document).on("click", "button[name=delMat]", function() {
-
-					var trHtml = $(this).parent().parent();
-
-					trHtml.remove(); //tr 테그 삭제
-
-				});
-				//추가한 재료 배열에 넣기
-				function matArr() {
-				    var matArr = [];     // 배열 초기화
-				    $("input").each(function(i) {
-				    	matArr.push($(this).val('matVol'));  
-				    	matArr.push($(this).val('matName'));   
-				    })
-				 
-				} 
-				*/
-				
-				<c:set var="listLength" value="${fn:length(recipeMaterialVo.recipeMatVoList) }" /> 
-				var length = '<c:out value="${listLength}"/>';
-				$(function(){
-					//추가 버튼 클릭 시 행 추가
-					$("#addMat").on('click', function(){
-						var tr = $("<tr>").attr("role", "row");
-						tr.append($("<td>").append($("<input>").addClass('mat-input').attr({
-							type: 'text',
-							name: 'recipeMatVoList['+length+'].matName',
-							required: 'true'
-						})));
-						tr.append($("<td>").append($("<input>").addClass('mat-input').attr({
-							type: 'text',
-							name: 'recipeMatVoList['+length+'].matVol'
-						})));
-						tr.append($("<td>"));
-						tr.append($("<td>").append($("<button>").addClass('btn btn-primary delMat delMat'+length).attr({
-							type: 'button'
-						}).text('취소')));
-						$("#dataTable > tbody").append(tr);
-						
-						length++;
-					});
-					//입력취소 버튼 누르면 해당하는 행 삭제
-					$('#dataTable').on('click', '.delMat', function(){
-						$(this).closest('tr').remove();
-					});
-				});
-			</script>
-			<!-- 관련 클래스 -->
-			<div>
+				<hr />
+				<br />
+				<!-- 관련 클래스 -->
 				<div class="row">
 					<h3>Related Class📖</h3>
 					<div>
@@ -202,15 +104,16 @@ input, textarea {
 							<br />
 
 							<div class="col-lg-12" align="center">
-								<table>
+								<table align="center">
 									<tr>
 										<td class="col-md-2" align="center" valign="middle"><select
-											name="vegType" id="vegType">
-												<option value="none" selected disabled>비건 레벨</option>
-												<option value="비건" <c:if test="${lessonVO.getVegType() == '비건' }">selected="selected"</c:if>>비건</option>
-												<option value="락토" <c:if test="${lessonVO.getVegType() == '락토' }">selected="selected"</c:if>>락토</option>
-												<option value="오보" <c:if test="${lessonVO.getVegType() == '오보' }">selected="selected"</c:if>>오보</option>
-												<option value="락토오보" <c:if test="${lessonVO.getVegType() == '락토오보' }">selected="selected"</c:if>>락토오보</option>
+											id="vegType">
+												<option value="" selected disabled>비건 레벨</option>
+												<option value="">전체</option>
+												<option value="비건">비건</option>
+												<option value="락토">락토</option>
+												<option value="오보">오보</option>
+												<option value="락토오보">락토오보</option>
 										</select></td>
 
 										<td class="col-md-7"><input type="text"
@@ -222,90 +125,189 @@ input, textarea {
 									</tr>
 								</table>
 							</div>
-							<div id="search-result" align="center">class search result</div>
+							<div id="search-result" align="center">
+								<c:choose>
+									<c:when test="${fn:length(lessons) == 0 }">
+										<p>관련 클래스가 없습니다. 클래스명을 검색하여 추가 가능합니다.</p>
+									</c:when>
+									<c:otherwise>
+										<table class="table table-borderless table-hover"
+											style="width: 64%">
+											<tbody>
+												<c:forEach var="lesson" items="${lessons }">
+													<tr>
+														<td width="100">${lesson.getLName() }</td>
+														<td width="300">${lesson.getCTitle() }</td>
+														<td width="50"><input type="checkbox" name="cIdArr"
+															value="class101" class="class-checked"
+															style="margin: 0px; zoom: 1.3;" checked></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</c:otherwise>
+								</c:choose>
+							</div>
 							<br /> <br />
 						</div>
 
 					</div>
 				</div>
-			</div>
-			<div class="col-md-12" align="right">
-				<button type="submit" class="btn btn-primary" value="updateFrm">수정하기</button>
-			</div>
-
-			<script>
-			<c:set var="clistLength" value="${fn:length(lessonVO.classVoList) }" />
-			var clength = '<c:out value="${clistLength}"/>';
-				//클래스 검색 버튼 클릭 검색할 코드를 넘겨서 값을 가져온다. 
-					$("#searchC").click(function() {
-						/* //alert("검색 버튼 클릭!");
-						var keyword = $("#searchCd").serialize(); */
-						$.ajax({
-							url : '/recipeLessonSearch.do',
-							type : 'POST',
-							dataType : "json",
-							data : {keyword:$("#keyword").val(),
-									vegType: $("#vegType").val()
-									},
-							success : function(data) {
-								console.log(data);
-								var output = "<table>";
-								for ( var i in data) {
-									output += "<tr>";
-									output += "<td width='100'>" + data[i].lname;
-									output += "<td width='200'>" + data[i].ctitle;
-									output += "<td width='250'>" + data[i].cdesc;
-									output += "<td width='60'>"+
-												"<input type='checkbox' name='cIdArr' value='"+data[i].cId+"' class='class-checked'>";
-									output += "</tr>" 
-								}
-								output += "</table>";
-								length++;
-								$("#search-result").html(output);
-								// success
-							},
-							error : function() {
-								alert("ajax통신 실패!!!");
-							}
-						});
-					});
-				/*  data-id='"+data[i].cid+"'> 읽어올때는 $(this).data('id') */
-				//검색한 클래스 선택 체크박스
-					function checkboxArr() {
-					   /*  var checkArr = [];     // 배열 초기화 */
-					    $("input[name='class_check']:checked").each(function(i) {
-					    	$(this).parents.find("<input>").attr(name='classVoList['+clength+'].cId')
-					    	clength++;
-					    	/* classVoList.push($(this).find('<tr>').data('id'));     // 체크된 것만 값을 뽑아서 배열에 push */
-					   		
-					    });
-					 
-					}
-					/* var classParams = {
-						"classList": checkArr
-					}; */
-				
-					$(document).ready(function(){
-						var today = new Date("${select.RDate }");
-						var year = today.getFullYear().toString().substr(2, 4);
-						var month = today.getMonth() + 1;
-						var day = today.getDate();
-						var date = year + "/" + month + "/" + day
-						$('#rDate').text(date);
-
-						$("#updateBtn").click(function(){
-							checkboxArr();
-							console.log(clength);
-							
-						});
-							
-					});
-			</script>
-			<script>
-				CKEDITOR.replace('ckeditor'); // 에디터로 생성
-			</script>
-
-		</form>
-		<br />
+				<br />
+				<div class="mb-5" align="center">
+					<button type="button" id="submitBtn" class="btn main-btn btn-hover">수정</button>
+				</div>
+			</form>
+		</div>
 	</div>
+
+	<script>
+		var clength = '<c:out value="${clistLength}"/>';
+		//클래스 검색 버튼 클릭 검색할 코드를 넘겨서 값을 가져온다. 
+		$("#searchC")
+				.click(
+						function() {
+							/* //alert("검색 버튼 클릭!");
+							var keyword = $("#searchCd").serialize(); */
+							$
+									.ajax({
+										url : '/recipeLessonSearch.do',
+										type : 'POST',
+										dataType : "json",
+										data : {
+											keyword : $("#keyword").val(),
+											vegType : $("#vegType").val()
+										},
+										success : function(data) {
+											console.log(data);
+											if (data.length > 0) {
+												var output = "<table class='table table-borderless table-hover' style='width: 64%'>";
+												for ( var i in data) {
+													output += "<tr>";
+													output += "<td width='100'>"
+															+ data[i].lname;
+													output += "<td width='300'>"
+															+ data[i].ctitle;
+
+													output += "<td width='50'>"
+															+ "<input type='checkbox' name='cIdArr' value='"+data[i].cid+"' class='class-checked' style='margin:0px; zoom:1.3;'>";
+													output += "</tr>"
+												}
+												output += "</table>";
+											} else {
+												var output = "<p>일치하는 결과가 없습니다</p>";
+											}
+											$("#search-result").html(output);
+											// success
+										},
+										error : function() {
+											alert("ajax통신 실패!!!");
+										}
+									});
+						});
+		/*  data-id='"+data[i].cid+"'> 읽어올때는 $(this).data('id') */
+		
+		$(document).ready(function() {
+			var today = new Date("${select.RDate }");
+			var year = today.getFullYear().toString().substr(2, 4);
+			var month = today.getMonth() + 1;
+			var day = today.getDate();
+			var date = year + "/" + month + "/" + day
+			$('#rDate').text(date);
+
+			$("#updateBtn").click(function() {
+				checkboxArr();
+				console.log(clength);
+
+			});
+
+		});
+	</script>
+	<c:set var="listLength" value="${fn:length(rm.recipeMatVoList) }" />
+	<script>
+		//ck에디터 세팅
+		var ckeditor_config = {
+			resize_enable : false,
+			enterMode : CKEDITOR.ENTER_BR,
+			shiftEnterMode : CKEDITOR.ENTER_P,
+			filebrowserUploadUrl : "/ckEditorUpload.do",
+			uploadUrl : "/ckEditorUpload.do"
+		};
+
+		CKEDITOR.replace('ckeditor', ckeditor_config); // 에디터로 생성
+
+		var length = '<c:out value="${listLength}"/>';
+		$(function() {
+			//메뉴추가 버튼
+			$('.addMat').on('click', function(){
+				var output=`<div class="row mb-3">
+								<div class="col-lg-5 col-md-5 col-sm-12">
+									<input type="hidden" name="recipeMatVoList[\${length}].matId"">
+									<input type="text" class="matInput" name="recipeMatVoList[\${length}].matName" placeholder="재료명 (예: 두부)">
+								</div>
+								<div class="col-lg-5 col-md-5 col-sm-12">
+									<input type="text" class="matInput" name="recipeMatVoList[\${length}].matVol" placeholder="분량 (예: 한 모)">
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-12" style="display: flex; align-items: center;">
+									<button type="button" class="deleteMat">
+										<i class="lni lni-circle-minus"></i>
+									</button>
+								</div>
+							</div>`;
+				$('.material').append(output);
+				length++;
+			});
+			
+			
+			//메뉴삭제 버튼
+			$('.material').on('click', '.deleteMat', function(){
+				var delMat = $('.delMat').val();
+				var matId = $(this).data('id');
+				if(delMat == '' || delMat == null){
+					delMat = delMat + matId;
+				} else{
+					delMat = delMat + ',' + matId;
+				}
+				$('.delMat').val(delMat);
+				$(this).closest('.row').remove();
+			});
+
+			$('#rType').val('${select.getRType()}').prop('selected', true);
+			
+			$('#submitBtn').on('click', function() {
+				$('#frm').submit();
+			});
+		});
+
+		function checkForm() {
+			var vegType = $('#rType').val();
+			var content = CKEDITOR.instances.ckeditor.getData();
+			var imgTag = findImgTag(content);
+			console.log(imgTag);
+			if (vegType == null || vegType == '') {
+				alert('레시피의 채식유형을 선택하세요');
+				return false;
+			} else if (content.length < 1) {
+				alert('내용을 입력해주세요');
+				return false;
+			} else if (imgTag == undefined) {
+				alert('사진을 한 개 이상 등록해주세요. 대표사진이 필요합니다.');
+				return false;
+			} else {
+				$('#rContent').val(content);
+				$('#rImage').val(imgTag);
+				return true;
+			}
+
+		}
+
+		//이미지태그 찾기
+		function findImgTag(content) {
+			var srcIndex = content.indexOf('img src'); //첫 이미지 태그의 index
+			var subStr = content.substr(srcIndex);
+			var splitStr = subStr.split('"');
+			var imgTag = splitStr[1];
+			return imgTag;
+		}
+	</script>
 </body>

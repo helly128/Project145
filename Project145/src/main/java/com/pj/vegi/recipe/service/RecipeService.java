@@ -1,8 +1,11 @@
 package com.pj.vegi.recipe.service;
 
 import java.util.List;
+
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 
 public interface RecipeService {
@@ -20,4 +23,10 @@ public interface RecipeService {
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);
 	int likeFlagSelect(LikeListVo vo);
+	
+	LessonVO relatedClass(LessonVO vo);
+	
+	int recipePointUpdate(MemberVo vo);
+	int recipeWalletHistory(WalletHistoryVO vo);
+	int recipeInsertCount(MemberVo vo);
 }

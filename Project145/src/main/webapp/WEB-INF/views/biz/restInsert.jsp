@@ -60,12 +60,12 @@
 }
 
 .menu-input {
-	border-color: #dedede;
+	border: 1px solid #8c8c8c;
 	width: 97%;
 	text-align: center;
 	vertical-align: bottom;
 	padding: 5px;
-	border-radius: 5px;
+	border-radius: 8px;
 }
 
 </style>

@@ -155,9 +155,10 @@ div, h3 {
 						<h5>${meetVo.meetParticipant }명</h5>
 					</div>
 					<div class="border-bottom p-3">
-						<form action="">
+						<form action="/enquiryVegimeet.do" method="post">
+							<input type="hidden" name="originId" value="${meetVo.meetId }">
 							<span class="widget-title mb-2">문의하기</span>
-							<textarea class="textarea" rows="3"></textarea>
+							<textarea class="textarea" rows="3" name="enqContent"></textarea>
 							<div align="right">
 								<button class="btn submitBtn btn-hover" type="submit">등록</button>
 							</div>
@@ -246,7 +247,9 @@ div, h3 {
 //	           fetchList(); 
 			});
 			
-			
+			$('.submitBtn').on('click', function(){
+				alert('문의가 등록되었습니다.');
+			});
 		});
 		
 		function fetchList() {

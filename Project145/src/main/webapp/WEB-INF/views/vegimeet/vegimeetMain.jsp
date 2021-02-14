@@ -96,6 +96,13 @@
 	opacity: 0;
 	cursor: pointer;
 }
+.search-area .search-wrapper {
+	box-shadow: 0px 0px 0px;
+}
+
+.search-area .search-wrapper select, input {
+	box-shadow: 0px 3px 25px rgb(203 207 213 / 10%);
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -171,7 +178,7 @@
 			<div class="search-area">
 				<div class="search-wrapper">
 					<form action="vegimeetList.do" id="form" method="post">
-						<div class="row justify-content-center pb-4 mb-5">
+						<div class="row justify-content-center mb-5">
 							<div class="col-lg-2 col-sm-4 col-6">
 								<div class="search-input">
 									<label for="category"> <i
@@ -236,10 +243,12 @@
 				</select>
 			</div> -->
 
-			<div align="left" class="newChallenge mb-4">
-				<button class="btn insertBtn"
-					onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
-			</div>
+			<c:if test="${mId != null and mId != '' }">
+				<div align="left" class="newChallenge mb-4">
+					<button class="btn insertBtn"
+						onclick="location.href='vegimeetInsertForm.do'">챌린지 개설</button>
+				</div>
+			</c:if>
 
 			<div class="row" id="cards">
 				<c:forEach var="vo" items="${list }">
@@ -390,14 +399,6 @@
 							}
 						});
 					});
-
-			var mId = '${mId}';
-			if (mId == null || mId == '') {
-				$('.insertBtn').prop('disabled', true);
-				$('.newChallenge').append(
-						$('<p>').attr('style', 'font-size: 12px;').text(
-								'로그인 후 이용가능합니다.'));
-			}
 
 			//목록 옵션 변경 시 리스트 불러오기
 			$('#options').on('change', function() {

@@ -8,7 +8,7 @@ public interface RecipeMaterialService {
 
 	public List<RecipeMaterialVo>getMaterialList(RecipeMaterialVo vo);
 	public List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo rmVo);
-//	public int RecipeMaterialInsert(RecipeMaterialVo vo);
-	public RecipeMaterialVo recipeMaterialUpdate(RecipeMaterialVo vo);
-//	public int RecipeMaterialDelete(RecipeMaterialVo vo);
+	public int recipeMaterialInsert(RecipeMaterialVo vo);
+	public int recipeMaterialUpdate(RecipeMaterialVo vo);
+	public int recipeMaterialDelete(RecipeMaterialVo vo);
 }

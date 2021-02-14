@@ -1,8 +1,11 @@
 package com.pj.vegi.recipe.mapper;
 
 import java.util.List;
+
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 
 public interface RecipeMapper {
@@ -28,4 +31,10 @@ public interface RecipeMapper {
 	int likeInsert(LikeListVo vo);
 	int likeDelete(LikeListVo vo);
 	int likeFlagSelect(LikeListVo vo);
+	
+	LessonVO relatedClass(LessonVO vo);		//상세페이지 관련클래스 조회
+	
+	int recipePointUpdate(MemberVo vo);		//레시피 작성 시 포인트 지급
+	int recipeWalletHistory(WalletHistoryVO vo);	//레시피 작성 시 포인트 지급건 내역에 추가
+	int recipeInsertCount(MemberVo vo);		//레시피 작성 적립 하루 5회 제한
 }
