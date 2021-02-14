@@ -84,6 +84,39 @@
 	</select>
 	
 	
+	<select id="adminBegiMeetReportList" resultType="ReportVo">
+	<!-- 신고목록 전체 조회 -->
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM report
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			</if>
+			<if test=" reportResult != null and reportResult != '' ">
+				AND reportResult = #{reportResult}
+			</if>
+		</where>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+	
+	<select id="countAdminBegiMeetReportList" resultType="Integer">
+	SELECT count(*)
+		FROM report
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			</if>
+			<if test=" reportResult != null and reportResult != '' ">
+				AND reportResult = #{reportResult}
+			</if>
+		</where>
+	</select>
+	
 	
 
 </mapper>

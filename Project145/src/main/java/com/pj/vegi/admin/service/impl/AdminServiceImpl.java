@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.admin.mapper.AdminMapper;
 import com.pj.vegi.admin.service.AdminService;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("adminService")
@@ -45,6 +46,18 @@ public class AdminServiceImpl implements AdminService {
 	public int countAdminRestaurant(RestaurantVo vo) {
 		// 페이징 카운트(식당)
 		return dao.countAdminRestaurant(vo);
+	}
+
+	@Override
+	public List<ReportVo> adminBegiMeetReportList(ReportVo vo) {
+		// 
+		return dao.adminBegiMeetReportList(vo);
+	}
+
+	@Override
+	public int countAdminBegiMeetReportList(ReportVo vo) {
+		//
+		return dao.countAdminBegiMeetReportList(vo);
 	}
 
 
