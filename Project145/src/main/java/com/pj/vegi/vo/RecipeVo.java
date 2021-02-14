@@ -1,6 +1,7 @@
 package com.pj.vegi.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ public class RecipeVo {
 	private String keyword;
 	private String mId;         
 	private String cId;              
-	private String[] cIdArr;  
+	private List<String> cIdArr;  
 	private int rReport;     
 	private int start;
 	private int end;
@@ -31,4 +32,5 @@ public class RecipeVo {
 	private int endPage;
 	
 	private int likeFlag;
+	private int seq;
 }

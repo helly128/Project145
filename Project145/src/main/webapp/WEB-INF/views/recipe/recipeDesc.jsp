@@ -170,7 +170,7 @@ style type ="text /css ">.likeAction {
 							+ "</a>";
 					put += "<hr/>";
 				});
-					put += "</ul>";
+				put += "</ul>";
 				$("#rMat").html(put);
 				if (result.length == 0) {
 					alert("검색 가능한 값이 없습니다.😂");
@@ -224,6 +224,8 @@ style type ="text /css ">.likeAction {
 
 </head>
 <body>
+	<c:set var="contentIndex"
+		value="${recipeSelect.getRContent().indexOf('<img src') }" />
 	<div class="container">
 
 		<div>
@@ -232,30 +234,18 @@ style type ="text /css ">.likeAction {
 		<div class="category-list-item">
 			<h2>🍏${recipeSelect.getRTitle() }</h2>
 			<br />
-			<div class="row">
-				<div class="col-lg-10">
-					<div class="icon">
-						<i class="lni lni-users">${recipeSelect.getMId()} </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-							class="lni lni-calendar">${recipeSelect.getRDate()}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-							class="lni lni-book">${recipeSelect.getRHit()}</i>
-					</div>
-					<div class="recipecontent">
-						<textarea class="noresize" rows="18" cols="60">${recipeSelect.getRContent() }</textarea>
-					</div>
-				</div>
-				<div class="col-lg-2">
-					<c:choose>
-						<c:when test="${recipeSelect.getRImage()}.startsWith('http')">
-							<img src="${recipeSelect.getRImage()}" height="200px"
-								width="200px">
-						</c:when>
-						<c:otherwise>
-							<img src="/images/${recipeSelect.getRImage()}" height="200px"
-								width="200px">
-						</c:otherwise>
-					</c:choose>
-				</div>
+			<div class="icon">
+				<i class="lni lni-user"> ${recipeSelect.getMId()} </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="lni lni-calendar"> ${recipeSelect.getRDate()}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="lni lni-book"> ${recipeSelect.getRHit()}</i>
 			</div>
+			<c:if test="${contentIndex == -1 }">
+				<div align="center">
+					<img src="${recipeSelect.getRImage()}" width="400px">
+				</div>
+			</c:if>
+			<div class="recipecontent my-4">${recipeSelect.getRContent() }</div>
+
 			<div class="row">
 				<div class="col-lg-10"></div>
 				<div class="col-lg-2">
@@ -343,7 +333,6 @@ style type ="text /css ">.likeAction {
 			<br /> <br />
 			<div class="row" id="cards">
 				<!-- 클래스리스트 시작 -->
-				<input type="hidden" value="${lesson}">
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="single-product">
@@ -351,14 +340,8 @@ style type ="text /css ">.likeAction {
 								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
 									src="/images/${lesson.getCImg() }" width="150" height="250">
 								</a>
-								<div class="product-action">
-									<a href="javascript:void(0)"><i class="lni lni-heart"></i></a>
-									<a href="javascript:void(0)" class="share"><i
-										class="lni lni-share"></i></a>
-								</div>
 							</div>
 							<div class="product-content">
-								<input type="hidden" value="클래스아이디">
 								<h3 class="name">
 									<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
 								</h3>
@@ -372,19 +355,6 @@ style type ="text /css ">.likeAction {
 								</ul>
 								<div class="product-bottom">
 									<h3 class="price">${lesson.CPrice }원</h3>
-									<div>
-										<button type="button" class="likeAction"
-											data-id="${lesson.getCId() }">
-											<c:if test="${lesson.getLikeFlag() > 0 }">
-												<img class="likeImg" src="/images/filled_like.png"
-													style="width: 30px;">
-											</c:if>
-											<c:if test="${lesson.getLikeFlag() == 0 }">
-												<img class="likeImg" src="/images/empty_like.png"
-													style="width: 30px;">
-											</c:if>
-										</button>
-									</div>
 								</div>
 							</div>
 						</div>

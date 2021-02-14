@@ -28,6 +28,7 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Controller
 public class VegimeetController {
@@ -300,4 +301,14 @@ public class VegimeetController {
 		return "true";
 	}
 	
+	//문의하기
+	@RequestMapping("/enquiryVegimeet.do")
+	public String enquiryVegimeet(enquiryVO vo, HttpSession session, Model model) {
+		String mId = (String) session.getAttribute("mId");
+		vo.setMId(mId);
+		vegimeetService.enquiryVegimeet(vo);
+		
+		model.addAttribute("meetId", vo.getOriginId());
+		return "redirect:vegimeetSelect.do";
+	}
 }

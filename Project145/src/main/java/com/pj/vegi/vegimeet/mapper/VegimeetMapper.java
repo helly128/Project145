@@ -10,6 +10,7 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface VegimeetMapper {
 	List<VegimeetVo> vegimeetList(VegimeetVo vo);
@@ -57,4 +58,7 @@ public interface VegimeetMapper {
 	
 	//참가자 사진 신고
 	int reportImage(ReportVo vo);
+	
+	//베지밋 문의하기
+	int enquiryVegimeet(enquiryVO vo);
 }

@@ -3,6 +3,7 @@ package com.pj.vegi.recipe.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.common.Paging;
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeMaterialVo;
 import com.pj.vegi.vo.RecipeVo;
 
@@ -76,12 +79,15 @@ public class RecipeController {
 	RecipeMaterialService recipeMaterialService;
 
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(LessonVO lVo, RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
+	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
 			throws SQLException {
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
 
-		List<LessonVO> lessons = recipeService.lessonSearch(lVo);
+		List<LessonVO> lessons = new ArrayList<LessonVO>();
+		if (recipeVo.getCId() != null) {
+			lessons = getLessonList(recipeVo, lessons);
+		}
 		session.setAttribute("rId", rVo.getRId());
 		model.addAttribute("recipeSelect", recipeVo);
 		model.addAttribute("lessons", lessons);
@@ -100,15 +106,13 @@ public class RecipeController {
 	public void ckEditorUpload(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam MultipartFile upload) throws IllegalStateException, IOException {
 		PrintWriter printWriter = null;
-		
-		response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=utf-8");
 
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
 
 		if (upload != null && upload.getSize() > 0) {
 			String name = ImageIO.imageUpload(request, upload);
 
-			String callback = request.getParameter("CKEditorFuncNum");
 			printWriter = response.getWriter();
 			String fileUrl = "/images/" + name; // 작성화면
 
@@ -116,24 +120,48 @@ public class RecipeController {
 //			printWriter.println("<script type='text/javascript'>" + "window.parent.CKEDITOR.tools.callFunction("
 //					+ callback + ",'" + fileUrl + "','이미지를 업로드하였습니다.')" + "</script>");
 
-			printWriter.println("{\"filename\" : \"" + name 
-									+"\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+			printWriter.println("{\"filename\" : \"" + name + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
 			printWriter.flush();
 
 		}
 	}
 
-
 	@RequestMapping("/recipeInsertResult.do")
-	public String recipeInsertResult(RecipeVo vo, Model model) {
-		String viewPath = null;
-		int n = recipeService.recipeInsert(vo);
-		if (n != 0)
-			viewPath = "redirect:recipeMain.do";
-		else
-			viewPath = "recipe/recipeInsertFail";
+	public String recipeInsertResult(RecipeVo vo, RecipeMaterialVo matVo, Model model, HttpSession session) {
+		String classArr = "";
+		if (vo.getCIdArr() != null) {
+			for (int i = 0; i < vo.getCIdArr().size(); i++) {
+				classArr += vo.getCIdArr().get(i);
+				if (i < vo.getCIdArr().size() - 1) {
+					classArr += ",";
+				}
+			}
+		}
+		vo.setCId(classArr);
+		String mId = (String) session.getAttribute("mId");
+		vo.setMId(mId);
+		recipeService.recipeInsert(vo);
+		String rId = "rec" + vo.getSeq();
+		if (matVo.getRecipeMatVoList() != null) {
+			for (RecipeMaterialVo material : matVo.getRecipeMatVoList()) {
+				if (material.getMatName() != null)
+					material.setRId(rId);
+				rmService.recipeMaterialInsert(material);
+			}
+		}
 
-		return viewPath;
+		// 레시피 작성 시 적립금 50원 지급
+		MemberVo mVo = new MemberVo();
+		mVo.setMId(mId);
+		int count = recipeService.recipeInsertCount(mVo);
+		if (count <= 5) {	// 하루 적립 5회 제한
+			WalletHistoryVO wVo = new WalletHistoryVO();
+			wVo.setMId(mId);
+			recipeService.recipePointUpdate(mVo);
+			recipeService.recipeWalletHistory(wVo);
+		}
+		model.addAttribute("rId", rId);
+		return "redirect:recipeDesc.do";
 	}
 
 	@RequestMapping("/recipeUpdate.do") // 수정 폼
@@ -144,24 +172,53 @@ public class RecipeController {
 		model.addAttribute("rId", vo.getRId());
 		model.addAttribute("select", recipeVo);
 		List<RecipeMaterialVo> rms = rmService.recipeMaterialSelect(rmVo);
-		model.addAttribute("rm", rms);
+		rmVo.setRecipeMatVoList(rms);
+		model.addAttribute("rm", rmVo);
+
+		List<LessonVO> lessons = new ArrayList<LessonVO>();
+		if (recipeVo.getCId() != null) {
+			lessons = getLessonList(recipeVo, lessons);
+		}
+		model.addAttribute("lessons", lessons);
+
 		return "recipe/recipeUpdate";
 	}
 
 	@RequestMapping(value = "/recipeUpdateResult.do", method = RequestMethod.POST) // 수정 처리
 	public String recipeUpdateResult(RecipeMaterialVo rmVo, LessonVO lVo, RecipeVo vo, Model model,
-			HttpServletRequest request, @RequestParam(name = "rImageFile") MultipartFile rImage)
+			HttpServletRequest request, @RequestParam String delMat)
 			throws IllegalStateException, IOException, SQLException {
-		// 사진 업로드 처리
-		if (rImage != null && rImage.getSize() > 0) {
-			String name = ImageIO.imageUpload(request, rImage);
-			vo.setRImage(name);
+		String classArr = "";
+		if (vo.getCIdArr() != null) {
+			for (int i = 0; i < vo.getCIdArr().size(); i++) {
+				classArr += vo.getCIdArr().get(i);
+				if (i < vo.getCIdArr().size() - 1) {
+					classArr += ",";
+				}
+			}
 		}
-		vo.setCId(vo.getCIdArr().toString());
+		vo.setCId(classArr);
 		recipeService.recipeUpdate(vo);
-		List<RecipeMaterialVo> matList = rmVo.getRecipeMatVoList();
-		for (RecipeMaterialVo rmVo1 : matList) {
-			recipeMaterialService.recipeMaterialUpdate(rmVo1);
+
+		// delMat으로 삭제된 재료의 matId 받아와서 db에서 삭제
+		RecipeMaterialVo matVo = new RecipeMaterialVo();
+		if (delMat != null || delMat != "") {
+			String mat[] = delMat.split(",");
+			for (String material : mat) {
+				matVo.setMatId(material);
+				rmService.recipeMaterialDelete(matVo);
+			}
+		}
+
+		if (rmVo.getRecipeMatVoList() != null) {
+			for (RecipeMaterialVo material : rmVo.getRecipeMatVoList()) {
+				if (material.getMatId() != null && material.getMatId() != "") { // 기존 재료 update
+					rmService.recipeMaterialUpdate(material);
+				} else { // 새 재료 insert
+					material.setRId(vo.getRId());
+					rmService.recipeMaterialInsert(material);
+				}
+			}
 		}
 		recipeService.recipeLessonSearch(lVo);
 		model.addAttribute("cId", lVo.getCId());
@@ -243,4 +300,18 @@ public class RecipeController {
 //		return viewPath;
 //	}
 //	
+
+	// DB에서 array형식인 cId를 List로 가져오기
+	// recipeDesc와 recipeUpdate에서 사용
+	public List<LessonVO> getLessonList(RecipeVo recipeVo, List<LessonVO> lessons) {
+		LessonVO lVo = new LessonVO();
+		String les[] = recipeVo.getCId().split(",");
+		for (String lesson : les) {
+			lVo.setCId(lesson);
+			LessonVO lessonVo = recipeService.relatedClass(lVo);
+			lessons.add(lessonVo);
+			System.out.println("===========" + lessonVo);
+		}
+		return lessons;
+	}
 }

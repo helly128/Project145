@@ -17,32 +17,27 @@ public class RecipeMaterialServiceImpl implements RecipeMaterialService{
 	
 	@Override
 	public List<RecipeMaterialVo> getMaterialList(RecipeMaterialVo vo) {
-		// TODO Auto-generated method stub
 		return dao.getMaterialList(vo);
 	}
 
 	@Override
 	public List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo vo) {
-		// TODO Auto-generated method stub
 		return dao.recipeMaterialSelect(vo);
 	}
 
-//	@Override
-//	public int RecipeMaterialInsert(RecipeMaterialVo vo) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	@Override
+	public int recipeMaterialInsert(RecipeMaterialVo vo) {
+		return dao.recipeMaterialInsert(vo);
+	}
 
 	@Override
-	public RecipeMaterialVo recipeMaterialUpdate(RecipeMaterialVo vo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int recipeMaterialUpdate(RecipeMaterialVo vo) {
+		return dao.recipeMaterialUpdate(vo);
 	}
-//
-//	@Override
-//	public int RecipeMaterialDelete(RecipeMaterialVo vo) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+
+	@Override
+	public int recipeMaterialDelete(RecipeMaterialVo vo) {
+		return dao.recipeMaterialDelete(vo);
+	}
 
 }

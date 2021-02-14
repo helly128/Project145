@@ -222,4 +222,9 @@
 		INSERT INTO report(report_no, report_content, report_date, m_id, origin_id)
 		VALUES('report' || rep_seq.nextval, #{reportContent}, current_date, #{mId}, #{originId})
 	</insert>
+	
+	<insert id="enquiryVegimeet">
+		INSERT INTO enquiry(enq_no, origin_id, enq_content, enq_date, m_id)
+		VALUES('enq' || enq_seq.nextval, #{originId}, #{enqContent}, current_date, #{mId})
+	</insert>
 </mapper>

@@ -8,7 +8,7 @@ public interface RecipeMaterialMapper {
 
 	List<RecipeMaterialVo>getMaterialList(RecipeMaterialVo vo);
 	List<RecipeMaterialVo> recipeMaterialSelect(RecipeMaterialVo vo);
-//	int recipeMaterialInsert(RecipeMaterialVo vo);
+	int recipeMaterialInsert(RecipeMaterialVo vo);
 	int recipeMaterialUpdate(RecipeMaterialVo vo);
-//	int recipeMaterialDelete(RecipeMaterialVo vo);
+	int recipeMaterialDelete(RecipeMaterialVo vo);
 }
