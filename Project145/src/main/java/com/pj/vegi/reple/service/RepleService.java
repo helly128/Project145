@@ -21,5 +21,6 @@ public interface RepleService {
 
 	public int repleInsert(RepleVo vo);//대댓글
 
+	public int countReple(RepleVo vo);
 
 }

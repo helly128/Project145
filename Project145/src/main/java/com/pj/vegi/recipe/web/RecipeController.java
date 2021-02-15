@@ -24,11 +24,13 @@ import com.pj.vegi.common.Paging;
 import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.recipeMaterial.service.RecipeMaterialService;
+import com.pj.vegi.reple.service.RepleService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeMaterialVo;
 import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RepleVo;
 
 @Controller
 public class RecipeController {
@@ -38,6 +40,9 @@ public class RecipeController {
 
 	@Autowired
 	RecipeMaterialService rmService;
+	
+	@Autowired
+	RepleService repleService;
 
 	@RequestMapping("/recipeMain.do") // 게시글 페이징 처리 추가하기
 	public String recipeMain(@ModelAttribute("vo") RecipeVo vo, Model model, Paging paging, HttpSession session) {
@@ -92,11 +97,23 @@ public class RecipeController {
 	RecipeMaterialService recipeMaterialService;
 
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
+	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session, Paging paging)
 			throws SQLException {
+		
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
 
+		//댓글 위한 페이징
+		paging.setPageUnit(5);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		recipeVo.setStart(paging.getFirst());
+		recipeVo.setEnd(paging.getLast());
+		RepleVo repleVo = new RepleVo();
+		repleVo.setRId(rVo.getRId());
+		paging.setTotalRecord(repleService.countReple(repleVo));
 		List<LessonVO> lessons = new ArrayList<LessonVO>();
 		if (recipeVo.getCId() != null) {
 			lessons = getLessonList(recipeVo, lessons);
@@ -105,6 +122,7 @@ public class RecipeController {
 		model.addAttribute("recipeSelect", recipeVo);
 		model.addAttribute("lessons", lessons);
 		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
+		model.addAttribute("paging", paging);
 
 		return "recipe/recipeDesc";
 	}

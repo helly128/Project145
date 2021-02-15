@@ -30,4 +30,7 @@ public class RepleVo {
 	
 	private String mName;
 	private String profileImage;
+	
+	private int start;
+	private int end;
 }
