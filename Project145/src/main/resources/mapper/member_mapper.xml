@@ -53,6 +53,10 @@
 	<insert id="naverInsert">
 		INSERT INTO MEMBER(m_id,m_name,email,PASSWORD,VEGTYPE,AUTH)
 		VALUES(#{mId},#{mName},#{email},'0000','비건','user')
-		
+		<selectKey keyProperty="password" resultType="String" order="AFTER">
+		select password
+		from member
+		where m_id=#{mId}
+		</selectKey>
 	</insert>
 </mapper>

@@ -21,40 +21,50 @@ h3 {
 	padding: 0.6em;
 }
 </style>
+<link href="/resources/my/css/mycss.css" rel="stylesheet"
+	type="text/css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
 </head>
 <body>
-	<div style="background-color: #6bb33b; width: 100%; height: 100px; text-align: center; color: white;">
-		<h3>Naver Login Success</h3>
-		<h4>${mName}님 환영합니다. </h4>
-		
-		<div align="center">
+	<div align="center">
+		<br />
 		<div class="profile-card" align="center">
 			<div class="profile-cover">
-				<div class="menu-container">
+				<div align="center">
+					<h3>Naver Login Success</h3>
+					<h4>${mName} 님 환영합니다.</h4>
+					<ul class="profile-actions" style="display: none;">
+					</ul>
 				</div>
+				<br /> <br /> <br /> <br />
 				<div class="profile-avatar">
-					<a href="#"><img src="/images/${member.getProfileImage() }"
-						width="150" height="150" onerror="this.src='/images/default.png'"
-						alt="내사진" /></a>
+					<img src="/images/${member.getProfileImage() }" width="150"
+						height="150" onerror="this.src='/images/default.png'" alt="내사진" />
 				</div>
+
 			</div>
-			
-			<h2>${mid }</h2>
-			<h2>${email}</h2>
-			<h5>${member.getVegtype() }</h5>
-			<br> <a href="/myPageEdit.do?mId=${sessionScope.mId}"
-				class="btn btn-success btn-icon-split" style="background-color: #6c9852;"> <span
-				class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
-			</span> <span class="text">myPage 내 정보 수정</span>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br /> <br> <a href="/myPageEdit.do?mId=${sessionScope.mId}"
+				class="btn btn-success btn-icon-split"
+				style="background-color: #6c9852;">myPage 내 정보 수정</span>
 			</a>
-		</div><br>
+		</div>
+		<div align="center">
+		<br>
+		<%--  <h2>${sessionScope.mId}</h2> --%>
+		 <h2>${sessionScope.password}</h2>
+		<c:if test="${sessionScope.password eq '0000'} ">
+		<p style="color: red;">기본 비밀번호는 0000입니다. 내 정보 수정 페이지에서 변경해주세요.</p>
+		</c:if>
+		</div>
 	</div>
-	</div>
+
 	<br>
-	<h2 style="text-align: center" id="name"></h2>
-	<h4 style="text-align: center" id="email"></h4>
+
 </body>
 </html>
