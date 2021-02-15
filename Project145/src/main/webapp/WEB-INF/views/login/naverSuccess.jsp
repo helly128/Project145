@@ -41,13 +41,14 @@ h3 {
 						alt="내사진" /></a>
 				</div>
 			</div>
+			
 			<h2>${mid }</h2>
 			<h2>${email}</h2>
 			<h5>${member.getVegtype() }</h5>
-			<br> <a href="/changePersonalInfo.do?mId=${mid }"
+			<br> <a href="/myPageEdit.do?mId=${sessionScope.mId}"
 				class="btn btn-success btn-icon-split" style="background-color: #6c9852;"> <span
 				class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
-			</span> <span class="text">내 정보 수정</span>
+			</span> <span class="text">myPage 내 정보 수정</span>
 			</a>
 		</div><br>
 	</div>

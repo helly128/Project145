@@ -48,8 +48,9 @@ style type ="text /css ">.likeAction {
 		$("#repleList").on('click', '.delBtn', function() {
 			/* var delAlert = confirm("정말 삭제 하시겠어요?");delAlert == ture */
 			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
-			var mid = $(event.target).parent().prev().text()
-			console.log($(event.target).parent().prev().text())
+			var mid = $(this).closest('tr').find('td').data('mid');
+			console.log(mid);
+			//console.log($(event.target).parent().prev().text())
 
 			if (mid == "${sessionScope.mId}") {
 
@@ -59,6 +60,8 @@ style type ="text /css ">.likeAction {
 
 				}
 			} else {
+				console.log(${sessionScope.mId});
+				console.log(mid);
 				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
@@ -373,7 +376,7 @@ style type ="text /css ">.likeAction {
 				<div id="reloadReple">
 					<div class="row" align="left">
 						<div class="col-lg-2" align="center">작성자</div>
-						<div class="col-lg-6" align="center">댓글 내용</div>
+						<div class="col-lg-6" align="left">댓글 내용</div>
 						<div class="col-lg-2" align="center">작성일자</div>
 						<div class="col-lg-2" align="center">비고</div>
 						<hr />
@@ -404,7 +407,7 @@ style type ="text /css ">.likeAction {
 									작성일자&nbsp;:&nbsp; <span id="wDate"> </span>
 								</div>
 							</div>
-							<div class="col-lg-19 col-sm-8 col-10">
+							<div class="col-lg-19 col-sm-8 col-10" align="left">
 								<div class="search-input">
 									<input type="text" name="reContent" id="reContent"
 										placeholder="🤷‍♂️댓글을 입력 해 주세요">
