@@ -12,10 +12,13 @@
 	</select>
 
 	<select id="readAll" resultType="com.pj.vegi.vo.RepleVo">
-		select * from reple
-		where r_id =
-		#{rId}
-		order by re_date,re_id
+		SELECT r.*, m.m_name, m.profile_image
+		FROM reple r JOIN member m
+		ON (r.m_id = m.m_id)
+		WHERE r.r_id = #{rId}
+		START WITH re_parent is null
+		CONNECT BY PRIOR re_id=re_parent
+		ORDER SIBLINGS BY re_date
 	</select>
 
 

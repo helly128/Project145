@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,30 +147,24 @@ input {
 								<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
 								<a style="font-size: 1rem">식당명</a>
 								<h6>${rVo.getRestName() }</h6>
-								<br> 
-								<a>예약날짜/시간</a> 
-								<input type="datetime-local"
-									class="input" id="resvDate" name="restReservDate"
-									onChange="setendmin(this.value)" width="50" required> 
-								<br> 
-								<a>예약자명</a>
-								<input type="text" class="input" name="restReservName" required>
-								<br> 
-								<a>예약인원</a> 
-								<input type="number" class="input"
-									name="restReservPeople" min="1" max="100" required> 
-								<br>
-								<br> 
-								<input type="hidden" name="mId" value="${sessionScope.mId }"> 
-							    <input type="hidden" name="restId" value="${rVo.getRestId()}">
+								<br> <a>예약날짜/시간</a> <input type="datetime-local"
+									class="input" id="resvDate" name="reservDate"
+									onChange="setendmin(this.value)" width="50" required> <br>
+								<a>예약자명</a> <input type="text" class="input"
+									name="restReservName" required> <br> <a>예약인원</a> <input
+									type="number" class="input" name="restReservPeople" min="1"
+									max="100" required> <br> <br> <input
+									type="hidden" name="mId" value="${sessionScope.mId }">
+								<input type="hidden" name="restId" value="${rVo.getRestId()}">
 								<button style="font-size: 1rem;" class="modal_close_btn">취소</button>
 								<button style="font-size: 1rem;" type="submit" id="push">예약</button>
 							</div>
 						</form>
 						<!-- 달력 기본 설정 -->
 						<script>
-				 document.getElementById('resvDate').value = new Date().toISOString().substring(0, 10);
-				</script>
+							document.getElementById('resvDate').value = new Date()
+									.toISOString().substring(0, 10);
+						</script>
 					</c:if>
 					<c:if test="${sessionScope.mId == null }">
 						<div id="my_modal">
@@ -293,8 +288,8 @@ input {
 								<a> ${menuList.getMenuVegeType() }</a>
 							</div>
 							<div align="right">
-								<a style="font-weight: bold; font-size: 20px">${menuList.getMenuPrice() }
-									원 </a>
+								<a style="font-weight: bold; font-size: 20px"><fmt:formatNumber
+										value="${menuList.getMenuPrice() }" pattern="#,###" /> 원 </a>
 							</div>
 							<hr>
 							<br>
@@ -379,8 +374,26 @@ input {
 </body>
 
 <script type="text/javascript">
+	//$( "#resvDate" ).datepicker({ minDate: 0});
 
-	$( "#resvDate" ).datepicker({ minDate: 0});
+	$(function() {
+		var today = new Date();
+		today.setDate(today.getDate() + 1);
+		today = dateFormat(today);
+		$('#resvDate').attr('min', today);
+	});
 
+	function dateFormat(today) { //today는 date타입
+		var day = today.getDate();
+		if (day < 10) {
+			day = '0' + day;
+		}
+		var month = today.getMonth() + 1;
+		if (month < 10) {
+			month = '0' + month;
+		}
+		today = today.getFullYear() + '-' + month + '-' + day + 'T00:00';
+		return today; //리턴은 string
+	}
 </script>
 </html>

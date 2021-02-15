@@ -58,7 +58,7 @@ public class RepleController {
 		return new ResponseEntity<>(service.read(reId), HttpStatus.OK);
 	}
 
-	//댓글 등록
+	// 댓글 등록
 	@RequestMapping(method = { RequestMethod.PUT,
 			RequestMethod.PATCH }, value = "/{reId}", consumes = "application/json", produces = {
 					MediaType.TEXT_PLAIN_VALUE })
@@ -69,7 +69,7 @@ public class RepleController {
 
 	}
 
-	//댓글 삭제
+	// 댓글 삭제
 	@RequestMapping(value = "/reple.do/{reId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public RepleVo delete(@PathVariable String reId, RepleVo vo) {
@@ -78,17 +78,16 @@ public class RepleController {
 		return vo;
 	}
 
-	
-	  //대댓글 등록
-//	  
-//	  @RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH }, value =
-//	  "/{reId}", consumes = "application/json", produces = {
-//	  MediaType.TEXT_PLAIN_VALUE }) public ResponseEntity<String>
-//	  repleInsert(@RequestBody RepleVo vo, @PathVariable("rId") int rId) {
-//	  
-//	  return service.repleInsert(vo) == 1 ? new ResponseEntity<>("success",
-//	  HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//	  
-//	  }
-	 
+	// 대댓글 등록
+
+//	@RequestMapping(method = { RequestMethod.PUT,
+//			RequestMethod.PATCH }, value = "/{reId}", consumes = "application/json", produces = {
+//					MediaType.TEXT_PLAIN_VALUE })
+//	public ResponseEntity<String> repleInsert(@RequestBody RepleVo vo, @PathVariable("rId") int rId) {
+//
+//		return service.repleInsert(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+//				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//
+//	}
+
 }
