@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="my"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +20,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	
+<link href="<%=request.getContextPath()%>/resources/assets/css/starRating.css" rel="stylesheet" type="text/css">
 
 <style>
 #my_modal {
@@ -146,30 +150,24 @@ input {
 								<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
 								<a style="font-size: 1rem">식당명</a>
 								<h6>${rVo.getRestName() }</h6>
-								<br> 
-								<a>예약날짜/시간</a> 
-								<input type="datetime-local"
+								<br> <a>예약날짜/시간</a> <input type="datetime-local"
 									class="input" id="resvDate" name="restReservDate"
-									onChange="setendmin(this.value)" width="50" required> 
-								<br> 
-								<a>예약자명</a>
-								<input type="text" class="input" name="restReservName" required>
-								<br> 
-								<a>예약인원</a> 
-								<input type="number" class="input"
-									name="restReservPeople" min="1" max="100" required> 
-								<br>
-								<br> 
-								<input type="hidden" name="mId" value="${sessionScope.mId }"> 
-							    <input type="hidden" name="restId" value="${rVo.getRestId()}">
+									onChange="setendmin(this.value)" width="50" required> <br>
+								<a>예약자명</a> <input type="text" class="input"
+									name="restReservName" required> <br> <a>예약인원</a> <input
+									type="number" class="input" name="restReservPeople" min="1"
+									max="100" required> <br> <br> <input
+									type="hidden" name="mId" value="${sessionScope.mId }">
+								<input type="hidden" name="restId" value="${rVo.getRestId()}">
 								<button style="font-size: 1rem;" class="modal_close_btn">취소</button>
 								<button style="font-size: 1rem;" type="submit" id="push">예약</button>
 							</div>
 						</form>
 						<!-- 달력 기본 설정 -->
 						<script>
-				 document.getElementById('resvDate').value = new Date().toISOString().substring(0, 10);
-				</script>
+							document.getElementById('resvDate').value = new Date()
+									.toISOString().substring(0, 10);
+						</script>
 					</c:if>
 					<c:if test="${sessionScope.mId == null }">
 						<div id="my_modal">
@@ -307,64 +305,33 @@ input {
 		</div>
 
 		<div>
-			<div>
+			<div class="row" align="left">
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8" style="margin: 0px 0px;">
-					<h5>댓글 목록</h5>
+					<h4>리뷰 작성</h4>
 				</div>
-				<br />
-				<div id="reloadReple">
-					<div class="row" align="center">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-1">번호</div>
-						<div class="col-lg-3">댓글 내용</div>
-						<div class="col-lg-2">작성일자</div>
-						<div class="col-lg-1">작성자</div>
-						<div class="col-lg-1">비고</div>
-					</div>
-					<div class="row" align="center">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-8">
-							<hr />
-						</div>
-					</div>
-
-					<input type="hidden" value="${reple}">
-					<!-- 댓글 목록 출력되는 부분 -->
-					<div class="row" id="repleList"></div>
-
-				</div>
-
-			</div>
-			<br /> <br />
-			<h5>댓글 작성</h5>
-			<br /> <br />
-			<div class="container">
+				<br /> <br />
 				<div class="search-wrapper">
 					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
 					<c:if test="${sessionScope.mId != null }">
 						<div class="row justify-content-center">
-							<div class="row" align="left">
-								<div class="col-lg-2">
-									<p>
-										작성자 &nbsp;: &nbsp;${sessionScope.mId }<input type="hidden"
-											name="mId" id="mId">
-									</p>
-								</div>
-								<div class="col-lg-10">
-									작성일자&nbsp;:&nbsp; <span id="wDate"> </span>
+							<div class="row" align="center">
+								<div class="col-lg-2"></div>
+								<div class="col-lg-3">
+									" ${sessionScope.mId } "님 리뷰를 남겨주세요! <input type="hidden"
+										name="mId" id="mId">
 								</div>
 							</div>
-							<div class="col-lg-19 col-sm-8 col-10">
-								<div class="search-input">
+							<div class="row" align="center">
+								<div class="col-lg-2"></div>
+								<div class="col-lg-6 search-input" align="left">
 									<input type="text" name="reContent" id="reContent"
-										placeholder="🤷‍♂️댓글을 입력 해 주세요">
+										placeholder="🤷‍♂️리뷰를 작성해 주세요" style="width: 550px;">
 								</div>
-							</div>
-
-							<div class="col-lg-2 col-sm-5 col-10">
-								<!-- Submit button -->
-								<button class="middle-btn" id="repleBtn">댓글</button>
+								<div class="col-lg-2 col-sm-5 col-10">
+									<!-- Submit button -->
+									<button class="middle-btn" id="repleBtn">댓글</button>
+								</div>
 							</div>
 						</div>
 
@@ -373,14 +340,77 @@ input {
 			</div>
 		</div>
 
+		<br /> <br />
+
+		<div>
+			<div class="row" align="left">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-8" style="margin: 0px 0px;">
+					<h4>리뷰 목록</h4>
+				</div>
+				<br /> <br />
+				<div id="restReview" align="center">
+					<div class="col-lg-8" align="center">
+						<table border="0">
+							<thead>
+								<tr
+									style="border-bottom: 1px solid; text-align: center; height: 50px;">
+									<th width="100px">작성자</th>
+									<th width="300px">리뷰</th>
+									<th width="100px">별점</th>
+									<th width="150px">사진</th>
+									<th width="100px">작성일자</th>
+									<th width="100px">수정/삭제</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="vo" items="${restReview }">
+									<tr
+										style="border-bottom: 1px solid; text-align: center; height: 50px;">
+										<td id="mId">${vo.getMId() }</td>
+										<td id="restReview">${vo.restReview }</td>
+
+										<td id="restStar">
+											<fieldset class="rating">
+												<input type="radio" id="star5" name="rating" value="${vo.restStar }" />
+												<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												
+											</fieldset>
+										</td>
+
+										<td id="reviewPic"><c:if test="${vo.reviewPic != null}">
+												<i class="lni lni-camera">사진보기</i>
+											</c:if> <c:if test="${vo.reviewPic == null }">X</c:if></td>
+										<td id="reviewDate">${vo.reviewDate }</td>
+										<td id="edit"><c:if
+												test="${vo.getMId() == sessionScope.mId }">
+												<button>
+													<i class="lni lni-pencil"></i> / <i class="lni lni-trash"></i>
+												</button>
+											</c:if> <c:if test="${vo.getMId() != sessionScope.mId }">
+
+											</c:if></td>
+									</tr>
+
+								</c:forEach>
+							</tbody>
+						</table>
+						<my:paging paging="${paging }" jsFunc="goList" />
+					</div>
+				</div>
+
+			</div>
+			<br /> <br />
+		</div>
+
 
 	</div>
 	<br>
 </body>
 
 <script type="text/javascript">
-
-	$( "#resvDate" ).datepicker({ minDate: 0});
-
+	$("#resvDate").datepicker({
+		minDate : 0
+	});
 </script>
 </html>

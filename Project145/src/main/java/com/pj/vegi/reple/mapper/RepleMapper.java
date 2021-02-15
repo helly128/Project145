@@ -24,7 +24,6 @@ public interface RepleMapper {
 	public int getCountByRId(int rId);
 
 	public int repleInsert(RepleVo vo);//대댓글 입력
-
-
+	public int countReple(RepleVo vo);
 
 }

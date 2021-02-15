@@ -10,7 +10,18 @@ public class Paging {
 	int endPage;
 	int first;
 	int last;
+	boolean prev;
+	boolean next;
 	
+	public boolean getPrev() {
+		prev= (page == 1) ? false: true;
+		return prev;
+	}
+	public boolean getNext() {
+		next= (endPage * pageUnit) < totalRecord ? true:false;
+		return next;
+	}
+
 	public int getFirst() {
 		first = (getPage() - 1) * getPageUnit() + 1;
 		return first;
@@ -69,12 +80,12 @@ public class Paging {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-	@Override
-	public String toString() {
-		return "Paging [pageUnit=" + pageUnit + ", pageSize=" + pageSize + ", lastPage=" + lastPage + ", totalRecord="
-				+ totalRecord + ", page=" + page + ", startPage=" + startPage + ", endPage=" + endPage + ", first="
-				+ first + ", last=" + last + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Paging [pageUnit=" + pageUnit + ", pageSize=" + pageSize + ", lastPage=" + lastPage + ", totalRecord="
+//				+ totalRecord + ", page=" + page + ", startPage=" + startPage + ", endPage=" + endPage + ", first="
+//				+ first + ", last=" + last + "]";
+//	}
 	
 	
 	

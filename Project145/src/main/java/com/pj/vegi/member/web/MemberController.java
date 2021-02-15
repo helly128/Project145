@@ -18,7 +18,6 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
 import com.pj.vegi.vo.MemberVo;
-import com.pj.vegi.vo.SnsInfoVo;
 
 @Controller
 public class MemberController {
@@ -110,7 +109,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("/naverResult.do")
-	public String naverResult() {
+	public String naverResult(MemberVo vo) {
 
 		return "login/naverSuccess";
 	}
@@ -120,29 +119,32 @@ public class MemberController {
 	public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
 			throws IOException, SQLException {
 		System.out.println("여기는 callback");
-
-		boolean check = memberService.memberLoginCheck(vo);
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBo.getAccessToken(session, code, state);
+		// 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBo.getUserProfile(oauthToken);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jnode = mapper.readTree(apiResult);
+		String mId = (String) jnode.get("response").get("id").textValue();
+		String email = (String) (jnode.get("response").get("email").textValue());
+		String mName = (String) (jnode.get("response").get("name").textValue());
+		
+		boolean check = memberService.naverLoginCheck(vo);
+		System.out.println("=============="+vo);
 		String result = null;
 
 		if (check != true) {// 새로운 네이버 로그인
-			OAuth2AccessToken oauthToken;
-			oauthToken = naverLoginBo.getAccessToken(session, code, state);
-			// 로그인 사용자 정보를 읽어온다.
-			apiResult = naverLoginBo.getUserProfile(oauthToken);
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jnode = mapper.readTree(apiResult);
-			String mId = (String) jnode.get("response").get("id").textValue();
-			String email = (String) (jnode.get("response").get("email").textValue());
-			String mName = (String) (jnode.get("response").get("name").textValue());
+			System.out.println("~~~~~~~~~if~~~~");
+			
 			vo.setMId(mId);
 			vo.setEmail(email);
 			vo.setMName(mName);
-
 			int n = memberService.naverInsert(vo);
 
 			if (n != 0) {
 				session.setAttribute("mName", mName);
 				session.setAttribute(email, email);
+				session.setAttribute("password", vo.getPassword());
 				session.setAttribute("mId", mId);
 				session.setAttribute("auth", "user");
 				result = "redirect:naverResult.do";
@@ -150,21 +152,11 @@ public class MemberController {
 				result = "redirect:/loginForm.do";
 			}
 		} else {// 이미저장된네이버로 로그인
-			OAuth2AccessToken oauthToken;
-			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			System.out.println("~~~~~~~~else~~~~");
 			// 로그인 사용자 정보를 읽어온다.
-			apiResult = naverLoginBo.getUserProfile(oauthToken);
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jnode = mapper.readTree(apiResult);
-			String mId = (String) jnode.get("response").get("id").textValue();
-			String email = (String) (jnode.get("response").get("email").textValue());
-			String mName = (String) (jnode.get("response").get("name").textValue());
-			vo.setMId(mId);
-			vo.setMName(jnode.get("response").get("name").textValue());
-			vo.setEmail(jnode.get("response").get("email").textValue());
-			vo.setMId(jnode.get("response").get("id").textValue());
 			session.setAttribute("mName", mName);
-			session.setAttribute(email, email);
+			session.setAttribute("email", email);
+			session.setAttribute("password", vo.getPassword());
 			session.setAttribute("mId", mId);
 			session.setAttribute("auth", "user");
 			result = "redirect:naverResult.do";
@@ -180,4 +172,5 @@ public class MemberController {
 		return result;
 	}
 
+	
 }
