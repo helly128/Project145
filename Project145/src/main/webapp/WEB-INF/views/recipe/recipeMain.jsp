@@ -54,6 +54,7 @@
 	function moveurl(category) {
 		location.href = category;
 	}
+	
 </script>
 
 
@@ -172,6 +173,8 @@
 						location.href = "recipeMain.do?page=" + p;
 					}
 					$(function() {
+						$("#RType").val("${vType}").prop("selected", true)
+						
 						$('#cards')
 								.on(
 										'click',

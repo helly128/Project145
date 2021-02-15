@@ -2,7 +2,9 @@ package com.pj.vegi.restaurant.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -131,11 +133,16 @@ public class RestaurantController {
 	}
 	//식당 예약
 	@RequestMapping("/reservInsert.do")
-	public String reservInsert(RestReservVo vo, Model model, HttpServletResponse response) throws IOException {
+	public String reservInsert(RestReservVo vo, RestaurantVo rVo, Model model, HttpServletResponse response) throws IOException {
+		Timestamp timeStamp = Timestamp.valueOf(vo.getReservDate().replace("T", " ") + ":00");
+		Date reservDate = new Date(timeStamp.getTime());
+		System.out.println(reservDate);
+		vo.setRestReservDate(reservDate);
 		int n = restaurantService.reservInsert(vo);
+		int m = restaurantService.reservCountUp(rVo);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		if (n != 0) {
+		if (n != 0 && m != 0) {
 
 			out.println("<script>alert('예약대기 상태입니다. 마이페이지에서 예약을 확인해주세요.'); location.href='restaurant.do';</script>");
 			out.flush();

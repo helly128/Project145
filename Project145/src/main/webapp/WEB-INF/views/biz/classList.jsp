@@ -183,11 +183,8 @@ function classdel(v){
 		alert('삭제 취소');
 		}	
 }
-
 $(function(){ 
-
 function classcollabo(c){
-
 		   $('#idsearch').click(function() {
 		    $('#background_modal').show();
 		   });
@@ -202,9 +199,7 @@ function classcollabo(c){
 		           }
 		   }); 
 }
-
 })
-
 </script>
 
 </body>

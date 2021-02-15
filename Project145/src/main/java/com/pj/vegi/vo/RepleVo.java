@@ -2,7 +2,7 @@ package com.pj.vegi.vo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ public class RepleVo {
 
 	private String rId;//
 	private String reContent;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy년MM월dd일")
+	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Date reDate;
 	private int reReport;
 	private int reAble;
@@ -26,5 +26,11 @@ public class RepleVo {
 	private String unId;
 	private String reId;
 	private int reDepth;
-	private int reParent;
+	private String reParent;
+	
+	private String mName;
+	private String profileImage;
+	
+	private int start;
+	private int end;
 }

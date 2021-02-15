@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.MemberVo;
-import com.pj.vegi.vo.SnsInfoVo;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -36,6 +35,16 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public boolean naverLoginCheck(MemberVo vo) {
+		MemberVo resultVO = dao.memberSelect(vo);
+		if(resultVO != null && vo.getMId().equals(resultVO.getMId())) {
+			return true;
+		}else {
+		return false;
+		}
+	}
+	
 	@Override
 	public int memberInsert(MemberVo vo) throws SQLException {
 

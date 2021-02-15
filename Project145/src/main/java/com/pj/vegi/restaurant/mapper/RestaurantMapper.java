@@ -36,7 +36,11 @@ public interface RestaurantMapper {
 	int restLikeDelete(LikeListVo vo); //좋아요 취소 
 	int restLikeFlagSelect(LikeListVo vo); //좋아요 여부 확인용
 	
+<<<<<<< HEAD
 	List<RestReviewVo> restReview(RestReviewVo vo); //식당 리뷰
 	int countRestReview (RestReviewVo vo); //삭당 리뷰 카운트
 	
+=======
+	int reservCountUp(RestaurantVo vo);	//식당 테이블의 예약 카운트 증가
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 }

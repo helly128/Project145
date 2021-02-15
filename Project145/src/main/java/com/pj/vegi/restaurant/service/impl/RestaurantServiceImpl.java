@@ -108,6 +108,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<RestReviewVo> restReview(RestReviewVo vo) {
 		//식당 리뷰
 		return dao.restReview(vo);
@@ -126,6 +127,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 
 
+=======
+	public int reservCountUp(RestaurantVo vo) {
+		return dao.reservCountUp(vo);
+	}
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 
 
 

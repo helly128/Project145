@@ -32,8 +32,17 @@ public interface RestaurantService {
 	int restLikeDelete(LikeListVo vo); //좋아요 취소
 	int restLikeFlagSelect(LikeListVo vo); //좋아요 여보 확인
 	
+<<<<<<< HEAD
 	List<RestReviewVo> restReview(RestReviewVo vo); //식당 리뷰
 	int countRestReview (RestReviewVo vo); //삭당 리뷰 카운트
 	
+=======
+	int reservCountUp(RestaurantVo vo);
+	
+
+
+	
+
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 
 }
