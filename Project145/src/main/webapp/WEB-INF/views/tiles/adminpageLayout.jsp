@@ -57,7 +57,8 @@
 			</li>
 
 			<!-- 클래스 관리 메뉴 -->
-			<li class="nav-item"><a class="nav-link collapsed"
+			<li class="nav-item">
+			<a class="nav-link collapsed"
 				href="/begiMain.do" data-toggle="collapse"
 				data-target="#collapseTwo" aria-expanded="true"
 				aria-controls="collapseTwo"> 🍋 <span>클래스 관리</span>
@@ -65,22 +66,22 @@
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="#">진행중인 클래스</a> <a
-							class="collapse-item" href="#">종료된 클래스</a>
+						<a class="collapse-item" href="#">진행중인 클래스</a> 
+						<a class="collapse-item" href="#">종료된 클래스</a>
 					</div>
 				</div></li>
 
 			<!-- 문의/신고 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
+			<li class="nav-item">
+			<a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> 🍐 <span>배지Meet
-						관리</span>
+				aria-expanded="true" aria-controls="collapseUtilities"> 🍐 <span>챌린지 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<a class="collapse-item" href="#">문의</a> <a class="collapse-item"
-							href="#">신고</a>
+						<a class="collapse-item" href="/adminBegiMeetQuestionList.do">문의</a> 
+						<a class="collapse-item" href="/adminBegiMeetReportList.do">신고</a>
 					</div>
 				</div></li>
 

@@ -14,13 +14,21 @@
 	</select>
 	
 	<update id = "recipeMaterialUpdate">
-	update recipe_material 
-	set 
-		MAT_ID=#{matId}, 
+	UPDATE recipe_material 
+	SET 
 		MAT_NAME=#{matName}, 
 		MAT_VOL=#{matVol}
-	where 
-		r_id=#{rId}; 
+	WHERE mat_id = #{matId}
 	
 	</update>
+	
+	<insert id="recipeMaterialInsert">
+		INSERT INTO recipe_material(mat_id, mat_name, mat_vol, r_id)
+		VALUES('mat' || mat_seq.nextval, #{matName}, #{matVol}, #{rId})
+	</insert>
+	
+	<delete id="recipeMaterialDelete">
+		DELETE FROM recipe_material
+		WHERE mat_id = #{matId}
+	</delete>
 </mapper>

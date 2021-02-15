@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 public interface AdminMapper {
@@ -15,6 +16,8 @@ public interface AdminMapper {
 	List<RestaurantVo> adminRestaurant(RestaurantVo vo); //관리자 페이지 식당조회 
 	int countAdminRestaurant(RestaurantVo vo); //페이징 게시물 카운트(식당)
 	
+	List<ReportVo> adminBegiMeetReportList(ReportVo vo);
+	int countAdminBegiMeetReportList(ReportVo vo);
 
 
 }

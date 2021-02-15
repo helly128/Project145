@@ -3,10 +3,13 @@ package com.pj.vegi.recipe.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.pj.vegi.mywallet.vo.WalletHistoryVO;
 import com.pj.vegi.recipe.mapper.RecipeMapper;
 import com.pj.vegi.recipe.service.RecipeService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.RecipeVo;
 
 @Service("recipeService")
@@ -78,5 +81,25 @@ public class RecipeServiceImpl implements RecipeService {
 	@Override
 	public List<LessonVO> recipeLessonSearch(LessonVO lvo) {
 		return dao.recipeLessonSearch(lvo);
+	}
+
+	@Override
+	public LessonVO relatedClass(LessonVO vo) {
+		return dao.relatedClass(vo);
+	}
+
+	@Override
+	public int recipePointUpdate(MemberVo vo) {
+		return dao.recipePointUpdate(vo);
+	}
+
+	@Override
+	public int recipeWalletHistory(WalletHistoryVO vo) {
+		return dao.recipeWalletHistory(vo);
+	}
+
+	@Override
+	public int recipeInsertCount(MemberVo vo) {
+		return dao.recipeInsertCount(vo);
 	}
 }

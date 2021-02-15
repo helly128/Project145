@@ -8,14 +8,13 @@
 <meta charset="UTF-8">
 <title>recipeMain</title>
 <style>
-.single-product {
+/* .single-product {
 	height: 400px;
 	width: 320px;
-}
-
-.product-content {
+} */
+/* .product-content {
 	height: 40px;
-}
+} */
 
 .likeAction {
 	border: none;
@@ -34,12 +33,21 @@
 	color: #6C9852;
 	cursor: pointer;
 }
-#writeBtn{
-    width: 130px;
-    background: #6C9852;
-    border-radius: 10px;
-    color: white;
-    height: 40px;
+
+#writeBtn {
+	width: 130px;
+	background: #6C9852;
+	border-radius: 10px;
+	color: white;
+	height: 40px;
+}
+
+.search-area .search-wrapper {
+	box-shadow: 0px 0px 0px;
+}
+
+.search-area .search-wrapper select, input {
+	box-shadow: 0px 3px 25px rgb(203 207 213 / 10%);
 }
 </style>
 <script>
@@ -69,7 +77,7 @@
 							<div class="row justify-content-center">
 
 								<div class="col-lg-3 col-sm-5 col-10">
-									<div class="search-input" style="margin-bottom: 5%">
+									<div class="search-input">
 										<label for="category"><i
 											class="lni lni-grid-alt theme-color"></i></label> <select
 											name="RType" id="RType">
@@ -96,65 +104,64 @@
 											placeholder="keyword" value="${vo.getKeyword() }">
 									</div>
 								</div>
-								<div class="col-lg-1" align="center">
-									<button class="btn btn-success" type="submit" >Search</button>
-								</div>
+								<!-- <div class="col-lg-1" align="center">
+									<button class="btn btn-success" type="submit">Search</button>
+								</div> -->
 							</div>
 						</form>
+					</div>
 						<div class="col-lg-2 col-sm-3 col-4">
 							<c:if test="${sessionScope.mId !=null}">
-								<button class="btn btn-success" id="writeBtn"
+								<button class="btn btn-success mt-4" id="writeBtn"
 									onclick="location.href='recipeInsert.do'">Write New</button>
 							</c:if>
 						</div>
-						<br /> <br />
+						<br />
 
 
-					</div>
 				</div>
 			</div>
 			<p />
 			<!-- 검색바 끝 -->
 			<!-- 레시피리스트 시작 -->
 			<%-- ${recipes} --%>
-			<div>
-				<div class="row" id="cards">
-					<c:forEach var="vo" items="${recipes}" varStatus="status">
-						<div class="col-xl-3 col-lg-6 col-md-6">
-							<div class="single-product">
-								<div class="product-img">
-									<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
-										src="${vo.getRImage()}" alt="recipe images" height="300px"
-										width="300px">
-									</a>
+			<div class="row" id="cards">
+				<c:forEach var="vo" items="${recipes}" varStatus="status">
+					<div class="col-xl-3 col-lg-6 col-md-6">
+						<div class="single-product">
+							<div class="product-img">
+								<a href="/recipeDesc.do?rId=${vo.getRId() }"> <img
+									src="${vo.getRImage()}" alt="recipe images" height="250px">
+								</a>
+							</div>
+							<div class="product-content" style="display: block;">
+								<div class="namediv">
+									<h5 class="name" title="${vo.getRTitle()}"
+										onclick='location.href="/recipeDesc.do?rId=${vo.getRId()}"'>${vo.getRTitle()}</h5>
 								</div>
-								<div class="product-content">
-									<div class="namediv">
-										<h5 class="name" title="${vo.getRTitle()}"
-											onclick="/recipeDesc.do?rId=${vo.getRId()}">${vo.getRTitle()}</h5>
+								<ul class="address">
+									<li><i class="lni lni-calendar"></i>&nbsp;&nbsp;${vo.getRDate() }</li>
+									<li><i class="lni lni-user"></i>&nbsp;&nbsp;${vo.getMId() }</li>
+								</ul>
+								<div class="product-bottom" style="display: flex; justify-content: flex-end;">
+									<div>
+										<button type="button" class="likeAction"
+											data-id="${vo.getRId() }">
+											<c:if test="${vo.likeFlag > 0 }">
+												<img class="likeImg" src="/images/filled_like.png"
+													style="width: 30px;">
+											</c:if>
+											<c:if test="${vo.likeFlag == 0 }">
+												<img class="likeImg" src="/images/empty_like.png"
+													style="width: 30px;">
+											</c:if>
+										</button>
 									</div>
-									<ul class="address">
-										<li><i class="lni lni-calendar"></i>&nbsp;&nbsp;${vo.getRDate() }</li>
-										<li><i class="lni lni-user"></i>&nbsp;&nbsp;${vo.getMId() }</li>
-									</ul>
-								</div>
-								<div align="right">
-									<button type="button" class="likeAction"
-										data-id="${vo.getRId() }">
-										<c:if test="${vo.likeFlag > 0 }">
-											<img class="likeImg" src="/images/filled_like.png"
-												style="width: 30px;">
-										</c:if>
-										<c:if test="${vo.likeFlag == 0 }">
-											<img class="likeImg" src="/images/empty_like.png"
-												style="width: 30px;">
-										</c:if>
-									</button>
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-				</div>
+					</div>
+				</c:forEach>
 			</div>
 			<!-- 레시피 리스트 카드 끝 -->
 			<!-- 페이징 처리 추가 -->

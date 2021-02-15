@@ -10,6 +10,7 @@ import com.pj.vegi.vo.MeetParticipantVo;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.VegimeetVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface VegimeetService {
 	List<VegimeetVo> vegimeetList(VegimeetVo vo);
@@ -48,4 +49,6 @@ public interface VegimeetService {
 	int vegimeetDelete(VegimeetVo vo);
 
 	int reportImage(ReportVo vo);
+
+	int enquiryVegimeet(enquiryVO vo);
 }

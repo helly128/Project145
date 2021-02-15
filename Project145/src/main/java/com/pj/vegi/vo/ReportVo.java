@@ -13,4 +13,8 @@ public class ReportVo {
 	private String reportResult;
 	private String mId;			//신고자ID
 	private String originId;
+	
+	private int start; //페이징 시작
+	private int end; //페이징 끝
+	private String keyword; //검색
 }
