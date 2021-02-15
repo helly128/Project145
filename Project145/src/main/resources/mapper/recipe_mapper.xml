@@ -27,10 +27,8 @@
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
-				r.r_title like '%' || #{keyword} || '%'
-				OR rm.mat_name
-				like '%' || #{keyword}
-				|| '%'
+				UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
+				OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%')
 			</if>
 		</where>
 		) b
@@ -54,10 +52,8 @@
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
-				r.r_title like '%' || #{keyword} || '%'
-				OR rm.mat_name
-				like '%' || #{keyword}
-				|| '%'
+				UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
+				OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%')
 			</if>
 		</where>
 	</select>
