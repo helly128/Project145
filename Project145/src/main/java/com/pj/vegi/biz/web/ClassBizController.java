@@ -183,19 +183,8 @@ public class ClassBizController {
 	@RequestMapping("/classBizDelete.do")
 	public String classBizDelete(Model model, LessonVO vo) {
 		int n = 0;
-//		LessonVO classVo = classBizService.classBizSelect(vo);
-//		String status = classVo.getStatus();
-//		int join = classVo.getCJoin();
-//		if(status.equals("강사승인대기") && status.equals("강사미정")) {
-//			n = classBizService.classBizDelete(vo);
-//			System.out.println(n+"건 삭제 완료");
-//		}else if (join == 0) {
-//			n = classBizService.classBizDelete(vo);
-//			System.out.println(n+"건 삭제 완료");
-//		}else {
-//			System.out.println("삭제불가");
-//		}
-//		n = classBizService.classBizDelete(vo);
+		n = classBizService.classBizDelete(vo);
+		
 		System.out.println(n+"건 삭제 완료");
 		return "redirect:classBizList.do";
 	}
