@@ -29,4 +29,12 @@ public interface ClassBizService {
 
 	int classBizUpdate(LessonVO cvo);
 
+	int applyCollabo(enquiryVO enqvo);
+
+	int enqAccepted(enquiryVO evo);
+
+	int enqRefused(enquiryVO evo);
+
+	int lecIdUpdate(LessonVO cvo);
+
 }

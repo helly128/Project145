@@ -508,7 +508,7 @@ function changelecId(e) {
 			</div>
 			<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
 				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
-							<textarea rows="8" name="lecProposal" id="lecProposal"
+							<textarea rows="8" name="enqContent" id="lecProposal"
 								style="width: 90%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
 			<!-- 강사부분 끝 -->
 

@@ -16,6 +16,7 @@
 	<delete id="classBizDelete">
 		DELETE FROM class
 		WHERE c_id=#{cId}
+		
 	</delete>
 
 
@@ -70,12 +71,6 @@
 		m_id=#{mId}
 	</update>
 
-	<update id="applyCollabo">
-		UPDATE class
-		set lec_proposal = #{lecProposal}
-		WHERE
-		c_id=#{cId}
-	</update>
 
 
 
@@ -89,16 +84,55 @@
 	</select>
 
 
-	<select id="classEnquiryList" resultType="enquiryVo">
+	<select id="classEnquiryList" resultType="enquiryVO">
 		select * from enquiry
 		where origin_Id = #{mId}
 	</select>
 
-	<select id="myEnquiryList" resultType="enquiryVo">
+	<select id="myEnquiryList" resultType="enquiryVO">
 		select * from enquiry
 		where m_id = #{mId}
 	</select>
 
+	<insert id="applyCollabo" >
+		insert into enquiry
+		(ENQ_NO,
+		ORIGIN_ID,
+		ENQ_CONTENT,
+		ENQ_DATE,
+		M_ID)
+		values(
+		'enq'||enq_seq.nextval,
+		#{originId},
+		#{enqContent},
+		current_date,
+		#{mId}			
+		)
+	</insert>
+	
+	<update id="enqAccepted">
+		UPDATE enquiry
+		set enq_Result = #{enqResult},
+		enq_pro_date = current_date,
+		enq_type = #{enqType}
+		WHERE
+		enq_no=#{enqNo}
+	</update>
+	
+	<update id="enqRefused">
+		UPDATE enquiry
+		set enq_Result = #{enqResult},
+		enq_pro_date = current_date,
+		enq_type = #{enqType}
+		WHERE
+		enq_no=#{enqNo}
+	</update>
+	<update id="lecIdUpdate">
+	Update class
+	set lec_id = #{lecId}
+	where 
+	c_id=#{cId}
+	</update>
 
 
 </mapper>

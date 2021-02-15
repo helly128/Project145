@@ -19,10 +19,14 @@ public interface ClassBizMapper {
 	
 	List<MemberVo> getLecList(String bizNum);
 	
-	int applyCollabo(LessonVO vo);
+	
 	List<enquiryVO> classEnquiryList(enquiryVO vo);
 	List<enquiryVO> myEnquiryList(enquiryVO vo);
 	int classBizUpdate(LessonVO cvo);
+	int applyCollabo(enquiryVO enqvo);
+	int enqAccepted(enquiryVO evo);
+	int enqRefused(enquiryVO evo);
+	int lecIdUpdate(LessonVO cvo);
 	
 	
 

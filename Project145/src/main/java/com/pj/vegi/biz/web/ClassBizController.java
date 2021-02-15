@@ -202,7 +202,7 @@ public class ClassBizController {
 	
 	
 	@RequestMapping("/classBizInsert.do") //클래스 등록
-	public String classBizInsert(Model model, HttpSession session, LessonVO cvo, MemberVo mvo, @RequestParam MultipartFile uploadfile, HttpServletRequest request) throws IllegalStateException, IOException {
+	public String classBizInsert(Model model, HttpSession session, LessonVO cvo, MemberVo mvo, enquiryVO enqvo,  @RequestParam MultipartFile uploadfile, HttpServletRequest request) throws IllegalStateException, IOException {
 		String mId = (String) session.getAttribute("mId");
 		// 클래스 cvo에 담긴 파라메터들 확인
 		System.out.println("클래스를 생성한다.");
@@ -216,6 +216,7 @@ public class ClassBizController {
 		if (mvo.getLecId()==mId) {
 			lstatus = "개설완료";
 			}else {
+				mvo.setLecId(null);
 				lstatus ="강사승인대기";
 				//문의테이블에 등록 !
 			}
@@ -241,6 +242,15 @@ public class ClassBizController {
 		n = classBizService.classBizInsert(cvo);
 		System.out.println("클래스" + n + "건 입력 완료");
 		
+		//lstatus가 강사 승인 대기 일때, 문의 테이블에 문의 내용 등록 originId 를 classId로 ! 
+		int m = 0;
+		
+		enqvo.setMId("class"+cvo.getCId());//클래스 아이디가 글쓴이 자리에 들어감
+		enqvo.setOriginId(cvo.getLecId());
+		System.out.println("콜라보는 "+enqvo);
+		m = classBizService.applyCollabo(enqvo);
+		System.out.println("콜라보 문의" + m + "건 입력 완료");
+		
 		
 
 		return "redirect:classBizList.do";
@@ -260,7 +270,38 @@ public class ClassBizController {
 
 		return "biz/enquiryList";
 	}
+	@ResponseBody
+	@RequestMapping("/enqAccepted")
+	public int enqAccepted(Model model, HttpSession session, enquiryVO evo, LessonVO cvo) {
+		int n = 0;
+		String result = "accepted";
+		evo.setEnqType(result);
+		System.out.println("결과는" + evo);
+		n = classBizService.enqAccepted(evo); 
+		// 클래스에 lecId로 등록하기 
+		String mId = (String) session.getAttribute("mId");
+		cvo.setLecId(mId);
+		System.out.println("넘겨줄 id는 "+evo.getOriginId());
+		String cId= evo.getOriginId();
+		cvo.setCId(cId);
+		n = classBizService.lecIdUpdate(cvo);
+		System.out.println(cvo);
+		
+		return n;
+	}
 	
+	@ResponseBody
+	@RequestMapping("/enqRefused")
+	public int enqRefused(Model model, HttpSession session, enquiryVO evo, LessonVO cvo) {
+		int n = 0;
+		String result = "refused";
+		evo.setEnqType(result);
+		evo.setEnqResult("거절함");
+		System.out.println("결과는" + evo);
+		n = classBizService.enqRefused(evo); 
+		
+		return n;
+	}
 	
 	
 }

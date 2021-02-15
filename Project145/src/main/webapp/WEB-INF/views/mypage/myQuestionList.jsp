@@ -37,30 +37,53 @@
 										style="width: 100%; text-align: center;">
 										<thead>
 											<tr role="row">
+												<th style="width: 150px;">보낸이</th>
+												<th style="width: 150px;">받은날짜</th>
 												<th style="width: 300px;">내용</th>
-												<th style="width: 50px;">받은날짜</th>
-												<th>상태</th>
-												<th>옵션</th>
+
+												<th>답변</th>
+
+												<th style="width: 200px;">옵션</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="cEnqList" items="${cEnqList }">
 												<tr role="row" class="tr-hover">
+													<td>${cEnqList.getMId() }</td>
+													<td>${cEnqList.enqDate}</td>
 													<td>${cEnqList.enqContent }</td>
-													<td><a href="#">${cEnqList.enqDate}</a></td>
-													<td>${cEnqList.enqResult }</td>
+
+													<td><div id="resulttext"><c:if test="${cEnqList.enqResult ne null}">
+													${cEnqList.enqResult }
+													</c:if> <c:if test="${cEnqList.enqResult eq null}">
+															<textarea class="enqResult" id="enqreply" rows="5"></textarea>
+														</c:if></div></td>
 													<td>
-														<button class="btn btn-outline-primary"
-															value="${cEnqList.enqNo}" onclick='enqOpen(this)'
-															style="font-size: 20px; z-index: 99;">
-															<i class="fa fa-envelope-open-o"></i>
+													
+													<c:if test="${cEnqList.enqType eq 'accepted'}">
+													
+														<button id="sad" class="btn btn-outline-danger"
+															value="${cEnqList.enqNo}" onclick='enqRefused(this)'
+															style="font-size: 15px; z-index: 99;">
+															<i class="fa fa-frown-o" aria-hidden="true">승낙취소</i>
+														</button>
+													</c:if>
+													<c:if test="${cEnqList.enqType eq 'refused'}">
+														거절
+													</c:if>
+													<c:if test="${cEnqList.enqResult eq null}">
+														<button id="smile" class="btn btn-outline-primary"
+															value="${cEnqList.enqNo}" onclick='enqAccepted(this)'
+															style="font-size: 15px; z-index: 99;">
+															<i class="fa fa-smile-o" aria-hidden="true">승낙</i>
 														</button>
 
-														<button class="btn btn-outline-primary"
-															onclick="classcollabo(this)"
-															style="font-size: 20px; z-index: 99; padding: 9px 7px 3px 11px">
-															<i class="fa fa-krw"></i>
+														<button id="sad" class="btn btn-outline-danger"
+															value="${cEnqList.enqNo}" onclick='enqRefused(this)'
+															style="font-size: 15px; z-index: 99;">
+															<i class="fa fa-frown-o" aria-hidden="true">거절</i>
 														</button>
+													</c:if>
 													</td>
 												</tr>
 											</c:forEach>
@@ -99,31 +122,22 @@
 										style="width: 100%; text-align: center;">
 										<thead>
 											<tr role="row">
-												<th style="width: 300px;">내용</th>
-												<th style="width: 50px;">보낸날짜</th>
+												<th style="width: 150px;">문의대상</th>
+												<th style="width: 150px;">보낸날짜</th>
+												<th style="width: 300px;">보낸내용</th>
 												<th>받은답변</th>
-												<th>옵션</th>
+
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="myEnqList" items="${myEnqList }">
 												<tr role="row" class="tr-hover">
+													<td>${myEnqList.originId}</td>
+													<td>${myEnqList.enqDate}</td>
 													<td>${myEnqList.enqContent }</td>
-													<td><a href="#">${myEnqList.enqDate}</a></td>
-													<td>${myEnqList.enqResult }</td>
-													<td>
-														<button class="btn btn-outline-primary"
-															value="${myEnqList.enqNo}" onclick='enqOpen(this)'
-															style="font-size: 20px; z-index: 99;">
-															<i class="fa fa-envelope-open-o"></i>
-														</button>
 
-														<button class="btn btn-outline-primary"
-															value="${myEnqList.enqNo}" onclick="enqdel(this)"
-															style="font-size: 20px; z-index: 99;">
-															<i class="fa fa-trash-o"></i>
-														</button>
-													</td>
+													<td>${myEnqList.enqResult }</td>
+
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -140,6 +154,7 @@
 		</div>
 	</div>
 
+
 	<script>
 		function enqDel(v) {
 			console.log(v.value);
@@ -149,6 +164,95 @@
 				alert('삭제 취소');
 			}
 		}
+
+function enqAccepted(e) {
+			if (confirm('콜라보요청을 승낙하겠습니까?')) {
+			
+			console.log(e.value);
+			var enqNo=e.value;
+			var tr = $(e).closest("tr");
+			var enqResult = tr.find('textarea').val();
+			var originId = tr.children().eq(0).text();
+			console.log(originId+"넘겨줌");
+				/* 아작스 */
+       $.ajax(
+          { 
+             type:"POST",
+             url:"enqAccepted.do",
+             data:{enqResult: enqResult, enqNo : enqNo, originId : originId}, //사용하는 함수 
+             dataType:"json",
+             success: function(n){
+                if(n!=0){
+                   $("#collaboresult").text("콜라보 승낙");
+                   alert("콜라보요청을 승낙하였습니다.");
+                   console.log(enqResult);
+                   $("#resulttext").text(enqResult);
+                   tr.find('textarea').hide();
+                   $("#smile").text('승낙됨');
+                   $("#smile").show();
+                   $("#sad").text("승낙취소");
+  
+                }
+                else{
+                   $("#saveResult").text("승낙 실패");
+                   alert("승낙 실패");
+                }
+             	
+             },
+             error:(log)=>{alert("아작스 실패")
+             }
+                
+          });
+				/* 아작스 */
+		
+			} else {
+				alert('승낙 취소');
+			}
+		}
+</script>
+<script>		
+function enqRefused(e) {
+			if (confirm('콜라보요청을 거절합니다. 한번 거절한 요청은 다시 수락할수 없습니다.')) {
+				
+					
+					console.log(e.value);
+					var enqNo=e.value;
+					var tr = $(e).closest("tr");
+					var enqResult = tr.find('textarea').val();
+						/* 아작스 */
+		       $.ajax(
+		          { 
+		             type:"POST",
+		             url:"enqRefused.do",
+		             data:{enqResult: enqResult, enqNo : enqNo}, //사용하는 함수 
+		             dataType:"json",
+		             success: function(n){
+		                if(n!=0){
+		                   $("#collaboresult").text("콜라보 거절");
+		                   alert("콜라보요청을 거절하였습니다.");
+		                   console.log(enqResult);
+		                   $("#resulttext").text("");
+		                   tr.find('textarea').hide();
+		                   $("#smile").text('거절함');
+		                   $("#smile").show();
+		                   $("#sad").text("거절함");
+		  
+		                }
+		                else{
+		                   $("#saveResult").text("거절 실패");
+		                   alert("거절 실패");
+		                }
+		             	
+		             },
+		             error:(log)=>{alert("아작스 실패")       }
+		                
+		          });
+				/* 아작스 */
+				
+					} else {
+						alert('거절 취소');
+					}
+				}
 	</script>
 </body>
 </html>

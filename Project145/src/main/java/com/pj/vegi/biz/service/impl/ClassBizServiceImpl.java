@@ -45,10 +45,7 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.getLecList(bizNum);
 	}
 
-	@Override
-	public int applyCollabo(LessonVO vo) {
-		return dao.applyCollabo(vo);
-	}
+	
 
 	@Override
 	public int classBizDelete(LessonVO vo) {
@@ -74,6 +71,35 @@ public class ClassBizServiceImpl implements ClassBizService{
 	public int classBizUpdate(LessonVO cvo) {
 		// TODO Auto-generated method stub
 		return dao.classBizUpdate(cvo);
+	}
+
+	@Override
+	public int applyCollabo(enquiryVO enqvo) {
+		
+		return dao.applyCollabo(enqvo);
+	}
+
+	@Override
+	public int applyCollabo(LessonVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int enqAccepted(enquiryVO evo) {
+		
+		return dao.enqAccepted(evo);
+	}
+
+	@Override
+	public int enqRefused(enquiryVO evo) {
+		// TODO Auto-generated method stub
+		return dao.enqRefused(evo);
+	}
+
+	@Override
+	public int lecIdUpdate(LessonVO cvo) {
+		return dao.lecIdUpdate(cvo);		
 	}
 
 }
