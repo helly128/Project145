@@ -148,5 +148,9 @@
 		AND origin_id=#{originId}
 	</select>
 
-
+	<update id="reservCountUp">
+		UPDATE restaurant
+		SET rest_reserv_wait = rest_reserv_wait + 1
+		WHERE rest_id = #{restId}
+	</update>
 </mapper>
