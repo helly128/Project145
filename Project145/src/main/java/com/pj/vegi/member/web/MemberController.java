@@ -2,9 +2,13 @@ package com.pj.vegi.member.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +21,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
+import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
-import com.pj.vegi.vo.SnsInfoVo;
+import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberService memberService; // MemberServiceImpl 객체 자동주입 -> @Service("memberService")와 같은이름
 
-	@RequestMapping("/main.do")
-	public String main() {
+	@RequestMapping("/")
+	public String main(Model model, LessonVO l_vo, VegimeetVo m_vo, RestaurantVo rest_vo, RecipeVo rec_vo) {
+		
+		List<Map> mainListLesson = memberService.mainLesson(l_vo);
+		model.addAttribute("mainListLesson", mainListLesson);
+		
+		List<Map> mainListMeet = memberService.mainMeet(m_vo);
+		model.addAttribute("mainListMeet", mainListMeet);
+		
+		List<Map> mainListRest = memberService.mainRest(rest_vo);
+		model.addAttribute("mainListRest", mainListRest);
+		
+		List<Map> mainListRecipe = memberService.mainRecipe(rec_vo);
+		model.addAttribute("mainListRecipe", mainListRecipe);
+		
 		return "main/main";
 	}
 

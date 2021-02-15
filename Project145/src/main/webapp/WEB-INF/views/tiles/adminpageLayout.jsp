@@ -39,7 +39,7 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
-				<div class="sidebar-brand-text mx-3">채식당</div>
+				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg"></div>
 			</a>
 
 			<!--회원 관리 메뉴 -->

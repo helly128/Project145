@@ -1,10 +1,15 @@
 package com.pj.vegi.member.service;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
-
+import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.SnsInfoVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 public interface MemberService {
 
@@ -23,5 +28,10 @@ public interface MemberService {
 	//public void sendEmail(MemberVo vo, String div) throws Exception; //이메일 보내는 메소드로 연결 
 	public void naverMailSend(MemberVo vo) throws Exception;	
 	
+	
+	List<Map> mainLesson (LessonVO vo);
+	List<Map> mainMeet (VegimeetVo vo);
+	List<Map> mainRest(RestaurantVo vo);
+	List<Map> mainRecipe(RecipeVo vo);
 
 }

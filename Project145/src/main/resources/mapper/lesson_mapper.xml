@@ -23,6 +23,7 @@
 		) b
 		) a
 		WHERE rn BETWEEN #{start } AND #{end }
+		ORDER BY c_end desc
 	</select>
 
 	<select id="lessonSelectOne" resultType="map">

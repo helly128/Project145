@@ -18,7 +18,7 @@
 				</div>
 				<br>
 				<form class="user" action="myPageEditResult.do" id="form"
-					method="post">
+					method="post" enctype="multipart/form-data">
 					<div class="col-lg-5 mb-4">
 						<div class="card shadow h-100">
 							<!-- Card Header - Dropdown -->
@@ -29,10 +29,10 @@
 							<!-- Card Body -->
 							<div class="image-container p-3">
 								<img id="rest-image" src="/images/images-empty.png" width="100%"
-									alt="restaurant image">
+									alt="내사진">
 								<div class="div-image">
-									<input type="file" name="profileImage" class="restPic"
-										accept="image/*" onchange="setImage(event);" requ>
+									<input type="file" name="uploadfile" class="uploadPic"
+										accept="image/*" onchange="setImage(event);">
 								</div>
 							</div>
 						</div>

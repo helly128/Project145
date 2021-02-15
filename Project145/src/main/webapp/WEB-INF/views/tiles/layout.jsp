@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <style>
 article {
-	min-height: 500px;
+	min-height: 600px;
 }
 </style>
 
@@ -68,7 +68,8 @@ article {
 				<div class="row align-items-center">
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
-							<a class="navbar-brand" href="/">채식당 <a class="navbar-brand"
+							<a class="navbar-brand" href="/"><img alt="로고"
+								src="/images/logo.svg"><a class="navbar-brand"
 								href="/main.do"> </a>
 								<button class="navbar-toggler" type="button"
 									data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -94,25 +95,25 @@ article {
 
 									<c:if test="${auth eq null}">
 										<li><a href="/loginForm.do"
-											class="main-btn btn-hover d-none d-md-block">로그인</a></li>
+											class="main-btn btn-hover d-none d-md-block">로그인</a></li>&nbsp;
 									</c:if>
 									<c:if test="${mId eq null && password eq null}">
 										<li><a href="/memberRegister.do"
-											class="main-btn btn-hover d-none d-md-block">회원가입</a></li>
+											class="main-btn btn-hover d-none d-md-block">회원가입</a></li>&nbsp;
 									</c:if>
 									<c:if test="${mId ne null}">
 										<li><a href="/logout.do"
-											class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>
+											class="main-btn btn-hover d-none d-md-block">로그아웃</a></li>&nbsp;
 									</c:if>
 									<c:if test="${mId ne null && auth ne 'admin'}">
 										<li><a href="/mypage.do"
 											class="main-btn btn-hover d-none d-md-block"> <span
 												class="d-md-none"><i class="lni lni-user"></i></span> <span
 												class="d-none d-md-block">마이페이지</span>
-										</a></li>
+										</a></li>&nbsp;
 										<c:if test="${auth eq 'rbiz' || auth eq 'cbiz' }">
 											<li><a href="/restBizList.do"
-												class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>
+												class="main-btn btn-hover d-none d-md-block">사업자페이지</a></li>&nbsp;
 										</c:if>
 										<c:if test="${auth eq 'admin'}">
 											<li><a href="/adminMemberSelect.do"
@@ -166,81 +167,14 @@ article {
 
 	<!--====== FOOTER PART START ======-->
 	<footer class="footer-area">
-		<div class="widget-wrapper">
-			<div class="map-img">
-				<img src="/resources/assets/images/footer/map-img.svg" alt="">
-			</div>
-			<div class="container">
-				<div class="row">
-
-					<div class="col-xl-4 col-md-7">
-						<div class="footer-widget about">
-							<a href="index.html" class="d-inline-block mb-30"> </a>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-md-4 order-md-2 order-xl-1 col-sm-6">
-						<div class="footer-widget">
-							<h4>Quick Link</h4>
-							<ul class="link">
-								<li><a href="javascript:void(0)">클래스</a></li>
-								<li><a href="/recipeMain.do">레시피</a></li>
-								<li><a href="javascript:void(0)">식당</a></li>
-								<li><a href="/vegimeetList.do">챌린지</a></li>
-								<li><a href="javascript:void(0)">Contact</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-md-4 order-md-3 order-xl-2 col-sm-6">
-						<div class="footer-widget">
-							<h4>Support</h4>
-							<ul class="link">
-								<li><a href="javascript:void(0)">Live Chat</a></li>
-								<li><a href="javascript:void(0)">Privacy Policy</a></li>
-								<li><a href="javascript:void(0)">Purchase</a></li>
-								<li><a href="javascript:void(0)">Protection</a></li>
-								<li><a href="javascript:void(0)">Support</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-md-4 order-md-4 order-xl-3 col-sm-6">
-						<div class="footer-widget">
-							<h4>Information</h4>
-							<ul class="link">
-								<li><a href="javascript:void(0)">Company</a></li>
-								<li><a href="javascript:void(0)">Contact Info</a></li>
-								<li><a href="javascript:void(0)">Blog & Articles</a></li>
-								<li><a href="javascript:void(0)">Terms of Service</a></li>
-								<li><a href="javascript:void(0)">Privacy Policy</a></li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-md-5 order-md-1 order-xl-4 col-sm-6">
-						<div class="footer-widget">
-							<h4>Contact Us</h4>
-							<ul>
-								<li><span>Phone:</span> 0345983672937</li>
-								<li><span>Email:</span> yourmail@gmail.com</li>
-								<li><span>Location:</span> United State of America</li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
 		<div class="copy-right">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="text-center">
 							<p>
-								Designed & Developed By <a href="https://graygrids.com/"
-									rel="nofollow" target="_blank">GrayGrids</a>
+								Designed & Developed By <a href="#" rel="nofollow"
+									target="_blank">PROJECT 145</a>
 							</p>
 						</div>
 					</div>
@@ -280,7 +214,7 @@ article {
 	<script
 		src="<%=request.getContextPath()%>/resources/assets/js/nouislider.js"></script>
 
-	
+
 	<script>
 		//========= glightbox
 		const myGallery = GLightbox({

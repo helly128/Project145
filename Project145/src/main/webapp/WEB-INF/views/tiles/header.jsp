@@ -87,7 +87,7 @@ article {
 					<div class="col-xl-12">
 						<nav class="navbar navbar-expand-lg">
 							<a class="navbar-brand" href="/main.do"> <img id="logo"
-								src="<%=request.getContextPath()%>/resources/assets/images/logo/logo.svg"
+								src="/images/logo.svg"
 								alt="Logo">
 							</a>
 							<button class="navbar-toggler" type="button"

@@ -4,6 +4,97 @@
 
 <mapper namespace="com.pj.vegi.member.mapper.MemberMapper">
 
+	<select id="mainLesson" resultType="map">
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+			        SELECT c.c_id "cId",
+			        l.origin_id "originId", 
+					count(l.origin_id) "cnt", 
+					c.c_title  "cTitle", 
+					c.c_img  "cImg", 
+					c.c_start  "cStart", 
+					c.c_end  "cEnd", 
+					c.c_price  "cPrice", 
+					c.lec_id  "cLecid", 
+					c.c_hit "cHit"
+			        FROM like_list l, class c
+			        WHERE l.origin_id = c.c_id AND origin_id like 'class%'      
+			              AND to_date(sysdate, 'YYYY-MM-DD') 
+			              between to_date(c.c_start, 'YYYY-MM-DD') and to_date(c.c_end, 'YYYY-MM-DD')
+			        GROUP BY l.origin_id, c.c_title, c.c_img, c.c_start, c.c_end, c.c_price, c.lec_id, c.c_hit, c.c_id
+			        ORDER BY count(l.origin_id) desc
+	         	 ) b 
+	   		   ) a 
+		WHERE rn BETWEEN 1 AND 4
+	</select>
+	
+	<select id="mainMeet" resultType="map">
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		        SELECT m.meet_id "meetId",
+			        l.origin_id, 
+					count(l.origin_id) "cnt",  
+					m.meet_title "mTitle", 
+					m.meet_start "mStart", 
+					m.meet_end "mEnd", 
+					m.meet_participant "mParti", 
+					m.meet_pic "mPic",
+					m.meet_fund "mFund"
+		        FROM like_list l, meet_un m
+		        WHERE l.origin_id = m.meet_id AND origin_id like 'meet%'      
+		              AND to_date(sysdate, 'YYYY-MM-DD') 
+		              between to_date(m.meet_start, 'YYYY-MM-DD') and to_date(m.meet_end, 'YYYY-MM-DD')
+		        GROUP BY l.origin_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_pic, m.meet_fund, m.meet_id
+		        ORDER BY count(l.origin_id) desc
+		          ) b 
+		      ) a 
+		WHERE rn BETWEEN 1 AND 4
+	</select>
+	
+	<select id="mainRest" resultType="map">
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		       SELECT r.rest_id "restId",
+			       	l.origin_id, 
+					count(l.origin_id) "cnt", 
+					r.rest_name "rName", 
+					r.rest_address "rAddress", 
+					r.rest_pic "rPic"
+		      FROM like_list l, restaurant r
+		      WHERE l.origin_id = r.rest_id AND origin_id like 'rest%'   
+		      GROUP BY l.origin_id, r.rest_name, r.rest_address, r.rest_pic, r.rest_id
+		      ORDER BY count(l.origin_id) desc
+		          ) b 
+		      ) a 
+		WHERE rn BETWEEN 1 AND 4
+	</select>
+	
+	<select id="mainRecipe" resultType="map">
+		SELECT a.*
+		FROM (
+		    SELECT b.*, ROWNUM rn 
+		    FROM (
+		       SELECT r.r_id "rId",
+		       l.origin_id, 
+				count(l.origin_id) "cnt", 
+				r.r_type "rType", 
+				r.r_title "rTitle", 
+				r.r_image "rImage"
+		      FROM like_list l, recipe r
+		      WHERE l.origin_id = r.r_id AND origin_id like 'rec%'   
+		      GROUP BY l.origin_id, r.r_type, r.r_title, r.r_image, r.r_id
+		      ORDER BY count(l.origin_id) desc
+		          ) b 
+		      ) a 
+		WHERE rn BETWEEN 1 AND 4
+	</select>
+
 	<select id="memberSelect" resultType="com.pj.vegi.vo.MemberVo">
 		SELECT
 		*

@@ -41,7 +41,7 @@ public class LessonController {
 		vo.setMId(mid);
 
 		// 페이징 설정
-		paging.setPageUnit(4);
+		paging.setPageUnit(8);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
 			paging.setPage(1);
