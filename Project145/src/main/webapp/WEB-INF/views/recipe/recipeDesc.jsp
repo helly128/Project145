@@ -28,51 +28,10 @@ style type ="text /css ">.likeAction {
 .noresize {
 	resize: none; /* 사용자 임의 변경 불가 */
 }
-
-textarea {
-	resize: none;
-	border: 1px solid #98bf80;
-	border-radius: 10px;
-	margin-bottom: 0px;
-}
-
-.delBtn {
-	border: none;
-	background: transparent;
-	font-size: 14px;
-}
-
-.reContent {
-	font-size: 15px;
-	color: black;
-}
 </style>
 
 
 <script>
-	function dateFormat(dat) {
-		var date = new Date(dat);
-		var year = date.getFullYear();
-		var month = date.getMonth() + 1;
-		var day = date.getDate();
-		var hour = date.getHours();
-		var min = date.getMinutes();
-		if (hour < 10) {
-			hour = '0' + hour;
-		}
-		if (min < 10) {
-			min = '0' + min;
-		}
-		if (month < 10) {
-			month = '0' + month;
-		}
-		if (day < 10) {
-			day = '0' + day;
-		}
-		var newDate = year + "-" + month + "-" + day + " " + hour + ":"
-				+ min;
-		return newDate;
-	}
 	var today = new Date();
 	var year = today.getFullYear();
 	var month = today.getMonth() + 1;
@@ -89,8 +48,9 @@ textarea {
 		$("#repleList").on('click', '.delBtn', function() {
 			/* var delAlert = confirm("정말 삭제 하시겠어요?");delAlert == ture */
 			/* mid=$(event.target).data("mid")  "${mId}"== mid*/
-			var mid = $(event.target).parent().prev().text()
-			console.log($(event.target).parent().prev().text())
+			var mid = $(this).closest('tr').find('td').data('mid');
+			console.log(mid);
+			//console.log($(event.target).parent().prev().text())
 
 			if (mid == "${sessionScope.mId}") {
 
@@ -100,6 +60,8 @@ textarea {
 
 				}
 			} else {
+				console.log(${sessionScope.mId});
+				console.log(mid);
 				alert("본인이 작성한 댓글만 삭제 가능합니다.");
 			}
 		});
@@ -174,59 +136,20 @@ textarea {
 					type : "get",
 					url : "/reple/reple.do?RId=${recipeVo.RId}",
 					success : function(result) {
-						var output = `<ul style='list-style:none;'>`; 
+						var output = "<table>";
+						console.log(result);
 						for ( var i in result) {
-							var date = dateFormat(result[i].reDate);
-							if(result[i].reDepth == 2){
-								output += "<li style='padding-left:60px;position:relative;' data-mid='\${result[i].mid}'>";
-							} else{
-								output += "<li>";
-							}
-							output += `<div class='reple-total mb-3' style="position:relative;">
-											<span style="position:absolute;"><image
-											src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></span>
-											<div style='padding-left:60px; position:relative;' class='reple-content'>
-												<div class="mb-1" style="color:black;">
-													<strong>\${result[i].mname}</strong>
-												</div>
-												<div class="reContent">
-													\${result[i].reContent}
-												</div>
-												<div>
-													<span style="font-size:12px;">\${date}</span>
-													<button type='button' data-id='\${result[i].reId}' class='delBtn' id='delBtn'><i class="lni lni-trash"></i></button>
-												</div>
-											</div>
-										</div>
-									</li>`;
-							
-							
-							
+							output += "<tr align='center'>";
+							output += "<td width='60' data-mid='"+result[i].mid+"'>"
+									+ result[i].mid;
+							output += "<td width='180'>" + result[i].reContent;
+							output += "<td width='60'>" + result[i].reDate;
+							output += "<td width='60'>"
+									+ "<button type='button'  data-id='"+result[i].reId+"' class='delBtn btn-sm btn-warning' id='delBtn'>삭제";
+
+							output += "</tr>"
 						}
-							/* output += `<tr class="mt-1">`;
-							if(result[i].reDepth == 1){
-								var img = `<td rowspan="2" width='60' style="padding: 8px 8px 8px 8px;"><image
-									src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></td>`;
-							} else{
-								var img = `<td rowspan="2" width='120' style="padding: 8px 8px 8px 68px;"><image
-									src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></td>`;
-							}
-								output += `<td rowspan="3" width='60'></td>
-											\${img}
-											<td data-mid="\${result[i].mid}" style="padding: 8px 8px 3px 12px;" colspan="2"><strong>\${result[i].mname}</strong></td>
-										</tr>
-										<tr>
-											<td style="padding: 3px 8px 3px 12px; font-size: 15px;" colspan="2">\${result[i].reContent}</td>
-										</tr>
-										<tr class='border-bottom'>
-											<td> </td>										
-											<td style="font-size:12px; color:grey; padding: 3px 8px 3px 12px;">\${date} <button type='button' data-id='\${result[i].reId}' class='delBtn' id='delBtn'><i class="lni lni-trash"></i></button></td>
-											<td width='60' style="padding: 3px 8px 3px 8px;"></td>
-										</tr>`;
-							
-						}
-						output += "</table>"; */
-						output += `</ul>`;
+						output += "</table>";
 						$("#repleList").html(output);
 					}
 				});
@@ -306,7 +229,7 @@ textarea {
 <body>
 	<c:set var="contentIndex"
 		value="${recipeSelect.getRContent().indexOf('<img src') }" />
-	<div class="container mb-5">
+	<div class="container">
 
 		<div>
 			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
@@ -444,37 +367,60 @@ textarea {
 		</div>
 		<br />
 
+
 		<div>
 			<div>
 
 				<h5>🖊댓글 목록</h5>
 				<br />
 				<div id="reloadReple">
+					<div class="row" align="left">
+						<div class="col-lg-2" align="center">작성자</div>
+						<div class="col-lg-6" align="left">댓글 내용</div>
+						<div class="col-lg-2" align="center">작성일자</div>
+						<div class="col-lg-2" align="center">비고</div>
+						<hr />
+					</div>
 					<input type="hidden" value="${reple}">
 					<!-- 댓글 목록 출력되는 부분 -->
-					<div class="row">
-						<div class="col-lg-10 col-md-10 mx-5" id="repleList"></div>
-					</div>
+					<div class="row" id="repleList"></div>
+
 				</div>
 
 			</div>
 			<br /> <br />
 			<h5>🖊댓글 작성</h5>
-			<br />
-			<div class="search-wrapper">
-				<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
-				<div class="row justify-content-center"
-					style="display: flex; align-items: center;">
-					<div class="col-lg-9 col-sm-9 col-10">
-						<div class="search-input">
-							<textarea name="reContent" id="reContent" rows="4"
-								placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
+			<br /> <br />
+			<div class="container">
+				<div class="search-wrapper">
+					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+					<c:if test="${sessionScope.mId != null }">
+						<div class="row justify-content-center">
+							<div class="row" align="left">
+								<div class="col-lg-2">
+									<p>
+										작성자 &nbsp;: &nbsp;${sessionScope.mId }<input type="hidden"
+											name="mId" id="mId">
+									</p>
+								</div>
+								<div class="col-lg-10">
+									작성일자&nbsp;:&nbsp; <span id="wDate"> </span>
+								</div>
+							</div>
+							<div class="col-lg-19 col-sm-8 col-10" align="left">
+								<div class="search-input">
+									<input type="text" name="reContent" id="reContent"
+										placeholder="🤷‍♂️댓글을 입력 해 주세요">
+								</div>
+							</div>
+
+							<div class="col-lg-2 col-sm-5 col-10">
+								<!-- Submit button -->
+								<button class="middle-btn" id="repleBtn">댓글</button>
+							</div>
 						</div>
-					</div>
-					<div class="col-lg-2 col-sm-5 col-10">
-						<!-- Submit button -->
-						<button class="middle-btn" id="repleBtn">등록</button>
-					</div>
+
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -501,10 +447,105 @@ textarea {
 			</div>
 		</div>
 		<!-- 댓글-->
-
+		<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+		<%-- <c:if test="${sessionScope.mId != null }">
+			<div class="replebox" id="repleList">
+				<div class="single-box">
+					<div class="row">
+						<div class="icon col-lg-1">
+							<h1>
+								<i class="lni lni-bulb"></i>
+							</h1>
+						</div>
+						<form id="openForm" action="">
+							<div class="icon col-lg-11">
+								<div class="row" align="left">
+									<div class="col-lg-2">
+										<p>작성자 &nbsp;: &nbsp;${sessionScope.mId }</p>
+									</div>
+									<div class="col-lg-10">
+										<p>작성일자&nbsp;: &nbsp;${rDate }</p>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="row">
+					<textarea rows="3" cols="100" id="rContent" name="rContent"
+						placeholder="댓글을 입력하세요">
+					</textarea>
+				</div>
+				<br />
+				<div class="row" align="right">
+					<div class="col-lg-10">
+						<label id="repleSecret">비밀댓글<input type="checkbox"
+							id="repleSecret"></label>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" id="repleBtn">댓글 작성</button>
+					</div>
+				</div>
+				</form>
+		</c:if>
+	</div> --%>
 		<br />
 
+		<!-- <div class="re-reple">
+		<div class="search-wrapper">
+			<form name="form1" method="post">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 col-sm-4 col-3">
+						<div class="search-input">
+							<input type="text" name="keyword" id="keyword"
+								placeholder="🤷‍♂️댓글을 입력 해 주세요">
+						</div>
+					</div>
+					<div class="col-lg-2 col-sm-2 col-1">
+						Submit button
+						<button type="button" class="middle-btn">댓글</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		대댓글
+		<div class="rereplebox">
+			<div class="single-box">
+				<div class="row">
+					<div class="icon col-lg-1">
+						<h1>
+							<i class="lni lni-bulb"></i>
+						</h1>
+					</div>
+					<div class="icon col-lg-11">
+						<div class="row" align="left">
+							<div class="col-lg-2">
+								<p>작성자</p>
+							</div>
+							<div class="col-lg-10">
+								<p>작성일자</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<p>Buy and sell everything from used cars to mobile phones and
+					computer or search for property.Buy and sell everything from used
+					cars to mobile phones and computer or search for property.Buy and
+					sell everything from used cars to mobile phones and computer or
+					search for property.</p>
+			</div>
+			<div class="row">
+				<div class="col-lg-10">
+					<a>↪</a>
+				</div>
+				<div class="col-lg-2">
+					<a>🚫</a>
+				</div>
+			</div>
+		</div>
 
+	</div> -->
 	</div>
 </body>
 </html>

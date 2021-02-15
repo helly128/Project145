@@ -54,10 +54,18 @@ public class RecipeController {
 		// 한 페이지의 시작/마지막레코드 번호
 		vo.setStart(paging.getFirst());
 		vo.setEnd(paging.getLast());
-
-		// 전체 건수
-		paging.setTotalRecord(recipeService.recipeCount(vo));
-		model.addAttribute("paging", paging);
+		
+		if (vo.getRType() == null || vo.getRType() == "") {
+			vo.setRType((String) session.getAttribute("RType"));
+			List<RecipeVo> recipes = recipeService.getRecipeList(vo);
+			model.addAttribute("recipes", recipes);
+		}
+		
+		String RType = vo.getRType();
+		String keyword = vo.getKeyword();
+		System.out.println("RType: " + RType);
+		model.addAttribute("RType", RType);
+		model.addAttribute("keyword", keyword);
 		// data 불러오기
 		List<RecipeVo> recipes = recipeService.getRecipeList(vo);
 		for (RecipeVo recipe_vo : recipes) {
@@ -66,6 +74,11 @@ public class RecipeController {
 			like_vo.setOriginId(((RecipeVo) recipe_vo).getRId());
 			((RecipeVo) recipe_vo).setLikeFlag(recipeService.likeFlagSelect(like_vo));
 		}
+
+		// 전체 건수
+		paging.setTotalRecord(recipeService.recipeCount(vo));
+		model.addAttribute("paging", paging);
+
 		model.addAttribute("recipes", recipes);
 		model.addAttribute("paging", paging);
 
@@ -154,7 +167,7 @@ public class RecipeController {
 		MemberVo mVo = new MemberVo();
 		mVo.setMId(mId);
 		int count = recipeService.recipeInsertCount(mVo);
-		if (count <= 5) {	// 하루 적립 5회 제한
+		if (count <= 5) { // 하루 적립 5회 제한
 			WalletHistoryVO wVo = new WalletHistoryVO();
 			wVo.setMId(mId);
 			recipeService.recipePointUpdate(mVo);
