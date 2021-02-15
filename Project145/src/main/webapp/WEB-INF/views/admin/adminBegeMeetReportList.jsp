@@ -15,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>adminMemeber</title>
+<title>adminBegeMeetReport</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -37,7 +37,7 @@
 
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">신고 관리</h1>
+		<h1 class="h3 mb-2 text-gray-800">챌린지 신고 관리</h1>
 
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
@@ -51,14 +51,15 @@
 						style="margin-right: 0px; float: left;">
 						<div class="dataTables_length" id="dataTable_length">
 							<label> 
-							<select name="!!!!!!!!" id="!!!!!!!!"
-								aria-controls="dataTable"
+							<select name="reportResult" id="reportResult" aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="" selected>전 체</option>
-									<option value="?????"
-										<c:if test="${vo.available == 'able' }">selected="selected"</c:if>>이용가능</option>
-									<option value="?????"
-										<c:if test="${vo.available == 'unable' }">selected="selected"</c:if>>이용정지</option>
+									<option value="waiting"
+										<c:if test="${vo.reportResult == 'waiting' }">selected="selected"</c:if>>수락대기</option>
+									<option value="accept"
+										<c:if test="${vo.reportResult == 'accept' }">selected="selected"</c:if>>신고수락</option>
+									<option value="unaccept"
+										<c:if test="${vo.reportResult == 'unaccept' }">selected="selected"</c:if>>신고거부</option>
 							</select>
 							</label>
 						</div>
@@ -74,22 +75,21 @@
 				</div>
 			</form>
 				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%"
-						cellspacing="0">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th>챌린지 사진(오리진) ID</th>
-								<th>신고당한 회원이름(M_id?)</th>
+								<th>신고자ID</th>
+								<th>피신고자ID(M_id?)</th>
 								<th>신고사유</th>
 								<th>신고 날짜</th>
 								<th>신고처리 현황</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${adminMember }">
+							<c:forEach var="vo" items="${adminReport }">
 								<tr>
-									<td id="mid">${vo.getMId() }</td>
-									<td id=""></td>
+									<td id="mid">${vo.reportNo }</td>
+									<td id="">임시</td>
 									<td id="reportContent">${vo.reportContent }</td>
 									<td id="reportDate">${vo.reportDate }</td>
 									<td id="reportResult">${vo.reportResult }</td>
@@ -98,8 +98,8 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>챌린지 사진(오리진) ID</th>
-								<th>신고당한 회원이름(M_id?)</th>
+								<th>신고자ID</th>
+								<th>피신고자ID(M_id?)</th>
 								<th>신고사유</th>
 								<th>신고 날짜</th>
 								<th>신고처리 현황</th>

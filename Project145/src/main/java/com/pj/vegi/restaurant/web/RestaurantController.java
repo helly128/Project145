@@ -21,6 +21,7 @@ import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestReservVo;
+import com.pj.vegi.vo.RestReviewVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Controller
@@ -102,15 +103,29 @@ public class RestaurantController {
 
 	// 식당 한 건 상세페이지
 	@RequestMapping("/restaurantDetail.do")
-	public String restaurantDetail(RestaurantVo rVo, Model model, HttpSession session) {
+	public String restaurantDetail(RestaurantVo rVo, RestReviewVo rRVo, Paging paging, Model model, HttpSession session) {
 		RestaurantVo restaurantVo = restaurantService.getRestaurantDetail(rVo);
 
 		RestMenuVo mVo = new RestMenuVo();
 		mVo.setRestId(restaurantVo.getRestId());
 		List<RestMenuVo> menuList = restaurantService.getRestaurantMenu(mVo);
-
+		
+		paging.setPageUnit(10);
+		paging.setPageSize(5);
+		if (paging.getPage() == null) {
+			paging.setPage(1);
+		}
+		rRVo.setStart(paging.getFirst());
+		rRVo.setEnd(paging.getLast());
+		
+		int cnt = restaurantService.countRestReview(rRVo);
+		paging.setTotalRecord(cnt);
+		
+		List<RestReviewVo> restReview = restaurantService.restReview(rRVo);
+		
 		model.addAttribute("rVo", restaurantVo);
 		model.addAttribute("menuList", menuList);
+		model.addAttribute("restReview", restReview );
 
 		return "restaurant/restaurantImformation";
 	}

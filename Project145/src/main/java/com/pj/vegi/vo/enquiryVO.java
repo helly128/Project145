@@ -12,4 +12,10 @@ public class enquiryVO {
 	private String enqProDate;
 	private String enqResult;
 	private String mId;
+	
+	private int start;
+	private int end;
+	private String keyword; //검색
+	
+	private String questionResult; //검색필터
 }

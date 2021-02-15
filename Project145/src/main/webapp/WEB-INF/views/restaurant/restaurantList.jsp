@@ -105,8 +105,17 @@
 								</div>
 								<br />
 								<div>
-									<i class="lni lni-star">${vo.getRestStarAvg() }</i> <br> <i
-										class="lni lni-map-marker">${vo.getRestAddress() }</i>
+									<table >
+										<tr>
+											<td> <i class="lni lni-star" ></i> </td>
+											<td> ${vo.getRestStarAvg() } </td>
+										</tr>
+										<tr height="50px">
+											<td style="vertical-align:top"> <i class="lni lni-map-marker" ></i> </td>
+											<td style="vertical-align:top"> ${vo.getRestAddress() } </td>
+										</tr>
+									</table>
+									
 								</div>
 								<br>
 								<!-- 좋아요 -->

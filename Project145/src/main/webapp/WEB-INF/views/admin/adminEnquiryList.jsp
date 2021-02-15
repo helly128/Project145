@@ -15,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>adminBegeMeetQuestion</title>
+<title>adminEnquiry</title>
 
 <!-- Custom fonts for this template -->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -37,7 +37,7 @@
 
 	<div class="container-fluid">
 		<!-- Page Heading -->
-		<h1 class="h3 mb-2 text-gray-800">챌린지 문의 관리</h1>
+		<h1 class="h3 mb-2 text-gray-800">전체 문의 관리</h1>
 
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
@@ -45,7 +45,7 @@
 				<h6 class="m-0 font-weight-bold text-primary">문의 목록</h6>
 			</div>
 			<div class="card-body">
-			<form action="adminBegiMeetQuestionList.do" method="get" id="frm">
+			<form action="adminEnquiryList.do" method="get" id="frm">
 				<div>
 					<div class="col-sm-5 col-md-4 col-lg-2"
 						style="margin-right: 0px; float: left;">
@@ -84,7 +84,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${adminQuestion }">
+							<c:forEach var="vo" items="${adminEnquiry }">
 								<tr>
 									<td id="mid">${vo.getMId() }</td>
 									<td id="enqContent">${vo.enqContent }</td>
@@ -113,7 +113,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 		function goList(p) {
 			var enqResult = document.getElementById("enqResult").value;
 			var keyword = document.getElementById("keyword").value;

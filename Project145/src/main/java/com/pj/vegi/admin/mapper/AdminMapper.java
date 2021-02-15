@@ -6,6 +6,7 @@ import java.util.List;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.enquiryVO;
 
 public interface AdminMapper {
 	
@@ -16,8 +17,14 @@ public interface AdminMapper {
 	List<RestaurantVo> adminRestaurant(RestaurantVo vo); //관리자 페이지 식당조회 
 	int countAdminRestaurant(RestaurantVo vo); //페이징 게시물 카운트(식당)
 	
-	List<ReportVo> adminBegiMeetReportList(ReportVo vo);
+	List<ReportVo> adminBegiMeetReportList(ReportVo vo); //챌린지 신고
 	int countAdminBegiMeetReportList(ReportVo vo);
+	
+	List<enquiryVO> adminBegiMeetQuestionList(enquiryVO vo); //챌린지 문의
+	int countAdminBegiMeetQuestionList(enquiryVO vo);
+	
+	List<enquiryVO> adminEnquiryList(enquiryVO vo); // 일반 문의
+	int countAdminEnquiryList(enquiryVO vo);
 
 
 }

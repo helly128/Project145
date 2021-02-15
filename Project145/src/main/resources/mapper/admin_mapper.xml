@@ -14,10 +14,11 @@
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				AND LOWER(m_name) like LOWER('%' || #{keyword} || '%')
-				OR LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+				OR
+				LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
 			<if test=" available != null and available != '' ">
-				AND LOWER(available) = LOWER(#{available} )
+				AND LOWER(available) = LOWER(#{available )
 			</if>
 		</where>
 		) b
@@ -30,9 +31,10 @@
 		SELECT count(*)
 		FROM member
 		<where>
-				<if test="keyword != null and keyword != '' ">
+			<if test="keyword != null and keyword != '' ">
 				AND LOWER(m_name) like LOWER('%' || #{keyword} || '%')
-				OR LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+				OR
+				LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
 			<if test=" available != null and available != '' ">
 				AND LOWER(available) = LOWER(#{available} )
@@ -69,9 +71,9 @@
 
 
 	<select id="countAdminRestaurant" resultType="Integer">
-	<!-- 식당 목록 페이징에 카운트하는 부분 -->
+		<!-- 식당 목록 페이징에 카운트하는 부분 -->
 		SELECT count(*)
-		FROM restaurant 
+		FROM restaurant
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				AND LOWER(rest_name) like LOWER('%' || #{keyword} || '%')
@@ -82,10 +84,10 @@
 			</if>
 		</where>
 	</select>
-	
-	
+
+
 	<select id="adminBegiMeetReportList" resultType="ReportVo">
-	<!-- 신고목록 전체 조회 -->
+		<!-- 챌린지 신고목록 전체 조회 -->
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
 		FROM
@@ -96,27 +98,115 @@
 				AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
 			<if test=" reportResult != null and reportResult != '' ">
-				AND reportResult = #{reportResult}
+				AND report_result = #{reportResult}
 			</if>
 		</where>
 		) b
 		) a
 		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
-	
+
 	<select id="countAdminBegiMeetReportList" resultType="Integer">
-	SELECT count(*)
+		<!-- 신고목록 페이징 카운트 -->
+		SELECT count(*)
 		FROM report
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
 			</if>
 			<if test=" reportResult != null and reportResult != '' ">
-				AND reportResult = #{reportResult}
+				AND report_result = #{reportResult}
 			</if>
 		</where>
 	</select>
-	
-	
+
+
+
+	<select id="adminBegiMeetQuestionList" resultType="enquiryVO">
+		<!-- 챌린지 문의 목록 전체 조회 -->
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM enquiry
+		where origin_id like '%meet%'
+		<if test="keyword != null and keyword != '' ">
+			AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			OR LOWER(enq_content) like LOWER('%' || #{keyword} || '%')
+		</if>
+		<if test=" questionResult == 'waiting' ">
+			AND enq_result is null
+		</if>
+		<if test="questionResult == 'complete' ">
+			AND enq_result is not null
+		</if>
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+
+	<select id="countAdminBegiMeetQuestionList" resultType="Integer">
+		<!-- 챌린지 문의 목록 카운트 -->
+		SELECT count(*)
+		FROM enquiry
+		where origin_id like '%meet%'
+		<if test="keyword != null and keyword != '' ">
+			AND LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			OR LOWER(enq_content) like LOWER('%' || #{keyword} || '%')
+		</if>
+		<if test=" questionResult == 'waiting' ">
+			AND enq_result is null
+		</if>
+		<if test="questionResult == 'complete' ">
+			AND enq_result is not null
+		</if>
+	</select>
+
+
+	<select id="adminEnquiryList" resultType="enquiryVO">
+		<!-- 일반 문의 목록 전체 조회 -->
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM enquiry
+		where
+		origin_id like '%admin%'
+		<if test="keyword != null and keyword != '' ">
+			AND (LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			OR
+			LOWER(enq_content) like LOWER('%' || #{keyword} || '%'))
+		</if>
+		<if test=" questionResult == 'waiting' ">
+			AND enq_result is null
+		</if>
+		<if test="questionResult == 'complete' ">
+			AND enq_result is not null
+		</if>
+
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+
+	<select id="countAdminEnquiryList" resultType="Integer">
+		<!-- 일반 문의 목록 카운트 -->
+		SELECT count(*)
+		FROM enquiry
+		where origin_id like '%admin%'
+		<if test="keyword != null and keyword != '' ">
+			AND (LOWER(m_id) like LOWER('%' || #{keyword} || '%')
+			OR
+			LOWER(enq_content) like LOWER('%' || #{keyword} || '%'))
+		</if>
+		<if test=" questionResult == 'waiting' ">
+			AND enq_result is null
+		</if>
+		<if test="questionResult == 'complete' ">
+			AND enq_result is not null
+		</if>
+	</select>
+
+
 
 </mapper>

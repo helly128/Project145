@@ -147,6 +147,27 @@
 		WHERE m_id=#{mId}
 		AND origin_id=#{originId}
 	</select>
+	
+	
+	<select id="restReview" resultType="RestReviewVo">
+	<!-- 식당 상세에서 리뷰 목록 -->	
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+		FROM
+		(SELECT *
+		FROM REST_REVIEW
+		where rest_id = #{restId}
+		) b
+		) a
+		WHERE rn BETWEEN #{start } AND #{end }
+	</select>
+	
+	<select id="countRestReview" resultType="int">
+	<!-- 식당 상세에서 리뷰 목록 카운트!!!! -->	
+		SELECT count(*)
+		FROM REST_REVIEW
+		where rest_id = #{restId}
+	</select>
 
 
 </mapper>
