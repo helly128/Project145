@@ -14,7 +14,7 @@ public class Paging {
 	boolean next;
 	
 	public boolean getPrev() {
-		prev= (startPage == 1) ? false: true;
+		prev= (page == 1) ? false: true;
 		return prev;
 	}
 	public boolean getNext() {
