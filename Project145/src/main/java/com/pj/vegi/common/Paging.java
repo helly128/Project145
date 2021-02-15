@@ -10,7 +10,18 @@ public class Paging {
 	int endPage;
 	int first;
 	int last;
+	boolean prev;
+	boolean next;
 	
+	public boolean getPrev() {
+		prev= (startPage == 1) ? false: true;
+		return prev;
+	}
+	public boolean getNext() {
+		next= (endPage * pageUnit) < totalRecord ? true:false;
+		return next;
+	}
+
 	public int getFirst() {
 		first = (getPage() - 1) * getPageUnit() + 1;
 		return first;

@@ -7,25 +7,25 @@ ${ paging}
 
 <style>
 .pagination {
-  display: inline-block;
+	display: inline-block;
 }
 
 .pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
 }
 
 .pagination a.active {
-  background-color: lightblue;
-  color: white;
-  border-radius: 5px;
+	background-color: lightblue;
+	color: white;
+	border-radius: 5px;
 }
 
 .pagination a:hover:not(.active) {
-  background-color: lightgray;
-  border-radius: 5px;
+	background-color: lightgray;
+	border-radius: 5px;
 }
 </style>
 
@@ -33,8 +33,10 @@ ${ paging}
 	<c:set var="jsFunc" value="goList"></c:set>
 </c:if>
 <div class="pagination">
-	<a
-		href="javascript:${jsFunc}(${paging.startPage>2?paging.startPage-1:1})">&laquo;</a>
+	<c:if test="${paging.prev}">
+		<a
+			href="javascript:${jsFunc}(${paging.startPage>2?paging.startPage-1:1})">&laquo;</a>
+	</c:if>
 	<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
 		<c:if test="${i != paging.page}">
 			<a href="javascript:${jsFunc}(${i})">${i}</a>
@@ -43,8 +45,10 @@ ${ paging}
 			<a class="active" href="#">${i}</a>
 		</c:if>
 	</c:forEach>
-	<a
-		href="javascript:${jsFunc}(${paging.endPage<paging.lastPage?paging.endPage+1:paging.endPage})">&raquo;</a>
+	<c:if test="${paging.next}">
+		<a
+			href="javascript:${jsFunc}(${paging.endPage<paging.lastPage?paging.endPage+1:paging.endPage})">&raquo;</a>
+	</c:if>
 </div>
 
 <!-- 

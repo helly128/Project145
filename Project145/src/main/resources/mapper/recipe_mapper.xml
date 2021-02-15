@@ -45,10 +45,23 @@
 		r_id=#{rId}
 	</select>
 	<select id="recipeCount" resultType="int">
-		select count(*)
-		from recipe
-
+		select count(distinct(r.r_id))
+		from recipe r
+		left outer JOIN recipe_material rm
+		on r.r_id = rm.r_id
+		<where>
+			<if test=" RType != null and RType != '' ">
+				r.r_type = #{RType}
+			</if>
+			<if test=" keyword != null and keyword != '' ">
+				r.r_title like '%' || #{keyword} || '%'
+				OR rm.mat_name
+				like '%' || #{keyword}
+				|| '%'
+			</if>
+		</where>
 	</select>
+
 	<delete id="recipeDelete">
 		delete from recipe
 		where r_id = #{rId}
@@ -190,10 +203,13 @@
 	</insert>
 
 	<select id="recipeInsertCount" resultType="int">
-		SELECT COUNT(wallet_id)
+		SELECT
+		COUNT(wallet_id)
 		FROM wallet_history
 		WHERE m_id = #{mId}
-		AND wallet_type = '레시피 작성'
-		AND wallet_date BETWEEN TRUNC(current_date, 'dd') AND TRUNC(current_date, 'dd')+1;
+		AND wallet_type
+		= '레시피 작성'
+		AND wallet_date BETWEEN TRUNC(current_date, 'dd') AND
+		TRUNC(current_date, 'dd')+1;
 	</select>
 </mapper>
