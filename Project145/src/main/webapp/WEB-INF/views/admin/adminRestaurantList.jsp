@@ -94,17 +94,10 @@
 									<td id="restid">${vo.getRestId() }</td>
 									<td id="restname"  onclick="location.href='/restAdminConfirm.do?rest=${vo.getRestId() }'" style="cursor:pointer;">
 											${vo.getRestName() }</td>
-									<td>
-										<label> 
-											<select name="dataTable_length" id="adminConfirmSelect" data-mid="${vo.getRestId()}"
-											aria-controls="dataTable" onchange="changConfirm(this)"
-											class="custom-select custom-select-sm form-control form-control-sm"
-											onclick="location.href='/restAdminConfirm.do?rest=${vo.getRestId() }'" style="cursor:pointer;">
-												<option value="true"  <c:if test="${vo.adminConfirm == 'true' }">selected="selected"</c:if>>등록허가</option>
-												<option value="false" <c:if test="${vo.adminConfirm == 'false' }">selected="selected"</c:if>>등록대기</option>
-												<option value="canceled" <c:if test="${vo.adminConfirm == 'canceled' }">selected="selected"</c:if>>등록거부</option>
-											</select>
-										</label>
+									<td id="adminConfirmSelect">
+											<c:if test="${vo.adminConfirm == 'true' }">등록허가</c:if>
+											<c:if test="${vo.adminConfirm == 'false' }">등록대기</c:if>
+											<c:if test="${vo.adminConfirm == 'canceled' }">등록거부</c:if>
 									</td>
 									<td id="confirmReason">${vo.getConfirmReason() }</td>
 								</tr>

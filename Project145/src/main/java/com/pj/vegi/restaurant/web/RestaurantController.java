@@ -11,16 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.LikeListVo;
+import com.pj.vegi.vo.RepleVo;
 import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestReservVo;
 import com.pj.vegi.vo.RestReviewVo;
@@ -175,5 +181,24 @@ public class RestaurantController {
 		vo.setOriginId(restId);
 		restaurantService.restLikeDelete(vo);
 	}
+	
+	
+	// 리뷰 등록
+	@RequestMapping("/restReviewInsert.do")
+	public String restReviewInsert(RestReviewVo vo, Model model, HttpSession session){
+		restaurantService.restReviewInsert(vo);
+		return "redirect:/restaurantDetail.do";
+	}
+
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping("/restReviewDelete.do/{restReviewId}")
+	public String restReviewDelete(@PathVariable String restReviewId, HttpSession session) {
+		RestReviewVo vo = new RestReviewVo();
+		restaurantService.restReviewDelete(vo);
+		return "redirect:/restaurantDetail.do";
+	}
+	
+	
 
 }

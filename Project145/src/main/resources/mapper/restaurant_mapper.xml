@@ -154,9 +154,11 @@
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
 		FROM
-		(SELECT *
-		FROM REST_REVIEW
-		where rest_id = #{restId}
+		(SELECT r.*,  m.m_name, m.profile_image
+		FROM REST_REVIEW r join member m
+		ON (r.m_id = m.m_id)
+		WHERE r.rest_id = #{restId}
+		ORdER BY review_Date
 		) b
 		) a
 		WHERE rn BETWEEN #{start } AND #{end }
@@ -165,9 +167,22 @@
 	<select id="countRestReview" resultType="int">
 	<!-- 식당 상세에서 리뷰 목록 카운트!!!! -->	
 		SELECT count(*)
-		FROM REST_REVIEW
-		where rest_id = #{restId}
+		FROM REST_REVIEW r join member m
+		ON (r.m_id = m.m_id)
+		WHERE r.rest_id = #{restId}
+		ORdER BY review_Date
 	</select>
+	
+	<insert id="restReviewInsert"> 
+	<!-- 리뷰 입력 -->
+		INSERT INTO rest_review(rest_review_id, rest_review, rest_star, review_pic, review_date, M_id, rest_id)
+		VALUES('rest_review'||rest_review_seq.nextval, #{restReview}, #{restStar}, null, sysdate, #{mId}, #{restId} )
+	</insert>
+	
+	<delete id="restReviewDelete">
+	<!-- 리뷰 삭제 -->
+		DELETE FROM rest_review WHERE rest_review_id = #{restReviewId}
+	</delete>
 
 	<update id="reservCountUp">
 		UPDATE restaurant

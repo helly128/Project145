@@ -20,10 +20,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	
-<link href="<%=request.getContextPath()%>/resources/assets/css/starRating.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/resources/assets/css/starRating.css" rel="stylesheet">
 
 <style>
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
 #my_modal {
 	display: none;
 	width: 400px;
@@ -54,6 +55,49 @@ button:hover {
 input {
 	margin: 2px 5px;
 	width: 300px;
+}
+.replebox {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.rereplebox {
+	margin-left: 15%;
+	margin-right: 15%;
+}
+
+<
+style type ="text /css ">.likeAction {
+	border: none;
+	background: transparent;
+}
+
+.noresize {
+	resize: none; /* 사용자 임의 변경 불가 */
+}
+
+textarea {
+	resize: none;
+	border: 1px solid #98bf80;
+	border-radius: 10px;
+	margin-bottom: 0px;
+}
+
+.delBtn {
+	border: none;
+	background: transparent;
+	font-size: 14px;
+}
+
+.editBtn {
+	border: none;
+	background: transparent;
+	font-size: 14px;
+}
+
+.reContent {
+	font-size: 15px;
+	color: black;
 }
 </style>
 
@@ -291,8 +335,7 @@ input {
 								<a> ${menuList.getMenuVegeType() }</a>
 							</div>
 							<div align="right">
-								<a style="font-weight: bold; font-size: 20px">${menuList.getMenuPrice() }
-									원 </a>
+								<a style="font-weight: bold; font-size: 20px">${menuList.getMenuPrice() } 원 </a>
 							</div>
 							<hr>
 							<br>
@@ -303,98 +346,131 @@ input {
 			<hr>
 			<br>
 		</div>
-
+<!-- 리뷰 작성 -->
 		<div>
 			<div class="row" align="left">
 				<div class="col-lg-2"></div>
-				<div class="col-lg-8" style="margin: 0px 0px;">
+				<div class="col-lg-8" style="padding: 0px 0px;">
 					<h4>리뷰 작성</h4>
 				</div>
 				<br /> <br />
+				
+			<form id="frm" name="frm" action="restReviewInsert.do">
+				<div class="row" align="center">
+					<div class="col-lg-4"></div>
+					<div class="col-lg-7 search-input" align="left">
+					<fieldset class="rating">
+    						<input type="radio" id="star5" name="rating" value="5" />
+    							<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+    						<input type="radio" id="star4half" name="rating" value="4 and a half" />
+    							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+    						<input type="radio" id="star4" name="rating" value="4" />
+    							<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+    						<input type="radio" id="star3half" name="rating" value="3 and a half" />
+    							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+    						<input type="radio" id="star3" name="rating" value="3" />
+    							<label class = "full" for="star3" title="Meh - 3 stars"></label>
+    						<input type="radio" id="star2half" name="rating" value="2 and a half" />
+    							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+    						<input type="radio" id="star2" name="rating" value="2" />
+    							<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+    						<input type="radio" id="star1half" name="rating" value="1 and a half" />
+    							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+    						<input type="radio" id="star1" name="rating" value="1" />
+    							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+    						<input type="radio" id="starhalf" name="rating" value="half" />
+    							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+						</fieldset>
+					</div>
+				</div>
+				
+								
 				<div class="search-wrapper">
 					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+					<c:if test="${sessionScope.mId == null }"> 
+						<div class="row justify-content-center">
+							<div class="row" align="center">
+								<div class="col-lg-2"></div>
+								<div class="col-lg-7 search-input" align="left">
+									<div class="search-input">
+										<textarea name="reContent" id="reContent" rows="4" placeholder="로그인 후 이용가능합니다" readonly></textarea>
+									</div>
+								</div>
+								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
+									<!-- Submit button -->
+									<button class="middle-btn">등록</button>
+								</div>
+							</div>
+						</div>
+					</c:if>
 					<c:if test="${sessionScope.mId != null }">
 						<div class="row justify-content-center">
 							<div class="row" align="center">
 								<div class="col-lg-2"></div>
-								<div class="col-lg-3">
-									" ${sessionScope.mId } "님 리뷰를 남겨주세요! <input type="hidden"
-										name="mId" id="mId">
+								<div class="col-lg-7 search-input" align="left">
+									<div class="search-input">
+										<textarea name="reContent" id="reContent" rows="4" placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
+									</div>
 								</div>
-							</div>
-							<div class="row" align="center">
-								<div class="col-lg-2"></div>
-								<div class="col-lg-6 search-input" align="left">
-									<input type="text" name="reContent" id="reContent"
-										placeholder="🤷‍♂️리뷰를 작성해 주세요" style="width: 550px;">
-								</div>
-								<div class="col-lg-2 col-sm-5 col-10">
+								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
 									<!-- Submit button -->
-									<button class="middle-btn" id="repleBtn">댓글</button>
+									<button class="middle-btn" id="repleBtn">등록</button>
 								</div>
 							</div>
 						</div>
-
 					</c:if>
 				</div>
+			</form>
 			</div>
 		</div>
 
 		<br /> <br />
-
+<!-- 리뷰 목록 -->
 		<div>
 			<div class="row" align="left">
 				<div class="col-lg-2"></div>
-				<div class="col-lg-8" style="margin: 0px 0px;">
+				<div class="col-lg-8" style="padding: 0px 0px;">
 					<h4>리뷰 목록</h4>
 				</div>
 				<br /> <br />
-				<div id="restReview" align="center">
-					<div class="col-lg-8" align="center">
-						<table border="0">
-							<thead>
-								<tr
-									style="border-bottom: 1px solid; text-align: center; height: 50px;">
-									<th width="100px">작성자</th>
-									<th width="300px">리뷰</th>
-									<th width="100px">별점</th>
-									<th width="150px">사진</th>
-									<th width="100px">작성일자</th>
-									<th width="100px">수정/삭제</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="vo" items="${restReview }">
-									<tr
-										style="border-bottom: 1px solid; text-align: center; height: 50px;">
-										<td id="mId">${vo.getMId() }</td>
-										<td id="restReview">${vo.restReview }</td>
-
-										<td id="restStar">
-											<fieldset class="rating">
-												<input type="radio" id="star5" name="rating" value="${vo.restStar }" />
-												<label class="full" for="star5" title="Awesome - 5 stars"></label>
-												
-											</fieldset>
-										</td>
-
-										<td id="reviewPic"><c:if test="${vo.reviewPic != null}">
-												<i class="lni lni-camera">사진보기</i>
-											</c:if> <c:if test="${vo.reviewPic == null }">X</c:if></td>
-										<td id="reviewDate">${vo.reviewDate }</td>
-										<td id="edit"><c:if
-												test="${vo.getMId() == sessionScope.mId }">
-												<button>
-													<i class="lni lni-pencil"></i> / <i class="lni lni-trash"></i>
+				<div class="row" id="restReview">
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8" style="margin: 0px 0px;">
+					<c:forEach var="vo" items="${restReview }">
+						<ul style="list-style:none;">
+							<li data-mid="${vo.getMId() }">
+								<div class="reple-total mb-3" style="position:relative;">
+									<span style="position:absolute;">
+										<c:if test="${vo.profileImage != null}">
+											<img src="/images/${vo.profileImage }" style="border-radius: 30%; width:45px;">
+										</c:if>
+										<c:if test="${vo.profileImage == null}">
+											<i class="lni lni-sprout" style="border-radius: 30%; width:45px; font-size: 31px;" ></i>
+										</c:if>
+									</span>
+									<div style="padding-left:60px; position:relative;" class="reple-content">
+										<div class="mb-1" style="color:black;">
+											<strong>${vo.getMId() }</strong> 
+										</div>
+										<div class="restStar">${vo.restStar }</div>
+										<div class="restReview" align="left"> ${vo.restReview } </div>
+										
+										<div>
+											<span style="font-size:12px;">${vo.reviewDate }</span>
+											<c:if test="${vo.getMId() == sessionScope.mId }">
+												<button type="button" data-id="${vo.restReviewId }" class="delBtn" id="delBtn" style="padding: 0px 0px;">
+													<i class="lni lni-trash"></i>
 												</button>
-											</c:if> <c:if test="${vo.getMId() != sessionScope.mId }">
-
-											</c:if></td>
-									</tr>
-
-								</c:forEach>
-							</tbody>
-						</table>
+											</c:if>
+											<c:if test="${vo.getMId() != sessionScope.mId }"> </c:if>
+										</div>
+										
+									</div>
+								</div>
+							</li>
+						</ul>
+						<hr>
+						</c:forEach>
 						<my:paging paging="${paging }" jsFunc="goList" />
 					</div>
 				</div>
@@ -409,8 +485,46 @@ input {
 </body>
 
 <script type="text/javascript">
-	$("#resvDate").datepicker({
-		minDate : 0
+//댓글 삭제
+function repleDelete() {
+	id = $(event.target).data("id")
+	$.ajax({
+		type : "delete",
+		url : "/reple/restReview.do/" + id,
+		success : function(result) {
+			repleList();
+
+		}
 	});
+}
+
+//댓글 입력
+function repleWrite() {
+	var reContent = $("#reContent").val();
+	var rId = "${RepleVo.RId}"
+	var mId = "${mId}"
+	$.ajax({
+		type : "post",
+		url : "/reple/reple.do",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		dataType : "text",
+		data : JSON.stringify({
+			rId : rId,
+			reContent : reContent,
+			reDate : date,
+			mId : mId
+		}),
+		success : function() {
+			alert("댓글이 등록되었습니다.");
+			$("#repleList").empty();
+			//$("#repleList").append('#repleList');
+			repleList();
+			$("#reContent").val("");
+		}
+	})
+}
+	
 </script>
 </html>
