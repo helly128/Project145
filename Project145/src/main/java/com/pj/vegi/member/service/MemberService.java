@@ -1,21 +1,16 @@
 package com.pj.vegi.member.service;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
 
 import com.pj.vegi.vo.LessonVO;
-=======
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 import com.pj.vegi.vo.MemberVo;
-<<<<<<< HEAD
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.SnsInfoVo;
 import com.pj.vegi.vo.VegimeetVo;
-=======
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
+
 
 public interface MemberService {
 
