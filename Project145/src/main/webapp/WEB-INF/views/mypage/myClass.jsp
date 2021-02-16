@@ -9,6 +9,20 @@
 <head>
 <meta charset="UTF-8">
 <title>myLikeClass.jsp</title>
+<style type="text/css">
+.likeAction {
+	border: none;
+	background: transparent;
+}
+
+.card-title {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -27,18 +41,16 @@
 						<div class="card-body">
 							<h3 class="card-title" style="cursor: pointer;"
 								onclick="location.href='lessonProduct.do?cId=${list.cId}'">${list.cTitle }</h3>
-							<p class="card-text">${list.cDesc }</p>
 							<p style="font: bold;">
-								시작일 <i class="lni lni-calendar"></i>
+								<i class="lni lni-calendar"> 시작일 </i>
 								<fmt:formatDate value="${list.cStart }" pattern="yyyy-MM-dd" />
 							</p>
 							<p>
-								종료일 <i class="lni lni-calendar"></i>
+								<i class="lni lni-calendar"> 종료일 </i>
 								<fmt:formatDate value="${list.cEnd }" pattern="yyyy-MM-dd" />
 							</p>
 						</div>
-						<div class="card-footer">
-						</div>
+						<div class="card-footer"></div>
 					</div>
 				</div>
 			</c:forEach>
@@ -46,26 +58,23 @@
 		<my:paging paging="${paging }" jsFunc="goList" />
 	</div>
 	<script>
+		function goList(p) {
+			location.href = "myClass.do?page=" + p;
+		}
 
-			function goList(p) {
-				location.href = "myClass.do?page=" + p;
+		function dateFormat(dat) {
+			var date = new Date(dat);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			if (min < 10) {
+				min = '0' + min;
 			}
-
-			function dateFormat(dat) {
-				var date = new Date(dat);
-				var year = date.getFullYear();
-				var month = date.getMonth() + 1;
-				var day = date.getDate();
-				var hour = date.getHours();
-				var min = date.getMinutes();
-				if (min < 10) {
-					min = '0' + min;
-				}
-				var newDate = year + "-" + month + "-" + day;
-				return newDate;
-			}
-
-		
+			var newDate = year + "-" + month + "-" + day;
+			return newDate;
+		}
 	</script>
 </body>
 </html>
