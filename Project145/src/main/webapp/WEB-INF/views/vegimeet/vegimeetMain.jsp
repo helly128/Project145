@@ -501,9 +501,9 @@
 			var keyword = $('#keyword').val();
 
 			if (options == 'all' || options == '') {
-				location.href = "lessonMain.do?page=" + p
+				location.href = "vegimeetList.do?page=" + p
 			} else {
-				location.href = "lessonMain.do?page=" + p + "&options="
+				location.href = "vegimeetList.do?page=" + p + "&options="
 						+ options + "&keyword=" + keyword;
 
 			}
