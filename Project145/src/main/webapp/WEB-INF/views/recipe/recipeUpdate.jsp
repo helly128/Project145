@@ -36,7 +36,7 @@ input, textarea {
 			<form id="frm" action="/recipeUpdateResult.do" method="post"
 				onsubmit="return checkForm();">
 				<input type="hidden" name="rId" value="${select.getRId() }">
-				<h3>recipe title🍏</h3>
+				<h3>recipe title</h3>
 				<div class="my-3">
 					<select name="rType" id="rType">
 						<option value="비건">비건</option>
@@ -59,7 +59,7 @@ input, textarea {
 				<hr>
 				<br />
 				<!-- 관련 재료 -->
-				<h3>Ingredient🍋</h3>
+				<h3>Ingredient</h3>
 				<br />
 				<div class="material">
 					Used Ingredient<br /> <br />
@@ -98,7 +98,7 @@ input, textarea {
 				<br />
 				<!-- 관련 클래스 -->
 				<div class="row">
-					<h3>Related Class📖</h3>
+					<h3>Related Class</h3>
 					<div>
 						<div class="plus">
 							<br />

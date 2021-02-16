@@ -59,6 +59,19 @@ textarea {
 	font-size: 14px;
 	font-weight: bold;
 }
+
+.name {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.name:hover {
+	color: #6C9852;
+	cursor: pointer;
+}
 </style>
 
 
@@ -462,14 +475,15 @@ textarea {
 					<div class="col-xl-3 col-lg-3 col-md-3">
 						<div class="single-product">
 							<div class="product-img">
-								<a href="/lessonProduct.do?cId=${lesson.getCId() }"> <img
-									src="/images/${lesson.getCImg() }" width="150" height="250">
+								<a href="/lessonProduct.do?cId=${lesson.getCId() }">
+									<img src="/images/${lesson.getCImg() }" width="150"
+									height="250">
 								</a>
 							</div>
 							<div class="product-content">
-								<h3 class="name">
-									<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
-								</h3>
+								<h6 class="name" title="${lesson.getCTitle() }"
+									onclick='location.href="/lessonProduct.do?cId=${lesson.getCId() }"'>${lesson.getCTitle() }</a>
+								</h6>
 							</div>
 						</div>
 					</div>
