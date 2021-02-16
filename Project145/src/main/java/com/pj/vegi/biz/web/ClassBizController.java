@@ -66,6 +66,20 @@ public class ClassBizController {
 		return "biz/classRegForm";
 
 	}
+	
+	//에디트에서 강사 아이디 검색
+	@ResponseBody
+	@RequestMapping("/classlecList.do")
+	public MemberVo classlecList(Model model, MemberVo vo,LessonVO cvo, HttpSession session) throws SQLException, JsonProcessingException {
+		System.out.println("클래스강사 검색");
+		MemberVo mvo = memberService.memberSelect(vo);
+		System.out.println(mvo+"============입니다");
+		//mId로 member의 정보 가져오기. 
+		model.addAttribute("mvo", mvo);
+		return mvo;
+
+	}
+	
 
 	@Autowired
 	MemberService memberService;
@@ -139,8 +153,8 @@ public class ClassBizController {
 		
 		//업로드 처리
 			if (uploadfile != null && uploadfile.getSize() > 0) {
-				String name = ImageIO.imageUpload(request, uploadfile);
-
+				System.out.println(cvo.getCImg());
+				String name = ImageIO.imageUpload(request, uploadfile,cvo.getCImg());
 				cvo.setCImg(name);
 			}
 		
@@ -173,10 +187,19 @@ public class ClassBizController {
 	
 	@ResponseBody
 	@RequestMapping("/applyCollabo.do")
-	public int applyCollabo(Model model, HttpSession session, LessonVO vo) {
+	public int applyCollabo(Model model, HttpSession session, LessonVO cvo, enquiryVO enqvo) {
+		System.out.println("출력할cId는"+ cvo.getCId());
 		int n = 0;
-		n = classBizService.applyCollabo(vo);
-		System.out.println(n + "건 입력완료");
+		enqvo.setMId("class"+cvo.getCId());//클래스 아이디가 글쓴이 자리에 들어감
+		enqvo.setOriginId(cvo.getLecId());
+		System.out.println("콜라보는 "+enqvo);
+		n = classBizService.applyCollabo(enqvo);
+		System.out.println("콜라보 문의" + n + "건 입력 완료");
+		
+		/* 클래스에 추가하기? 
+		 * int m = 0; n = classBizService.applyCollabo(vo); System.out.println(n +
+		 * "건 입력완료");
+		 */
 		return n;
 	}
 	

@@ -36,73 +36,6 @@ h6 {
 <title>클래스 상세페이지</title>
 </head>
 <body style="padding: 0;">
-<script type="text/javascript">
-
-$(function(){ //아작스
-	
-	//강사 수정 클릭시, 클래스 상태가 진행중이거나 종료 이면 안넘어감
-	$("#changelec").click(()=>{
-	console.log($("#status").val());
-	var status = $("#status").val();
-	if(status == "강사미정" || status=="강사승인대기"){
-		alert ('모달을 띄움니다.');
-		//모달창 =============================
-		   
-			  
-			    $('#smallModal').modal("show");
-			   
-			   // 2. 모달창 닫기 버튼
-			   $('.close').on('click', function() {
-			    $('#background_modal').modal("hide");
-			   });
-			   // 3. 모달창 위도우 클릭 시 닫기
-			   $(window).on('click', function() {
-			    if (event.target == $('#background_modal').get(0)) {
-			              $('#background_modal').hide();
-			           }
-			   }); 
-			   //모달창 =============================
-	}else {
-		alert("이미 시작된 강의의 강사정보는 수정이 불가합니다.");
-	}
-	});
-	
-	
-//모달에서 ! 수정 아작스 
-/* 	$("#applyCollabo").click(()=>{
-    	console.log($("#lecProposal").val());
-       $.ajax(
-          { 
-             type:"POST",
-             url:"applyCollabo.do",
-             data:{lecProposal: $("#lecProposal").val(), cId : $("#cId").val()}, //사용하는 함수 
-             dataType:"json",
-             success: function(n){
-                if(n!=0){
-                   $("#applyResult").text("메세지를 보냈습니다.");
-                   var btnmsg="메세지 다시 보내기";
-                   $("#savecareer").text(btnmsg);
-                   alert("등록되었습니다.");
-                }
-                else{
-                   $("#saveResult").text("등록 실패");
-                   alert("등록실패");
-                }
-             	
-             },
-             error:(log)=>{alert("실패+log")
-             }
-                
-          });
-    }); */
- //모달에서 수정 아작스끝 
-	
-	
-});
-
-
-
-</script>
 
 
 
@@ -208,11 +141,19 @@ $(function(){ //아작스
 				<div class="row">
 					<div class="col-half">
 						<div class="profile-cover">
+						
 							<div class="profile-avatar" style="margin:10px 70px;">
+							<c:if test ="${mvo.profileImage ne null }">
 								<img style="border-radius: 50%;" width="200px" height="200px;"
 									src="/images/${mvo.profileImage}" />
+							</c:if>
+							<c:if test="${mvo.profileImage eq null }">
+								<img style="border-radius: 50%;" width="200px" height="200px;"
+									src="/images/default.png/">
+							</c:if>
+							
 							</div>
-
+					
 							<div class="profile-details" style="font-size: 1.5rem">
 								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
 									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp <a
@@ -251,9 +192,9 @@ $(function(){ //아작스
 					</div>
 					<br>
 
-					<button class="btn btn-warning" type="button" id ="changelec"
-						style="margin: 20px; width: 100%; padding: 10px;"
-						>강사 변경</button>
+					<div id ="changelec"
+						style="margin: 20px; width: 100%; padding: 10px; border:0; font-size:1rem"
+						>${classVo.status} 상태입니다.</div>
  				
 				</div>
 			</div>
@@ -292,244 +233,10 @@ $(function(){ //아작스
 
 	<br>
 	
-	<div class="modal fade" id="smallModal" tabindex="-1" role="dialog"
-		style="padding-top: 200px;" aria-labelledby="basicModal"
-		aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel">강사정보 수정</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div id="lecResult" class="modal-body" align="center">
-					<!-- 강사 선택 옵션 탭  -->
-			<div class="row">
-				
-				<div class="input-group">
-					<input type="radio" name="lectureropt" value="leclist" id="leclist"
-						checked=checked class="lectureropt"> <label for="leclist"><span><i
-							class="fa fa-users"></i>기존 강사 목록</span></label> <input type="radio"
-						name="lectureropt" value="lecadd" id="lecadd" class="lectureropt" />
-					<label for="lecadd"> <span><i
-							class="fa fa-user-plus"></i>강사 추가/수정</span></label>
-				</div>
 
-			</div>
-			
-			<!-- 기존 강사 목록에서 선택  -->
-			<div class="card shadow mb-4" id="leclistdiv">
-				<br>
-				<div class="row">
-					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름</h5>
-						<div id="showlecName"></div>
-					</div>
-					<div class="col-half" align="left">
-						<h5 style="padding-top: 20px;">강사아이디</h5>
-						<div class="input-group">
-							<!-- 같은 비즈 넘버 아래의 강사 아이디 보여주는 부분 -->
-							<select id="lecturerId1" required
-								style="width: 80%; padding: 0px; margin-right: 50px;"
-								class="form-control" onChange="changeprofile()">
-								<option selected value="-">계정을 선택해주세요.</option>
-								<c:forEach items="${lecList}" var="lec">
-									<option><c:out value="${lec.getMId()}" /></option>
-								</c:forEach>
-							</select>
-
-						</div>
-					</div>
-				</div>
-
-
-				<div class="row">
-					<div class="col-half">
-						<div class="profile-cover">
-							<div class="profile-avatar">
-								<img id="showlecImage" style="border-radius: 50%;" width="200px" height="200px;"
-									src="" alt="" id="더미그림" />
-							</div>
-
-							<div class="profile-details" style="font-size: 1.5rem">
-								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-id-card-o"></i></a> <a
-									id="showlecInsta" href="naver.com" target="blank"> <i
-									class="fa fa-instagram"></i></a><a
-									href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-envelope-o"></i></a>
-							</div>
-						</div>
-					</div>
-
-					<br>
-					<div class="col-half">
-					
-					
-						<div class="msg" align="left">
-							<div>
-								<h5>강사이력</h5>
-								<div id="showlecCareer">
-								
-								</div>
-							</div>
-
-						</div>
-						<br>
-						<div class="msg" id="lecprop" align="left" >
-
-
-							<h5>강사에게 메세지</h5>
-
-							<textarea rows="3" id="proposal2" class="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
-
-							<div>
-								<button type="button" class="preview">Preview</button>
-							</div>
-							<div id="result"></div>
-							<br>
-	
-							
-						</div>
-
-					</div>
-					<br>
-
-					<!-- <button class="btn btn-warning" type="button"
-						id ="applyCollabo"
-						style="margin: 20px; width: 100%; padding: 10px;">강사에게
-						콜라보 신청</button>
- -->
-				</div>
-			</div>
-
-			<!-- 새로운 강사 생성  -->
-			<div class="card shadow mb-4" id="lecadddiv" style="display: none">
-				<br>
-
-				<div class="row">
-					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름 mName</h5>
-					</div>
-					<div class="col-half">
-						<div class="input-group">
-							<select name="lecturerId2" onchange="showSection(this)"
-								style="width: 90%; padding: 0px; margin: 0px;">
-								<option value="" selected>추가 옵션을 선택하세요</option>
-								<option value="${sessionScope.mId}">내 이력 수정 :
-									${sessionScope.mId}</option>
-								<option>외부 강사 추가</option>
-							</select>
-
-						</div>
-					</div>
-
-
-					<div class="col-lg-12">
-						<div class="col-half">
-							<div class="profile-cover">
-								<div class="profile-avatar">
-									<img id="showlecImage2" style="border-radius: 50%;"
-										src="" alt="더미그림" />
-								</div>
-
-								<div class="profile-details" style="font-size: 1.5rem">
-									<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp<a
-										href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-instagram"></i></a> &nbsp<a
-										href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-envelope-o"></i></a>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="col-half">
-							<div class="msg" id="melec" align="left">
-
-								<h5>내 강사 이력 수정</h5>
-								
-								<textarea rows="8" name="career" id="career" style="width: 90%"></textarea>
-
-
-							</div>
-
-							<div class="msg" id="otherlec" align="left" style="display: none">
-							
-								강사 ID 입력<input type="text" class="lec" style="width: 90%" onChange="changelecId(this.value)">
-
-
-
-							<h5>강사에게 메세지</h5>
-
-							<textarea rows="3" id="proposal2"  class="proposal2"  name="proposal2" name="pro" style="width: 90%"></textarea>
-
-							<div>
-								미리 보기를 눌러서 메세지를 확인하세요.<button type="button" class="preview">미리보기</button>
-							</div>
-							<div id="result"></div>
-							<br>
-
-
-						
-						
-								
-							</div>
-						</div>
-
-
-						<br>
-
-
-					</div>
-					<div class="col-12">
-						<div class="applyResult"></div>
-						<!-- <button class="btn btn-warning"
-							style="margin: 20px; width: 90%; padding: 10px; display: none;"
-							id="sendmsg">강사에게 콜라보 신청</button>
-
-						<button class="btn btn-warning" type="button"
-							style="margin: 10px; width: 90%; padding: 10px;" id="savecareer">내
-							이력 저장</button> -->
-
-
-
-
-					</div>
-				</div>
-			</div>
-			<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
-				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
-							<textarea rows="8" name="lecProposal" id="lecProposal"
-								style="width: 90%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
-			<!-- 강사부분 끝 -->
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" id="toLogin" style="display: none"
-						class="btn btn-primary" style="background:#1ab188; border:none;">로그인
-						화면</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 <script>
-
-
-
-
-
-
-
-
-
-
-$(document).ready(function() { //기존 강사 목록에서 선택 || 새로운 강사 추가 
+/* $(document).ready(function() { //기존 강사 목록에서 선택 || 새로운 강사 추가 
 
 	
 	$("input:radio[name=lectureropt]").click(function() {
@@ -603,7 +310,7 @@ function changeprofile() {
 	$("#lecId").val(lecturer);
 	console.log(lecturer+"로 변경")
 	console.log("정보 검색 끝 ");
-}
+} */
 
 </script>
 

@@ -50,6 +50,7 @@
 											<c:forEach var="cEnqList" items="${cEnqList }">
 												<tr role="row" class="tr-hover">
 													<td>${cEnqList.getMId() }</td>
+													
 													<td>${cEnqList.enqDate}</td>
 													<td>${cEnqList.enqContent }</td>
 
@@ -132,7 +133,9 @@
 										<tbody>
 											<c:forEach var="myEnqList" items="${myEnqList }">
 												<tr role="row" class="tr-hover">
-													<td>${myEnqList.originId}</td>
+													<td>${myEnqList.originId}
+													
+													</td>
 													<td>${myEnqList.enqDate}</td>
 													<td>${myEnqList.enqContent }</td>
 
@@ -195,7 +198,8 @@ function enqAccepted(e) {
                 }
                 else{
                    $("#saveResult").text("승낙 실패");
-                   alert("승낙 실패");
+                   alert("더 이상 존재하지 않는 클래스입니다. 거절해주세요.");
+                 
                 }
              	
              },
@@ -219,12 +223,14 @@ function enqRefused(e) {
 					var enqNo=e.value;
 					var tr = $(e).closest("tr");
 					var enqResult = tr.find('textarea').val();
+					var mId = tr.children().eq(0).text();
+					console.log(mId);
 						/* 아작스 */
 		       $.ajax(
 		          { 
 		             type:"POST",
 		             url:"enqRefused.do",
-		             data:{enqResult: enqResult, enqNo : enqNo}, //사용하는 함수 
+		             data:{enqResult: enqResult, enqNo : enqNo, mId: mId}, //사용하는 함수 
 		             dataType:"json",
 		             success: function(n){
 		                if(n!=0){
@@ -233,14 +239,14 @@ function enqRefused(e) {
 		                   console.log(enqResult);
 		                   $("#resulttext").text("");
 		                   tr.find('textarea').hide();
-		                   $("#smile").text('거절함');
-		                   $("#smile").show();
+		                   $("#smile").text('');
+		                   $("#smile").hide();
 		                   $("#sad").text("거절함");
 		  
 		                }
 		                else{
 		                   $("#saveResult").text("거절 실패");
-		                   alert("거절 실패");
+		                   alert("존재하지 않는 클래스입니다. ");
 		                }
 		             	
 		             },

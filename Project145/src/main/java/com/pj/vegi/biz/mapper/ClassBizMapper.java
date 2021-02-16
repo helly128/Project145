@@ -27,6 +27,8 @@ public interface ClassBizMapper {
 	int enqAccepted(enquiryVO evo);
 	int enqRefused(enquiryVO evo);
 	int lecIdUpdate(LessonVO cvo);
+	void enqBizDelete(LessonVO vo);
+	void collaboRefused(enquiryVO evo);
 	
 	
 

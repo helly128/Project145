@@ -47,7 +47,7 @@
 	</div>
 
 
-	<div class="container">
+	<div class="container" style="max-width: 1400px;">
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">내 클래스 목록</h6>
@@ -70,13 +70,13 @@
 										style="width: 100%; text-align: center;">
 										<thead>
 											<tr role="row">
-												<th style="width: 30px;">시작날짜</th>
-												<th style="width: 60px;">클래스명</th>
-												<th style="width: 30px;">시간</th>
-												<th style="width: 40px;">장소</th>
+												<th style="width: 50px;">시작날짜</th>
+												<th style="width: 70px;">클래스명</th>
+												<th style="width: 50px;">시간</th>
+												<th style="width: 50px;">장소</th>
 												
 												
-												<th style="width: 20px;">상태</th>
+												<th style="width: 50px;">상태</th>
 												<th style="width: 20px;">인원</th>
 												<th style="width: 20px;">옵션</th>
 											</tr>

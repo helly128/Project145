@@ -18,6 +18,11 @@
 		WHERE c_id=#{cId}
 		
 	</delete>
+	
+	<delete id="enqBizDelete">
+		Delete from Enquiry
+		where m_Id=#{cId}	
+	</delete>
 
 
 
@@ -119,6 +124,17 @@
 		enq_no=#{enqNo}
 	</update>
 	
+	
+	<update id="lecIdUpdate">
+	Update class
+	set 
+	lec_id = #{lecId},
+	status ='개설완료'
+	where 
+	c_id=#{cId}
+	</update>
+	
+	
 	<update id="enqRefused">
 		UPDATE enquiry
 		set enq_Result = #{enqResult},
@@ -126,13 +142,14 @@
 		enq_type = #{enqType}
 		WHERE
 		enq_no=#{enqNo}
-	</update>
-	<update id="lecIdUpdate">
+	</update> 
+	<update id="collaboRefused">
 	Update class
-	set lec_id = #{lecId}
+	set 
+	status='강사미정',
+	lec_id=null
 	where 
-	c_id=#{cId}
+	c_id=#{mId}
 	</update>
-
 
 </mapper>

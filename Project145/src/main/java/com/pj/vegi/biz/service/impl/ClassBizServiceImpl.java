@@ -49,6 +49,7 @@ public class ClassBizServiceImpl implements ClassBizService{
 
 	@Override
 	public int classBizDelete(LessonVO vo) {
+		dao.enqBizDelete(vo);
 		return dao.classBizDelete(vo);
 	}
 
@@ -93,12 +94,14 @@ public class ClassBizServiceImpl implements ClassBizService{
 
 	@Override
 	public int enqRefused(enquiryVO evo) {
-		// TODO Auto-generated method stub
+		dao.collaboRefused(evo);
+		
 		return dao.enqRefused(evo);
 	}
 
 	@Override
 	public int lecIdUpdate(LessonVO cvo) {
+		
 		return dao.lecIdUpdate(cvo);		
 	}
 

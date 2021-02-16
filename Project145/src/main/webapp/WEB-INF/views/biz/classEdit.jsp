@@ -29,10 +29,38 @@
 <title>클래스 등록 폼</title>
 </head>
 <body style="padding: 0;">
-	<script>
-$(function(){  
-//자기 이력 member에 등록/수정 
-    $("#savecareer").click(()=>{
+	<script type="text/javascript">
+
+$(function(){ //아작스
+	
+	//강사 수정 클릭시, 클래스 상태가 진행중이거나 종료 이면 안넘어감
+	$("#changelec").click(()=>{
+	console.log($("#status").val());
+	var status = $("#status").val();
+	if(status == "강사미정" || status=="강사승인대기"){
+		alert ('모달을 띄움니다.');
+		//모달창 =============================
+		   
+			  
+			    $('#smallModal').modal("show");
+			   
+			   // 2. 모달창 닫기 버튼
+			   $('.close').on('click', function() {
+			    $('#background_modal').modal("hide");
+			   });
+			   // 3. 모달창 위도우 클릭 시 닫기
+			   $(window).on('click', function() {
+			    if (event.target == $('#background_modal').get(0)) {
+			              $('#background_modal').hide();
+			           }
+			   }); 
+			   //모달창 =============================
+	}else {
+		alert("이미 시작되거나 종료된 강의의 강사정보는 수정이 불가합니다.");
+	}
+	});
+//내 이력 수정
+	$("#savecareer").click(()=>{
     	console.log($("#career").val());
        $.ajax(
           { 
@@ -45,21 +73,33 @@ $(function(){
                    $("#saveResult").text("이력이 등록되었습니다.");
                    var btnmsg="이력 재수정";
                    $("#savecareer").text(btnmsg);
-                   
+                   alert("등록되었습니다.");
+                   $("#aftercareer").text($("#career").val());
+               	 $('#smallModal').modal("hide");
                 }
                 else{
                    $("#saveResult").text("등록 실패");
                    
                 }
-             	alert("등록되었습니다.");
+             	
              },
              error:(log)=>{alert("실패+log")
              }
                 
           });
     });
-    
-  
+	
+	
+});
+
+
+
+</script>
+
+
+<script>
+$(function(){  
+
     // 메세지 프리뷰 
    $("#preview").click(()=>{
 	 console.log($("#cTitle").val());
@@ -71,7 +111,6 @@ $(function(){
 	 console.log($("#cPrice").val());
 	 console.log($("#proposal2").val());
 	 
-	 var title = "안녕하세요 강사님,  [" +$("#cTitle").val() + "]라는클래스를 ";
 	 var start = $("#cStart").val() + " ~  " ;
 	 var end = $("#cEnd").val() + "까지 ";
 	 var time = $("#cTime").val() +"에 ";
@@ -80,8 +119,7 @@ $(function(){
 	 var price = "원비 "+$("#cPrice").val() + "의 금액으로 진행하려 합니다.";
 	 var msg =  $("#proposal2").val() ;
 	 var proposal = title + start + end+ time+ loc+parti+price+msg ;
-	 var lecId =  $("#lecturerId1").val() ;
-	 $("#lecId").val(lecId);
+	 
 	 $("#lecProposal").val(proposal);
  });
     
@@ -113,7 +151,7 @@ $(function(){
           });
     });
  
-   // 날짜 미니멈
+// 날짜 미니멈
    //get today in date yyyy-mm-dd
    var today = new Date();
    var dd = today.getDate();
@@ -140,11 +178,13 @@ $(function(){
 </script>
 
 	<div class="container" align="center">
-		<form id="cfrm" class="cfrm" action="/classBizUpdate.do" method="post" enctype="multipart/form-data">
+		<form id="cfrm" class="cfrm" action="/classBizUpdate.do" method="post"
+			enctype="multipart/form-data">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${classVo.getCId()}'>
 			<br>
 			<div class="pagetitle" align="center">
+			<input type="hidden" id="status" value="${classVo.status}">
 				<h3>클래스 수정</h3>
 			</div>
 			<br>
@@ -152,15 +192,15 @@ $(function(){
 				<h5>대표사진</h5>
 
 				<div class="div-image" style="float: right;">
-					<input type="file" name="uploadfile" class="classPic" accept="image/* "
-						onchange="setImage(event);"  
+					<input type="file" name="uploadfile" class="classPic"
+						accept="image/* " onchange="setImage(event);"
 						style="background-color: white; border: none; margin-left: 10px; padding: 0; border-radius: 2px;">
 				</div>
-
+				<input type="hidden" name="cImg" value="${classVo.getCImg()}"> 
 				<!-- Card Body -->
 				<div class="image-container p-3" style="width: 100%" align="center">
-					<img id="class-image" src="/images/${classVo.getCImg()}" height="300px"
-						width="auto">
+					<img id="class-image" src="/images/${classVo.getCImg()}"
+						height="300px" width="auto">
 
 				</div>
 			</div>
@@ -169,8 +209,7 @@ $(function(){
 				<h5>클래스명</h5>
 				<div class="input-group input-group-icon">
 					<input type="text" placeholder="클래스 이름" id="cTitle" name="cTitle"
-						value="${classVo.getCTitle()}"
-						required autocomplete="off">
+						value="${classVo.getCTitle()}" required autocomplete="off">
 					<div class="input-icon">
 						<i class="fa fa-pencil"></i>
 					</div>
@@ -182,65 +221,46 @@ $(function(){
 
 
 			
-			<h5>베지테리언타입</h5>
-			<br>
-			<div class="labelf" align="center">
-				<div class="demo">
-					<table class="tbl">
-						<tr>
-							<th>채소</th>
-							<th>유제품</th>
-							<th>달걀</th>
-						</tr>
-						<tr><th></th><th></th><th></th></tr>
-						<tr>
-							<td>
-								<div class="tbl-data" data-item="🥦" style="">
-									<input type="checkbox" id="vegan" class="type" value="비건"
-										checked disabled> <label for="vegan">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
-							</td>
-							<td>
-								<div class="tbl-data" data-item="🧀">
-									<input type="checkbox" class="vtype" id="locto" value="락토">
-									<label for="locto">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
-							</td>
-							<td>
-								<div class="tbl-data" data-item="🥚 ">
-									<input type="checkbox" id="ovo" class="vtype" value="오보">
-									<label for="ovo">&nbsp&nbsp&nbsp&nbsp</label>
-								</div>
-							</td>
-						</tr>
-					</table>
-					<input type="hidden" id="vegi" readonly value="비건" required
-						name="vegtype"
-						style="text-align: center; height: 3rem; padding: 10px;">
+				<h5>베지테리언타입</h5>
+				
+				<br>
+				
+				<!-- Example single danger button -->
+				<div class="btn-group">
+					<select class="selectpicker" name="vegType"
+						data-style="btn-success" style="width: 200px; height:4rem;">
+						<option value="${classVo.vegType }" selected>${classVo.vegType }</option>
+						<option value="비건">🥦비건</option>
+						<option value="락토">🧀락토</option>
+						<option value="오보">🥚오보</option>
+						<option value="락토오보">🧀🥚락토오보</option>
+					</select>
 				</div>
-			</div>
-
-
+				
 			<div class="row">
 				<div class="col-half">
 					<h5>시작일</h5>
 					<div class="input-group">
-						<input onChange="setendmin(this.value)" type="date" name="cStart" id="cStart" value="${classVo.getCStart()}">
+						<input type="date" name="cStart" id="cStart"
+						onChange="setendmin(this.value)" value="${classVo.getCStart()}">
 					</div>
 				</div>
 				<div class="col-half">
 					<h5>종료일</h5>
 					<div class="input-group">
-						<input type="date" name="cEnd" id="cEnd" value="${classVo.getCEnd()}">
+						<input type="date" name="cEnd" id="cEnd" value="${classVo.getCStart()}">
 					</div>
 				</div>
 			</div>
 
+		
+
 			<div class="row">
 				<h5>요일 / 시간</h5>
-				<div class="input-group input-group-icon"  >
+				<div class="input-group input-group-icon">
 					<input type="text" name="cTime" id="cTime"
-						placeholder="매주 ** 요일 오전/오후 ** 시" required autocomplete="off" value="${classVo.getCTime()}">
+						placeholder="매주 ** 요일 오전/오후 ** 시" required autocomplete="off"
+						value="${classVo.getCTime()}">
 					<div class="input-icon">
 						<i class="fa fa-pencil"></i>
 					</div>
@@ -250,8 +270,8 @@ $(function(){
 			<div class="row">
 				<h5>장소</h5>
 				<div class="input-group input-group-icon">
-					<input type="text" name="cLoc" onclick="RestAddr()" class="input"  value="${classVo.getCLoc()}"
-						id="cLoc" required autocomplete="off">
+					<input type="text" name="cLoc" onclick="RestAddr()" class="input"
+						value="${classVo.getCLoc()}" id="cLoc" required autocomplete="off">
 					<div class="input-icon">
 						<i class="fa fa-pencil"></i>
 					</div>
@@ -277,10 +297,10 @@ $(function(){
 					<h5>가격(5000원 단위)</h5>
 					<div class="input-group">
 						<div class="number-input" style="margin: 10px">
-							<button  type="button" 
+							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepDown(1000)"></button>
 							<input class="quantity" min="1000" id="cPrice" name="cPrice"
-								 value="${classVo.getCPrice()}"type="number">
+								value="${classVo.getCPrice()}" type="number">
 							<button type="button"
 								onclick="this.parentNode.querySelector('input[type=number]').stepUp(5000)"
 								class="plus"></button>
@@ -288,280 +308,83 @@ $(function(){
 					</div>
 				</div>
 			</div>
-			<br><br>
+			<br> <br>
 			<h5>강사 정보</h5>
 			<br>
-					
+
 			<div class="card shadow mb-4" id="leclistdiv">
 				<br>
 				<div class="row">
 					<div class="col-half">
 						<h5 style="padding-top: 20px;">강사이름</h5>
-						<h6>${mvo.getMName()}</h6>
+						<input type="hidden" id="lecImg" value="${mvo.profileImage}" >
+						<input type="hidden" id="lecName" value="${mvo.getMName()}">
+						<h5>${mvo.getMName()}</h5>
 					</div>
 					<div class="col-half" align="left">
 						<h5 style="padding-top: 20px;">강사아이디</h5>
 						<div>
 							<h6>${mvo.getMId()}</h6>
-					</div>
-				</div>
-
-
-				<div class="row">
-					<div class="col-half">
-						<div class="profile-cover">
-							<div class="profile-avatar" style=" padding:10px 100px">
-								<img style="border-radius: 50%;" width="200px" height="200px;"
-									src="/images/${mvo.profileImage}" />
-							</div>
-
-							<div class="profile-details" style="font-size: 1.5rem">
-								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp <a
-									id="showlecInsta" href="naver.com" target="blank"> <i
-									class="fa fa-instagram"></i></a> &nbsp<a
-									href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-envelope-o"></i></a>
-							</div>
-						</div>
-					</div>
-
-					<br>
-					<div class="col-half">
-						<div class="msg" align="left">
-							<div>
-								<h5>강사이력</h5>
-								<div>
-									<h6>${mvo.career}"</h6>
-								</div>
-							</div>
-
-						</div>
-						<br>
-						
-						<div align="left" style="padding-right:40px">
-						<h5>보낸 제안서</h5>
-							<h6>${classVo.lecProposal}</h6>
-						</div>
-						
-						<div align="left" style="padding-right:40px">
-						<h5>받은 답변</h5>
-							<h6>${classVo.lecResponse}</h6>
-							<br>
-						</div>
-						
-					</div>
-					<br>
-
-					<button class="btn btn-warning" type="button" id ="applyCollabo"
-						style="margin: 20px; width: 100%; padding: 10px;">강사 변경</button>
- 
-				</div>
-			</div>
-			
-			</div>
-			<!-- 강사부분 끝 -->
-			<%-- <!-- 강사 선택 옵션 탭  -->
-			<div class="row">
-				<h5>강사 정보</h5>
-				<div class="input-group">
-					<input type="radio" name="lectureropt" value="leclist" id="leclist"
-						checked=checked class="lectureropt"> <label for="leclist"><span><i
-							class="fa fa-users"></i>기존 강사 목록</span></label> <input type="radio"
-						name="lectureropt" value="lecadd" id="lecadd" class="lectureropt" />
-					<label for="lecadd"> <span><i
-							class="fa fa-user-plus"></i>강사 추가/수정</span></label>
-				</div>
-
-			</div>
-			
-			<!-- 기존 강사 목록에서 선택  -->
-			<div class="card shadow mb-4" id="leclistdiv">
-				<br>
-				<div class="row">
-					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름</h5>
-						<div id="showlecName"></div>
-					</div>
-					<div class="col-half" align="left">
-						<h5 style="padding-top: 20px;">강사아이디</h5>
-						<div class="input-group">
-							<!-- 같은 비즈 넘버 아래의 강사 아이디 보여주는 부분 -->
-							<select id="lecturerId1"
-								style="width: 80%; padding: 0px; margin-right: 50px;"
-								class="form-control" onclick="changeprofile(this)">
-								<option selected value="${mvo.getMId()}">현재 강사 :
-									${mvo.getMId()}</option>
-								<c:forEach items="${lecList}" var="lec">
-									<option><c:out value="${lec.getMId()}" />강사 변경 :${lec.getMId()}</option>
-								</c:forEach>
-							</select>
-
-						</div>
-					</div>
-				</div>
-
-
-				<div class="row">
-					<div class="col-half">
-						<div class="profile-cover">
-							<div class="profile-avatar">
-								<img style="border-radius: 50%;" width="200px" height="200px;"
-									src="/images/${mvo.profileImage}"  alt="" id="showlecImage" />
-							</div>
-
-							<div class="profile-details" style="font-size: 1.5rem">
-								<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp <a
-									id="showlecInsta" href="naver.com" target="blank"> <i
-									class="fa fa-instagram"></i></a> &nbsp<a
-									href="https://www.instagram.com/maxencefvl/?hl=ko"
-									target="blank"><i class="fa fa-envelope-o"></i></a>
-							</div>
-						</div>
-					</div>
-
-					<br>
-					<div class="col-half">
-						<div class="msg" align="left">
-							<div>
-								<h5>강사이력</h5>
-								<div id="showlecCareer">
-									<br>${mvo.career}"
-								</div>
-							</div>
-
-						</div>
-						<br>
-						<div class="msg" id="lecprop" align="left">
-
-
-							<h5>강사에게 메세지</h5>
-
-							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
-
-							<div>
-								<button type="button" id="preview">Preview</button>
-							</div>
-							<div id="result"></div>
-							<br>
-
-
-							<textarea rows="8" name="lecProposal" id="lecProposal"
-								style="width: 90%">${classVo.lecProposal}"</textarea>
-						</div>
-
-					</div>
-					<br>
-
-					<!-- <button class="btn btn-warning" type="button"
-						id ="applyCollabo"
-						style="margin: 20px; width: 100%; padding: 10px;">강사에게
-						콜라보 신청</button>
- -->
-				</div>
-			</div>
-
-			<!-- 새로운 강사 생성  -->
-			<div class="card shadow mb-4" id="lecadddiv" style="display: none">
-				<br>
-
-				<div class="row">
-					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름 mName</h5>
-					</div>
-					<div class="col-half">
-						<div class="input-group">
-							<select name="lecturerId2" onchange="showSection(this)"
-								style="width: 90%; padding: 0px; margin: 0px;">
-								<option value="">강사 추가 옵션</option>
-								<option value="${sessionScope.mId}">내 이력 수정 :
-									${sessionScope.mId}</option>
-								<option>외부 강사 추가</option>
-							</select>
-
 						</div>
 					</div>
 
 
-					<div class="col-lg-12">
+					<div class="row">
 						<div class="col-half">
 							<div class="profile-cover">
-								<div class="profile-avatar">
-									<img style="border-radius: 50%;"
-										src="/images" alt="" />
+								<div class="profile-avatar" style="padding: 10px 100px">
+
+									<c:if test="${mvo.profileImage ne null }">
+										<img style="border-radius: 50%;" width="200px" height="200px;"
+											src="/images/${mvo.profileImage}" />
+									</c:if>
+									<c:if test="${mvo.profileImage eq null }">
+										<img style="border-radius: 50%;" width="200px" height="200px;"
+											src="/images/default.png/">
+									</c:if>
+
 								</div>
 
-								<div class="profile-details" style="font-size: 1.5rem">
-									<a href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-id-card-o"></i></a> &nbsp<a
-										href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-instagram"></i></a> &nbsp<a
-										href="https://www.instagram.com/maxencefvl/?hl=ko"
-										target="blank"><i class="fa fa-envelope-o"></i></a>
-								</div>
+
 							</div>
 						</div>
-
-
-						<div class="col-half">
-							<div class="msg" id="melec" align="left">
-
-								<h5>내 강사 이력 수정</h5>
-								
-								<textarea rows="8" name="career" id="career" style="width: 90%"></textarea>
-
-
-							</div>
-
-							<div class="msg" id="otherlec" align="left" style="display: none">
-							
-								강사 ID <input type="text" style="width: 90%" id="lecId" name="lecId" value="">
-
-
-
-							<h5>강사에게 메세지</h5>
-
-							<textarea rows="3" id="proposal2" name="proposal2" name="pro" style="width: 90%"></textarea>
-
-							<div>
-								<button type="button" id="preview">Preview</button>
-							</div>
-							<div id="result"></div>
-							<br>
-
-
-							<textarea rows="8" name="lecProposal" id="lecProposal"
-								style="width: 90%"></textarea>
-						
-								
-							</div>
-						</div>
-
 
 						<br>
+						<div class="col-half">
+							<div class="msg" align="left">
+								<div>
+									<h5>강사이력</h5>
+									<div id="aftercareer">
+										<h6>${mvo.career}</h6>
+									</div>
+								</div>
 
+							</div>
+							<br>
 
-					</div>
-					<div class="col-12">
-						<div class="applyResult"></div>
-						<!-- <button class="btn btn-warning"
-							style="margin: 20px; width: 90%; padding: 10px; display: none;"
-							id="sendmsg">강사에게 콜라보 신청</button>
+							<div align="left" style="padding-right: 40px">
+								<h5>보낸 제안서</h5>
+								<h6>${classVo.lecProposal}</h6>
+							</div>
 
-						<button class="btn btn-warning" type="button"
-							style="margin: 10px; width: 90%; padding: 10px;" id="savecareer">내
-							이력 저장</button> -->
+							<div align="left" style="padding-right: 40px">
+								<h5>받은 답변</h5>
+								<h6>${classVo.lecResponse}</h6>
+								<br>
+							</div>
 
+						</div>
+						<br>
 
-
+						<button class="btn btn-warning" type="button" id ="changelec"
+							style="margin: 20px; width: 100%; padding: 10px;">강사 변경</button>
 
 					</div>
 				</div>
-			</div>
 
+			</div>
 			<!-- 강사부분 끝 -->
- --%>
+
 
 			<div class="row" style="text-align: left">
 				<h5>클래스 커리큘럼</h5>
@@ -591,6 +414,105 @@ $(function(){
 
 		</form>
 	</div>
+	
+	
+	<!--=========================== 모달 ==========================   -->
+
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog"
+		style="padding-top: 200px;" aria-labelledby="basicModal"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="padding:20px;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel">강사정보 수정</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+			<!-- 내 이력 수정 / 새로운 강사 검색   -->
+			<div class="card shadow mb-4" id="lecadddiv" style="padding:20px;">
+				<br>
+
+				<div class="row">
+					<div class="col-half">
+						<h5 style="padding-top: 20px;">강사이름 : </h5><div id ='lecNamesel' style="font-size: 2rem; padding-left:20px;">${mvo.getMName()}</div>
+					</div>
+					<div class="col-half">
+						<div class="input-group">
+							<select name="lecturerId" id="lecInfo" onchange="showSection(this.value)"
+								style="width: 90%; padding: 0px; margin: 0px;">
+								<option value="" selected>추가 옵션을 선택하세요</option>
+								<option value="${sessionScope.mId}">내 이력 수정 :
+									${sessionScope.mId}</option>
+								<option value="other">외부 강사 추가</option>
+							</select>
+
+						</div>
+					</div>
+
+					<div class="col-lg-12">
+						<div class="col-half">
+							<div class="profile-cover">
+								<div class="profile-avatar">
+									<img id="showlecImage2" style="border-radius: 50%;"
+										src="/images/default.png/" alt="더미그림" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-half">
+							<div class="msg" id="melec" align="left">
+
+								<h5>내 강사 이력 수정</h5>
+								<textarea rows="8" name="career" id="career" style="width: 90%"></textarea>
+								<button style="float:right;" id="savecareer">이력수정</button>&ensp; &ensp; 
+							</div>
+
+							<div class="msg" id="otherlec" align="left" style="display: none">
+							
+								강사 ID 입력<input type="text" id="lecinput" class="lec" style="width: 90%" onChange="changelecId(this.value)">
+								<button style="float:right;" id="searchlecId">검색</button>&ensp; &ensp; 
+			
+
+							<h5>강사에게 메세지</h5>
+
+							<textarea rows="3" id="proposal2"  class="proposal2"  name="proposal2" name="pro" style="width: 90%"></textarea>
+
+							<div>
+								미리 보기를 눌러서 메세지를 확인하세요.<button type="button" id="preview" class="preview">미리보기</button>
+							</div>
+							<div id="result"></div>
+							<br>
+<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
+				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
+							<textarea rows="8" name="lecProposal" id="lecProposal"
+								style="width: 100%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
+			<button id="applyCollabo">제안서 보내기</button>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			
+		
+			<!-- 강사부분 끝 -->
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="toLogin" style="display: none"
+						class="btn btn-primary" style="background:#1ab188; border:none;">로그인
+						화면</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	
+	
 	<br>
 
 	<script>
@@ -606,50 +528,64 @@ $(function(){
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
-		$(document).ready(function() { //기존 강사 목록에서 선택 || 새로운 강사 추가 
+	
+		function showSection(lec) { //나를 강사로 추가 || 다른 강사 추가
+			alert('lec');
+			var lecName = $("#lecName").val(); //img
+			var lecImage =  $("#lecImg").val(); //name
 
-			$("input:radio[name=lectureropt]").click(function() {
-				var lecval = $('input:radio[name=lectureropt]:checked').val();
-
-				if (lecval == "leclist") {
-
-					$("#lecadddiv").hide();
-					$("#leclistdiv").show();
-
-				} else {
-					$("#leclistdiv").hide();
-					$("#lecadddiv").show();
-
-				}
-			});
-
-			$("#updateclass").click(function() { 
-				alert("수정완료");
-				$("#cfrm").submit();
-			})
-
-		});
-		
-		
-		
-		function showSection(lec) { //강사 추가 나를 강사로 추가 || 다른 강사 추가
-
-			if (lec.value == "${sessionScope.mId}") {
+			if (lec == "${sessionScope.mId}") {
+				$("#showlecImage2").attr('src','/images/'+lecImage);
+				$("#lecNamesel").text(lecName); //이름넣기
 				$("#otherlec").hide();
 				$("#sendmsg").hide();
 				$("#savecareer").show();
 				$("#melec").show();
 				str="${sessionScope.mId}";
 				$("#myId").val(str);
+				
+				
 
 			} else {
+				$("#showlecImage2").attr('src','images/default.png');
+				$("#lecNamesel").text('아이디를 검색하세요.'); //이름넣기
 				$("#otherlec").show();
 				$("#melec").hide();
 				$("#savecareer").hide();
 				$("#sendmsg").show();
 			}
 		}
+		//강사 아이디 찾아서 사진 보여주기 
+		 $("#searchlecId").click(()=>{
+	          console.log($("#lecinput").val());
+	          $.ajax(
+	             { 
+	                type:"POST",
+	                url:"classlecList.do",
+	                data:{mId: $("#lecinput").val()}, //사용하는 함수 
+	                dataType:"json",
+	                success: function(mvo){
+	                   if(mvo != ''){
+	                   console.log(mvo);
+	                   console.log(mvo.mid);
+	                   console.log(mvo.profileImage);
+	                   $("#lecNamesel").text(mvo.mid);
+	                   $("#showlecImage2").attr('src','images/'+mvo.profileImage);
+	                   $("#lecId").val(mvo.mid);
+	                   }else {
+	                	   alert('없는 회원ID 입니다.')
+	                   }     
+	                },
+	                error:(log)=>{alert('없는 회원ID 입니다. 다시 검색해주세요')
+	                }
+	                   
+	             });
+	       });
+
 		
+		
+</script>
+<script>	
 		var lecList = ${lecList2};
 		function changeprofile(pro) {
 			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
@@ -726,16 +662,7 @@ $(function(){
 				}
 			}).open();
 		}
-		
-		
 	
-		
-
-
-		
-		
-		
-		
 	</script>
 
 
