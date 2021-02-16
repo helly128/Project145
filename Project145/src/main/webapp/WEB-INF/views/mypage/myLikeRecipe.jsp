@@ -11,6 +11,14 @@
 	border: none;
 	background: transparent;
 }
+
+.card-title {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>

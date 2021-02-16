@@ -102,7 +102,7 @@
 										</div></td>
 									<td><c:choose>
 											<c:when test="${today <= list.meetEnd }">참여중</c:when>
-											<c:when test="${today > list.meetEnd }">완료<br>페이백:</c:when>
+											<c:when test="${today > list.meetEnd }">완료</c:when>
 										</c:choose></td>
 								</tr>
 							</tbody>
