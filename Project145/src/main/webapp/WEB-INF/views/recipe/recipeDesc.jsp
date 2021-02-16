@@ -99,7 +99,6 @@ textarea {
 						reDepth: 1,
 						mId : mId
 			};
-			console.log(data);
 			repleWrite(data);//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
 		
@@ -114,7 +113,6 @@ textarea {
 						mId : mId,
 						reId : reId
 			};
-			console.log(data);
 			repleWrite(data);//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
 
@@ -228,7 +226,6 @@ textarea {
 					type : "get",
 					url : "/reple/reple.do?RId=${recipeVo.RId}&showMore="+showMore,
 					success : function(result) {
-						console.log(result);
 						var ul = `<ul id="reple-ul" style='list-style:none;'>`;
 						var output = '';
 						for ( var i in result) {
@@ -240,7 +237,7 @@ textarea {
 							}
 							output += `<div class='reple-total mb-3' style="position:relative;">
 											<span style="position:absolute;"><image
-											src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></span>
+											src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px; height:45px;'></span>
 											<div style='padding-left:60px; position:relative;' class='reple-content'>
 												<div class="mb-1" style="color:black;">
 													<strong>\${result[i].mname}</strong>
@@ -473,17 +470,6 @@ textarea {
 								<h3 class="name">
 									<a href="/lessonProduct.do?cId=${lesson.getCId() }">${lesson.getCTitle() }</a>
 								</h3>
-								<span class="update">${lesson.getCDesc() }</span>
-								<ul class="address">
-									<li><i class="lni lni-calendar"></i> ${lesson.getCEnd() }
-										${lesson.getCStart() }</li>
-									<li><i class="lni lni-map-marker"></i>
-										${lesson.getVegType() }</li>
-									<li><i class="lni lni-package"></i> ${lesson.getCHit() }</li>
-								</ul>
-								<div class="product-bottom">
-									<h3 class="price">${lesson.CPrice }원</h3>
-								</div>
 							</div>
 						</div>
 					</div>
