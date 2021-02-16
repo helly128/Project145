@@ -37,4 +37,6 @@ public interface ClassBizService {
 
 	int lecIdUpdate(LessonVO cvo);
 
+	int enqBizDelete(LessonVO cvo);
+
 }

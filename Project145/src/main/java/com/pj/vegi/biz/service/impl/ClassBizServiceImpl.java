@@ -105,4 +105,10 @@ public class ClassBizServiceImpl implements ClassBizService{
 		return dao.lecIdUpdate(cvo);		
 	}
 
+	@Override
+	public int enqBizDelete(LessonVO cvo) {
+		// TODO Auto-generated method stub
+		return dao.enqBizDelete(cvo);
+	}
+
 }

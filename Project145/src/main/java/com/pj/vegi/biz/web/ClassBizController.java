@@ -100,7 +100,11 @@ public class ClassBizController {
 	}
 
 	@RequestMapping("/classBizEdit.do")
-	public String classBizEdit(Model model, LessonVO cvo, LecturerVo lvo, MemberVo vo) throws SQLException, JsonProcessingException {
+	public String classBizEdit(Model model, LessonVO cvo, LecturerVo lvo, HttpSession session,MemberVo vo) throws SQLException, JsonProcessingException {
+		String mId = (String) session.getAttribute("mId");
+		vo.setMId(mId);
+		MemberVo svo = memberService.memberSelect(vo);
+
 		LessonVO classVo = classBizService.classBizSelect(cvo);
 		System.out.println(classVo);
 		
@@ -114,7 +118,7 @@ public class ClassBizController {
 		//비즈넘버 아래의 강사 리스트 가져오기.
 		System.out.println(lecList);
 		ObjectMapper lecturer = new ObjectMapper();
-		
+		model.addAttribute("svo", svo);
 		model.addAttribute("classVo", classVo);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("lecList2", lecturer.writeValueAsString(lecList));
@@ -134,8 +138,10 @@ public class ClassBizController {
 			cvo.setVegType("비건");
 		}
 		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
+		//이거 왜 안됨?
 		String lstatus = "";
-		if (mvo.getLecId()==mId) {
+		System.out.println(cvo.getLecId()+"=======가 같은지 비교");
+		if (cvo.getLecId()==mId) {
 			lstatus = "개설완료";
 			}else {
 				lstatus ="강사승인대기";
@@ -172,11 +178,22 @@ public class ClassBizController {
 
 	@ResponseBody
 	@RequestMapping("/myCareerUpdate.do")
-	public int myCareerUpdate(@RequestParam String career, Model model, HttpSession session, MemberVo vo) {
+	public int myCareerUpdate(@RequestParam String career, Model model, HttpSession session, MemberVo vo, LessonVO cvo) {
 		vo.setCareer(career);
 		System.out.println(career);
 		String mId = (String) session.getAttribute("mId");
 		System.out.println(mId+"입니다.");
+		
+		int m = 0;
+	System.out.println(cvo+"=======이래=====");
+		m = classBizService.enqBizDelete(cvo);
+		System.out.println(m+"건 기존 요청 삭제함.");
+		String status ="개설완료";
+		cvo.setStatus(status);
+		
+		int s = classBizService.lecIdUpdate(cvo);
+		System.out.println(s + "건 입력완료");
+		
 		vo.setMId(mId);
 		vo.setCareer(career);
 		int n = 0;
@@ -189,17 +206,24 @@ public class ClassBizController {
 	@RequestMapping("/applyCollabo.do")
 	public int applyCollabo(Model model, HttpSession session, LessonVO cvo, enquiryVO enqvo) {
 		System.out.println("출력할cId는"+ cvo.getCId());
+		
+		int m = 0;
+		m = classBizService.enqBizDelete(cvo);
+		System.out.println(m+"건 기존 요청 삭제함.");
+		
+		int s = 0;
+		String status= "강사승인대기";
+		cvo.setStatus(status);
+		cvo.setLecId(enqvo.getOriginId());
+		s = classBizService.lecIdUpdate(cvo);
+		System.out.println( s +"건 클래스에 업데이트");
+		
 		int n = 0;
-		enqvo.setMId("class"+cvo.getCId());//클래스 아이디가 글쓴이 자리에 들어감
-		enqvo.setOriginId(cvo.getLecId());
-		System.out.println("콜라보는 "+enqvo);
+		enqvo.setMId(cvo.getCId());//클래스 아이디가 글쓴이 자리에 들어감
+		System.out.println("======콜라보는 "+enqvo+"======");
 		n = classBizService.applyCollabo(enqvo);
 		System.out.println("콜라보 문의" + n + "건 입력 완료");
 		
-		/* 클래스에 추가하기? 
-		 * int m = 0; n = classBizService.applyCollabo(vo); System.out.println(n +
-		 * "건 입력완료");
-		 */
 		return n;
 	}
 	
@@ -223,17 +247,7 @@ public class ClassBizController {
 		if(cvo.getVegType()=="") {
 			cvo.setVegType("비건");
 		}
-		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
-		String lstatus = "";
-		if (mvo.getLecId()==mId) {
-			lstatus = "개설완료";
-			}else {
-				mvo.setLecId(null);
-				lstatus ="강사승인대기";
-				//문의테이블에 등록 !
-			}
-		cvo.setStatus(lstatus);
-		System.out.println("사업자 번호 찾기");
+		
 		// mId로 사업자 번호 찾고 설정
 		MemberVo bizNumVo = classBizService.classBizNum(mvo);
 		String bizNum = bizNumVo.getBizNum();
@@ -248,7 +262,17 @@ public class ClassBizController {
 
 				cvo.setCImg(name);
 			}
-		
+			//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
+			String lstatus = "";
+			if (mvo.getLecId()!=mId) {
+				lstatus = "강사승인대기";
+				cvo.setStatus(lstatus);
+				}else {
+					lstatus ="개설완료";
+					cvo.setStatus(lstatus);
+				}
+			
+			System.out.println("사업자 번호 찾기");
 		// 클래스 인서트 ! 생성하기
 		int n = 0;
 		n = classBizService.classBizInsert(cvo);
@@ -296,6 +320,8 @@ public class ClassBizController {
 		System.out.println("넘겨줄 id는 "+evo.getOriginId());
 		String cId= evo.getOriginId();
 		cvo.setCId(cId);
+		String status = "개설완료";
+		cvo.setStatus(status);
 		n = classBizService.lecIdUpdate(cvo);
 		System.out.println(cvo);
 		

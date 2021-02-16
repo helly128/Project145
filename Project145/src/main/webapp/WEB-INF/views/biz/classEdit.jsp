@@ -37,7 +37,7 @@ $(function(){ //아작스
 	$("#changelec").click(()=>{
 	console.log($("#status").val());
 	var status = $("#status").val();
-	if(status == "강사미정" || status=="강사승인대기"){
+	if(status == "강사미정" || status=="강사승인대기" || status=="개설완료"){
 		alert ('모달을 띄움니다.');
 		//모달창 =============================
 		   
@@ -66,15 +66,28 @@ $(function(){ //아작스
           { 
              type:"POST",
              url:"myCareerUpdate.do",
-             data:{career: $("#career").val()}, //사용하는 함수 
+             data:{career: $("#career").val(), cId : $("#cId").val()}, //사용하는 함수 
              dataType:"json",
              success: function(n){
                 if(n!=0){
+                   var pimageval = $("#pimage").val();
+                   console.log("img 는 바로 "+ pimageval);
                    $("#saveResult").text("이력이 등록되었습니다.");
                    var btnmsg="이력 재수정";
                    $("#savecareer").text(btnmsg);
-                   alert("등록되었습니다.");
+                   
                    $("#aftercareer").text($("#career").val());
+                   //사진이 왜 안바뀔까?
+                   $("#imageafter1").attr('src','images/'+pimageval);
+                   $("#imageafter2").attr('src','images/'+pimageval);
+                    
+                   $("#mnameafter").text($("#mname").val());
+                   $("#midafter").text($("#mId").val());
+                   $("#lecId").val($("#mId").val());
+                   
+                   
+                   
+                   alert("등록되었습니다.");  
                	 $('#smallModal').modal("hide");
                 }
                 else{
@@ -110,7 +123,7 @@ $(function(){
 	 console.log($("#cParti").val());
 	 console.log($("#cPrice").val());
 	 console.log($("#proposal2").val());
-	 
+	 var title = $("#lecId1").val() + " 강사님 ["+ $("#cTitle").val() +"] 클래스를 "
 	 var start = $("#cStart").val() + " ~  " ;
 	 var end = $("#cEnd").val() + "까지 ";
 	 var time = $("#cTime").val() +"에 ";
@@ -125,25 +138,40 @@ $(function(){
     
  // 두번째 아작스, 강사에게 콜라보 신청 보내기 (proposal 메세지만 보내면 됨)
    $("#applyCollabo").click(()=>{
-    	console.log($("#lecProposal").val());
+    	console.log($("#lecId1").val());
+    	
        $.ajax(
           { 
              type:"POST",
              url:"applyCollabo.do",
-             data:{lecProposal: $("#lecProposal").val(), cId : $("#cId").val()}, //사용하는 함수 
+             data:{enqContent: $("#lecProposal").val(), originId : $("#lecId1").val(),cId : $("#cId").val()}, //사용하는 함수 
              dataType:"json",
              success: function(n){
                 if(n!=0){
                    $("#applyResult").text("메세지를 보냈습니다.");
                    var btnmsg="메세지 다시 보내기";
                    $("#savecareer").text(btnmsg);
-                   
+                   alert("콜라보 요청을 보냈습니다.전에 보냈던 요청들은 삭제 되었습니다.");
+                   //화면으로옮겨주기! 
+                   var midval = $("#midval").val();
+                   var mnameval= $("#mnameval").val();
+                   var careerval= $("#careerval").val();
+                   var pimageval=$("#pimageval").val();
+                  
+                   $("#mnameafter").text(mnameval);
+                   $("#midafter").text(midval);
+                   $("#aftercareer").text(careerval);
+                   $("#imageafter1").attr('src','images/'+pimageval);
+                   $("#imageafter2").attr('src','images/'+pimageval);
+                   $("#aftercareer").text(careerval);
+                   $("#lecId").val(midval);
+                   $('#smallModal').modal("hide");
                 }
                 else{
                    $("#saveResult").text("등록 실패");
-                   
+                   alert("등록실패");
                 }
-             	alert("등록되었습니다.");
+             	
              },
              error:(log)=>{alert("실패+log")
              }
@@ -182,6 +210,8 @@ $(function(){
 			enctype="multipart/form-data">
 			<input type="hidden" name="mId" id="mId" value='${sessionScope.mId}'>
 			<input type="hidden" name="cId" id="cId" value='${classVo.getCId()}'>
+			<input type="hidden" id="pimage" value='${svo.profileImage}'>
+			<input type="hidden" id="mname" value='${svo.getMName()}'>
 			<br>
 			<div class="pagetitle" align="center">
 			<input type="hidden" id="status" value="${classVo.status}">
@@ -315,31 +345,31 @@ $(function(){
 			<div class="card shadow mb-4" id="leclistdiv">
 				<br>
 				<div class="row">
-					<div class="col-half">
+					<div class="col-6">
 						<h5 style="padding-top: 20px;">강사이름</h5>
 						<input type="hidden" id="lecImg" value="${mvo.profileImage}" >
 						<input type="hidden" id="lecName" value="${mvo.getMName()}">
-						<h5>${mvo.getMName()}</h5>
+						<h5 id="mnameafter">${mvo.getMName()}</h5>
 					</div>
-					<div class="col-half" align="left">
+					<div class="col-6" align="left">
 						<h5 style="padding-top: 20px;">강사아이디</h5>
-						<div>
+						<div id="midafter">
 							<h6>${mvo.getMId()}</h6>
 						</div>
 					</div>
 
 
 					<div class="row">
-						<div class="col-half">
-							<div class="profile-cover">
-								<div class="profile-avatar" style="padding: 10px 100px">
+						<div class="col-6" align="center">
+							<div class="profile-cover" >
+								<div class="profile-avatar" style=" margin: 10px 60px" >
 
 									<c:if test="${mvo.profileImage ne null }">
-										<img style="border-radius: 50%;" width="200px" height="200px;"
+										<img id="imgafter2" style="border-radius: 50%;" width="200px" height="200px;"
 											src="/images/${mvo.profileImage}" />
 									</c:if>
 									<c:if test="${mvo.profileImage eq null }">
-										<img style="border-radius: 50%;" width="200px" height="200px;"
+										<img id="imgafter1" style="border-radius: 50%;" width="200px" height="200px;"
 											src="/images/default.png/">
 									</c:if>
 
@@ -350,7 +380,7 @@ $(function(){
 						</div>
 
 						<br>
-						<div class="col-half">
+						<div class="col-6">
 							<div class="msg" align="left">
 								<div>
 									<h5>강사이력</h5>
@@ -372,7 +402,7 @@ $(function(){
 								<h6>${classVo.lecResponse}</h6>
 								<br>
 							</div>
-
+<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
 						</div>
 						<br>
 
@@ -437,7 +467,7 @@ $(function(){
 
 				<div class="row">
 					<div class="col-half">
-						<h5 style="padding-top: 20px;">강사이름 : </h5><div id ='lecNamesel' style="font-size: 2rem; padding-left:20px;">${mvo.getMName()}</div>
+						<h5 style="padding-top: 20px;">강사이름 : </h5><div id ='lecNamesel' style="font-size: 2rem; padding-left:20px;">아이디를 선택해주세요.</div>
 					</div>
 					<div class="col-half">
 						<div class="input-group">
@@ -483,9 +513,14 @@ $(function(){
 							<div>
 								미리 보기를 눌러서 메세지를 확인하세요.<button type="button" id="preview" class="preview">미리보기</button>
 							</div>
-							<div id="result"></div>
+							<div id="result">
+							<input type="hidden" id="midval">
+							<input type="hidden" id="mnameval">
+							<input type="hidden" id="careerval">
+							<input type="hidden" id="pimageval">
+							</div>
 							<br>
-<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
+<input id="lecId1" value="${mvo.getMId()}"> 
 				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
 							<textarea rows="8" name="lecProposal" id="lecProposal"
 								style="width: 100%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
@@ -509,7 +544,8 @@ $(function(){
 				</div>
 			</div>
 		</div>
-	</div>	
+
+	
 	
 	
 	
@@ -528,15 +564,16 @@ $(function(){
 			reader.readAsDataURL(event.target.files[0]);
 		}
 
+		
 	
 		function showSection(lec) { //나를 강사로 추가 || 다른 강사 추가
 			alert('lec');
 			var lecName = $("#lecName").val(); //img
 			var lecImage =  $("#lecImg").val(); //name
-
+			var pimage = $("#pimage").val();
 			if (lec == "${sessionScope.mId}") {
-				$("#showlecImage2").attr('src','/images/'+lecImage);
-				$("#lecNamesel").text(lecName); //이름넣기
+				$("#showlecImage2").attr('src','/images/'+pimage);
+				$("#lecNamesel").text("${sessionScope.mId}"); //이름넣기
 				$("#otherlec").hide();
 				$("#sendmsg").hide();
 				$("#savecareer").show();
@@ -567,11 +604,13 @@ $(function(){
 	                success: function(mvo){
 	                   if(mvo != ''){
 	                   console.log(mvo);
-	                   console.log(mvo.mid);
-	                   console.log(mvo.profileImage);
+	                   $("#midval").val(mvo.mid);
+	                   $("#mnameval").val(mvo.mname);
+	                   $("#careerval").val(mvo.career);
+	                   $("#pimageval").val(mvo.profileImage);
 	                   $("#lecNamesel").text(mvo.mid);
 	                   $("#showlecImage2").attr('src','images/'+mvo.profileImage);
-	                   $("#lecId").val(mvo.mid);
+	                   $("#lecId1").val(mvo.mid);
 	                   }else {
 	                	   alert('없는 회원ID 입니다.')
 	                   }     
@@ -582,35 +621,6 @@ $(function(){
 	             });
 	       });
 
-		
-		
-</script>
-<script>	
-		var lecList = ${lecList2};
-		function changeprofile(pro) {
-			var lecturer = $("#lecturerId1").val();//pro.value; 받아올때 제이슨 값으로 object에 돌려서 받아옴.
-			console.log("정보 검색 시작" + lecturer);
-			
-			for(i = 0; i < lecList.length ; i ++){
-				if ( lecList[i].mid == lecturer ) {
-					console.log(lecList[i].mid + "가 아이디임");
-					console.log(lecList[i].mname + "가 이름임");
-					console.log(lecList[i].career + "가 커리어임");
-					console.log('/images/'+lecList[i].profileImage);
-					console.log(lecList[i].insta +'인스타임');
-					$("#showlecName").text(lecList[i].mname);
-					$("#showlecCareer").text(lecList[i].career);
-					$("#showlecImage").attr('src','/images/'+lecList[i].profileImage);
-					$('#showlecInsta').prop('href',lecList[i].insta)
-					
-				
-					
-				}else{ console.log("그런 정보 없음")}
-				
-			}
-			console.log("정보 검색 끝 ");
-		}
-		
 
 		//채식타입 선택 폼 
 		$(".vtype").click(function() {
@@ -662,7 +672,12 @@ $(function(){
 				}
 			}).open();
 		}
-	
+		
+		$("#updateclass").click(function() {
+			alert("수정했습니다.");
+			$("#cfrm").submit();
+		})
+		
 	</script>
 
 

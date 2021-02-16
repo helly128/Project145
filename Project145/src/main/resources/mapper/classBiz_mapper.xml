@@ -129,7 +129,7 @@
 	Update class
 	set 
 	lec_id = #{lecId},
-	status ='개설완료'
+	status =#{status}
 	where 
 	c_id=#{cId}
 	</update>
