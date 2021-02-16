@@ -256,7 +256,7 @@
 						<div class="single-product">
 							<div class="product-img">
 								<a href="/vegimeetSelect.do?meetId=${vo.meetId }"> <img
-									src="/images/${vo.meetPic }" style="height: 180px;"
+									src="/images/${vo.meetPic }" style="height: 250px;"
 									alt="vegimeet image">
 								</a>
 							</div>
