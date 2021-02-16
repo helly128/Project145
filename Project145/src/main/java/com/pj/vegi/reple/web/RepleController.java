@@ -28,7 +28,7 @@ public class RepleController {
 	@ResponseBody
 	public List<RepleVo> readAll(RepleVo vo) {
 		int count = service.countReple(vo);
-		int showSize = 10;	//처음 페이지 로딩 시 보여줄 댓글 개수
+		int showSize = 5;	//처음 페이지 로딩 시 보여줄 댓글 개수
 		if (vo.getShowMore().equals("more")) {
 			if (count > showSize) {
 				vo.setStart(showSize+1);

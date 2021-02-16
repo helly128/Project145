@@ -110,7 +110,7 @@ public class RestaurantBizController {
 		return "redirect:restBizSelect.do";
 	}
 
-	@RequestMapping("/restBizDelete.do")	//가게 완전히 삭제하면 예약정보도 날아가므로 biznum, m_id 지우고 admin_confirm='reject'로 변경
+	@RequestMapping("/restBizDelete.do") // 가게 완전히 삭제하면 예약정보도 날아가므로 biznum, m_id 지우고 admin_confirm='reject'로 변경
 	public String restBizDelete(Model model, RestaurantVo vo) {
 //		restBizService.restAllMenuDelete(vo);
 		restBizService.restBizDelete(vo);
@@ -139,10 +139,12 @@ public class RestaurantBizController {
 		restVo.setRestId("rest" + restVo.getSeq());
 
 		List<RestMenuVo> menuList = menuListVo.getMenuVoList();
-		for (RestMenuVo menuVo : menuList) {
-			if (menuVo.getMenuName() != null && menuVo.getMenuName() != "") {
-				menuVo.setRestId(restVo.getRestId());
-				restBizService.restMenuInsert(menuVo);
+		if (menuList != null) {
+			for (RestMenuVo menuVo : menuList) {
+				if (menuVo.getMenuName() != null && menuVo.getMenuName() != "") {
+					menuVo.setRestId(restVo.getRestId());
+					restBizService.restMenuInsert(menuVo);
+				}
 			}
 		}
 
@@ -181,7 +183,7 @@ public class RestaurantBizController {
 		List<RestReservVo> reservList = restBizService.restReservList(vo);
 		return reservList;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/restBizReservRefuse.do/{restId}")
 	public List<RestReservVo> restBizReservRefuse(Model model, @PathVariable String restId) {
@@ -192,10 +194,10 @@ public class RestaurantBizController {
 		List<RestReservVo> reservList = restBizService.restReservList(vo);
 		return reservList;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/restBizReservEnd.do/{restId}")
-	public List<RestReservVo> restBizReservEnd(Model model, @PathVariable String restId){
+	public List<RestReservVo> restBizReservEnd(Model model, @PathVariable String restId) {
 		RestReservVo vo = new RestReservVo();
 		vo.setRestId(restId);
 		vo.setRestReservStatus("지난예약");
