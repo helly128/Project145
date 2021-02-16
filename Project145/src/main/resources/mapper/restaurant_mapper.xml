@@ -74,14 +74,19 @@
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
 		FROM
-		(SELECT *
-		FROM RESTAURANT
-		where ADMIN_CONFIRM = 'true'
+		(SELECT NVL(V.avgstar, 0)
+			star, R.*
+			FROM RESTAURANT R left outer join
+				(select round(avg(rest_star),2) avgstar, rest_id from rest_review group by
+			rest_id) V
+			on R.rest_id = V.rest_id
+			where ADMIN_CONFIRM = 'true'
 		<if test="keyword != null and keyword != '' ">
 			AND LOWER(rest_name) like LOWER('%' || #{keyword} || '%')
 		</if>
 		<if test=" menuVegeType != null and menuVegeType != '' ">
-			AND rest_id IN (SELECT rest_id FROM rest_menu WHERE menu_Vege_Type = #{menuVegeType})
+			AND rest_id IN (SELECT rest_id FROM rest_menu WHERE
+			menu_Vege_Type = #{menuVegeType})
 		</if>
 		) b
 		) a
@@ -98,18 +103,21 @@
 			AND LOWER(rest_name) like LOWER('%' || #{keyword} || '%')
 		</if>
 		<if test=" menuVegeType != null and menuVegeType != '' ">
-			AND rest_id IN (SELECT rest_id FROM rest_menu WHERE menu_Vege_Type = #{menuVegeType})
+			AND rest_id IN (SELECT rest_id FROM rest_menu WHERE
+			menu_Vege_Type = #{menuVegeType})
 		</if>
 	</select>
 
 
-
-
 	<select id="getRestaurantDetail" resultType="RestaurantVo">
 		<!-- 식당 상세페이지 -->
-		SELECT *
-		FROM RESTAURANT
-		WHERE REST_ID = #{restId}
+		SELECT A.avg_star ,R.*
+		FROM RESTAURANT R join (select
+		round(avg(rest_star),2) avg_star from rest_review where rest_id =
+		#{restId})A
+		ON REST_ID = #{restId}
+
+		<!-- SELECT * FROM RESTAURANT WHERE REST_ID = #{restId} -->
 	</select>
 
 	<select id="getRestaurantMenu" resultType="RestMenuVo">
@@ -118,6 +126,7 @@
 		FROM REST_MENU
 		WHERE REST_ID = #{restId}
 	</select>
+
 
 	<insert id="reservInsert">
 		<!-- 예약하기 -->
@@ -147,46 +156,51 @@
 		WHERE m_id=#{mId}
 		AND origin_id=#{originId}
 	</select>
-	
-	
+
+
 	<select id="restReview" resultType="RestReviewVo">
-	<!-- 식당 상세에서 리뷰 목록 -->	
+		<!-- 식당 상세에서 리뷰 목록 -->
 		SELECT a.*
 		FROM ( SELECT b.*, ROWNUM rn
 		FROM
-		(SELECT r.*,  m.m_name, m.profile_image
+		(SELECT r.*, m.m_name,
+		m.profile_image
 		FROM REST_REVIEW r join member m
 		ON (r.m_id = m.m_id)
 		WHERE r.rest_id = #{restId}
 		ORdER BY review_date desc
 		) b
 		) a
-		WHERE rn BETWEEN #{start } AND #{end }
+		WHERE rn
+		BETWEEN #{start } AND #{end }
 	</select>
-	
+
 	<select id="countRestReview" resultType="int">
-	<!-- 식당 상세에서 리뷰 목록 카운트!!!! -->	
+		<!-- 식당 상세에서 리뷰 목록 카운트!!!! -->
 		SELECT count(*)
 		FROM REST_REVIEW r join member m
 		ON (r.m_id = m.m_id)
 		WHERE r.rest_id = #{restId}
 		ORdER BY review_Date
 	</select>
-	
-	<insert id="restReviewInsert"> 
-	<!-- 리뷰 입력 -->
-		INSERT INTO rest_review(rest_review_id, rest_review, rest_star, review_pic, review_date, M_id, rest_id)
-		VALUES('rest_review'||rest_review_seq.nextval, #{restReview}, #{restStar}, null, sysdate, #{mId}, #{restId} )
+
+	<insert id="restReviewInsert">
+		<!-- 리뷰 입력 -->
+		INSERT INTO rest_review(rest_review_id, rest_review, rest_star,
+		review_pic, review_date, M_id, rest_id)
+		VALUES('rest_review'||rest_review_seq.nextval, #{restReview},
+		#{restStar}, null, sysdate, #{mId}, #{restId} )
 	</insert>
-	
+
 	<delete id="restReviewDelete">
-	<!-- 리뷰 삭제 -->
+		<!-- 리뷰 삭제 -->
 		DELETE FROM rest_review WHERE rest_review_id = #{restReviewId}
 	</delete>
 
 	<update id="reservCountUp">
 		UPDATE restaurant
-		SET rest_reserv_wait = rest_reserv_wait + 1
+		SET rest_reserv_wait =
+		rest_reserv_wait + 1
 		WHERE rest_id = #{restId}
 	</update>
 </mapper>

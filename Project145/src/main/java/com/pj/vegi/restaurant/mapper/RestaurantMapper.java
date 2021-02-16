@@ -45,5 +45,6 @@ public interface RestaurantMapper {
 	
 
 	int reservCountUp(RestaurantVo vo);	//식당 테이블의 예약 카운트 증가
+	
 
 }

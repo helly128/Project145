@@ -40,11 +40,6 @@ public interface RestaurantService {
 	int restReviewDelete(RestReviewVo vo); //리뷰 삭제
 
 	int reservCountUp(RestaurantVo vo);
-	
-
-
-	
-
 
 
 }

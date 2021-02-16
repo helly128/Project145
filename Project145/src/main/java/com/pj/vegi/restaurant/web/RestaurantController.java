@@ -130,7 +130,7 @@ public class RestaurantController {
 		paging.setTotalRecord(cnt);
 		
 		List<RestReviewVo> restReview = restaurantService.restReview(rRVo);
-		
+
 		model.addAttribute("rVo", restaurantVo);
 		model.addAttribute("menuList", menuList);
 		model.addAttribute("restReview", restReview );
@@ -204,14 +204,24 @@ public class RestaurantController {
 		
 	}
 
-	// 댓글 삭제
+	// 리뷰 삭제
 	@ResponseBody
-	@RequestMapping(value = "/restReviewDelete.do/{restReviewId}", method = RequestMethod.DELETE)
-	public String restReviewDelete(@PathVariable String restReviewId, RestReviewVo vo) {
-		vo.setRestReviewId(restReviewId);
-		restaurantService.restReviewDelete(vo);
+	@RequestMapping("/restReviewDelete.do/{restReviewId}")
+	public String restReviewDelete(@PathVariable String restReviewId, RestReviewVo vo,  Model model, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		
-		return "redirect:/restaurantDetail.do";
+		int n = restaurantService.restReviewDelete(vo);
+		
+		if(n != 0 ) {
+			out.println("<script>alert('리뷰가 삭제 되었습니다.'); location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
+			out.flush();
+			return null;
+		} else {
+			out.println("<script>alert('리뷰가 삭제되지 못했습니다.');  location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
+			out.flush();
+			return null;
+		}
 	}
 	
 	
