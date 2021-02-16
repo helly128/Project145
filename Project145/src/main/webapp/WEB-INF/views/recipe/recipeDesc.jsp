@@ -357,7 +357,7 @@ textarea {
 			<a href="/recipeMain.do" style="margin-top: 5%"><h2>⬅</h2></a>
 		</div>
 		<div class="category-list-item">
-			<h2>🍏${recipeSelect.getRTitle() }</h2>
+			<h2>${recipeSelect.getRTitle() }</h2>
 			<br />
 			<div class="icon">
 				<i class="lni lni-user"> ${recipeSelect.getMId()} </i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
@@ -420,7 +420,7 @@ textarea {
 		</script> -->
 		<!-- 관련 재료 -->
 		<div>
-			<h3>🍋Ingredient</h3>
+			<h3>재료</h3>
 			<br />
 			<div class="row">
 				<div class="col-lg-4">
@@ -454,7 +454,7 @@ textarea {
 		<br />
 		<!-- 관련 클래스 -->
 		<div>
-			<h3>📖Related Class</h3>
+			<h3>Related Class</h3>
 			<br /> <br />
 			<div class="row" id="cards">
 				<!-- 클래스리스트 시작 -->
@@ -480,7 +480,7 @@ textarea {
 
 		<div>
 			<c:if test='${mId != null && mId != "" }'>
-				<h5>🖊댓글 작성</h5>
+				<h5>댓글 작성</h5>
 				<br />
 				<div class="search-wrapper">
 					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
@@ -503,7 +503,7 @@ textarea {
 			</c:if>
 			<div>
 
-				<h5>🖊댓글 목록</h5>
+				<h5>댓글 목록</h5>
 				<br />
 				<div id="reloadReple">
 					<input type="hidden" value="${reple}">
