@@ -45,7 +45,7 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
-				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg" width="100" height="80"></div>
+				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg" width="100" height="80">채식당</div>
 			</a>
 
 			<!-- Divider -->
@@ -87,7 +87,7 @@
 						<h6 class="collapse-header">I Like it</h6>
 						<a class="collapse-item" href="/myLikeClass.do">Class</a> <a
 							class="collapse-item" href="/myLikeRecipe.do">Recipe</a> <a
-							class="collapse-item" href="/myLikeMeet.do">Meet</a> <a
+							class="collapse-item" href="/myLikeMeet.do">Challenge</a> <a
 							class="collapse-item" href="/myLikeRestaurant.do">Restaurant</a>
 					</div>
 				</div></li>

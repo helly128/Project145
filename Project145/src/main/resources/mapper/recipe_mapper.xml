@@ -20,15 +20,14 @@
 		FROM recipe r
 		LEFT OUTER JOIN recipe_material rm
 		on
-		r.r_id =
-		rm.r_id
+		(r.r_id = rm.r_id)
 		<where>
 			<if test=" RType != null and RType != '' ">
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
-				UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
-				OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%')
+				AND (UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
+					OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%'))
 			</if>
 		</where>
 		) b
@@ -46,14 +45,14 @@
 		select count(distinct(r.r_id))
 		from recipe r
 		left outer JOIN recipe_material rm
-		on r.r_id = rm.r_id
+		on (r.r_id = rm.r_id)
 		<where>
 			<if test=" RType != null and RType != '' ">
 				r.r_type = #{RType}
 			</if>
 			<if test=" keyword != null and keyword != '' ">
-				UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
-				OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%')
+				AND (UPPER(r.r_title) like UPPER('%' || #{keyword} || '%')
+					OR UPPER(rm.mat_name) like UPPER('%' || #{keyword} || '%'))
 			</if>
 		</where>
 	</select>
@@ -206,6 +205,6 @@
 		AND wallet_type
 		= '레시피 작성'
 		AND wallet_date BETWEEN TRUNC(current_date, 'dd') AND
-		TRUNC(current_date, 'dd')+1;
+		TRUNC(current_date, 'dd')+1
 	</select>
 </mapper>
