@@ -27,7 +27,11 @@
 	background-color: #6C9852;
 	color: white;
 	border-radius: 5px;
+<<<<<<< HEAD
 	background-color: lightblue;
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
+=======
+	background-color: #6C9852;
 >>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 	color: white;
 	border-radius: 5px;
