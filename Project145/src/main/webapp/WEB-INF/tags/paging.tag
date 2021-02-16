@@ -18,15 +18,12 @@
 }
 
 .pagination a.active {
-<<<<<<< HEAD
   background-color: #6C9852;
   color: white;
   border-radius: 5px;
-=======
-	background-color: lightblue;
+	background-color: #6C9852;
 	color: white;
 	border-radius: 5px;
->>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 }
 
 .pagination a:hover:not(.active) {
@@ -35,9 +32,9 @@
 }
 </style>
 
-<%-- <c:if test="${empty jsFunc}">
+<c:if test="${empty jsFunc}">
 	<c:set var="jsFunc" value="goList"></c:set>
-</c:if> --%>
+</c:if>
 <div class="pagination">
 	<c:if test="${paging.prev}">
 		<a href="javascript:${jsFunc}(${paging.startPage>2?paging.startPage-1:1})">&laquo;</a>
