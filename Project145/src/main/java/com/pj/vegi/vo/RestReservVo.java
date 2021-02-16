@@ -25,4 +25,6 @@ public class RestReservVo {
 	
 	private List<RestReservVo> reservVoList;
 	private String checkFlag;
+	
+	private String reservDate;
 }

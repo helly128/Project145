@@ -20,10 +20,13 @@ import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+<<<<<<< HEAD
 import com.pj.vegi.vo.RecipeVo;
 import com.pj.vegi.vo.RestaurantVo;
 import com.pj.vegi.vo.SnsInfoVo;
 import com.pj.vegi.vo.VegimeetVo;
+=======
+>>>>>>> branch 'main' of https://github.com/helly128/Project145.git
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -42,6 +45,16 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public boolean naverLoginCheck(MemberVo vo) {
+		MemberVo resultVO = dao.memberSelect(vo);
+		if(resultVO != null && vo.getMId().equals(resultVO.getMId())) {
+			return true;
+		}else {
+		return false;
+		}
+	}
+	
 	@Override
 	public int memberInsert(MemberVo vo) throws SQLException {
 

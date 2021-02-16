@@ -12,10 +12,19 @@
 	</select>
 
 	<select id="readAll" resultType="com.pj.vegi.vo.RepleVo">
-		select * from reple
-		where r_id =
-		#{rId}
-		order by re_date,re_id
+		SELECT a.*
+		FROM ( SELECT b.*, ROWNUM rn
+			FROM
+				(SELECT r.*, m.m_name, m.profile_image
+				FROM reple r JOIN member m
+				ON (r.m_id = m.m_id)
+				WHERE r.r_id = #{rId}
+				START WITH re_parent is null
+				CONNECT BY PRIOR re_id=re_parent
+				ORDER SIBLINGS BY re_date
+				) b
+			) a
+		WHERE rn BETWEEN #{start } AND #{end }
 	</select>
 
 
@@ -49,4 +58,9 @@
 
 	</insert>
 
+	<select id="countReple" resultType="int">
+		SELECT COUNT(*)
+		FROM reple
+		WHERE r_id=#{rId}
+	</select>
 </mapper>

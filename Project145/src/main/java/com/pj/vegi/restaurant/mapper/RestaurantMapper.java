@@ -35,5 +35,5 @@ public interface RestaurantMapper {
 	int restLikeDelete(LikeListVo vo); //좋아요 취소 
 	int restLikeFlagSelect(LikeListVo vo); //좋아요 여부 확인용
 	
-	
+	int reservCountUp(RestaurantVo vo);	//식당 테이블의 예약 카운트 증가
 }

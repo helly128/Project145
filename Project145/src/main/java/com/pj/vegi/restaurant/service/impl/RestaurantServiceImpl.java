@@ -106,13 +106,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 		return dao.restLikeFlagSelect(vo);
 	}
 
-
-
-
-	
-
-
-
+	@Override
+	public int reservCountUp(RestaurantVo vo) {
+		return dao.reservCountUp(vo);
+	}
 
 
 

@@ -59,8 +59,10 @@ public class RepleServiceImpl implements RepleService{
 		return dao.repleInsert(vo);
 	}
 
-
-
+	@Override
+	public int countReple(RepleVo vo) {
+		return dao.countReple(vo);
+	}
 
 
 }

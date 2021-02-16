@@ -20,7 +20,6 @@ public interface MemberMapper {
 	MemberVo idSearch(MemberVo vo);
 	MemberVo pwSearch(MemberVo vo);
 	int updatePw(MemberVo vo);
-	
 	int naverInsert(MemberVo vo);
 	
 	

@@ -31,7 +31,7 @@ public interface RestaurantService {
 	int restLikeDelete(LikeListVo vo); //좋아요 취소
 	int restLikeFlagSelect(LikeListVo vo); //좋아요 여보 확인
 	
-	
+	int reservCountUp(RestaurantVo vo);
 	
 
 
