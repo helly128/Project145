@@ -166,23 +166,20 @@
 									height="250">
 								</a>
 							</div>
-							<div class="product-content">
+							<div class="product-content" style="height: 220px;">
 								<h4 class="name">
 									<a href="/vegimeetSelect.do?meetId=${meetM.meetId }">${meetM.mTitle }</a>
 								</h4>
-								<span class="update">Last Update: 5 hours ago</span>
 								<ul class="address">
 									<li><a href="javascript:void(0)"><i
-											class="lni lni-package"></i> <i class="lni lni-heart-filled"></i>
-											${meetM.cnt }</a></li>
+											class="lni lni-heart-filled"></i> ${meetM.cnt }</a></li>
 									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i>${meetM.mParti }</a></li>
+											class="lni lni-user"></i> ${meetM.mParti }</a></li>
 									<li><a href="javascript:void(0)"><i
-											class="lni lni-calendar"></i>${meetM.mStart }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-map-marker"></i>${meetM.mEnd }</a></li>
-									<li><a href="javascript:void(0)"><i
-											class="lni lni-user"></i>${meetM.mParti }</a></li>
+											class="lni lni-calendar"></i> <fmt:formatDate
+												value="${meetM.mStart }" pattern="yyyy-MM-dd" /> </a></li>
+									<li><a href="javascript:void(0)"> ~ <fmt:formatDate
+												value="${meetM.mEnd }" pattern="yyyy-MM-dd" /></a></li>
 
 								</ul>
 								<div class="product-bottom">
@@ -190,8 +187,6 @@
 										<fmt:formatNumber value="${meetM.mFund }" pattern="#,###" />
 										원
 									</h4>
-									<a href="javascript:void(0)" class="link-ad"><i
-										class="lni lni-checkmark-circle"></i> Verified Ad</a>
 								</div>
 							</div>
 						</div>
@@ -257,18 +252,24 @@
 			if (min < 10) {
 				min = '0' + min;
 			}
-			var newDate = year + "-" + month + "-" + day;
+			var newDate = year + "
+								-" + month + "-" + day;
 			return newDate;
 		}
 
-		function doPopupopen() {
+		function
+								doPopupopen() {
 			window
 					.open(
 							"popup.jsp",
 							"popup01",
-							"width=500, height=600, left=1300, top=200, location=no, menubar=no, scrollbars=no");
+							"width=500,
+								height=600, left=1300, top=200, location=no, menubar=no,
+								scrollbars=no");
 		}
-	</script>
+	
+								</script>
+
 
 
 
