@@ -45,7 +45,7 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
-				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg" width="100" height="80"></div>
+				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg" width="100" height="80">채식당</div>
 			</a>
 
 			<!-- Divider -->
