@@ -33,4 +33,7 @@ public class RepleVo {
 	
 	private int start;
 	private int end;
+	
+	private String showMore;
+	private String moreFlag;
 }

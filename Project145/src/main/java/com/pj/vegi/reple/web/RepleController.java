@@ -1,9 +1,6 @@
 package com.pj.vegi.reple.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pj.vegi.common.Paging;
 import com.pj.vegi.reple.service.RepleService;
 import com.pj.vegi.vo.RepleVo;
 
@@ -30,21 +26,30 @@ public class RepleController {
 	// 목록 조회
 	@RequestMapping(value = "/reple.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> readAll(RepleVo vo, Paging paging) {
-		paging.setPageUnit(5);
-		paging.setPageSize(5);
-		if (paging.getPage() == null) {
-			paging.setPage(1);
+	public List<RepleVo> readAll(RepleVo vo) {
+		int count = service.countReple(vo);
+		int showSize = 10;	//처음 페이지 로딩 시 보여줄 댓글 개수
+		if (vo.getShowMore().equals("more")) {
+			if (count > showSize) {
+				vo.setStart(showSize+1);
+				vo.setEnd(count);
+			}
+		} else {
+			vo.setStart(1);
+			vo.setEnd(showSize);
 		}
-		vo.setStart(paging.getFirst());
-		vo.setEnd(paging.getLast());
-		int cnt = service.countReple(vo);
-		paging.setTotalRecord(cnt);
+
 		List<RepleVo> list = service.readAll(vo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("paging", paging);
-		return map;
+		if (vo.getShowMore().equals("more")) {
+			list.get(0).setShowMore("more");
+		}
+		if(count > showSize) {
+			list.get(0).setMoreFlag("has more");
+		} else {
+			list.get(0).setMoreFlag("no more");
+		}
+		
+		return list;
 	}
 
 	// 댓글 입력

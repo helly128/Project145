@@ -47,6 +47,18 @@ textarea {
 	font-size: 15px;
 	color: black;
 }
+
+.delBtnDiv {
+	position: absolute;
+	top: 12px;
+	right: 0px;
+}
+
+.write-rereple {
+	color: black;
+	font-size: 14px;
+	font-weight: bold;
+}
 </style>
 
 
@@ -74,17 +86,36 @@ textarea {
 				+ min;
 		return newDate;
 	}
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = today.getMonth() + 1;
-	var day = today.getDate();
-	var date = year + "년" + month + "월" + day + "일"
 
 	$(document).ready(function() {
-		repleList(1);//댓글 목록 불러오기
+		repleList();//댓글 목록 불러오기
 
 		$("#repleBtn").click(function() {
-			repleWrite();//댓글 쓰기 버튼 클릭시 json으로 입력
+			var reContent = $("#reContent").val();
+			var rId = "${recipeSelect.getRId()}";
+			var mId = "${mId}";
+			var data = {rId : rId,
+						reContent : reContent,
+						reDepth: 1,
+						mId : mId
+			};
+			console.log(data);
+			repleWrite(data);//댓글 쓰기 버튼 클릭시 json으로 입력
+		});
+		
+		$('#repleList').on('click', "#rerepleBtn", function() {
+			var reContent = $("#rereContent").val();
+			var rId = "${recipeSelect.getRId()}";
+			var mId = "${mId}";
+			var reId = $(this).data('id');
+			var data = {rId : rId,
+						reContent : reContent,
+						reDepth: 2,
+						mId : mId,
+						reId : reId
+			};
+			console.log(data);
+			repleWrite(data);//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
 
 		$("#repleList").on('click', '.delBtn', function() {
@@ -111,6 +142,35 @@ textarea {
 		var date = year + "-" + month + "-" + day
 		$('#wDate').text(date);
 
+		
+		$('#repleList').on('click', '.showMoreBtn', function(){
+			$(this).data('id', 'more');
+			repleList();
+		});
+		
+		//대댓글 입력창 띄우기
+		$('#repleList').on('click', '.write-rereple', function(){
+			$('.rerepleDiv').remove();
+			var reId = $(this).data('id');
+			var rereple = `<div class="search-wrapper rerepleDiv">
+							<div class="row justify-content-center"
+								style="display: flex; align-items: center;">
+								<div class="col-lg-1 col-sm-1"></div>
+								<div class="col-lg-9 col-sm-9 col-10">
+									<div class="search-input">
+										<textarea name="reContent" id="rereContent" rows="4"
+											placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
+									</div>
+								</div>
+								<div class="col-lg-2 col-sm-5 col-10">
+									<!-- Submit button -->
+									<button class="middle-btn" id="rerepleBtn" data-id='\${reId}'>등록</button>
+								</div>
+							</div>
+						</div>`;
+			$(this).parents('.reple-li').after(rereple);
+			
+		});
 	});
 	//댓글 삭제
 	function repleDelete() {
@@ -124,12 +184,9 @@ textarea {
 			}
 		});
 	}
-
+	
 	//댓글 입력
-	function repleWrite() {
-		var reContent = $("#reContent").val();
-		var rId = "${RepleVo.RId}"
-		var mId = "${mId}"
+	function repleWrite(data) {
 		$.ajax({
 			type : "post",
 			url : "/reple/reple.do",
@@ -137,12 +194,7 @@ textarea {
 				"Content-Type" : "application/json"
 			},
 			dataType : "text",
-			data : JSON.stringify({
-				rId : rId,
-				reContent : reContent,
-				reDate : date,
-				mId : mId
-			}),
+			data : JSON.stringify(data),
 			success : function() {
 				alert("댓글이 등록되었습니다.");
 				$("#repleList").empty();
@@ -170,20 +222,21 @@ textarea {
 	 
 	//댓글 목록 출력
 	function repleList() {
+		 var showMore = $('.showMoreBtn').data('id');
 		$
 				.ajax({
 					type : "get",
-					url : "/reple/reple.do?RId=${recipeVo.RId}",
-					success : function(map) {
-						var output = `<ul style='list-style:none;'>`; 
-						var result = map.list;
-						//var paging = map.paging;
+					url : "/reple/reple.do?RId=${recipeVo.RId}&showMore="+showMore,
+					success : function(result) {
+						console.log(result);
+						var ul = `<ul id="reple-ul" style='list-style:none;'>`;
+						var output = '';
 						for ( var i in result) {
 							var date = dateFormat(result[i].reDate);
 							if(result[i].reDepth == 2){
-								output += `<li style='padding-left:60px; position:relative;' data-mid='\${result[i].mid}'>`;
+								output += `<li class="reple-li" style='padding-left:60px; position:relative;' data-mid='\${result[i].mid}'>`;
 							} else{
-								output += `<li data-mid='\${result[i].mid}'>`;
+								output += `<li class="reple-li" data-mid='\${result[i].mid}'>`;
 							}
 							output += `<div class='reple-total mb-3' style="position:relative;">
 											<span style="position:absolute;"><image
@@ -196,43 +249,33 @@ textarea {
 													\${result[i].reContent}
 												</div>
 												<div>
-													<span style="font-size:12px;">\${date}</span>
+													<span style="font-size:12px; padding-right: 10px;">\${date}</span>`;
+							if(result[i].reDepth == 1){
+								output += `<a class="write-rereple" href="javascript:void(0);" data-id='\${result[i].reId}'>답글쓰기</a>`;
+							}
+							output += `</div>
+												<div class="delBtnDiv">
 													<button type='button' data-id='\${result[i].reId}' class='delBtn' id='delBtn'><i class="lni lni-trash"></i></button>
 												</div>
 											</div>
 										</div>
 									</li>`;
 							
-							
-							
 						}
-							/* output += `<tr class="mt-1">`;
-							if(result[i].reDepth == 1){
-								var img = `<td rowspan="2" width='60' style="padding: 8px 8px 8px 8px;"><image
-									src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></td>`;
-							} else{
-								var img = `<td rowspan="2" width='120' style="padding: 8px 8px 8px 68px;"><image
-									src="/images/\${result[i].profileImage}" style='border-radius: 30%; width:45px;'></td>`;
-							}
-								output += `<td rowspan="3" width='60'></td>
-											\${img}
-											<td data-mid="\${result[i].mid}" style="padding: 8px 8px 3px 12px;" colspan="2"><strong>\${result[i].mname}</strong></td>
-										</tr>
-										<tr>
-											<td style="padding: 3px 8px 3px 12px; font-size: 15px;" colspan="2">\${result[i].reContent}</td>
-										</tr>
-										<tr class='border-bottom'>
-											<td> </td>										
-											<td style="font-size:12px; color:grey; padding: 3px 8px 3px 12px;">\${date} <button type='button' data-id='\${result[i].reId}' class='delBtn' id='delBtn'><i class="lni lni-trash"></i></button></td>
-											<td width='60' style="padding: 3px 8px 3px 8px;"></td>
-										</tr>`;
-							
+						var closeUl = `</ul>`;
+						if(result[0].showMore != 'more' && result[0].moreFlag == 'has more'){
+							output += `<div align="center">
+											<button class="showMoreBtn btn btn-light" data-id=''>더보기</button>
+										</div>`;
+						} else{
+							$('.showMoreBtn').parent().remove();
 						}
-						output += "</table>"; */
-						output += `</ul>`;
-						console.log(map);
-						//output += `<my:paging paging="\${paging }" jsFunc="repleList" />`;
-						$("#repleList").html(output);
+						
+						if(result[0].showMore == 'more'){
+							$('#reple-ul').append(output);
+						} else{
+							$("#repleList").html(ul+output+closeUl);
+						}
 					}
 				});
 	}
@@ -450,6 +493,28 @@ textarea {
 		<br />
 
 		<div>
+			<c:if test='${mId != null && mId != "" }'>
+				<h5>🖊댓글 작성</h5>
+				<br />
+				<div class="search-wrapper">
+					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+					<div class="row justify-content-center"
+						style="display: flex; align-items: center;">
+						<div class="col-lg-9 col-sm-9 col-10">
+							<div class="search-input">
+								<textarea name="reContent" id="reContent" rows="4"
+									placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
+							</div>
+						</div>
+						<div class="col-lg-2 col-sm-5 col-10">
+							<!-- Submit button -->
+							<button class="middle-btn" id="repleBtn">등록</button>
+						</div>
+					</div>
+				</div>
+				<br />
+				<br />
+			</c:if>
 			<div>
 
 				<h5>🖊댓글 목록</h5>
@@ -462,25 +527,6 @@ textarea {
 					</div>
 				</div>
 
-			</div>
-			<br /> <br />
-			<h5>🖊댓글 작성</h5>
-			<br />
-			<div class="search-wrapper">
-				<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
-				<div class="row justify-content-center"
-					style="display: flex; align-items: center;">
-					<div class="col-lg-9 col-sm-9 col-10">
-						<div class="search-input">
-							<textarea name="reContent" id="reContent" rows="4"
-								placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
-						</div>
-					</div>
-					<div class="col-lg-2 col-sm-5 col-10">
-						<!-- Submit button -->
-						<button class="middle-btn" id="repleBtn">등록</button>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!-- reple Modal -->
