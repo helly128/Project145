@@ -158,7 +158,7 @@
 		FROM REST_REVIEW r join member m
 		ON (r.m_id = m.m_id)
 		WHERE r.rest_id = #{restId}
-		ORdER BY review_Date
+		ORdER BY review_date desc
 		) b
 		) a
 		WHERE rn BETWEEN #{start } AND #{end }

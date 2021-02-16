@@ -102,6 +102,7 @@
 	});
 </script>
 <script type="text/javascript">
+/* 메뉴 추가하기 */
 	var length = 1;
 	$(function() {
 		$('#PlusButton').on('click', function() {

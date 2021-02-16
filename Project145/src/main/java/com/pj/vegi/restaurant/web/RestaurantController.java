@@ -184,18 +184,33 @@ public class RestaurantController {
 	
 	
 	// 리뷰 등록
+	@ResponseBody
 	@RequestMapping("/restReviewInsert.do")
-	public String restReviewInsert(RestReviewVo vo, Model model, HttpSession session){
-		restaurantService.restReviewInsert(vo);
-		return "redirect:/restaurantDetail.do";
+	public String restReviewInsert(RestReviewVo vo, Model model, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		int n = restaurantService.restReviewInsert(vo);
+		if (n != 0) {
+			out.println("<script>alert('리뷰가 등록 되었습니다.'); location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
+			out.flush();
+			return null;
+		} else {
+			out.println("<script>alert('리뷰가 등록되지 못했습니다.');  location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
+			out.flush();
+			return null;
+		}
+		
+		
 	}
 
 	// 댓글 삭제
 	@ResponseBody
-	@RequestMapping("/restReviewDelete.do/{restReviewId}")
-	public String restReviewDelete(@PathVariable String restReviewId, HttpSession session) {
-		RestReviewVo vo = new RestReviewVo();
+	@RequestMapping(value = "/restReviewDelete.do/{restReviewId}", method = RequestMethod.DELETE)
+	public String restReviewDelete(@PathVariable String restReviewId, RestReviewVo vo) {
+		vo.setRestReviewId(restReviewId);
 		restaurantService.restReviewDelete(vo);
+		
 		return "redirect:/restaurantDetail.do";
 	}
 	
