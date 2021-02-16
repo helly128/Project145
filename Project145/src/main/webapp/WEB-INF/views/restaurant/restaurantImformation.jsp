@@ -118,13 +118,15 @@ textarea {
 					<div style="float: left; margin-right: 1rem;">
 						<h3>🥗${rVo.getRestName() }</h3>
 					</div>
+					<div style="float: left; width: 30px;">
+					<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" width="25px" height="25px"/>
+					</div>
 					<div style="float: left;">
-						<h3>⭐( ${rVo.getRestStarAvg() } )</h3>
+						<h3>( ${rVo.getAvgStar() } )</h3>
 					</div>
 				</div>
 				<div class="col-lg-2">
-					<a class="main-btn btn-hover d-none d-md-block" id="restResvButton">
-						예약하기</a>
+					<a class="main-btn btn-hover d-none d-md-block" id="restResvButton">예약하기</a>
 				</div>
 
 <!-- 식당 예약 모달 띄우기 부분  -->
@@ -376,26 +378,26 @@ textarea {
 				<div class="row" align="center">
 					<div class="col-lg-4"></div>
 					<div class="col-lg-7 search-input" align="left">
-					<fieldset class="rating" name="restStar">
+					<fieldset class="rating">
     						<input type="radio" id="star5" name="restStar" value="5" />
     							<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-    						<input type="radio" id="star4half" name="rating" value="4.5" />
+    						<input type="radio" id="star4half" name="restStar" value="4.5" />
     							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-    						<input type="radio" id="star4" name="rating" value="4" />
+    						<input type="radio" id="star4" name="restStar" value="4" />
     							<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-    						<input type="radio" id="star3half" name="rating" value="3.5" />
+    						<input type="radio" id="star3half" name="restStar" value="3.5" />
     							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-    						<input type="radio" id="star3" name="rating" value="3" />
+    						<input type="radio" id="star3" name="restStar" value="3" />
     							<label class = "full" for="star3" title="Meh - 3 stars"></label>
-    						<input type="radio" id="star2half" name="rating" value="2.5" />
+    						<input type="radio" id="star2half" name="restStar" value="2.5" />
     							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-    						<input type="radio" id="star2" name="rating" value="2" />
+    						<input type="radio" id="star2" name="restStar" value="2" />
     							<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-    						<input type="radio" id="star1half" name="rating" value="1.5" />
+    						<input type="radio" id="star1half" name="restStar" value="1.5" />
     							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-    						<input type="radio" id="star1" name="rating" value="1" />
+    						<input type="radio" id="star1" name="restStar" value="1" />
     							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-    						<input type="radio" id="starhalf" name="rating" value="0.5" />
+    						<input type="radio" id="starhalf" name="restStar" value="0.5" />
     							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 						</fieldset>
 					</div>
@@ -425,7 +427,7 @@ textarea {
 								<div class="col-lg-2"></div>
 								<div class="col-lg-7 search-input" align="left">
 									<div class="search-input">
-										<textarea name="restReview" id="restReview" rows="4" placeholder=" 식당의 리뷰를 입력 해주세요 "></textarea>
+										<textarea name="restReview" id="restReview" rows="4" placeholder=" 식당의 리뷰를 입력 해주세요 " required></textarea>
 									</div>
 								</div>
 								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
@@ -481,7 +483,8 @@ textarea {
 										<div>
 											<span style="font-size:12px;">${vo.reviewDate }</span>
 											<c:if test="${vo.getMId() == sessionScope.mId }">
-												<button type="button" data-id="${vo.restReviewId }" class="delBtn" id="delBtn" style="padding: 0px 0px;">
+												<button type="button" class="delBtn" id="delBtn" style="padding: 0px 0px;" 
+												onclick="del(${vo.restReviewId })">
 													<i class="lni lni-trash"></i>
 												</button>
 											</c:if>
@@ -512,6 +515,14 @@ textarea {
 	/* 버튼 disable 만들기 */
 	var button_joinus = document.getElementById('button'); 
 	button_joinus.disabled = true; 
+
+	/* 리뷰 삭제 */
+	function del(seq) {
+		var chk = confirm("정말 삭제하시겠습니까?");
+		if (chk) {
+			location.href='restReviewDelete.do?restReviewId='+ seq;
+		}
+	}	
 </script>
 
 

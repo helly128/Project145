@@ -34,5 +34,8 @@ public class RestaurantVo {
 	private String keyword;
 	
 	private String menuVegeType;
+	
+	private String avgStar;
+	private String star;
 
 }
