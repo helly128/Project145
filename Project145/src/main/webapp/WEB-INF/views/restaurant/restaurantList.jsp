@@ -93,7 +93,7 @@
 						<div class="single-product">
 							<div class="product-img">
 								<a href="/restaurantDetail.do?restId=${vo.getRestId() }"> <img
-									src="images/salad.jpg" alt="" height="300px" width="300px">
+									src="images/${vo.getRestPic() }" alt="" height="300px" width="300px">
 								</a>
 							</div>
 

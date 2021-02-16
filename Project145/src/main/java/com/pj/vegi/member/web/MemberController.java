@@ -2,9 +2,13 @@ package com.pj.vegi.member.web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +21,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.naverLoginApi.NaverLoginBo;
+import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberService memberService; // MemberServiceImpl 객체 자동주입 -> @Service("memberService")와 같은이름
 
-	@RequestMapping("/main.do")
-	public String main() {
+	@RequestMapping("/")
+	public String main(Model model, LessonVO l_vo, VegimeetVo m_vo, RestaurantVo rest_vo, RecipeVo rec_vo) {
+		
+		List<Map> mainListLesson = memberService.mainLesson(l_vo);
+		model.addAttribute("mainListLesson", mainListLesson);
+		
+		List<Map> mainListMeet = memberService.mainMeet(m_vo);
+		model.addAttribute("mainListMeet", mainListMeet);
+		
+		List<Map> mainListRest = memberService.mainRest(rest_vo);
+		model.addAttribute("mainListRest", mainListRest);
+		
+		List<Map> mainListRecipe = memberService.mainRecipe(rec_vo);
+		model.addAttribute("mainListRecipe", mainListRecipe);
+		
 		return "main/main";
 	}
 
@@ -115,52 +136,51 @@ public class MemberController {
 	}
 
 	// 네이버 로그인 성공시 callback호출 메소드
-	@RequestMapping(value = "/callback")
-	public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
-			throws IOException, SQLException {
-		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBo.getAccessToken(session, code, state);
-		// 로그인 사용자 정보를 읽어온다.
-		apiResult = naverLoginBo.getUserProfile(oauthToken);
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode jnode = mapper.readTree(apiResult);
-		String mId = (String) jnode.get("response").get("id").textValue();
-		String email = (String) (jnode.get("response").get("email").textValue());
-		String mName = (String) (jnode.get("response").get("name").textValue());
-		
-		boolean check = memberService.naverLoginCheck(vo);
-		System.out.println("=============="+vo);
-		String result = null;
-
-		if (check != true) {// 새로운 네이버 로그인
-			System.out.println("~~~~~~~~~if~~~~");
+		@RequestMapping(value = "/callback")
+		public String callback(MemberVo vo, @RequestParam String code, @RequestParam String state, HttpSession session)
+				throws IOException, SQLException {
+			System.out.println("여기는 callback");
+			OAuth2AccessToken oauthToken;
+			oauthToken = naverLoginBo.getAccessToken(session, code, state);
+			// 로그인 사용자 정보를 읽어온다.
+			apiResult = naverLoginBo.getUserProfile(oauthToken);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jnode = mapper.readTree(apiResult);
+			String mId = (String) jnode.get("response").get("id").textValue();
+			String email = (String) (jnode.get("response").get("email").textValue());
+			String mName = (String) (jnode.get("response").get("name").textValue());
 			
-			vo.setMId(mId);
-			vo.setEmail(email);
-			vo.setMName(mName);
-			int n = memberService.naverInsert(vo);
+			boolean check = memberService.naverLoginCheck(vo);
+			System.out.println("=============="+vo);
+			String result = null;
 
-			if (n != 0) {
+			if (check != false) {// 새로운 네이버 로그인
+				System.out.println("~~~~~~~~~if~~~~");
+				
+				vo.setMId(mId);
+				vo.setEmail(email);
+				vo.setMName(mName);
+				int n = memberService.naverInsert(vo);
+
+				if (n != 0) {
+					session.setAttribute("mName", mName);
+					session.setAttribute(email, email);
+					session.setAttribute("mId", mId);
+					session.setAttribute("auth", "user");
+					result = "redirect:naverResult.do";
+				} else {
+					result = "redirect:/loginForm.do";
+				}
+			} else {// 이미저장된네이버로 로그인
+				System.out.println("~~~~~~~~else~~~~");
+				// 로그인 사용자 정보를 읽어온다.
+				
 				session.setAttribute("mName", mName);
 				session.setAttribute(email, email);
-				session.setAttribute("password", vo.getPassword());
 				session.setAttribute("mId", mId);
 				session.setAttribute("auth", "user");
 				result = "redirect:naverResult.do";
-			} else {
-				result = "redirect:/loginForm.do";
 			}
-		} else {// 이미저장된네이버로 로그인
-			System.out.println("~~~~~~~~else~~~~");
-			// 로그인 사용자 정보를 읽어온다.
-			session.setAttribute("mName", mName);
-			session.setAttribute("email", email);
-			session.setAttribute("password", vo.getPassword());
-			session.setAttribute("mId", mId);
-			session.setAttribute("auth", "user");
-			result = "redirect:naverResult.do";
-		}
 
 //		String viewPath = "";
 //		if (n != 0)

@@ -30,9 +30,9 @@
 			<h2>${member.getEmail() }</h2>
 			<h5>${member.getVegtype() }</h5>
 			<br> <a href="/myPageEditCheck.do?mId=${mid }"
-				class="btn btn-success btn-icon-split"> <span
-				class="icon text-white-50"> <i class="fas fa-arrow-right"></i>
-			</span> <span class="text">내 정보 수정</span>
+				class="btn btn-success btn-icon-split">
+				<span class="icon text-white-50"> <i class="fas fa-arrow-right"></i></span>
+			<span class="text">내 정보 수정</span>
 			</a>
 		</div><br>
 	</div>

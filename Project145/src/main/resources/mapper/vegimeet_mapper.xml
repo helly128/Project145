@@ -23,7 +23,7 @@
 							AND UPPER(meet_title) like UPPER('%' || #{keyword} || '%')
 						</if>
 					</where>
-					ORDER BY meet_start
+					ORDER BY meet_start desc
 				) b
 			) a
 		WHERE rn BETWEEN #{start } AND #{end } 

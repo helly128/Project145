@@ -1,6 +1,8 @@
 package com.pj.vegi.member.service.impl;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -16,7 +18,12 @@ import org.springframework.stereotype.Service;
 
 import com.pj.vegi.member.mapper.MemberMapper;
 import com.pj.vegi.member.service.MemberService;
+import com.pj.vegi.vo.LessonVO;
 import com.pj.vegi.vo.MemberVo;
+import com.pj.vegi.vo.RecipeVo;
+import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.SnsInfoVo;
+import com.pj.vegi.vo.VegimeetVo;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
@@ -112,6 +119,26 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int naverInsert(MemberVo vo) {
 		return dao.naverInsert(vo);
+	}
+
+	@Override
+	public List<Map> mainLesson(LessonVO vo) {
+		return dao.mainLesson(vo);
+	}
+
+	@Override
+	public List<Map> mainMeet(VegimeetVo vo) {
+		return dao.mainMeet(vo);
+	}
+
+	@Override
+	public List<Map> mainRest(RestaurantVo vo) {
+		return dao.mainRest(vo);
+	}
+
+	@Override
+	public List<Map> mainRecipe(RecipeVo vo) {
+		return dao.mainRecipe(vo);
 	}
 
 

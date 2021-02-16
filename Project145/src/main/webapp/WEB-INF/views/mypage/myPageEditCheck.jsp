@@ -14,7 +14,7 @@
 					<h1 class="h4 text-gray-900 mb-2">내정보 수정을 위해 비밀번호를 확인해주세요.</h1>
 					<br>
 				</div>
-				<form class="user" action="myWallet.do" id="frm"
+				<form class="user" action="myPageEdit.do" id="frm"
 					onsubmit="return editFunc();" method="post">
 					<div class="form-group">
 						<input id="password" name="password" type="password"

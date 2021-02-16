@@ -12,6 +12,7 @@
 <meta name="author" content="">
 
 <title>mypageLayout.jsp</title>
+<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- Custom fonts for this template-->
 <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css"
@@ -44,7 +45,7 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="/">
 				<div class="sidebar-brand-icon rotate-n-15"></div>
-				<div class="sidebar-brand-text mx-3">채식당</div>
+				<div class="sidebar-brand-text mx-3"><img src="/images/logo.svg" width="100" height="80"></div>
 			</a>
 
 			<!-- Divider -->
@@ -52,7 +53,7 @@
 
 			<!-- Nav Item - Tables -->
 			<li class="nav-item"><a class="nav-link" href="/mypage.do">
-					🎀 <span>My Page</span>
+					<i class="lni lni-cog"></i> <span>My Page</span>
 			</a></li>
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
@@ -62,7 +63,7 @@
 			<li class="nav-item"><a class="nav-link collapsed"
 				href="/begiMain.do" data-toggle="collapse"
 				data-target="#collapseTwo" aria-expanded="true"
-				aria-controls="collapseTwo"> 🏃‍♂ <span>My Challenge</span>
+				aria-controls="collapseTwo"> <i class="lni lni-pulse"></i> <span>My Challenge</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -77,7 +78,7 @@
 			<!-- Nav Item - Utilities Collapse Menu -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> ❤ <span>My
+				aria-expanded="true" aria-controls="collapseUtilities"> <i class="lni lni-heart"></i> <span>My
 						Like It</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
@@ -86,33 +87,33 @@
 						<h6 class="collapse-header">I Like it</h6>
 						<a class="collapse-item" href="/myLikeClass.do">Class</a> <a
 							class="collapse-item" href="/myLikeRecipe.do">Recipe</a> <a
-							class="collapse-item" href="/myLikeMeet.do">Meet</a> <a
+							class="collapse-item" href="/myLikeMeet.do">Challenge</a> <a
 							class="collapse-item" href="/myLikeRestaurant.do">Restaurant</a>
 					</div>
 				</div></li>
 
 			<li class="nav-item"><a class="nav-link" href="/myClass.do">
-					🎨 <span>My Class</span>
+					<i class="lni lni-cake"></i> <span>My Class</span>
 			</a></li>
 
 			<li class="nav-item"><a class="nav-link" href="/myRestaurant.do">
-					🍙 <span>My Restaurant</span>
+					<i class="lni lni-dinner"></i> <span>My Restaurant</span>
 			</a></li>
 
 			<li class="nav-item"><a class="nav-link" href="/myRecipe.do">
-					🍺 <span>My Recipe</span>
+					<i class="lni lni-chef-hat"></i> <span>My Recipe</span>
 			</a></li>
 
 			<hr class="sidebar-divider">
 
 			<li class="nav-item"><a class="nav-link"
-				href="/myWalletCheck.do"> 👜 <span>My Wallet</span>
+				href="/myWalletCheck.do"> <i class="lni lni-wallet"></i> <span>My Wallet</span>
 			</a></li>
 
 			<hr class="sidebar-divider d-none d-md-block">
 
 			<li class="nav-item"><a class="nav-link" href="/myQuestion.do">
-					💌 <span>My Question</span>
+					<i class="lni lni-question-circle"></i> <span>My Question</span>
 			</a></li>
 			<hr class="sidebar-divider d-none d-md-block">
 
@@ -188,7 +189,7 @@
 							</form>
 						</div>
 						</li>
-
+						<%-- 
 						<!-- Nav Item - Alerts -->
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
@@ -234,9 +235,9 @@
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Show All Alerts</a>
-							</div></li>
-
-
+							</div></li> 
+						--%>
+						<%-- 
 						<!-- Nav Item - Messages -->
 						<li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
@@ -298,7 +299,7 @@
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Read More Messages</a>
 							</div></li>
-
+--%>
 
 
 						<div class="topbar-divider d-none d-sm-block"></div>

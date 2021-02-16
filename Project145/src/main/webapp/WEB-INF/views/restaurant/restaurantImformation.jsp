@@ -27,7 +27,8 @@
 
 #my_modal {
 	display: none;
-	width: 400px;
+	width: 450px;
+	height: 530px;
 	padding: 10px 10px;
 	background-color: #fefefe;
 	border: 1px solid #888;
@@ -126,7 +127,7 @@ textarea {
 						예약하기</a>
 				</div>
 
-
+<!-- 식당 예약 모달 띄우기 부분  -->
 				<script>
 					function modal(id) {
 						var zIndex = 9999;
@@ -186,22 +187,35 @@ textarea {
 							});
 				</script>
 
-
+<!-- 식당 예약 form -->
 				<div>
 					<c:if test="${sessionScope.mId != null }">
 						<form id="frm" action="reservInsert.do">
 							<div id="my_modal">
+									<br>
 								<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
 								<a style="font-size: 1rem">식당명</a>
-								<h6>${rVo.getRestName() }</h6>
-								<br> <a>예약날짜/시간</a> <input type="datetime-local"
+								<h4>${rVo.getRestName() }</h4>
+									<br>
+								<a>예약날짜/시간</a> 
+									<br>
+								<input type="datetime-local"
 									class="input" id="resvDate" name="restReservDate"
-									onChange="setendmin(this.value)" width="50" required> <br>
-								<a>예약자명</a> <input type="text" class="input"
-									name="restReservName" required> <br> <a>예약인원</a> <input
-									type="number" class="input" name="restReservPeople" min="1"
-									max="100" required> <br> <br> <input
-									type="hidden" name="mId" value="${sessionScope.mId }">
+									onChange="setendmin(this.value)" width="50" style="border: 1px solid #98bf80;" required > 
+									<br>
+									<br>
+								<a>예약자명</a> 
+									<br>
+								<input type="text" class="input"
+									name="restReservName" style="border: 1px solid #98bf80;" required > 
+									<br>
+									<br>  
+								<a>예약인원</a>
+									<br>  
+								<input type="number" class="input" name="restReservPeople" min="1"
+									max="100" style="border: 1px solid #98bf80;" required> 
+								<br> <br> 
+								<input type="hidden" name="mId" value="${sessionScope.mId }">
 								<input type="hidden" name="restId" value="${rVo.getRestId()}">
 								<button style="font-size: 1rem;" class="modal_close_btn">취소</button>
 								<button style="font-size: 1rem;" type="submit" id="push">예약</button>
@@ -318,7 +332,7 @@ textarea {
 			<br>
 			<hr />
 			<br />
-
+<!-- 메뉴리스트 부분 -->
 			<div class="row">
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8" style="padding: 0px 0px;">
@@ -356,29 +370,32 @@ textarea {
 				<br /> <br />
 				
 			<form id="frm" name="frm" action="restReviewInsert.do">
+				<input type="hidden" name="mId" value="${sessionScope.mId }">
+				<input type="hidden" name="restId" value="${rVo.getRestId()}">
+				
 				<div class="row" align="center">
 					<div class="col-lg-4"></div>
 					<div class="col-lg-7 search-input" align="left">
-					<fieldset class="rating">
-    						<input type="radio" id="star5" name="rating" value="5" />
+					<fieldset class="rating" name="restStar">
+    						<input type="radio" id="star5" name="restStar" value="5" />
     							<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-    						<input type="radio" id="star4half" name="rating" value="4 and a half" />
+    						<input type="radio" id="star4half" name="rating" value="4.5" />
     							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
     						<input type="radio" id="star4" name="rating" value="4" />
     							<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-    						<input type="radio" id="star3half" name="rating" value="3 and a half" />
+    						<input type="radio" id="star3half" name="rating" value="3.5" />
     							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
     						<input type="radio" id="star3" name="rating" value="3" />
     							<label class = "full" for="star3" title="Meh - 3 stars"></label>
-    						<input type="radio" id="star2half" name="rating" value="2 and a half" />
+    						<input type="radio" id="star2half" name="rating" value="2.5" />
     							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
     						<input type="radio" id="star2" name="rating" value="2" />
     							<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-    						<input type="radio" id="star1half" name="rating" value="1 and a half" />
+    						<input type="radio" id="star1half" name="rating" value="1.5" />
     							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
     						<input type="radio" id="star1" name="rating" value="1" />
     							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-    						<input type="radio" id="starhalf" name="rating" value="half" />
+    						<input type="radio" id="starhalf" name="rating" value="0.5" />
     							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 						</fieldset>
 					</div>
@@ -386,7 +403,7 @@ textarea {
 				
 								
 				<div class="search-wrapper">
-					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리-->
+					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리/ 작동 안함-->
 					<c:if test="${sessionScope.mId == null }"> 
 						<div class="row justify-content-center">
 							<div class="row" align="center">
@@ -397,8 +414,7 @@ textarea {
 									</div>
 								</div>
 								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
-									<!-- Submit button -->
-									<button class="middle-btn">등록</button>
+									<button class="middle-btn" id="disableBtn" disabled="">등록</button>
 								</div>
 							</div>
 						</div>
@@ -409,12 +425,12 @@ textarea {
 								<div class="col-lg-2"></div>
 								<div class="col-lg-7 search-input" align="left">
 									<div class="search-input">
-										<textarea name="reContent" id="reContent" rows="4" placeholder="🤷‍♂️댓글을 입력 해 주세요"></textarea>
+										<textarea name="restReview" id="restReview" rows="4" placeholder=" 식당의 리뷰를 입력 해주세요 "></textarea>
 									</div>
 								</div>
 								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
 									<!-- Submit button -->
-									<button class="middle-btn" id="repleBtn">등록</button>
+									<button class="middle-btn"  type="submit" id="restReviewBtn">등록</button>
 								</div>
 							</div>
 						</div>
@@ -437,6 +453,8 @@ textarea {
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8" style="margin: 0px 0px;">
 					<c:forEach var="vo" items="${restReview }">
+					<div id="restReviewList">
+						<input type="hidden" name="restReviewId" value="${vo.restReviewId }">
 						<ul style="list-style:none;">
 							<li data-mid="${vo.getMId() }">
 								<div class="reple-total mb-3" style="position:relative;">
@@ -449,10 +467,15 @@ textarea {
 										</c:if>
 									</span>
 									<div style="padding-left:60px; position:relative;" class="reple-content">
-										<div class="mb-1" style="color:black;">
-											<strong>${vo.getMId() }</strong> 
+										<div class="mb-1">
+											<div style="float:left; margin-right:20px; color:black;">
+												<strong>${vo.getMId() }</strong>
+											</div> 
+											<div class="restStar"> 
+												<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" width="15px" height="15px"/> 
+												${vo.restStar }
+											</div>
 										</div>
-										<div class="restStar">${vo.restStar }</div>
 										<div class="restReview" align="left"> ${vo.restReview } </div>
 										
 										<div>
@@ -470,6 +493,7 @@ textarea {
 							</li>
 						</ul>
 						<hr>
+						</div>
 						</c:forEach>
 						<my:paging paging="${paging }" jsFunc="goList" />
 					</div>
@@ -484,47 +508,11 @@ textarea {
 	<br>
 </body>
 
-<script type="text/javascript">
-//댓글 삭제
-function repleDelete() {
-	id = $(event.target).data("id")
-	$.ajax({
-		type : "delete",
-		url : "/reple/restReview.do/" + id,
-		success : function(result) {
-			repleList();
-
-		}
-	});
-}
-
-//댓글 입력
-function repleWrite() {
-	var reContent = $("#reContent").val();
-	var rId = "${RepleVo.RId}"
-	var mId = "${mId}"
-	$.ajax({
-		type : "post",
-		url : "/reple/reple.do",
-		headers : {
-			"Content-Type" : "application/json"
-		},
-		dataType : "text",
-		data : JSON.stringify({
-			rId : rId,
-			reContent : reContent,
-			reDate : date,
-			mId : mId
-		}),
-		success : function() {
-			alert("댓글이 등록되었습니다.");
-			$("#repleList").empty();
-			//$("#repleList").append('#repleList');
-			repleList();
-			$("#reContent").val("");
-		}
-	})
-}
-	
+<script>
+	/* 버튼 disable 만들기 */
+	var button_joinus = document.getElementById('button'); 
+	button_joinus.disabled = true; 
 </script>
+
+
 </html>

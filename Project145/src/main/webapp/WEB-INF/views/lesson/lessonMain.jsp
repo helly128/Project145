@@ -19,6 +19,18 @@
 .namediv {
 	height: 60px;
 }
+
+.search-area .search-wrapper {
+	box-shadow: 0px 0px 0px;
+}
+
+.name {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -27,9 +39,13 @@
 			<div class="row">
 				<div class="mx-auto col-xl-6 col-lg-7 col-md-10">
 					<div class="text-center section-title mb-60">
-						<h1>클래스를 들어봅시다 📢</h1>
-						<p>요즘, 이거 못하는 사람 있나?</p>
+						<h1>
+							클래스를 들어봅시다 <i class="lni lni-paperclip"></i>
+						</h1>
+						<p></p>
 					</div>
+					<br>
+					<br>
 				</div>
 			</div>
 			<div class="search-area">
@@ -71,6 +87,7 @@
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="row" id="cards">
 				<c:forEach var="lesson" items="${lessons }">
 					<div class="col-xl-3 col-lg-6 col-md-6">
@@ -125,17 +142,17 @@
 											</c:when>
 											<c:when test="${today <= lesson.getCEnd()}">
 												<button id="status" disabled type="button"
-													class="btn btn-outline-success">클래스 진행중</button>
+													class="btn btn-outline-danger">클래스 진행중</button>
 											</c:when>
 											<c:when test="${today > lesson.getCEnd()}">
 												<button id="status" disabled type="button"
-													class="btn btn-outline-success">클래스 마감</button>
+													class="btn btn-outline-secondary">클래스 마감</button>
 											</c:when>
 										</c:choose>
 									</c:if>
 									<c:if test="${lesson.CJoin == lesson.CParti }">
 										<button id="status" disabled type="button"
-											class="btn btn-outline-success">모집 마감</button>
+											class="btn btn-outline-secondary">모집 마감</button>
 									</c:if>
 								</div>
 							</div>

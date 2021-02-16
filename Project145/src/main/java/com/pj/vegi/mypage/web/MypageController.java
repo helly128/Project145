@@ -1,5 +1,6 @@
 package com.pj.vegi.mypage.web;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.pj.vegi.biz.service.ClassBizService;
+import com.pj.vegi.common.ImageIO;
 import com.pj.vegi.common.Paging;
 import com.pj.vegi.member.service.MemberService;
 import com.pj.vegi.mypage.service.MypageService;
@@ -284,11 +290,17 @@ public class MypageController {
 	}
 
 	@RequestMapping("/myPageEditResult.do")
-	public String myPageEditResult(MemberVo vo, Model model, HttpSession session) throws SQLException {
+	public String myPageEditResult(MemberVo vo, Model model, HttpSession session, @RequestParam MultipartFile uploadfile, HttpServletRequest request) throws IllegalStateException, IOException, SQLException {
 
 		vo.setMId((String) session.getAttribute("mId"));
-		mypageService.myPageUpdate(vo);
 
+		if (uploadfile != null && uploadfile.getSize() > 0) {
+			String name = ImageIO.imageUpload(request, uploadfile);
+			vo.setProfileImage(name);
+		}
+		
+		mypageService.myPageUpdate(vo);
+		
 		return "redirect:mypage.do";
 	}
 
