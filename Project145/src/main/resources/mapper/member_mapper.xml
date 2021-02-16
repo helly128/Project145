@@ -46,8 +46,7 @@
 					m.meet_fund "mFund"
 		        FROM like_list l, meet_un m
 		        WHERE l.origin_id = m.meet_id AND origin_id like 'meet%'      
-		              AND to_date(sysdate, 'YYYY-MM-DD') 
-		              between to_date(m.meet_start, 'YYYY-MM-DD') and to_date(m.meet_end, 'YYYY-MM-DD')
+		              AND to_date(sysdate, 'YYYY-MM-DD') <![CDATA[<]]>  to_date(m.meet_end, 'YYYY-MM-DD')
 		        GROUP BY l.origin_id, m.meet_title, m.meet_start, m.meet_end, m.meet_participant, m.meet_pic, m.meet_fund, m.meet_id
 		        ORDER BY count(l.origin_id) desc
 		          ) b 

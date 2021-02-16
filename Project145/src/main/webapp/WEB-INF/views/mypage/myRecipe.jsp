@@ -8,6 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <title>myLikeRecipe.jsp</title>
+<style type="text/css">
+.card-title {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -25,7 +34,7 @@
 							onclick="location.href='recipeDesc.do?rId=${recipe.getRId()}'"
 							style="cursor: pointer;">
 						<div class="card-body">
-							<h3 class="card-title">${recipe.getRTitle() }</h3>
+							<h5 class="card-title">${recipe.getRTitle() }</h5>
 						</div>
 						<div class="card-footer">
 							<p href="#">조회수 ${recipe.getRHit() }</p>

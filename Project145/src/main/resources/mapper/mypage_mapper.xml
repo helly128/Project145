@@ -67,7 +67,7 @@
 						p.today_flag "todayFlag", 
 						p.achiv "achiv",
 						m.total_day "totalDay",
-						trunc ( trunc( ((sysdate ) - m.meet_start)) / m.total_day *100 ) "dayAchiv"
+						trunc ( trunc( (m.meet_end  - m.meet_start +1 ) ) / m.total_day *100 ) "dayAchiv"
 				FROM meet_un m JOIN meet_parti p
 				ON m.meet_id = p.meeT_id
 				WHERE p.m_id = #{mId}
@@ -110,7 +110,7 @@
 						m.total_day "totalDay",
 						sum(achiv) "achiv", 
 						NVL(sum(achiv)/m.meet_participant,0) "allAchiv",
-            			trunc ( trunc( ((sysdate + 1) - m.meet_start)) / m.total_day *100 ) "dayAchiv"  
+            			trunc ( trunc( (m.meet_end - m.meet_start +1 ) / m.total_day *100 ) ) "dayAchiv"  
 				FROM meet_un m LEFT OUTER JOIN meet_parti p
 				ON m.meet_id = p.meet_id
 				WHERE m.m_id = #{mId}

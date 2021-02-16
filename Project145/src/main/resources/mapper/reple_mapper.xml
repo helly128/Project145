@@ -30,8 +30,8 @@
 
 	<insert id="insert">
 		insert into reple (re_id,re_content,re_date,
-		m_id,r_id)
-		values('re'||re_seq.nextval,#{reContent},current_date,#{mId},#{rId} )
+		m_id,r_id, re_depth)
+		values('re'||re_seq.nextval,#{reContent},current_date,#{mId},#{rId},#{reDepth} )
 
 	</insert>
 

@@ -256,7 +256,7 @@
 						<div class="single-product">
 							<div class="product-img">
 								<a href="/vegimeetSelect.do?meetId=${vo.meetId }"> <img
-									src="/images/${vo.meetPic }" style="height: 180px;"
+									src="/images/${vo.meetPic }" style="height: 250px;"
 									alt="vegimeet image">
 								</a>
 							</div>
@@ -501,9 +501,9 @@
 			var keyword = $('#keyword').val();
 
 			if (options == 'all' || options == '') {
-				location.href = "lessonMain.do?page=" + p
+				location.href = "vegimeetList.do?page=" + p
 			} else {
-				location.href = "lessonMain.do?page=" + p + "&options="
+				location.href = "vegimeetList.do?page=" + p + "&options="
 						+ options + "&keyword=" + keyword;
 
 			}

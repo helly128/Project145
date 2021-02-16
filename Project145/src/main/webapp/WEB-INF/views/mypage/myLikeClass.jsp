@@ -12,6 +12,14 @@
 	border: none;
 	background: transparent;
 }
+
+.card-title {
+	display: block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -25,8 +33,10 @@
 				<div class="col-lg-3 col-md-6 mb-4">
 					<div class="card h-100">
 						<img class="card-img-top" src="/images/${list.cImg }" width="100"
-							height="200" onerror="this.src='/images/loveurth (3).jpg'" alt="좋아하는 클래스 이미지"
-							onclick="location.href='lessonProduct.do?cId=${list.cId}'" style="cursor: pointer;">
+							height="200" onerror="this.src='/images/loveurth (3).jpg'"
+							alt="좋아하는 클래스 이미지"
+							onclick="location.href='lessonProduct.do?cId=${list.cId}'"
+							style="cursor: pointer;">
 						<div class="card-body">
 							<h4 class="card-title">${list.cTitle }</h4>
 							<ul class="address" align="left">
@@ -37,14 +47,13 @@
 								<li>TYPE : ${list.vegType }</li>
 								<li>조회수 : ${list.cHit }</li>
 							</ul>
-							<a href="#" class="btn btn-warning btn-icon-split"><span
-								class="text">강의현황 : ${list.status }</span></a>
 						</div>
 						<div class="card-footer" align="right">
 							<button type="button" class="likeAction"
 								data-id="${list.originId }">
 								<img class="likeImg" src="/images/filled_like.png"
-									style="width: 30px;" onerror="this.src='/images/loveurth (3).jpg'" alt="꽉찬 하트">
+									style="width: 30px;"
+									onerror="this.src='/images/loveurth (3).jpg'" alt="꽉찬 하트">
 							</button>
 						</div>
 					</div>

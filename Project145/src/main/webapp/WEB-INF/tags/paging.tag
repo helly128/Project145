@@ -18,9 +18,14 @@
 }
 
 .pagination a.active {
+  background-color: #6C9852;
+  color: white;
+  border-radius: 5px;
+	background-color: #6C9852;
 	background-color: #6C9852;
 	color: white;
 	border-radius: 5px;
+	background-color: lightblue;
 	background-color: #6C9852;
 	color: white;
 	border-radius: 5px;
