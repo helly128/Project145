@@ -11,6 +11,7 @@ import com.pj.vegi.admin.service.AdminService;
 import com.pj.vegi.vo.MemberVo;
 import com.pj.vegi.vo.ReportVo;
 import com.pj.vegi.vo.RestaurantVo;
+import com.pj.vegi.vo.enquiryVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
@@ -50,7 +51,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<ReportVo> adminBegiMeetReportList(ReportVo vo) {
-		// 
+		//챌린지 신고 
 		return dao.adminBegiMeetReportList(vo);
 	}
 
@@ -58,6 +59,30 @@ public class AdminServiceImpl implements AdminService {
 	public int countAdminBegiMeetReportList(ReportVo vo) {
 		//
 		return dao.countAdminBegiMeetReportList(vo);
+	}
+
+	@Override
+	public List<enquiryVO> adminBegiMeetQuestionList(enquiryVO vo) {
+		//챌린지문의 목록
+		return dao.adminBegiMeetQuestionList(vo);
+	}
+
+	@Override
+	public int countAdminBegiMeetQuestionList(enquiryVO vo) {
+		// 
+		return dao.countAdminBegiMeetQuestionList(vo);
+	}
+
+	@Override
+	public List<enquiryVO> adminEnquiryList(enquiryVO vo) {
+		// 일반 관리자 문의
+		return dao.adminEnquiryList(vo);
+	}
+
+	@Override
+	public int countAdminEnquiryList(enquiryVO vo) {
+		//
+		return dao.countAdminEnquiryList(vo);
 	}
 
 

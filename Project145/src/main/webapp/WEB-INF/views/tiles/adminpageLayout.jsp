@@ -91,9 +91,11 @@
 
 
 			<!-- Nav Item - Charts -->
-			<li class="nav-item"><a class="nav-link" href="/myRecipe.do">
+			<li class="nav-item">
+				<a class="nav-link" href="/adminEnquiryList.do">
 					🍇 <span>문의 관리</span>
-			</a></li>
+				</a>
+			</li>
 
 			<!-- Sidebar Toggler (Sidebar) -->
 			<div class="text-center d-none d-md-inline">

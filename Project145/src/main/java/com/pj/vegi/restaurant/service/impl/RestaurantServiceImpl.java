@@ -10,6 +10,7 @@ import com.pj.vegi.restaurant.service.RestaurantService;
 import com.pj.vegi.vo.LikeListVo;
 import com.pj.vegi.vo.RestMenuVo;
 import com.pj.vegi.vo.RestReservVo;
+import com.pj.vegi.vo.RestReviewVo;
 import com.pj.vegi.vo.RestaurantVo;
 
 @Service("restaurantService")
@@ -107,9 +108,34 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
+	public List<RestReviewVo> restReview(RestReviewVo vo) {
+		//식당 리뷰
+		return dao.restReview(vo);
+	}
+
+	@Override
+	public int countRestReview(RestReviewVo vo) {
+		// 식당리뷰 카운트
+		return dao.countRestReview(vo);
+	}
+
+
 	public int reservCountUp(RestaurantVo vo) {
 		return dao.reservCountUp(vo);
 	}
+
+	@Override
+	public int restReviewInsert(RestReviewVo vo) {
+		// 리뷰 등록
+		return dao.restReviewInsert(vo);
+	}
+
+	@Override
+	public int restReviewDelete(RestReviewVo vo) {
+		// 리뷰 삭제
+		return dao.restReviewDelete(vo);
+	}
+
 
 
 
