@@ -169,13 +169,15 @@ textarea {
 	 } */
 	 
 	//댓글 목록 출력
-	function repleList(p) {
+	function repleList() {
 		$
 				.ajax({
 					type : "get",
-					url : "/reple/reple.do?RId=${recipeVo.RId}&page="+p,
-					success : function(result) {
+					url : "/reple/reple.do?RId=${recipeVo.RId}",
+					success : function(map) {
 						var output = `<ul style='list-style:none;'>`; 
+						var result = map.list;
+						//var paging = map.paging;
 						for ( var i in result) {
 							var date = dateFormat(result[i].reDate);
 							if(result[i].reDepth == 2){
@@ -228,6 +230,8 @@ textarea {
 						}
 						output += "</table>"; */
 						output += `</ul>`;
+						console.log(map);
+						//output += `<my:paging paging="\${paging }" jsFunc="repleList" />`;
 						$("#repleList").html(output);
 					}
 				});
@@ -455,7 +459,6 @@ textarea {
 					<!-- 댓글 목록 출력되는 부분 -->
 					<div class="row">
 						<div class="col-lg-10 col-md-10 mx-5" id="repleList"></div>
-						<my:paging paging="${paging }" jsFunc="repleList" />
 					</div>
 				</div>
 

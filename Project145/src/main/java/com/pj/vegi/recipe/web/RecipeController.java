@@ -97,23 +97,12 @@ public class RecipeController {
 	RecipeMaterialService recipeMaterialService;
 
 	@RequestMapping("/recipeDesc.do") // 단건 상세 보기 페이지
-	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session, Paging paging)
+	public String recipeDesc(RecipeVo rVo, RecipeMaterialVo rmVo, Model model, HttpSession session)
 			throws SQLException {
 		
 		RecipeVo recipeVo = recipeService.recipeSelect(rVo);
 		List<RecipeMaterialVo> recipeMaterialSelectList = recipeMaterialService.recipeMaterialSelect(rmVo);
 
-		//댓글 위한 페이징
-		paging.setPageUnit(5);
-		paging.setPageSize(5);
-		if (paging.getPage() == null) {
-			paging.setPage(1);
-		}
-		recipeVo.setStart(paging.getFirst());
-		recipeVo.setEnd(paging.getLast());
-		RepleVo repleVo = new RepleVo();
-		repleVo.setRId(rVo.getRId());
-		paging.setTotalRecord(repleService.countReple(repleVo));
 		List<LessonVO> lessons = new ArrayList<LessonVO>();
 		if (recipeVo.getCId() != null) {
 			lessons = getLessonList(recipeVo, lessons);
@@ -122,7 +111,6 @@ public class RecipeController {
 		model.addAttribute("recipeSelect", recipeVo);
 		model.addAttribute("lessons", lessons);
 		model.addAttribute("recipeMaterial", recipeMaterialSelectList);
-		model.addAttribute("paging", paging);
 
 		return "recipe/recipeDesc";
 	}

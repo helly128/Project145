@@ -1,6 +1,9 @@
 package com.pj.vegi.reple.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,7 @@ public class RepleController {
 	// 목록 조회
 	@RequestMapping(value = "/reple.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<RepleVo> readAll(RepleVo vo, Paging paging) {
+	public Map<String, Object> readAll(RepleVo vo, Paging paging) {
 		paging.setPageUnit(5);
 		paging.setPageSize(5);
 		if (paging.getPage() == null) {
@@ -38,7 +41,10 @@ public class RepleController {
 		int cnt = service.countReple(vo);
 		paging.setTotalRecord(cnt);
 		List<RepleVo> list = service.readAll(vo);
-		return list;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("paging", paging);
+		return map;
 	}
 
 	// 댓글 입력
