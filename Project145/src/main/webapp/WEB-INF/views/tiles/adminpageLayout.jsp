@@ -45,14 +45,14 @@
 			<!--회원 관리 메뉴 -->
 			<li class="nav-item">
 				<a class="nav-link" href="/adminMemberSelect.do">
-					🍓 <span>회원 관리</span>
+					<span>회원 관리</span>
 				</a>
 			</li>
 
 			<!-- 식당 관리 -->
 			<li class="nav-item">
 				<a class="nav-link" href="/adminRestaurant.do"> 
-					🍊 <span>식당 관리</span>
+					<span>식당 관리</span>
 				</a>
 			</li>
 
@@ -61,7 +61,7 @@
 			<a class="nav-link collapsed"
 				href="/begiMain.do" data-toggle="collapse"
 				data-target="#collapseTwo" aria-expanded="true"
-				aria-controls="collapseTwo"> 🍋 <span>클래스 관리</span>
+				aria-controls="collapseTwo"> <span>클래스 관리</span>
 			</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 					data-parent="#accordionSidebar">
@@ -75,7 +75,7 @@
 			<li class="nav-item">
 			<a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> 🍐 <span>챌린지 관리</span>
+				aria-expanded="true" aria-controls="collapseUtilities"> <span>챌린지 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -93,7 +93,7 @@
 			<!-- Nav Item - Charts -->
 			<li class="nav-item">
 				<a class="nav-link" href="/adminEnquiryList.do">
-					🍇 <span>문의 관리</span>
+					<span>문의 관리</span>
 				</a>
 			</li>
 
