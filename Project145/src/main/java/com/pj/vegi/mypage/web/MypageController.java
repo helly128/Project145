@@ -58,14 +58,14 @@ public class MypageController {
 		return "mypage/mypageMain";
 	}
 
-//	@RequestMapping("/myBegiContact.do")
-//	public String myBegiContact() {
+//	@RequestMapping("/myVegiContact.do")
+//	public String myVegiContact() {
 //
-//		return "mypage/myBegiContact";
+//		return "mypage/myVegiContact";
 //	}
 
-	@RequestMapping("/myBegiUntact.do")
-	public String myBegiUntact(Model model, HttpSession session, MeetParticipantVo vo, Paging paging) {
+	@RequestMapping("/myVegiUntact.do")
+	public String myVegiUntact(Model model, HttpSession session, MeetParticipantVo vo, Paging paging) {
 
 		String mid = (String) session.getAttribute("mId");
 		model.addAttribute("mid", mid);
@@ -97,7 +97,7 @@ public class MypageController {
 
 		model.addAttribute("list", list);
 
-		return "mypage/myBegiUntact";
+		return "mypage/myVegiUntact";
 	}
 
 	@RequestMapping("/myMeet.do")

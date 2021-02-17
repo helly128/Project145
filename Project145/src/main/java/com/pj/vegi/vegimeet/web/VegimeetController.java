@@ -207,13 +207,6 @@ public class VegimeetController {
 		return "redirect:vegimeetSelect.do";
 	}
 
-	@RequestMapping("/vegimeetPicInsertForm.do")
-	public String vegimeetPicInsertForm(Model model, VegimeetVo vo) {
-		System.out.println("vo.meetId : " + vo.getMeetId());
-		model.addAttribute("vo", vo);
-		return "vegimeet/picWindow";
-	}
-
 	@ResponseBody
 	@RequestMapping("/vegimeetPicInsert.do/{meetId}")
 	public Map vegimeetPicInsert(Model model, @PathVariable String meetId, HttpSession session,
