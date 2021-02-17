@@ -119,12 +119,12 @@ textarea {
 			var reContent = $("#rereContent").val();
 			var rId = "${recipeSelect.getRId()}";
 			var mId = "${mId}";
-			var reId = $(this).data('id');
+			var reParent = $(this).data('id');
 			var data = {rId : rId,
 						reContent : reContent,
 						reDepth: 2,
 						mId : mId,
-						reId : reId
+						reParent : reParent
 			};
 			repleWrite(data);//댓글 쓰기 버튼 클릭시 json으로 입력
 		});
@@ -138,7 +138,8 @@ textarea {
 			if (mid == "${sessionScope.mId}") {
 
 				if (confirm("정말 삭제 하시겠어요?")) {
-					repleDelete();
+					var reId = $(this).data('id');
+					repleDelete(reId);
 					alert("삭제되었습니다.");
 
 				}
@@ -184,11 +185,11 @@ textarea {
 		});
 	});
 	//댓글 삭제
-	function repleDelete() {
-		id = $(event.target).data("id")
+	function repleDelete(reId) {
+		
 		$.ajax({
 			type : "delete",
-			url : "/reple/reple.do/" + id,
+			url : "/reple/reple.do/" + reId,
 			success : function(result) {
 				repleList();
 
