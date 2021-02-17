@@ -56,6 +56,7 @@
 											pattern="#,###" /> 원</td>
 									<td><div class="row no-gutters align-items-center">
 											<div class="col">
+											<%--
 												<div>
 													<h4 class="small font-weight-bold">
 														목표기간 (${list.totalDay }일) <span class="float-right">${list.dayAchiv }%</span>
@@ -66,6 +67,7 @@
 															aria-valuemin="0" aria-valuemax="100"></div>
 													</div>
 												</div>
+											 --%>
 												<div>
 													<h4 class="small font-weight-bold">
 														참여자 총 달성률 <span class="float-right">${list.allAchiv }%</span>
