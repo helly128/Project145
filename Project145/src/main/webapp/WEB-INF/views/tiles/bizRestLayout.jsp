@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>식당관리</title>
+<title>사업자 페이지</title>
 
 <!-- Custom fonts for this template-->
 <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css"

@@ -48,7 +48,7 @@ article {
 <!--====== Style CSS ======-->
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/assets/css/style.css">
-<title>Insert title here</title>
+<title>채식당</title>
 
 
 

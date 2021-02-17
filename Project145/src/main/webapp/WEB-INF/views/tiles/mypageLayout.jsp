@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>mypageLayout.jsp</title>
+<title>채식당 마이페이지</title>
 <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- Custom fonts for this template-->
