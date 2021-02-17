@@ -79,6 +79,7 @@
 									<td><div class="row no-gutters align-items-center">
 											<div class="col">
 												<div>
+												<%--
 													<h4 class="small font-weight-bold">
 														목표기간 (${list.totalDay }일) <span class="float-right">${list.dayAchiv }%</span>
 													</h4>
@@ -87,6 +88,7 @@
 															style="width: ${list.dayAchiv }%" aria-valuenow="20"
 															aria-valuemin="0" aria-valuemax="100"></div>
 													</div>
+												 --%>
 												</div>
 												<div>
 													<h4 class="small font-weight-bold">
