@@ -20,10 +20,13 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-<link href="<%=request.getContextPath()%>/resources/assets/css/starRating.css" rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/resources/assets/css/starRating.css"
+	rel="stylesheet">
 
 <style>
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import
+	url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 #my_modal {
 	display: none;
@@ -57,6 +60,7 @@ input {
 	margin: 2px 5px;
 	width: 300px;
 }
+
 .replebox {
 	margin-left: 10%;
 	margin-right: 10%;
@@ -116,20 +120,22 @@ textarea {
 				<div class="col-lg-2"></div>
 				<div class="col-lg-6">
 					<div style="float: left; margin-right: 1rem;">
-						<h3>🥗${rVo.getRestName() }</h3>
+						<h2>🥗${rVo.getRestName() }</h2>
 					</div>
 					<div style="float: left; width: 30px;">
-					<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" width="25px" height="25px"/>
+						<img
+							src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg=="
+							width="25px" height="25px" />
 					</div>
 					<div style="float: left;">
-						<h3>( ${rVo.getAvgStar() } )</h3>
+						<h4>( ${rVo.getAvgStar() } )</h4>
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<a class="main-btn btn-hover d-none d-md-block" id="restResvButton">예약하기</a>
 				</div>
 
-<!-- 식당 예약 모달 띄우기 부분  -->
+				<!-- 식당 예약 모달 띄우기 부분  -->
 				<script>
 					function modal(id) {
 						var zIndex = 9999;
@@ -189,34 +195,36 @@ textarea {
 							});
 				</script>
 
-<!-- 식당 예약 form -->
+				<!-- 식당 예약 form -->
 				<div>
 					<c:if test="${sessionScope.mId != null }">
 						<form id="frm" action="reservInsert.do">
 							<div id="my_modal">
-									<br>
+								<br>
 								<!-- 	모달 창의 내용이 여기에 들어온다아아아아아ㅏ -->
 								<a style="font-size: 1rem">식당명</a>
 								<h4>${rVo.getRestName() }</h4>
-									<br>
-								<a>예약날짜/시간</a> 
-									<br>
+									<br> 
+								<a>예약날짜</a> 
+								<br> 
 								<input type="datetime-local"
-									class="input" id="resvDate" name="restReservDate"
-									onChange="setendmin(this.value)" width="50" style="border: 1px solid #98bf80;" required > 
+									class="input" id="resvDate" name="reservDate"
+									onChange="setendmin(this.value)" width="50" required style="border: 1px solid #98bf80;"> 
 									<br>
 									<br>
 								<a>예약자명</a> 
-									<br>
+								<br> 
 								<input type="text" class="input"
-									name="restReservName" style="border: 1px solid #98bf80;" required > 
+									name="restReservName" required style="border: 1px solid #98bf80;"> 
 									<br>
-									<br>  
-								<a>예약인원</a>
-									<br>  
-								<input type="number" class="input" name="restReservPeople" min="1"
-									max="100" style="border: 1px solid #98bf80;" required> 
-								<br> <br> 
+									<br> 
+								<a>예약인원</a> 
+								<br> 
+								<input
+									type="number" class="input" name="restReservPeople" min="1"
+									max="100" required style="border: 1px solid #98bf80;"> 
+									<br> 
+									<br> 
 								<input type="hidden" name="mId" value="${sessionScope.mId }">
 								<input type="hidden" name="restId" value="${rVo.getRestId()}">
 								<button style="font-size: 1rem;" class="modal_close_btn">취소</button>
@@ -249,7 +257,7 @@ textarea {
 
 			<!-- 식당 사진 -->
 			<div class="col-lg-12" align="center">
-				<img src="" height="350px" width="600px">
+				<img src="images/${rVo.restPic }" height="350px" width="600px">
 			</div>
 
 			<br>
@@ -334,7 +342,7 @@ textarea {
 			<br>
 			<hr />
 			<br />
-<!-- 메뉴리스트 부분 -->
+			<!-- 메뉴리스트 부분 -->
 			<div class="row">
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8" style="padding: 0px 0px;">
@@ -351,7 +359,8 @@ textarea {
 								<a> ${menuList.getMenuVegeType() }</a>
 							</div>
 							<div align="right">
-								<a style="font-weight: bold; font-size: 20px">${menuList.getMenuPrice() } 원 </a>
+								<a style="font-weight: bold; font-size: 20px"><fmt:formatNumber
+										value="${menuList.getMenuPrice() }" pattern="#,###" /> 원 </a>
 							</div>
 							<hr>
 							<br>
@@ -362,7 +371,7 @@ textarea {
 			<hr>
 			<br>
 		</div>
-<!-- 리뷰 작성 -->
+		<!-- 리뷰 작성 -->
 		<div>
 			<div class="row" align="left">
 				<div class="col-lg-2"></div>
@@ -370,80 +379,85 @@ textarea {
 					<h4>리뷰 작성</h4>
 				</div>
 				<br /> <br />
-				
-			<form id="frm" name="frm" action="restReviewInsert.do">
-				<input type="hidden" name="mId" value="${sessionScope.mId }">
-				<input type="hidden" name="restId" value="${rVo.getRestId()}">
-				
-				<div class="row" align="center">
-					<div class="col-lg-4"></div>
-					<div class="col-lg-7 search-input" align="left">
-					<fieldset class="rating">
-    						<input type="radio" id="star5" name="restStar" value="5" />
-    							<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-    						<input type="radio" id="star4half" name="restStar" value="4.5" />
-    							<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-    						<input type="radio" id="star4" name="restStar" value="4" />
-    							<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-    						<input type="radio" id="star3half" name="restStar" value="3.5" />
-    							<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-    						<input type="radio" id="star3" name="restStar" value="3" />
-    							<label class = "full" for="star3" title="Meh - 3 stars"></label>
-    						<input type="radio" id="star2half" name="restStar" value="2.5" />
-    							<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-    						<input type="radio" id="star2" name="restStar" value="2" />
-    							<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-    						<input type="radio" id="star1half" name="restStar" value="1.5" />
-    							<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-    						<input type="radio" id="star1" name="restStar" value="1" />
-    							<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-    						<input type="radio" id="starhalf" name="restStar" value="0.5" />
-    							<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-						</fieldset>
+
+				<form id="frm" name="frm" action="restReviewInsert.do">
+					<input type="hidden" name="mId" value="${sessionScope.mId }">
+					<input type="hidden" name="restId" value="${rVo.getRestId()}">
+
+					<div class="row" align="center">
+						<div class="col-lg-4"></div>
+						<div class="col-lg-7 search-input" align="left">
+							<fieldset class="rating">
+								<input type="radio" id="star5" name="restStar" value="5" /> <label
+									class="full" for="star5" title="Awesome - 5 stars"></label> <input
+									type="radio" id="star4half" name="restStar" value="4.5" /> <label
+									class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+								<input type="radio" id="star4" name="restStar" value="4" /> <label
+									class="full" for="star4" title="Pretty good - 4 stars"></label>
+								<input type="radio" id="star3half" name="restStar" value="3.5" />
+								<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+								<input type="radio" id="star3" name="restStar" value="3" /> <label
+									class="full" for="star3" title="Meh - 3 stars"></label> <input
+									type="radio" id="star2half" name="restStar" value="2.5" /> <label
+									class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+								<input type="radio" id="star2" name="restStar" value="2" /> <label
+									class="full" for="star2" title="Kinda bad - 2 stars"></label> <input
+									type="radio" id="star1half" name="restStar" value="1.5" /> <label
+									class="half" for="star1half" title="Meh - 1.5 stars"></label> <input
+									type="radio" id="star1" name="restStar" value="1" /> <label
+									class="full" for="star1" title="Sucks big time - 1 star"></label>
+								<input type="radio" id="starhalf" name="restStar" value="0.5" />
+								<label class="half" for="starhalf"
+									title="Sucks big time - 0.5 stars"></label>
+							</fieldset>
+						</div>
 					</div>
-				</div>
-				
-								
-				<div class="search-wrapper">
-					<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리/ 작동 안함-->
-					<c:if test="${sessionScope.mId == null }"> 
-						<div class="row justify-content-center">
-							<div class="row" align="center">
-								<div class="col-lg-2"></div>
-								<div class="col-lg-7 search-input" align="left">
-									<div class="search-input">
-										<textarea name="reContent" id="reContent" rows="4" placeholder="로그인 후 이용가능합니다" readonly></textarea>
+
+
+					<div class="search-wrapper">
+						<!--로그인 한 회원에게만 댓글만 수정 삭제 가능하도록 처리/ 작동 안함-->
+						<c:if test="${sessionScope.mId == null }">
+							<div class="row justify-content-center">
+								<div class="row" align="center">
+									<div class="col-lg-2"></div>
+									<div class="col-lg-7 search-input" align="left">
+										<div class="search-input">
+											<textarea name="reContent" id="reContent" rows="4"
+												placeholder="로그인 후 이용가능합니다" readonly></textarea>
+										</div>
+									</div>
+									<div class="col-lg-1 col-sm-5 col-10"
+										style="display: flex; align-items: center;">
+										<button class="middle-btn" id="disableBtn" disabled="">등록</button>
 									</div>
 								</div>
-								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
-									<button class="middle-btn" id="disableBtn" disabled="">등록</button>
-								</div>
 							</div>
-						</div>
-					</c:if>
-					<c:if test="${sessionScope.mId != null }">
-						<div class="row justify-content-center">
-							<div class="row" align="center">
-								<div class="col-lg-2"></div>
-								<div class="col-lg-7 search-input" align="left">
-									<div class="search-input">
-										<textarea name="restReview" id="restReview" rows="4" placeholder=" 식당의 리뷰를 입력 해주세요 " required></textarea>
+						</c:if>
+						<c:if test="${sessionScope.mId != null }">
+							<div class="row justify-content-center">
+								<div class="row" align="center">
+									<div class="col-lg-2"></div>
+									<div class="col-lg-7 search-input" align="left">
+										<div class="search-input">
+											<textarea name="restReview" id="restReview" rows="4"
+												placeholder=" 식당의 리뷰를 입력 해주세요 " required></textarea>
+										</div>
+									</div>
+									<div class="col-lg-1 col-sm-5 col-10"
+										style="display: flex; align-items: center;">
+										<!-- Submit button -->
+										<button class="middle-btn" type="submit" id="restReviewBtn">등록</button>
 									</div>
 								</div>
-								<div class="col-lg-1 col-sm-5 col-10" style="display: flex; align-items: center;">
-									<!-- Submit button -->
-									<button class="middle-btn"  type="submit" id="restReviewBtn">등록</button>
-								</div>
 							</div>
-						</div>
-					</c:if>
-				</div>
-			</form>
+						</c:if>
+					</div>
+				</form>
 			</div>
 		</div>
 
 		<br /> <br />
-<!-- 리뷰 목록 -->
+		<!-- 리뷰 목록 -->
 		<div>
 			<div class="row" align="left">
 				<div class="col-lg-2"></div>
@@ -454,49 +468,56 @@ textarea {
 				<div class="row" id="restReview">
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8" style="margin: 0px 0px;">
-					<c:forEach var="vo" items="${restReview }">
-					<div id="restReviewList">
-						<input type="hidden" name="restReviewId" value="${vo.restReviewId }">
-						<ul style="list-style:none;">
-							<li data-mid="${vo.getMId() }">
-								<div class="reple-total mb-3" style="position:relative;">
-									<span style="position:absolute;">
-										<c:if test="${vo.profileImage != null}">
-											<img src="/images/${vo.profileImage }" style="border-radius: 30%; width:45px;">
-										</c:if>
-										<c:if test="${vo.profileImage == null}">
-											<i class="lni lni-sprout" style="border-radius: 30%; width:45px; font-size: 31px;" ></i>
-										</c:if>
-									</span>
-									<div style="padding-left:60px; position:relative;" class="reple-content">
-										<div class="mb-1">
-											<div style="float:left; margin-right:20px; color:black;">
-												<strong>${vo.getMId() }</strong>
-											</div> 
-											<div class="restStar"> 
-												<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg==" width="15px" height="15px"/> 
-												${vo.restStar }
+						<c:forEach var="vo" items="${restReview }">
+							<div id="restReviewList">
+								<input type="hidden" name="restReviewId"
+									value="${vo.restReviewId }">
+								<ul style="list-style: none;">
+									<li data-mid="${vo.getMId() }">
+										<div class="reple-total mb-3" style="position: relative;">
+											<span style="position: absolute;"> <c:if
+													test="${vo.profileImage != null}">
+													<img src="/images/${vo.profileImage }"
+														style="border-radius: 30%; width: 45px;">
+												</c:if> <c:if test="${vo.profileImage == null}">
+													<i class="lni lni-sprout"
+														style="border-radius: 30%; width: 45px; font-size: 31px;"></i>
+												</c:if>
+											</span>
+											<div style="padding-left: 60px; position: relative;"
+												class="reple-content">
+												<div class="mb-1">
+													<div style="float: left; margin-right: 20px; color: black;">
+														<strong>${vo.getMId() }</strong>
+													</div>
+													<div class="restStar">
+														<img
+															src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTMuODY3IDUzLjg2NyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTMuODY3IDUzLjg2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0VGQ0U0QTsiIHBvaW50cz0iMjYuOTM0LDEuMzE4IDM1LjI1NiwxOC4xODIgNTMuODY3LDIwLjg4NyA0MC40LDM0LjAxMyA0My41NzksNTIuNTQ5IDI2LjkzNCw0My43OTggDQoJMTAuMjg4LDUyLjU0OSAxMy40NjcsMzQuMDEzIDAsMjAuODg3IDE4LjYxMSwxOC4xODIgIi8+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8L3N2Zz4NCg=="
+															width="15px" height="15px" /> ${vo.restStar }
+													</div>
+												</div>
+												<div class="restReview" align="left">${vo.restReview }
+												</div>
+
+												<div>
+													<span style="font-size: 12px;">${vo.reviewDate }</span>
+													<c:if test="${vo.getMId() == sessionScope.mId }">
+														<button type="button" class="delBtn"
+															id="${vo.restReviewId }" style="padding: 0px 0px;"
+															onclick="del(this)">
+															<i class="lni lni-trash"></i>
+														</button>
+													</c:if>
+													<c:if test="${vo.getMId() != sessionScope.mId }">
+													</c:if>
+												</div>
+
 											</div>
 										</div>
-										<div class="restReview" align="left"> ${vo.restReview } </div>
-										
-										<div>
-											<span style="font-size:12px;">${vo.reviewDate }</span>
-											<c:if test="${vo.getMId() == sessionScope.mId }">
-												<button type="button" class="delBtn" id="delBtn" style="padding: 0px 0px;" 
-												onclick="del(${vo.restReviewId })">
-													<i class="lni lni-trash"></i>
-												</button>
-											</c:if>
-											<c:if test="${vo.getMId() != sessionScope.mId }"> </c:if>
-										</div>
-										
-									</div>
-								</div>
-							</li>
-						</ul>
-						<hr>
-						</div>
+									</li>
+									<hr>
+								</ul>
+							</div>
 						</c:forEach>
 						<my:paging paging="${paging }" jsFunc="goList" />
 					</div>
@@ -513,16 +534,51 @@ textarea {
 
 <script>
 	/* 버튼 disable 만들기 */
-	var button_joinus = document.getElementById('button'); 
-	button_joinus.disabled = true; 
+	var button_joinus = document.getElementById('button');
+	button_joinus.disabled = true;
 
 	/* 리뷰 삭제 */
 	function del(seq) {
+		console.log(seq.id);
+		var reviewId = seq.id;
 		var chk = confirm("정말 삭제하시겠습니까?");
 		if (chk) {
-			location.href='restReviewDelete.do?restReviewId='+ seq;
+			$.ajax({
+				type : "post",
+				url : "restReviewDelete.do",
+				data : {
+					restReviewId : reviewId
+				},
+				success : function(n) {
+					if (n != 0) {
+						alert("리뷰가 삭제 되었습니다");
+						$(seq).closest("ul").hide();
+					} else {
+						alert("리뷰를 삭제하지 못했습니다");
+					}
+				}
+			})
 		}
-	}	
+	}
+	
+	$(function() {
+		var today = new Date();
+		today.setDate(today.getDate() + 1);
+		today = dateFormat(today);
+		$('#resvDate').attr('min', today);
+	});
+	function dateFormat(today) { //today는 date타입
+		var day = today.getDate();
+		if (day < 10) {
+			day = '0' + day;
+		}
+		var month = today.getMonth() + 1;
+		if (month < 10) {
+			month = '0' + month;
+		}
+		today = today.getFullYear() + '-' + month + '-' + day + 'T00:00';
+		return today; //리턴은 string
+	}
 </script>
 
 

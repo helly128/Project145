@@ -112,9 +112,8 @@
 	<select id="getRestaurantDetail" resultType="RestaurantVo">
 		<!-- 식당 상세페이지 -->
 		SELECT A.avg_star ,R.*
-		FROM RESTAURANT R join (select
-		round(avg(rest_star),2) avg_star from rest_review where rest_id =
-		#{restId})A
+		FROM RESTAURANT R join 
+			(select round(avg(rest_star),2) avg_star from rest_review where rest_id = #{restId}) A
 		ON REST_ID = #{restId}
 
 		<!-- SELECT * FROM RESTAURANT WHERE REST_ID = #{restId} -->

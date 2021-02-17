@@ -206,24 +206,11 @@ public class RestaurantController {
 
 	// 리뷰 삭제
 	@ResponseBody
-	@RequestMapping("/restReviewDelete.do/{restReviewId}")
-	public String restReviewDelete(@PathVariable String restReviewId, RestReviewVo vo,  Model model, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		int n = restaurantService.restReviewDelete(vo);
-		
-		if(n != 0 ) {
-			out.println("<script>alert('리뷰가 삭제 되었습니다.'); location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
-			out.flush();
-			return null;
-		} else {
-			out.println("<script>alert('리뷰가 삭제되지 못했습니다.');  location.href='restaurantDetail.do?restId=" + vo.getRestId() + "'; </script>");
-			out.flush();
-			return null;
-		}
+	@RequestMapping("/restReviewDelete.do")
+	public int restReviewDelete(RestReviewVo vo, Model model, HttpServletResponse response) throws IOException {
+		System.out.println(vo + "받아옴");
+		int n = restaurantService.restReviewDelete(vo);		
+		return n;
 	}
 	
-	
-
 }
