@@ -29,7 +29,7 @@
 	<update id="classBizUpdate">
 		UPDATE class 
 		set C_TITLE = #{cTitle},C_IMG = #{cImg},C_DESC= #{cDesc},VEGTYPE= #{vegType},C_PRICE = #{cPrice},
-		C_START = #{cStart},C_END = #{cEnd},STATUS = #{status},CURRICULUM = #{curriCulum},C_PARTI = #{cParti},
+		C_START = #{cStart},C_END = #{cEnd},CURRICULUM = #{curriCulum},C_PARTI = #{cParti},
 		C_LOC = #{cLoc},C_TIME = #{cTime}
 		where c_id = #{cId}
 	</update>

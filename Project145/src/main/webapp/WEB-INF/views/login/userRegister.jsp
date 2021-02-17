@@ -94,6 +94,7 @@ $("#submitbtn").click(()=>{
 <body>
 
 	<div align="center">
+	<br><br><br>
 		<h2>일반 회원가입</h2>
 
 		<div class="search-wrapper">

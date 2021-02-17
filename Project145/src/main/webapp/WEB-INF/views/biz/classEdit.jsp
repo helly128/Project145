@@ -38,7 +38,7 @@ $(function(){ //아작스
 	console.log($("#status").val());
 	var status = $("#status").val();
 	if(status == "강사미정" || status=="강사승인대기" || status=="개설완료"){
-		alert ('모달을 띄움니다.');
+		
 		//모달창 =============================
 		   
 			  
@@ -62,24 +62,29 @@ $(function(){ //아작스
 //내 이력 수정
 	$("#savecareer").click(()=>{
     	console.log($("#career").val());
+    	console.log($("#lecInfo").val());
+    	var pimageval = $("#pimage").val();
        $.ajax(
           { 
              type:"POST",
              url:"myCareerUpdate.do",
-             data:{career: $("#career").val(), cId : $("#cId").val()}, //사용하는 함수 
+             data:{career: $("#career").val(), cId : $("#cId").val(), lecId : $("#lecInfo").val()}, //사용하는 함수 
              dataType:"json",
              success: function(n){
                 if(n!=0){
-                   var pimageval = $("#pimage").val();
+                  
                    console.log("img 는 바로 "+ pimageval);
+                   
+                   $("#imgafter1").attr('src','/images/'+pimageval);
+                   $("#imgafter2").attr('src','/images/'+pimageval);
+                   
                    $("#saveResult").text("이력이 등록되었습니다.");
                    var btnmsg="이력 재수정";
                    $("#savecareer").text(btnmsg);
                    
                    $("#aftercareer").text($("#career").val());
                    //사진이 왜 안바뀔까?
-                   $("#imageafter1").attr('src','images/'+pimageval);
-                   $("#imageafter2").attr('src','images/'+pimageval);
+                 
                     
                    $("#mnameafter").text($("#mname").val());
                    $("#midafter").text($("#mId").val());
@@ -161,8 +166,8 @@ $(function(){
                    $("#mnameafter").text(mnameval);
                    $("#midafter").text(midval);
                    $("#aftercareer").text(careerval);
-                   $("#imageafter1").attr('src','images/'+pimageval);
-                   $("#imageafter2").attr('src','images/'+pimageval);
+                   $("#imgafter1").attr('src','/images/'+pimageval);
+                   $("#imgafter2").attr('src','/images/'+pimageval);
                    $("#aftercareer").text(careerval);
                    $("#lecId").val(midval);
                    $('#smallModal').modal("hide");
@@ -392,7 +397,7 @@ $(function(){
 							</div>
 							<br>
 
-							<div align="left" style="padding-right: 40px">
+						<!-- <div align="left" style="padding-right: 40px">
 								<h5>보낸 제안서</h5>
 								<h6>${classVo.lecProposal}</h6>
 							</div>
@@ -401,8 +406,8 @@ $(function(){
 								<h5>받은 답변</h5>
 								<h6>${classVo.lecResponse}</h6>
 								<br>
-							</div>
-<input id="lecId" name="lecId" value="${mvo.getMId()}"> 
+							</div> -->	
+<input type="hidden" id="lecId" name="lecId" value="${mvo.getMId()}"> 
 						</div>
 						<br>
 
@@ -520,7 +525,7 @@ $(function(){
 							<input type="hidden" id="pimageval">
 							</div>
 							<br>
-<input id="lecId1" value="${mvo.getMId()}"> 
+<input type="hidden" id="lecId1" value="${mvo.getMId()}"> 
 				<h5>제안서 본문(자동으로 입력됩니다.)</h5>
 							<textarea rows="8" name="lecProposal" id="lecProposal"
 								style="width: 100%" readonly placeholder="본인이 강사인 경우는 제안서를 작성하지 않습니다."></textarea>
@@ -567,7 +572,7 @@ $(function(){
 		
 	
 		function showSection(lec) { //나를 강사로 추가 || 다른 강사 추가
-			alert('lec');
+			
 			var lecName = $("#lecName").val(); //img
 			var lecImage =  $("#lecImg").val(); //name
 			var pimage = $("#pimage").val();
@@ -584,7 +589,7 @@ $(function(){
 				
 
 			} else {
-				$("#showlecImage2").attr('src','images/default.png');
+				$("#showlecImage2").attr('src','/images/default.png');
 				$("#lecNamesel").text('아이디를 검색하세요.'); //이름넣기
 				$("#otherlec").show();
 				$("#melec").hide();
@@ -609,7 +614,7 @@ $(function(){
 	                   $("#careerval").val(mvo.career);
 	                   $("#pimageval").val(mvo.profileImage);
 	                   $("#lecNamesel").text(mvo.mid);
-	                   $("#showlecImage2").attr('src','images/'+mvo.profileImage);
+	                   $("#showlecImage2").attr('src','/images/'+mvo.profileImage);
 	                   $("#lecId1").val(mvo.mid);
 	                   }else {
 	                	   alert('없는 회원ID 입니다.')

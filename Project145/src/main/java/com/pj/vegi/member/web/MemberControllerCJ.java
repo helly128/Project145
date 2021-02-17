@@ -227,15 +227,5 @@ public class MemberControllerCJ {
 
 
 
-//@RequestMapping("/bizRestEdit.do")
-//@ResponseBody
-//public int restUpdate(@RequestParam String restId,Model model, RestaurantVo vo) throws SQLException{
-//	System.out.println(restId +"받아옴");
-//	vo.setRestId(restId);
-//	int n = restaurantService.restaurantEdit(vo);
-//	return n;
-//
-//}
-
 
 }

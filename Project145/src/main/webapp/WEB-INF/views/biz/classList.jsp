@@ -112,10 +112,10 @@
 													onclick="classdel(this)"
 													style="font-size:20px;z-index:99;"><i class="fa fa-trash-o"></i>
 													</button>
-													<button class="btn btn-outline-primary" 
+													<!--  <button class="btn btn-outline-primary" 
 													onclick="classcollabo(this)"
 													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
-													</button>
+													</button>-->
 													</c:if>
 													
 													<!-- 진행중인데 조인멤버=0이면 -수정 삭제 결제 버튼 -->
@@ -137,10 +137,10 @@
 													<button class="btn btn-outline-primary" 
 													onclick="location.href='classBizEdit.do?cId=${vo.getCId()}'"
 													style="font-size:20px; z-index:99;"><i class="fa fa-pencil"></i></button>
-													<button class="btn btn-outline-primary" 
+													<!-- <button class="btn btn-outline-primary" 
 													onclick="classcollabo(this)"
 													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
-													</button>
+													</button>-->
 													</c:if>
 													
 													<!-- 종료된 이벤트, 삭제와 결제 버튼만 -->
@@ -149,10 +149,10 @@
 													onclick="classdel(this)"
 													style="font-size:20px;z-index:99;"><i class="fa fa-trash-o"></i>
 													</button>
-													<button class="btn btn-outline-primary" 
+													<!-- <button class="btn btn-outline-primary" 
 													onclick="classcollabo(this)"
 													style="font-size:20px; z-index:99; padding:9px 7px 3px 11px "><i class="fa fa-krw"></i>
-													</button>
+													</button> -->
 													</c:if>
 													
 													</td>

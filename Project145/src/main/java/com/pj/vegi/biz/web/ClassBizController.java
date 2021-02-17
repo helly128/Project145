@@ -139,15 +139,7 @@ public class ClassBizController {
 		}
 		//강사 아이디가 세션아이디와 같으면 개설완료 그 외에는 승인대기임
 		//이거 왜 안됨?
-		String lstatus = "";
-		System.out.println(cvo.getLecId()+"=======가 같은지 비교");
-		if (cvo.getLecId()==mId) {
-			lstatus = "개설완료";
-			}else {
-				lstatus ="강사승인대기";
-				//문의테이블에 등록 !
-			}
-		cvo.setStatus(lstatus);
+		
 		System.out.println("사업자 번호 찾기");
 		// mId로 사업자 번호 찾고 설정
 		MemberVo bizNumVo = classBizService.classBizNum(mvo);
@@ -185,7 +177,7 @@ public class ClassBizController {
 		System.out.println(mId+"입니다.");
 		
 		int m = 0;
-	System.out.println(cvo+"=======이래=====");
+		System.out.println(cvo+"=======이래=====");
 		m = classBizService.enqBizDelete(cvo);
 		System.out.println(m+"건 기존 요청 삭제함.");
 		String status ="개설완료";
